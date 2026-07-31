@@ -1,0 +1,32 @@
+Let's build this exactly like a real product, not just "screens."
+
+We'll do it in small, production-ready milestones:
+
+Milestone 1 – Journal List
+✅ JournalCard
+✅ JournalSectionHeader
+✅ JournalList
+✅ EmptyJournal
+✅ JournalScreen
+Milestone 2 – Create Journal
+Mood selector
+Category selector
+Title input
+Content editor
+Photo attachments
+Save
+Milestone 3 – Journal Details
+Beautiful reading experience
+Favorite
+Share
+Delete
+Edit
+Milestone 4 – Polish
+Micro animations
+Pull to refresh
+Search
+Filters
+Swipe actions
+Skeleton loading
+Haptics
+Empty/loading/error states
