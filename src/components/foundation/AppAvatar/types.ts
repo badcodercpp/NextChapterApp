@@ -1,13 +1,15 @@
+import { AppPressableProps } from '../AppPressable';
+import { AvatarSize } from './variants';
 import { ImageSourcePropType } from 'react-native';
 
-export interface AvatarProps {
+export interface AppAvatarProps extends Omit<AppPressableProps, 'children'> {
   name?: string;
 
   uri?: string;
 
   source?: ImageSourcePropType;
 
-  size?: number;
+  size?: AvatarSize;
 
-  onPress?: () => void;
+  className?: string;
 }

@@ -1,11 +1,15 @@
 export const Gradients = {
-  question: ['#F4F0FF', '#FFF8F2'],
+  primary: ['#7C3AED', '#A855F7'],
 
-  insight: ['#EEF6FF', '#FFFFFF'],
+  background: ['#141129', '#1B1735'],
 
-  recovery: ['#F3FFF7', '#FFFFFF'],
+  hero: ['#141129', '#2D1B69'],
 
-  ai: ['#ECE7FF', '#FFFFFF'],
+  overlay: ['rgba(20,17,41,0)', 'rgba(20,17,41,0.75)', '#141129'],
 
-  primary: ['#7C6CF8', '#A694FF'],
+  success: ['#22C55E', '#16A34A'],
+
+  danger: ['#EF4444', '#DC2626'],
 } as const;
+
+export type GradientVariant = keyof typeof Gradients;

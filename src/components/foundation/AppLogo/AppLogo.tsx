@@ -1,19 +1,25 @@
 import { AppLogoProps } from './types';
 import { Image } from 'react-native';
+import { LogoVariants } from './variants';
 import React from 'react';
+import { cn } from '@/utils/cn';
 
-export function AppLogo({ size = 96, style }: AppLogoProps) {
+export function AppLogo({
+  size = 96,
+  variant = 'default',
+  className,
+  ...props
+}: AppLogoProps) {
   return (
     <Image
-      source={require('@/assets/images/logo.png')}
+      {...props}
+      source={LogoVariants[variant]}
       resizeMode="contain"
-      style={[
-        {
-          width: size,
-          height: size,
-        },
-        style,
-      ]}
+      className={cn(className)}
+      style={{
+        width: size,
+        height: size,
+      }}
     />
   );
 }

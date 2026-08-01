@@ -1,15 +1,18 @@
-import { StyleProp, ViewStyle } from 'react-native';
+import { ReactNode } from 'react';
+import { ViewProps } from 'react-native';
 
-import React from 'react';
-
-export interface AppEmptyStateProps {
-  image?: React.ReactNode;
-
+export interface AppEmptyStateProps extends ViewProps {
   title: string;
 
   description?: string;
 
-  action?: React.ReactNode;
+  illustration?: ReactNode;
 
-  style?: StyleProp<ViewStyle>;
+  footer?: ReactNode;
+
+  className?: string;
+
+  titleClassName?: string;
+
+  descriptionClassName?: string;
 }

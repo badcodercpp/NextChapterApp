@@ -1,21 +1,13 @@
-import { StyleProp, ViewStyle } from 'react-native';
-import { ThemeColor, ThemeRadius, ThemeSpacing } from '@/theme/types';
+import { ViewProps } from 'react-native';
 
-import { ReactNode } from 'react';
-import { Shadows } from '@/theme/shadows';
+export type CardVariant = 'surface' | 'primary' | 'transparent';
 
-export interface AppCardProps {
-  children: ReactNode;
+export interface AppCardProps extends ViewProps {
+  children: React.ReactNode;
 
-  style?: StyleProp<ViewStyle>;
-
-  padding?: ThemeSpacing;
-
-  radius?: ThemeRadius;
-
-  backgroundColor?: ThemeColor;
-
-  shadow?: keyof typeof Shadows;
+  variant?: CardVariant;
 
   border?: boolean;
+
+  className?: string;
 }

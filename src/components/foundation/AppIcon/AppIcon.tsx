@@ -1,5 +1,6 @@
 import { AppIconProps } from './types';
-import { Theme } from '@/theme';
+import { Colors } from '@/theme/colors';
+import React from 'react';
 
 export function AppIcon({
   icon: Icon,
@@ -11,13 +12,9 @@ export function AppIcon({
   return (
     <Icon
       size={size}
-      color={Theme.colors[color]}
+      color={Colors[color]}
       strokeWidth={strokeWidth}
-      {...(fill
-        ? {
-            fill,
-          }
-        : {})}
+      fill={fill}
     />
   );
 }

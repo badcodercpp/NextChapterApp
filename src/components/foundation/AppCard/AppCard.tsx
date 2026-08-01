@@ -1,38 +1,30 @@
 import { AppCardProps } from './types';
-import { Colors } from '@/theme/colors';
-import { Radius } from '@/theme/radius';
+import { CardVariants } from './variants';
 import React from 'react';
-import { Shadows } from '@/theme/shadows';
-import { Spacing } from '@/theme/spacing';
 import { View } from 'react-native';
-import { styles } from './styles';
+import { cn } from '@/utils/cn';
 
 export function AppCard({
   children,
-  style,
-  padding = 'xl',
-  radius = 'lg',
-  backgroundColor = 'surface',
-  shadow = 'sm',
+  variant = 'surface',
   border = false,
+  className,
+  ...props
 }: AppCardProps) {
   return (
     <View
-      style={[
-        styles.container,
-        {
-          backgroundColor: Colors[backgroundColor],
-          padding: Spacing[padding],
-          borderRadius: Radius[radius],
-        },
-        Shadows[shadow],
-        style,
-        // eslint-disable-next-line react-native/no-inline-styles
-        border && {
-          borderWidth: 1,
-          borderColor: Colors.border,
-        },
-      ]}
+      {...props}
+      className={cn(
+        'rounded-3xl p-6',
+
+        CardVariants[variant],
+
+        border && 'border border-border',
+
+        'shadow-lg',
+
+        className,
+      )}
     >
       {children}
     </View>

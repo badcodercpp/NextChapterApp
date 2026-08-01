@@ -1,21 +1,21 @@
-import { ThemeColor, ThemeSpacing } from '@/theme/types';
+import { ScrollViewProps, ViewProps } from 'react-native';
 
-import { ReactNode } from 'react';
-
-export interface AppScreenProps {
-  children: ReactNode;
+export interface AppScreenProps extends ViewProps {
+  children: React.ReactNode;
 
   scroll?: boolean;
 
-  safeArea?: boolean;
-
   keyboard?: boolean;
 
-  backgroundColor?: ThemeColor;
-
-  horizontalPadding?: ThemeSpacing;
-
-  verticalPadding?: ThemeSpacing;
+  safeArea?: boolean;
 
   safeTop?: boolean;
+
+  safeBottom?: boolean;
+
+  className?: string;
+
+  contentClassName?: string;
+
+  scrollProps?: ScrollViewProps;
 }

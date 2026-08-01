@@ -1,13 +1,13 @@
 import { ActivityIndicator, View } from 'react-native';
-import { ButtonSizes, ButtonVariants } from './config';
+import { ButtonSizes, ButtonVariants } from './variants';
 
 import { AppButtonProps } from './types';
 import { AppIcon } from '../AppIcon';
 import { AppPressable } from '../AppPressable';
 import { AppText } from '../AppText';
-import { Colors } from '@/theme/colors';
+import LinearGradient from 'react-native-linear-gradient';
 import React from 'react';
-import { styles } from './styles';
+import { cn } from '@/utils/cn';
 
 export function AppButton({
   title,
@@ -24,7 +24,7 @@ export function AppButton({
 
   rightIcon,
 
-  style,
+  className,
 
   disabled,
 
@@ -36,53 +36,85 @@ export function AppButton({
   const LeftIcon = leftIcon;
   const RightIcon = rightIcon;
 
+  const isGradient = variant === 'gradient';
+
   return (
     <AppPressable
       {...props}
       disabled={disabled || loading}
-      style={[
-        styles.container,
+      className={cn(
+        'flex-row items-center justify-center rounded-2xl bg-button',
 
-        // eslint-disable-next-line react-native/no-inline-styles
-        {
-          backgroundColor: Colors[button.backgroundColor],
+        fullWidth && 'w-full',
 
-          borderWidth: button.borderColor ? 1 : 0,
+        !isGradient && button.container,
 
-          borderColor: button.borderColor
-            ? Colors[button.borderColor]
-            : 'transparent',
+        // buttonSize.container,
 
-          height: buttonSize.height,
+        disabled && 'opacity-50',
 
-          paddingHorizontal: buttonSize.paddingHorizontal,
+        className,
 
-          width: fullWidth ? '100%' : undefined,
-        },
-
-        style,
-      ]}
+        'bg-red-500',
+      )}
     >
-      {loading ? (
-        <ActivityIndicator color={Colors[button.textColor]} />
+      {isGradient ? (
+        <LinearGradient
+          //@ts-ignore
+          colors={button.gradient}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          className={cn(
+            'flex-row items-center justify-center rounded-2xl',
+            buttonSize.container,
+          )}
+        >
+          {loading ? (
+            <ActivityIndicator color="white" />
+          ) : (
+            <View className="flex-row items-center">
+              {LeftIcon && (
+                <View className="mr-2">
+                  <AppIcon icon={LeftIcon} size={buttonSize.icon} />
+                </View>
+              )}
+
+              <AppText variant={buttonSize.typography} className={button.text}>
+                {title}
+              </AppText>
+
+              {RightIcon && (
+                <View className="ml-2">
+                  <AppIcon icon={RightIcon} size={buttonSize.icon} />
+                </View>
+              )}
+            </View>
+          )}
+        </LinearGradient>
       ) : (
-        <View style={styles.content}>
-          {LeftIcon && (
-            <View style={styles.iconLeft}>
-              <AppIcon icon={LeftIcon} size={20} color={button.textColor} />
+        <>
+          {loading ? (
+            <ActivityIndicator color="white" />
+          ) : (
+            <View className="flex-row items-center">
+              {LeftIcon && (
+                <View className="mr-2">
+                  <AppIcon icon={LeftIcon} size={buttonSize.icon} />
+                </View>
+              )}
+
+              <AppText variant={buttonSize.typography} className={button.text}>
+                {title}
+              </AppText>
+
+              {RightIcon && (
+                <View className="ml-2">
+                  <AppIcon icon={RightIcon} size={buttonSize.icon} />
+                </View>
+              )}
             </View>
           )}
-
-          <AppText variant={buttonSize.typography} color={button.textColor}>
-            {title}
-          </AppText>
-
-          {RightIcon && (
-            <View style={styles.iconRight}>
-              <AppIcon icon={RightIcon} size={20} color={button.textColor} />
-            </View>
-          )}
-        </View>
+        </>
       )}
     </AppPressable>
   );

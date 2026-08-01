@@ -13,8 +13,9 @@ import { AppPressable } from '../AppPressable';
 import { AppText } from '../AppText';
 import { Colors } from '@/theme/colors';
 import { INPUT_ICON_SIZE } from './constants';
+import { InputVariants } from './variants';
 import { X } from 'lucide-react-native';
-import { styles } from './styles';
+import { cn } from '@/utils/cn';
 
 export const AppInput = forwardRef<AppInputRef, AppInputProps>(
   (
@@ -38,19 +39,19 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
       onEndIconPress,
 
       value,
-      editable,
-
-      containerStyle,
-      inputContainerStyle,
-      inputStyle,
-      labelStyle,
-      helperTextStyle,
 
       onFocus,
       onBlur,
       onChangeText,
 
       maxLength,
+
+      multiline = false,
+
+      className,
+      inputClassName,
+      labelClassName,
+      helperTextClassName,
 
       ...props
     },
@@ -61,11 +62,15 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
     const [focused, setFocused] = useState(false);
 
     useImperativeHandle(ref, () => ({
-      focus: () => inputRef.current?.focus(),
+      focus() {
+        inputRef.current?.focus();
+      },
 
-      blur: () => inputRef.current?.blur(),
+      blur() {
+        inputRef.current?.blur();
+      },
 
-      clear: () => {
+      clear() {
         inputRef.current?.clear();
         onChangeText?.('');
       },
@@ -92,20 +97,20 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
       onChangeText?.('');
     }, [onChangeText]);
 
-    const isEditable = !disabled && !readOnly && editable !== false;
+    const isEditable = !disabled && !readOnly && disabled !== false;
 
     const showClearButton = clearable && !!value && !loading && isEditable;
 
     return (
-      <View style={containerStyle}>
+      <View className={cn(className)}>
         {label && (
-          <View style={styles.labelContainer}>
-            <AppText variant="label" style={labelStyle}>
+          <View className={cn(InputVariants.label.base)}>
+            <AppText variant="label" className={labelClassName}>
               {label}
             </AppText>
 
             {required && (
-              <AppText variant="label" color="error" style={styles.required}>
+              <AppText variant="label" color="error" className="ml-1">
                 *
               </AppText>
             )}
@@ -113,22 +118,22 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
         )}
 
         <View
-          style={[
-            styles.inputContainer,
+          className={cn(
+            InputVariants.container.base,
 
-            focused && styles.focused,
+            focused && InputVariants.container.focused,
 
-            !!error && styles.error,
+            error && InputVariants.container.error,
 
-            disabled && styles.disabled,
+            disabled && InputVariants.container.disabled,
 
-            readOnly && styles.readOnly,
+            readOnly && InputVariants.container.readOnly,
 
-            inputContainerStyle,
-          ]}
+            multiline && 'items-start',
+          )}
         >
           {startIcon && (
-            <View style={styles.startIcon}>
+            <View className={InputVariants.icon.left}>
               <AppIcon
                 icon={startIcon}
                 size={INPUT_ICON_SIZE}
@@ -142,20 +147,31 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
             {...props}
             value={value}
             editable={isEditable}
-            style={[styles.input, inputStyle]}
-            placeholderTextColor={Colors.textTertiary}
+            multiline={multiline}
+            textAlignVertical={multiline ? 'top' : 'center'}
+            maxLength={maxLength}
+            placeholderTextColor={Colors.textMuted}
+            className={cn(
+              InputVariants.input.base,
+
+              multiline && InputVariants.input.multiline,
+
+              disabled && InputVariants.input.disabled,
+
+              inputClassName,
+            )}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChangeText={onChangeText}
           />
 
           {loading ? (
-            <View style={styles.endIcon}>
+            <View className={InputVariants.icon.right}>
               <ActivityIndicator color={Colors.primary} />
             </View>
           ) : showClearButton ? (
             <AppPressable
-              style={styles.endIcon}
+              className={InputVariants.icon.right}
               onPress={handleClear}
               accessibilityRole="button"
               accessibilityLabel="Clear text"
@@ -164,7 +180,10 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
             </AppPressable>
           ) : endIcon ? (
             onEndIconPress ? (
-              <AppPressable style={styles.endIcon} onPress={onEndIconPress}>
+              <AppPressable
+                className={InputVariants.icon.right}
+                onPress={onEndIconPress}
+              >
                 <AppIcon
                   icon={endIcon}
                   size={INPUT_ICON_SIZE}
@@ -172,7 +191,7 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
                 />
               </AppPressable>
             ) : (
-              <View style={styles.endIcon}>
+              <View className={InputVariants.icon.right}>
                 <AppIcon
                   icon={endIcon}
                   size={INPUT_ICON_SIZE}
@@ -183,22 +202,18 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
           ) : null}
         </View>
 
-        {(helperText || error || showCharacterCount) && (
-          <View style={styles.helperContainer}>
+        {(helperText || error || (showCharacterCount && maxLength)) && (
+          <View className={InputVariants.helper.container}>
             <AppText
               variant="caption"
               color={error ? 'error' : 'textSecondary'}
-              style={helperTextStyle}
+              className={helperTextClassName}
             >
               {error || helperText}
             </AppText>
 
             {showCharacterCount && maxLength && (
-              <AppText
-                variant="caption"
-                color="textSecondary"
-                style={styles.counter}
-              >
+              <AppText variant="caption" color="textSecondary">
                 {`${value?.length ?? 0}/${maxLength}`}
               </AppText>
             )}
@@ -208,3 +223,5 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
     );
   },
 );
+
+AppInput.displayName = 'AppInput';

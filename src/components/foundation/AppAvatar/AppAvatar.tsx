@@ -1,48 +1,50 @@
-import { Image, Pressable, View } from 'react-native';
+import { Image, View } from 'react-native';
 
+import type { AppAvatarProps } from './types';
+import { AppPressable } from '../AppPressable';
 import { AppText } from '../AppText';
-import { AvatarProps } from './types';
+import { AvatarSizes } from './variants';
 import React from 'react';
-import { styles } from './styles';
+import { cn } from '@/utils/cn';
 
 export function AppAvatar({
   name,
   uri,
   source,
-  size = 48,
+  size = 'md',
+  className,
   onPress,
-}: AvatarProps) {
-  const initials = name
-    ? name
-        .split(' ')
-        .map(x => x[0])
-        .join('')
-        .substring(0, 2)
-        .toUpperCase()
-    : '';
+  ...props
+}: AppAvatarProps) {
+  const avatarSize = AvatarSizes[size];
+
+  const initials =
+    name
+      ?.trim()
+      .split(' ')
+      .map(word => word[0])
+      .join('')
+      .slice(0, 2)
+      .toUpperCase() ?? '';
 
   const avatar = (
     <View
-      style={[
-        styles.container,
-        {
-          width: size,
-          height: size,
-          borderRadius: size / 2,
-        },
-      ]}
+      className={cn(
+        'items-center justify-center rounded-full bg-primary overflow-hidden',
+
+        avatarSize.container,
+
+        className,
+      )}
     >
       {uri || source ? (
         <Image
           source={uri ? { uri } : source}
-          style={{
-            width: size,
-            height: size,
-            borderRadius: size / 2,
-          }}
+          className="h-full w-full"
+          resizeMode="cover"
         />
       ) : (
-        <AppText variant="titleMediumBold" style={styles.initials}>
+        <AppText variant={avatarSize.text} color="text">
           {initials}
         </AppText>
       )}
@@ -53,5 +55,9 @@ export function AppAvatar({
     return avatar;
   }
 
-  return <Pressable onPress={onPress}>{avatar}</Pressable>;
+  return (
+    <AppPressable onPress={onPress} {...props}>
+      {avatar}
+    </AppPressable>
+  );
 }

@@ -1,14 +1,9 @@
-import { StyleProp, TextProps, TextStyle } from 'react-native';
-import { ThemeColor, ThemeTypography } from '@/theme/types';
-
-import { ReactNode } from 'react';
+import { ColorVariant } from '@/theme/colors';
+import { TextProps } from 'react-native';
+import { TypographyVariant } from '@/theme/typography';
 
 export interface AppTextProps extends TextProps {
-  children: ReactNode;
-
-  variant?: ThemeTypography;
-
-  color?: ThemeColor;
-
-  style?: StyleProp<TextStyle>;
+  variant?: TypographyVariant;
+  color?: ColorVariant;
+  className?: string;
 }

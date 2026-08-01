@@ -1,9 +1,8 @@
 import { PressableProps, StyleProp, ViewStyle } from 'react-native';
 
 export interface AppPressableProps extends PressableProps {
-  children: React.ReactNode;
-
+  className?: string;
   style?: StyleProp<ViewStyle>;
-
   disabledOpacity?: number;
+  pressedOpacity?: number;
 }

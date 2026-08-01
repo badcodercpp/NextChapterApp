@@ -3,24 +3,19 @@ import { Colors } from '@/theme/colors';
 import React from 'react';
 import { Text } from 'react-native';
 import { Typography } from '@/theme/typography';
+import { cn } from '@/utils';
 
 export function AppText({
   children,
   variant = 'body',
   color = 'text',
-  style,
+  className,
   ...props
 }: AppTextProps) {
   return (
     <Text
       {...props}
-      style={[
-        Typography[variant],
-        {
-          color: Colors[color],
-        },
-        style,
-      ]}
+      className={cn(Typography[variant], Colors[color], className)}
     >
       {children}
     </Text>

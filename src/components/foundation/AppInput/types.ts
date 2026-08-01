@@ -1,106 +1,91 @@
-import type {
-  StyleProp,
-  TextInputProps,
-  TextStyle,
-  ViewStyle,
-} from 'react-native';
-
 import { LucideIcon } from 'lucide-react-native';
+import { TextInputProps } from 'react-native';
 
 export interface AppInputRef {
-  focus: () => void;
-  blur: () => void;
-  clear: () => void;
+  focus(): void;
+  blur(): void;
+  clear(): void;
 }
 
-export interface AppInputProps extends TextInputProps {
+export interface AppInputProps extends Omit<TextInputProps, 'editable'> {
   /**
    * Label displayed above the input.
    */
   label?: string;
 
   /**
-   * Shows a red asterisk.
+   * Marks the field as required.
    */
   required?: boolean;
 
   /**
-   * Helper text shown below input.
+   * Helper text shown below the input.
    */
   helperText?: string;
 
   /**
    * Error message.
+   * Overrides helperText when present.
    */
   error?: string;
 
   /**
-   * Makes input non-editable with disabled styling.
+   * Makes the input non-editable.
    */
   disabled?: boolean;
 
   /**
-   * Makes input non-editable but keeps normal appearance.
+   * Read-only state.
    */
   readOnly?: boolean;
 
   /**
-   * Shows ActivityIndicator.
+   * Shows ActivityIndicator on the right.
    */
   loading?: boolean;
 
   /**
-   * Shows clear button automatically.
+   * Shows clear button when value exists.
    */
   clearable?: boolean;
 
   /**
-   * Displays character count.
+   * Displays current/max characters.
    */
   showCharacterCount?: boolean;
 
   /**
-   * Maximum character count.
-   */
-  characterLimit?: number;
-
-  /**
-   * Left icon component.
+   * Left icon.
    */
   startIcon?: LucideIcon;
 
   /**
-   * Right icon component.
+   * Right icon.
    */
   endIcon?: LucideIcon;
 
   /**
-   * Called when right icon is pressed.
+   * Fired when right icon is pressed.
    */
-  onEndIconPress?: () => void;
+  onEndIconPress?(): void;
 
   /**
-   * Root container style.
+   * Container class.
    */
-  containerStyle?: StyleProp<ViewStyle>;
+  className?: string;
 
   /**
-   * Input wrapper style.
+   * TextInput class.
    */
-  inputContainerStyle?: StyleProp<ViewStyle>;
+  inputClassName?: string;
 
   /**
-   * TextInput style.
+   * Label class.
    */
-  inputStyle?: StyleProp<TextStyle>;
+  labelClassName?: string;
 
   /**
-   * Label style.
+   * Helper text class.
    */
-  labelStyle?: StyleProp<TextStyle>;
-
-  /**
-   * Helper/Error style.
-   */
-  helperTextStyle?: StyleProp<TextStyle>;
+  helperTextClassName?: string;
 }

@@ -3,15 +3,20 @@ import { Colors } from './colors';
 import { Gradients } from './gradients';
 import { Radius } from './radius';
 import { Shadows } from './shadows';
-import { Spacing } from './spacing';
 import { Typography } from './typography';
 
 export const Theme = {
   colors: Colors,
-  spacing: Spacing,
-  radius: Radius,
   typography: Typography,
+  radius: Radius,
   shadows: Shadows,
   gradients: Gradients,
   animation: Animation,
-} as const;
+};
+
+export * from './animation';
+export * from './colors';
+export * from './gradients';
+export * from './radius';
+export * from './shadows';
+export * from './typography';

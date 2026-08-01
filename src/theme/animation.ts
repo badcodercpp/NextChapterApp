@@ -1,9 +1,10 @@
 export const Animation = {
-  duration: {
-    fast: 150,
+  fast: 150,
+  normal: 250,
+  slow: 400,
 
-    normal: 250,
-
-    slow: 400,
+  spring: {
+    damping: 18,
+    stiffness: 180,
   },
 } as const;

@@ -1,16 +1,9 @@
-import { AppInputProps } from '../AppInput';
+import { AppInputProps, AppInputRef } from '../AppInput';
 
-export interface AppSearchBarProps
-  extends Omit<
-    AppInputProps,
-    | 'label'
-    | 'helperText'
-    | 'error'
-    | 'required'
-    | 'multiline'
-    | 'showCharacterCount'
-  > {
+export interface AppSearchBarProps extends Omit<AppInputProps, 'startIcon'> {
   showFilter?: boolean;
 
-  onFilterPress?: () => void;
+  onFilterPress?(): void;
 }
+
+export type { AppInputRef };

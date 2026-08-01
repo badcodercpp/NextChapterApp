@@ -1,65 +1,55 @@
-import { ActivityIndicator } from 'react-native';
-import { AppFABProps } from './types';
+import { ActivityIndicator, View } from 'react-native';
+import { FabSizes, FabVariants } from './variants';
+
+import { AppFabProps } from './types';
 import { AppIcon } from '../AppIcon';
 import { AppPressable } from '../AppPressable';
 import { AppText } from '../AppText';
 import { Colors } from '@/theme/colors';
-import { FAB } from './constants';
 import React from 'react';
-import { styles } from './styles';
+import { cn } from '@/utils/cn';
 
-export function AppFAB({
+export function AppFab({
   icon,
-
   label,
-
   extended = false,
-
   loading = false,
-
   disabled = false,
-
-  style,
-
+  variant = 'primary',
+  className,
   ...props
-}: AppFABProps) {
+}: AppFabProps) {
+  const fab = FabVariants[variant];
+  const size = extended ? FabSizes.extended : FabSizes.normal;
+
   return (
     <AppPressable
       {...props}
       disabled={disabled || loading}
-      style={[
-        styles.container,
+      className={cn(
+        'flex-row items-center justify-center',
 
-        // eslint-disable-next-line react-native/no-inline-styles
-        {
-          width: extended ? undefined : FAB.size,
+        fab.container,
 
-          height: extended ? FAB.extendedHeight : FAB.size,
+        size.container,
 
-          borderRadius: extended ? FAB.extendedHeight / 2 : FAB.borderRadius,
+        disabled && 'opacity-50',
 
-          paddingHorizontal: extended ? FAB.horizontalPadding : 0,
-
-          opacity: disabled ? 0.5 : 1,
-        },
-
-        style,
-      ]}
+        className,
+      )}
     >
       {loading ? (
-        <ActivityIndicator color={Colors.textInverse} />
+        <ActivityIndicator color={Colors.text} />
       ) : (
         <>
-          <AppIcon icon={icon} size={FAB.iconSize} color="textInverse" />
+          <AppIcon icon={icon} size={size.icon} color="text" />
 
           {extended && label && (
-            <AppText
-              variant="bodyBold"
-              color="textInverse"
-              style={styles.label}
-            >
-              {label}
-            </AppText>
+            <View className="ml-3">
+              <AppText variant="bodySemiBold" className={fab.text}>
+                {label}
+              </AppText>
+            </View>
           )}
         </>
       )}

@@ -5,48 +5,55 @@ import {
 } from 'react-native-safe-area-context';
 
 import { AppScreenProps } from './types';
-import { Colors } from '@/theme/colors';
 import React from 'react';
-import { Spacing } from '@/theme/spacing';
 import { TAB_BAR_HEIGHT } from '@/navigation/constants';
-import { styles } from './styles';
+import { cn } from '@/utils/cn';
 
 export function AppScreen({
   children,
+
   scroll = false,
-  safeArea = false,
+
   keyboard = false,
-  backgroundColor = 'background',
-  horizontalPadding = 'xl',
-  verticalPadding = 'none',
+
+  safeArea = true,
+
   safeTop = true,
+
+  safeBottom = true,
+
+  className,
+
+  contentClassName,
+
+  scrollProps,
+
+  ...props
 }: AppScreenProps) {
-  const Container = safeArea ? SafeAreaView : View;
   const insets = useSafeAreaInsets();
+
+  const Container = safeArea ? SafeAreaView : View;
 
   const content = scroll ? (
     <ScrollView
+      {...scrollProps}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={[
-        styles.content,
-        {
-          paddingHorizontal: Spacing[horizontalPadding],
-          paddingVertical: Spacing[verticalPadding],
-        },
-      ]}
+      contentContainerClassName={cn(
+        'flex-grow',
+
+        contentClassName,
+      )}
     >
       {children}
     </ScrollView>
   ) : (
     <View
-      style={[
-        styles.flex,
-        {
-          paddingHorizontal: Spacing[horizontalPadding],
-          paddingVertical: Spacing[verticalPadding],
-        },
-      ]}
+      className={cn(
+        'flex-1',
+
+        contentClassName,
+      )}
     >
       {children}
     </View>
@@ -54,20 +61,17 @@ export function AppScreen({
 
   const screen = (
     <Container
-      style={[
-        styles.flex,
-        {
-          backgroundColor: Colors[backgroundColor],
-        },
-        {
-          paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
-          ...(safeTop
-            ? {
-                paddingTop: insets.top,
-              }
-            : {}),
-        },
-      ]}
+      {...props}
+      className={cn(
+        'flex-1 bg-background',
+
+        className,
+      )}
+      style={{
+        paddingTop: safeTop ? insets.top : 0,
+
+        paddingBottom: safeBottom ? insets.bottom + TAB_BAR_HEIGHT : 0,
+      }}
     >
       {content}
     </Container>
@@ -79,17 +83,7 @@ export function AppScreen({
 
   return (
     <KeyboardAvoidingView
-      style={[
-        styles.flex,
-        {
-          paddingBottom: insets.bottom + TAB_BAR_HEIGHT,
-          ...(safeTop
-            ? {
-                paddingTop: insets.top,
-              }
-            : {}),
-        },
-      ]}
+      className="flex-1"
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       {screen}

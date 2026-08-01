@@ -1,9 +1,7 @@
-export const INPUT_HEIGHT = 52;
-
-export const INPUT_RADIUS = 16;
-
-export const INPUT_HORIZONTAL_PADDING = 16;
-
 export const INPUT_ICON_SIZE = 20;
 
-export const INPUT_MAX_LENGTH = 1000;
+export const INPUT_MIN_HEIGHT = 56;
+
+export const INPUT_MULTILINE_MIN_HEIGHT = 120;
+
+export const INPUT_PRESSED_OPACITY = 0.7;

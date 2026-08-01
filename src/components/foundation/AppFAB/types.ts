@@ -1,9 +1,8 @@
-import { StyleProp, ViewStyle } from 'react-native';
-
 import { AppPressableProps } from '../AppPressable';
+import { FabVariant } from './variants';
 import { LucideIcon } from 'lucide-react-native';
 
-export interface AppFABProps extends Omit<AppPressableProps, 'children'> {
+export interface AppFabProps extends Omit<AppPressableProps, 'children'> {
   icon: LucideIcon;
 
   label?: string;
@@ -12,7 +11,7 @@ export interface AppFABProps extends Omit<AppPressableProps, 'children'> {
 
   loading?: boolean;
 
-  disabled?: boolean;
+  variant?: FabVariant;
 
-  style?: StyleProp<ViewStyle>;
+  className?: string;
 }

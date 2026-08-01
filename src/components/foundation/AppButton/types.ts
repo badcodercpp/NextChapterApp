@@ -1,5 +1,3 @@
-import { StyleProp, ViewStyle } from 'react-native';
-
 import { AppPressableProps } from '../AppPressable';
 import { LucideIcon } from 'lucide-react-native';
 
@@ -8,7 +6,8 @@ export type ButtonVariant =
   | 'secondary'
   | 'outline'
   | 'ghost'
-  | 'danger';
+  | 'danger'
+  | 'gradient';
 
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
@@ -27,5 +26,5 @@ export interface AppButtonProps extends Omit<AppPressableProps, 'children'> {
 
   rightIcon?: LucideIcon;
 
-  style?: StyleProp<ViewStyle>;
+  className?: string;
 }

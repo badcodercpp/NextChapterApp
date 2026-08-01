@@ -1,8 +1,8 @@
-import { AppInput, AppInputRef } from '../AppInput';
+import type { AppInputRef, AppSearchBarProps } from './types';
 import { Filter, Search } from 'lucide-react-native';
 import React, { forwardRef } from 'react';
 
-import { AppSearchBarProps } from './types';
+import { AppInput } from '../AppInput';
 
 export const AppSearchBar = forwardRef<AppInputRef, AppSearchBarProps>(
   (
@@ -16,6 +16,10 @@ export const AppSearchBar = forwardRef<AppInputRef, AppSearchBarProps>(
 
       endIcon,
 
+      inputClassName,
+
+      className,
+
       ...props
     },
     ref,
@@ -24,9 +28,11 @@ export const AppSearchBar = forwardRef<AppInputRef, AppSearchBarProps>(
       <AppInput
         ref={ref}
         {...props}
+        className={className}
+        inputClassName={inputClassName}
         placeholder={placeholder}
         clearable={clearable}
-        startIcon={Search} // replace with your icon
+        startIcon={Search}
         endIcon={showFilter ? endIcon ?? Filter : endIcon}
         onEndIconPress={showFilter ? onFilterPress : props.onEndIconPress}
         returnKeyType="search"
@@ -37,3 +43,5 @@ export const AppSearchBar = forwardRef<AppInputRef, AppSearchBarProps>(
     );
   },
 );
+
+AppSearchBar.displayName = 'AppSearchBar';

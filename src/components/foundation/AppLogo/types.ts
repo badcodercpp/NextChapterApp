@@ -1,6 +1,10 @@
-import { ImageStyle, StyleProp } from 'react-native';
+import { ImageProps } from 'react-native';
+import { LogoVariant } from './variants';
 
-export interface AppLogoProps {
+export interface AppLogoProps extends Omit<ImageProps, 'source'> {
   size?: number;
-  style?: StyleProp<ImageStyle>;
+
+  variant?: LogoVariant;
+
+  className?: string;
 }

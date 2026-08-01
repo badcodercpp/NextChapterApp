@@ -2,20 +2,26 @@ import { AppEmptyStateProps } from './types';
 import { AppText } from '../AppText';
 import React from 'react';
 import { View } from 'react-native';
-import { styles } from './styles';
+import { cn } from '@/utils/cn';
 
 export function AppEmptyState({
-  image,
   title,
   description,
-  action,
-  style,
+  illustration,
+  footer,
+  className,
+  titleClassName,
+  descriptionClassName,
+  ...props
 }: AppEmptyStateProps) {
   return (
-    <View style={[styles.container, style]}>
-      {image && <View style={styles.image}>{image}</View>}
+    <View
+      {...props}
+      className={cn('items-center justify-center px-8 py-10', className)}
+    >
+      {illustration && <View className="mb-6">{illustration}</View>}
 
-      <AppText variant="titleLargeBold" style={styles.title}>
+      <AppText variant="title" className={cn('text-center', titleClassName)}>
         {title}
       </AppText>
 
@@ -23,13 +29,13 @@ export function AppEmptyState({
         <AppText
           variant="body"
           color="textSecondary"
-          style={styles.description}
+          className={cn('mt-2 text-center', descriptionClassName)}
         >
           {description}
         </AppText>
       )}
 
-      {action && <View style={styles.action}>{action}</View>}
+      {footer && <View className="mt-8">{footer}</View>}
     </View>
   );
 }

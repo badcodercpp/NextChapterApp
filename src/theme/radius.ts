@@ -1,15 +1,21 @@
 export const Radius = {
-  none: 0,
+  none: 'rounded-none',
 
-  xs: 6,
+  xs: 'rounded-sm',
 
-  sm: 12,
+  sm: 'rounded',
 
-  md: 16,
+  md: 'rounded-lg',
 
-  lg: 24,
+  lg: 'rounded-xl',
 
-  xl: 32,
+  xl: 'rounded-2xl',
 
-  full: 9999,
+  '2xl': 'rounded-3xl',
+
+  '3xl': 'rounded-[32px]',
+
+  full: 'rounded-full',
 } as const;
+
+export type RadiusVariant = keyof typeof Radius;

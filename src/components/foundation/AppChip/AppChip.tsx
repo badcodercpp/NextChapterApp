@@ -1,62 +1,56 @@
-import { ChipColors, ChipSizes } from './constants';
+import { ChipSizes, ChipVariants } from './variants';
 
-import { AppChipProps } from './types';
+import type { AppChipProps } from './types';
 import { AppIcon } from '../AppIcon';
 import { AppPressable } from '../AppPressable';
 import { AppText } from '../AppText';
 import React from 'react';
 import { View } from 'react-native';
-import { styles } from './styles';
+import { cn } from '@/utils/cn';
 
 export function AppChip({
-  label,
-
-  icon,
-
-  selected = false,
-
-  disabled = false,
-
+  title,
+  variant = 'soft',
   size = 'md',
-
-  style,
-
+  selected = false,
+  leftIcon,
+  rightIcon,
+  className,
   ...props
 }: AppChipProps) {
+  const chip = ChipVariants[variant];
   const chipSize = ChipSizes[size];
-
-  const colors = selected ? ChipColors.selected : ChipColors.default;
 
   return (
     <AppPressable
       {...props}
-      disabled={disabled}
-      style={[
-        styles.container,
+      className={cn(
+        'flex-row items-center rounded-full',
 
-        // eslint-disable-next-line react-native/no-inline-styles
-        {
-          height: chipSize.height,
+        chip.container,
 
-          paddingHorizontal: chipSize.paddingHorizontal,
+        chipSize.container,
 
-          backgroundColor: colors.background,
+        selected && 'border-2 border-primary',
 
-          borderColor: colors.border,
-
-          opacity: disabled ? 0.5 : 1,
-        },
-
-        style,
-      ]}
+        className,
+      )}
     >
-      {icon && (
-        <View style={styles.icon}>
-          <AppIcon icon={icon} size={chipSize.icon} color="success" />
+      {leftIcon && (
+        <View className="mr-2">
+          <AppIcon icon={leftIcon} size={chipSize.icon} />
         </View>
       )}
 
-      <AppText variant={chipSize.typography}>{label}</AppText>
+      <AppText variant={chipSize.text} className={chip.text}>
+        {title}
+      </AppText>
+
+      {rightIcon && (
+        <View className="ml-2">
+          <AppIcon icon={rightIcon} size={chipSize.icon} />
+        </View>
+      )}
     </AppPressable>
   );
 }
