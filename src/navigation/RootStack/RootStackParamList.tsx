@@ -3,7 +3,7 @@ import { RootRoutes } from './RootRoutes';
 import { TabParamList } from '../Tab/TabParamList';
 
 export type RootStackParamList = {
-  [RootRoutes.Splash]: undefined;
+  [RootRoutes.Landing]: undefined;
 
   [RootRoutes.Auth]: undefined;
 

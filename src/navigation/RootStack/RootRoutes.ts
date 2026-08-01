@@ -1,5 +1,5 @@
 export const RootRoutes = {
-  Splash: 'Splash',
+  Landing: 'Landing',
   Auth: 'Auth',
   Main: 'Main',
   Settings: 'Settings',

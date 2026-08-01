@@ -1,6 +1,5 @@
 import { BottomTabBar } from '../components/CustomBottomTabBar';
 import { HomeNavigator } from '@/features/home';
-import { JournalNavigator } from '@/features/journal/navigation';
 import { TabParamList } from './TabParamList';
 import { TabRoutes } from './TabRoutes';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -32,7 +31,7 @@ export function TabNavigator() {
           title: t('app.locale.journal'),
         }}
         name={TabRoutes.Journal}
-        component={JournalNavigator}
+        component={HomeNavigator}
       />
 
       <Tab.Screen
