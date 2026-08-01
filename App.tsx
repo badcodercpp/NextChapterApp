@@ -23,6 +23,8 @@
 
 // export default App;
 
+import './src/global.css';
+
 import { Text, View } from 'react-native';
 
 import React from 'react';

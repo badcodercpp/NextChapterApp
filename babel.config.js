@@ -19,7 +19,7 @@ module.exports = {
         ],
       },
     ],
-    'react-native-reanimated/plugin',
     '@babel/plugin-transform-export-namespace-from',
+    'react-native-reanimated/plugin',
   ],
 };

@@ -1,6 +1,9 @@
-const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
-const { withNativeWind } = require('nativewind/metro');
+const { getDefaultConfig } = require('@react-native/metro-config');
+const { withUniwindConfig } = require('uniwind/metro');
 
-module.exports = withNativeWind(mergeConfig(getDefaultConfig(__dirname), {}), {
-  input: './global.css',
+const config = getDefaultConfig(__dirname);
+
+module.exports = withUniwindConfig(config, {
+  cssEntryFile: './src/global.css',
+  dtsFile: './src/uniwind-types.d.ts',
 });
