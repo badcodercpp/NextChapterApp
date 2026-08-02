@@ -36,80 +36,95 @@ export function AppButton({
   const LeftIcon = leftIcon;
   const RightIcon = rightIcon;
 
-  const isGradient = variant === 'gradient';
+  const isGradient = variant === 'gradient' && button.gradient !== null;
 
   return (
     <AppPressable
       {...props}
       disabled={disabled || loading}
       className={cn(
-        'flex-row items-center justify-center rounded-2xl bg-button',
+        'flex-row items-center justify-center rounded-2xl bg-primary overflow-hidden',
 
         fullWidth && 'w-full',
 
         !isGradient && button.container,
 
-        // buttonSize.container,
+        buttonSize.container,
 
         disabled && 'opacity-50',
 
         className,
-
-        'bg-red-500',
       )}
     >
       {isGradient ? (
-        <LinearGradient
-          //@ts-ignore
-          colors={button.gradient}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          className={cn(
-            'flex-row items-center justify-center rounded-2xl',
-            buttonSize.container,
-          )}
-        >
-          {loading ? (
-            <ActivityIndicator color="white" />
-          ) : (
-            <View className="flex-row items-center">
-              {LeftIcon && (
-                <View className="mr-2">
-                  <AppIcon icon={LeftIcon} size={buttonSize.icon} />
-                </View>
-              )}
+        <>
+          {/* @ts-ignore */}
+          <LinearGradient
+            colors={button.gradient.colors}
+            start={button.gradient.start}
+            end={button.gradient.end}
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{
+              flex: 1,
+              borderRadius: 16,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {loading ? (
+              <ActivityIndicator color="white" />
+            ) : (
+              <View className="h-full w-full flex-row items-center flex-1 px-6">
+                {LeftIcon && (
+                  <View className="mr-2">
+                    <AppIcon icon={LeftIcon} size={buttonSize.icon} />
+                  </View>
+                )}
 
-              <AppText variant={buttonSize.typography} className={button.text}>
-                {title}
-              </AppText>
-
-              {RightIcon && (
-                <View className="ml-2">
-                  <AppIcon icon={RightIcon} size={buttonSize.icon} />
+                <View className="flex-1">
+                  <AppText variant="lg" className={button.text}>
+                    {title}
+                  </AppText>
                 </View>
-              )}
-            </View>
-          )}
-        </LinearGradient>
+
+                {RightIcon && (
+                  <View className="ml-2">
+                    <AppIcon
+                      icon={RightIcon}
+                      size={buttonSize.icon}
+                      className="text-primary"
+                    />
+                  </View>
+                )}
+              </View>
+            )}
+          </LinearGradient>
+        </>
       ) : (
         <>
           {loading ? (
             <ActivityIndicator color="white" />
           ) : (
-            <View className="flex-row items-center">
+            <View className="h-full w-full flex-row items-center flex-1 px-6">
               {LeftIcon && (
                 <View className="mr-2">
                   <AppIcon icon={LeftIcon} size={buttonSize.icon} />
                 </View>
               )}
 
-              <AppText variant={buttonSize.typography} className={button.text}>
-                {title}
-              </AppText>
+              <View className="flex-1">
+                <AppText variant="lg" className={button.text}>
+                  {title}
+                </AppText>
+              </View>
 
               {RightIcon && (
                 <View className="ml-2">
-                  <AppIcon icon={RightIcon} size={buttonSize.icon} />
+                  <AppIcon
+                    icon={RightIcon}
+                    size={buttonSize.icon}
+                    className="text-text"
+                  />
                 </View>
               )}
             </View>

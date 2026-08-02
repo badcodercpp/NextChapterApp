@@ -67,6 +67,7 @@ export function AppScreen({
 
         className,
       )}
+      // eslint-disable-next-line react-native/no-inline-styles
       style={{
         paddingTop: safeTop ? insets.top : 0,
 

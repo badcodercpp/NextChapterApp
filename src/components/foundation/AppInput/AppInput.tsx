@@ -105,12 +105,12 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
       <View className={cn(className)}>
         {label && (
           <View className={cn(InputVariants.label.base)}>
-            <AppText variant="label" className={labelClassName}>
+            <AppText variant="lg" className={labelClassName}>
               {label}
             </AppText>
 
             {required && (
-              <AppText variant="label" color="error" className="ml-1">
+              <AppText variant="lg" color="error" className="ml-1">
                 *
               </AppText>
             )}
@@ -134,11 +134,7 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
         >
           {startIcon && (
             <View className={InputVariants.icon.left}>
-              <AppIcon
-                icon={startIcon}
-                size={INPUT_ICON_SIZE}
-                color="textSecondary"
-              />
+              <AppIcon icon={startIcon} size={INPUT_ICON_SIZE} />
             </View>
           )}
 
@@ -176,7 +172,7 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
               accessibilityRole="button"
               accessibilityLabel="Clear text"
             >
-              <AppIcon icon={X} size={18} color="textSecondary" />
+              <AppIcon icon={X} size={18} />
             </AppPressable>
           ) : endIcon ? (
             onEndIconPress ? (
@@ -184,19 +180,11 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
                 className={InputVariants.icon.right}
                 onPress={onEndIconPress}
               >
-                <AppIcon
-                  icon={endIcon}
-                  size={INPUT_ICON_SIZE}
-                  color="textSecondary"
-                />
+                <AppIcon icon={endIcon} size={INPUT_ICON_SIZE} />
               </AppPressable>
             ) : (
               <View className={InputVariants.icon.right}>
-                <AppIcon
-                  icon={endIcon}
-                  size={INPUT_ICON_SIZE}
-                  color="textSecondary"
-                />
+                <AppIcon icon={endIcon} size={INPUT_ICON_SIZE} />
               </View>
             )
           ) : null}
@@ -205,7 +193,7 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
         {(helperText || error || (showCharacterCount && maxLength)) && (
           <View className={InputVariants.helper.container}>
             <AppText
-              variant="caption"
+              variant="lg"
               color={error ? 'error' : 'textSecondary'}
               className={helperTextClassName}
             >
@@ -213,7 +201,7 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
             </AppText>
 
             {showCharacterCount && maxLength && (
-              <AppText variant="caption" color="textSecondary">
+              <AppText variant="lg" color="textSecondary">
                 {`${value?.length ?? 0}/${maxLength}`}
               </AppText>
             )}

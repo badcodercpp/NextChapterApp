@@ -1,30 +1,29 @@
 import { AppButton, AppText } from '@/components';
 import { Pressable, View } from 'react-native';
 
-import { ArrowRight } from 'lucide-react-native';
-import React from 'react';
+import { ArrowRightIcon } from 'lucide-react-native';
+import { useNavigation } from '@react-navigation/native';
 
-interface LandingCTAProps {
-  onGetStarted: () => void;
-  onLogin: () => void;
-}
-
-export function LandingCTA({ onGetStarted, onLogin }: LandingCTAProps) {
+export function LandingCTA() {
+  const navigation = useNavigation();
   return (
-    <View className="px-6 pb-10">
+    <View className="px-4 pb-16">
       <AppButton
         title="Begin Your Journey"
-        onPress={onGetStarted}
-        rightIcon={ArrowRight}
+        // variant="gradient"
+        size="md"
+        rightIcon={ArrowRightIcon}
+        fullWidth
+        onPress={() => navigation.navigate('Onboarding' as never)}
       />
 
-      <View className="mt-7 flex-row items-center justify-center">
-        <AppText variant="bodySmall" color="textSecondary">
+      <View className="mt-2 flex-row items-center justify-center">
+        <AppText variant="base" className="text-text-secondary">
           Already have an account?
         </AppText>
 
-        <Pressable onPress={onLogin} className="ml-2" hitSlop={10}>
-          <AppText variant="bodySmall" color="primary">
+        <Pressable onPress={() => navigation.navigate('Login' as never)}>
+          <AppText variant="base" className="ml-2 font-bold text-text">
             Log In
           </AppText>
         </Pressable>

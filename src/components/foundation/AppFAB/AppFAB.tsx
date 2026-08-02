@@ -42,11 +42,11 @@ export function AppFab({
         <ActivityIndicator color={Colors.text} />
       ) : (
         <>
-          <AppIcon icon={icon} size={size.icon} color="text" />
+          <AppIcon icon={icon} size={size.icon} />
 
           {extended && label && (
             <View className="ml-3">
-              <AppText variant="bodySemiBold" className={fab.text}>
+              <AppText variant="lg" className={fab.text}>
                 {label}
               </AppText>
             </View>

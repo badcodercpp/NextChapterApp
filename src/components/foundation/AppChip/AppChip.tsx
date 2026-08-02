@@ -42,7 +42,7 @@ export function AppChip({
         </View>
       )}
 
-      <AppText variant={chipSize.text} className={chip.text}>
+      <AppText variant="xs" className={chip.text}>
         {title}
       </AppText>
 

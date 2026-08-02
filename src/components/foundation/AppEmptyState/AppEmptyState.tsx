@@ -21,13 +21,13 @@ export function AppEmptyState({
     >
       {illustration && <View className="mb-6">{illustration}</View>}
 
-      <AppText variant="title" className={cn('text-center', titleClassName)}>
+      <AppText variant="xs" className={cn('text-center', titleClassName)}>
         {title}
       </AppText>
 
       {description && (
         <AppText
-          variant="body"
+          variant="xs"
           color="textSecondary"
           className={cn('mt-2 text-center', descriptionClassName)}
         >

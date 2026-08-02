@@ -8,6 +8,14 @@
     },
     "ignoreDeprecations": "6.0"
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts"],
+  "include": [
+    "src",
+    "src/**/*",
+    "src/uniwind-types.d.ts",
+    "App.tsx",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.d.ts"
+  ],
   "exclude": ["**/node_modules", "**/Pods"]
 }

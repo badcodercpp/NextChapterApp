@@ -44,7 +44,7 @@ export function AppAvatar({
           resizeMode="cover"
         />
       ) : (
-        <AppText variant={avatarSize.text} color="text">
+        <AppText variant="lg" color="text">
           {initials}
         </AppText>
       )}

@@ -1,4 +1,3 @@
-import { ColorVariant } from '@/theme/colors';
 import { LucideIcon } from 'lucide-react-native';
 
 export interface AppIconProps {
@@ -6,9 +5,7 @@ export interface AppIconProps {
 
   size?: number;
 
-  color?: ColorVariant;
-
   strokeWidth?: number;
 
-  fill?: string;
+  className?: string;
 }
