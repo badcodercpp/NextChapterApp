@@ -11,7 +11,12 @@ export function LandingBackground() {
       style={{ width: '100%' }}
     >
       <LinearGradient
-        colors={['#141129', 'rgba(20,17,41,0.75)', 'transparent']}
+        colors={[
+          '#141129',
+          'rgba(20,17,41,0.75)',
+          'transparent',
+          'transparent',
+        ]}
         locations={[0, 0.2, 0.45, 1]}
         // eslint-disable-next-line react-native/no-inline-styles
         style={{

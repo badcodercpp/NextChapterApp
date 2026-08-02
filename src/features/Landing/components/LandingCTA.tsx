@@ -2,10 +2,11 @@ import { AppButton, AppText } from '@/components';
 import { Pressable, View } from 'react-native';
 
 import { ArrowRightIcon } from 'lucide-react-native';
+import { LandingNavigationProp } from '../navigation/types';
 import { useNavigation } from '@react-navigation/native';
 
 export function LandingCTA() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<LandingNavigationProp>();
   return (
     <View className="px-4 pb-16">
       <AppButton
@@ -14,16 +15,16 @@ export function LandingCTA() {
         size="md"
         rightIcon={ArrowRightIcon}
         fullWidth
-        onPress={() => navigation.navigate('Onboarding' as never)}
+        onPress={() => navigation.navigate('WhatBringsYouHere')}
       />
 
       <View className="mt-2 flex-row items-center justify-center">
-        <AppText variant="base" className="text-text-secondary">
+        <AppText variant="md" className="text-text-secondary">
           Already have an account?
         </AppText>
 
         <Pressable onPress={() => navigation.navigate('Login' as never)}>
-          <AppText variant="base" className="ml-2 font-bold text-text">
+          <AppText variant="md" className="ml-2 font-bold text-text">
             Log In
           </AppText>
         </Pressable>

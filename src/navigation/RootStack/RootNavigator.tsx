@@ -1,5 +1,5 @@
 import { DrawerNavigator } from '../Drawer/DrawerNavigator';
-import { LandingScreen } from '@/features/Landing';
+import { LandingNavigator } from '@/features/Landing/navigation/LandingNavigator';
 import { NavigationContainer } from '@react-navigation/native';
 import { RootRoutes } from './RootRoutes';
 import { RootStackParamList } from './RootStackParamList';
@@ -11,7 +11,10 @@ export default function RootNavigator() {
   return (
     <NavigationContainer>
       <Root.Navigator screenOptions={{ headerShown: false }}>
-        <Root.Screen name={RootRoutes.Landing} component={LandingScreen} />
+        <Root.Screen
+          name={RootRoutes.LandingStack}
+          component={LandingNavigator}
+        />
         <Root.Screen name={RootRoutes.Main} component={DrawerNavigator} />
       </Root.Navigator>
     </NavigationContainer>

@@ -46,9 +46,13 @@ export type RadiusTokens = {
 export type TypographyTokens = {
   xs: number;
   sm: number;
-  base: number;
+  md: number;
   lg: number;
   xl: number;
+  '2xl': number;
+  '3xl': number;
+  '4xl': number;
+  '5xl': number;
 };
 
 export type FontTokens = {

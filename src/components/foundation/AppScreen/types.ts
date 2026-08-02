@@ -18,4 +18,6 @@ export interface AppScreenProps extends ViewProps {
   contentClassName?: string;
 
   scrollProps?: ScrollViewProps;
+
+  considerTabBar?: boolean;
 }

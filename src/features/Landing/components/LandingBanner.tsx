@@ -4,7 +4,7 @@ import { AppText } from '@/components';
 
 export function LandingBanner() {
   return (
-    <View className="items-center px-4 pt-16">
+    <View className="items-center px-4 pt-4">
       <View className="h-28 w-28 items-center justify-center rounded-full bg-surface">
         <Image
           source={require('@/assets/images/logo.png')}
@@ -14,13 +14,13 @@ export function LandingBanner() {
       </View>
 
       <View className="mt-8 items-center">
-        <AppText variant="xl" className="text-text text-5xl font-bold">
+        <AppText variant="5xl" className="text-text font-bold">
           NextChapter
         </AppText>
 
         <AppText
-          variant="sm"
-          className="mt-2 uppercase text-xl tracking-brand text-text-secondary"
+          variant="lg"
+          className="mt-2 uppercase tracking-brand text-text-secondary"
         >
           AI RECOVERY COMPANION
         </AppText>
@@ -28,18 +28,11 @@ export function LandingBanner() {
 
       <View className="mt-20 items-center">
         <AppText
-          variant="xl"
-          className="text-center text-2xl font-medium leading-title text-text"
+          variant="2xl"
+          className="text-center font-medium leading-title text-text"
         >
           Every ending is the beginning of your next chapter.
         </AppText>
-
-        {/* <AppText
-          variant="xl"
-          className="mt-2 text-center text-2xl font-medium leading-h2 text-text"
-        >
-          your next chapter.
-        </AppText> */}
 
         <AppText variant="lg" className="mt-8 text-text-secondary">
           Heal • Grow • Move Forward

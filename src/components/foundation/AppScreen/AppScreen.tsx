@@ -28,6 +28,8 @@ export function AppScreen({
 
   scrollProps,
 
+  considerTabBar = false,
+
   ...props
 }: AppScreenProps) {
   const insets = useSafeAreaInsets();
@@ -71,7 +73,9 @@ export function AppScreen({
       style={{
         paddingTop: safeTop ? insets.top : 0,
 
-        paddingBottom: safeBottom ? insets.bottom + TAB_BAR_HEIGHT : 0,
+        paddingBottom: safeBottom
+          ? insets.bottom + (considerTabBar ? TAB_BAR_HEIGHT : 0)
+          : 0,
       }}
     >
       {content}

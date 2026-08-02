@@ -112,7 +112,7 @@ export function AppButton({
                 </View>
               )}
 
-              <View className="flex-1">
+              <View className="flex-1 items-center">
                 <AppText variant="lg" className={button.text}>
                   {title}
                 </AppText>

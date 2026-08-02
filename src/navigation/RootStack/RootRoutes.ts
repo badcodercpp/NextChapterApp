@@ -1,5 +1,5 @@
 export const RootRoutes = {
-  Landing: 'Landing',
+  LandingStack: 'LandingStack',
   Auth: 'Auth',
   Main: 'Main',
   Settings: 'Settings',
