@@ -4,4 +4,6 @@ export type LandingStackParamList = {
   [LandingRoutes.Landing]: undefined;
 
   [LandingRoutes.WhatBringsYouHere]: undefined;
+
+  [LandingRoutes.HowLongHasItBeen]: undefined;
 };

@@ -1,1 +1,1 @@
-export * from './WhatBringsYouHere';
+export * from './WhatBringsYouHereScreen';

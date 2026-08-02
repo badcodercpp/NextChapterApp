@@ -1,4 +1,8 @@
-import { LandingScreen, WhatBringsYouHereScreen } from '../screens';
+import {
+  HowLongHasItBeenScreen,
+  LandingScreen,
+  WhatBringsYouHereScreen,
+} from '../screens';
 
 import { LandingRoutes } from './LandingRoutes';
 import { LandingStackParamList } from './LandingStackParamList';
@@ -27,6 +31,14 @@ export function LandingNavigator() {
         component={WhatBringsYouHereScreen}
         options={{
           title: 'What brings you here?',
+        }}
+      />
+
+      <Stack.Screen
+        name={LandingRoutes.HowLongHasItBeen}
+        component={HowLongHasItBeenScreen}
+        options={{
+          title: 'How long has it been?',
         }}
       />
     </Stack.Navigator>

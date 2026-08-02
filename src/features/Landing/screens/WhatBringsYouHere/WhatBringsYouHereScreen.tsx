@@ -9,6 +9,7 @@ import {
 import { ArrowRight, Check, Lock } from 'lucide-react-native';
 import { ImageBackground, ScrollView, View } from 'react-native';
 
+import { LandingNavigationProp } from '../../navigation/types';
 import LinearGradient from 'react-native-linear-gradient';
 import { REASONS } from '../../constants';
 import { cn } from '@/utils';
@@ -16,14 +17,13 @@ import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 
 export function WhatBringsYouHereScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<LandingNavigationProp>();
 
   const [selectedReason, setSelectedReason] = useState('breakup');
 
   return (
     <View className="flex-1 bg-background">
       <AppScreen
-        // scroll
         safeBottom={true}
         safeTop={false}
         className="flex-1 bg-background"
@@ -139,7 +139,7 @@ export function WhatBringsYouHereScreen() {
                 title="Continue"
                 size="lg"
                 fullWidth
-                onPress={() => navigation.navigate('HowLongHasItBeen' as never)}
+                onPress={() => navigation.navigate('HowLongHasItBeen')}
                 rightIcon={ArrowRight}
               />
             </View>
