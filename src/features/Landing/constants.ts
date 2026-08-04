@@ -5,13 +5,22 @@ import {
   CalendarRange,
   ClockArrowDown,
   CloudRain,
+  EyeOff,
+  Flag,
+  Heart,
   HeartCrack,
+  HeartHandshake,
   HeartMinus,
   Hourglass,
+  MessageCircle,
   Moon,
+  Shield,
+  ShieldCheck,
   Sparkles,
+  Star,
+  Sunrise,
 } from 'lucide-react-native';
-import { RecoveryReason, Timeline } from './types';
+import { Feature, Feeling, Goal, RecoveryReason, Timeline } from './types';
 
 export const REASONS: RecoveryReason[] = [
   {
@@ -87,5 +96,134 @@ export const TIMELINES: Timeline[] = [
     subtitle: 'More than 12 months ago',
     icon: Hourglass,
     iconColor: 'text-info',
+  },
+];
+
+export const FEELINGS: Feeling[] = [
+  {
+    id: 'heartbroken',
+    title: 'Heartbroken',
+    subtitle: 'Overwhelmed with sadness',
+    emoji: '😭',
+  },
+  {
+    id: 'sad',
+    title: 'Sad',
+    subtitle: 'Feeling down and low',
+    emoji: '😔',
+  },
+  {
+    id: 'angry',
+    title: 'Angry',
+    subtitle: 'Frustrated or irritated',
+    emoji: '😡',
+  },
+  {
+    id: 'anxious',
+    title: 'Anxious',
+    subtitle: 'Worried and overthinking',
+    emoji: '😰',
+  },
+  {
+    id: 'lonely',
+    title: 'Lonely',
+    subtitle: 'Feeling alone and empty',
+    emoji: '☹️',
+  },
+  {
+    id: 'numb',
+    title: 'Numb',
+    subtitle: 'Feeling empty or nothing',
+    emoji: '😐',
+  },
+  {
+    id: 'hopeful',
+    title: 'Hopeful',
+    subtitle: 'Positive about the future',
+    emoji: '😊',
+  },
+  {
+    id: 'grateful',
+    title: 'Grateful',
+    subtitle: 'Thankful and appreciative',
+    emoji: '🥰',
+  },
+  {
+    id: 'confident',
+    title: 'Confident',
+    subtitle: 'Feeling strong and ready',
+    emoji: '🙂',
+  },
+];
+
+export const GOALS: Goal[] = [
+  {
+    id: 'overthinking',
+    title: 'Stop overthinking',
+    subtitle: 'Calm my mind and find peace',
+    icon: Brain,
+  },
+  {
+    id: 'sleep',
+    title: 'Sleep better',
+    subtitle: 'Rest deeply and wake up refreshed',
+    icon: Moon,
+  },
+  {
+    id: 'profile',
+    title: 'Stop checking their profile',
+    subtitle: 'Break the habit and move on',
+    icon: EyeOff,
+  },
+  {
+    id: 'confidence',
+    title: 'Build confidence',
+    subtitle: 'Believe in myself again',
+    icon: Shield,
+  },
+  {
+    id: 'heal',
+    title: 'Heal emotionally',
+    subtitle: 'Process my emotions and let go',
+    icon: HeartHandshake,
+  },
+  {
+    id: 'move-on',
+    title: 'Move on',
+    subtitle: 'Let go of the past and look ahead',
+    icon: Flag,
+  },
+  {
+    id: 'motivation',
+    title: 'Daily motivation',
+    subtitle: 'Stay inspired and keep going',
+    icon: Sunrise,
+  },
+];
+
+export const FEATURES: Feature[] = [
+  {
+    id: 'judgement',
+    title: 'No judgement',
+    description: 'You can be 100% real with me.',
+    icon: MessageCircle,
+  },
+  {
+    id: 'always',
+    title: 'Always here',
+    description: "Whenever you need to talk,\nI'm here for you.",
+    icon: Heart,
+  },
+  {
+    id: 'personalized',
+    title: 'Personalized for you',
+    description: 'I learn and grow with you to\ngive better support.',
+    icon: Star,
+  },
+  {
+    id: 'privacy',
+    title: 'Your privacy matters',
+    description: 'Everything you share stays\nprivate and secure.',
+    icon: ShieldCheck,
   },
 ];

@@ -7,7 +7,12 @@ import {
   AppText,
 } from '@/components';
 import { ArrowRight, Check, Lock } from 'lucide-react-native';
-import { ImageBackground, ScrollView, View } from 'react-native';
+import {
+  ImageBackground,
+  LayoutChangeEvent,
+  ScrollView,
+  View,
+} from 'react-native';
 
 import { LandingNavigationProp } from '../../navigation/types';
 import LinearGradient from 'react-native-linear-gradient';
@@ -20,6 +25,12 @@ export function WhatBringsYouHereScreen() {
   const navigation = useNavigation<LandingNavigationProp>();
 
   const [selectedReason, setSelectedReason] = useState('breakup');
+  const [cardHeight, setCardHeight] = useState(0);
+
+  const handleLayout = (e: LayoutChangeEvent) => {
+    const { height } = e.nativeEvent.layout;
+    setCardHeight(prev => Math.max(prev, height));
+  };
 
   return (
     <View className="flex-1 bg-background">
@@ -92,6 +103,8 @@ export function WhatBringsYouHereScreen() {
                           ? 'border-primary bg-card'
                           : 'border-border bg-surface',
                       )}
+                      onLayout={handleLayout}
+                      style={cardHeight ? { height: cardHeight } : undefined}
                     >
                       <View className="absolute right-4 top-5">
                         {selected && (

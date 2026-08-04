@@ -1,7 +1,13 @@
 import {
+  CreateAccountScreen,
+  HowAreYouFeelingScreen,
   HowLongHasItBeenScreen,
   LandingScreen,
+  MeetYourAIScreen,
+  RecoveryStartsTodayScreen,
+  ReminderScreen,
   WhatBringsYouHereScreen,
+  WhatWouldYouLikeHelpWithScreen,
 } from '../screens';
 
 import { LandingRoutes } from './LandingRoutes';
@@ -39,6 +45,54 @@ export function LandingNavigator() {
         component={HowLongHasItBeenScreen}
         options={{
           title: 'How long has it been?',
+        }}
+      />
+
+      <Stack.Screen
+        name={LandingRoutes.HowAreYouFeeling}
+        component={HowAreYouFeelingScreen}
+        options={{
+          title: 'How are you feeling today?',
+        }}
+      />
+
+      <Stack.Screen
+        name={LandingRoutes.WhatWouldYouLikeHelpWith}
+        component={WhatWouldYouLikeHelpWithScreen}
+        options={{
+          title: 'What would you like help with?',
+        }}
+      />
+
+      <Stack.Screen
+        name={LandingRoutes.MeetYourAI}
+        component={MeetYourAIScreen}
+        options={{
+          title: 'Meet your AI !!',
+        }}
+      />
+
+      <Stack.Screen
+        name={LandingRoutes.CreateAccount}
+        component={CreateAccountScreen}
+        options={{
+          title: 'Create account',
+        }}
+      />
+
+      <Stack.Screen
+        name={LandingRoutes.Reminder}
+        component={ReminderScreen}
+        options={{
+          title: 'Reminder',
+        }}
+      />
+
+      <Stack.Screen
+        name={LandingRoutes.RecoveryStartsToday}
+        component={RecoveryStartsTodayScreen}
+        options={{
+          title: 'Reminder',
         }}
       />
     </Stack.Navigator>

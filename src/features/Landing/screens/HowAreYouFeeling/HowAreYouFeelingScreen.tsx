@@ -7,18 +7,39 @@ import {
   AppText,
 } from '@/components';
 import { ArrowRight, Check, Lock } from 'lucide-react-native';
-import { ImageBackground, ScrollView, View } from 'react-native';
+import {
+  ImageBackground,
+  LayoutChangeEvent,
+  ScrollView,
+  View,
+} from 'react-native';
 
+import { FEELINGS } from '../../constants';
 import { LandingNavigationProp } from '../../navigation/types';
 import LinearGradient from 'react-native-linear-gradient';
-import { TIMELINES } from '../../constants';
 import { cn } from '@/utils';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 
-export function HowLongHasItBeenScreen() {
-  const [selected, setSelected] = useState('today');
+export function HowAreYouFeelingScreen() {
   const navigation = useNavigation<LandingNavigationProp>();
+  const [selectedFeelings, setSelectedFeelings] = useState<string[]>([
+    'heartbroken',
+    'lonely',
+    'hopeful',
+  ]);
+  const [cardHeight, setCardHeight] = useState(0);
+
+  const toggleFeeling = (id: string) => {
+    setSelectedFeelings(current =>
+      current.includes(id) ? current.filter(x => x !== id) : [...current, id],
+    );
+  };
+
+  const handleLayout = (e: LayoutChangeEvent) => {
+    const { height } = e.nativeEvent.layout;
+    setCardHeight(prev => Math.max(prev, height));
+  };
 
   return (
     <AppScreen
@@ -56,68 +77,83 @@ export function HowLongHasItBeenScreen() {
         <View className="mb-8">
           <View className="mt-4 items-center">
             <AppText variant="4xl" className="text-center text-text">
-              How long has it been?
+              How are you
+              <AppText variant="4xl" className="text-primary">
+                {' '}
+                feeling
+              </AppText>
+            </AppText>
+            <AppText variant="4xl" className="text-center text-text">
+              today?
             </AppText>
 
             <AppText
               variant="sm"
               className="mt-2 text-center text-text-secondary"
             >
-              This helps us support you better {'\n'} and personalize your
-              journey.
+              Your feelings matter.
+            </AppText>
+
+            <AppText variant="sm" className="text-center text-text-secondary">
+              Select all that apply.
             </AppText>
           </View>
         </View>
 
         <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-          <View className="flex-1">
-            {TIMELINES.map(item => {
-              const isSelected = selected === item.id;
+          <View className="flex-row flex-wrap justify-between">
+            {FEELINGS.map(item => {
+              const selected = selectedFeelings.includes(item.id);
 
               return (
                 <AppPressable
                   key={item.id}
-                  className="mb-5"
-                  onPress={() => setSelected(item.id)}
+                  className="mb-4 w-[48%]"
+                  onPress={() => toggleFeeling(item.id)}
                 >
                   <AppCard
                     className={cn(
-                      'flex-row items-center rounded-2xl border px-4 py-4',
-                      isSelected
+                      'rounded-2xl border p-4',
+                      selected
                         ? 'border-primary bg-card'
                         : 'border-border bg-surface',
                     )}
+                    onLayout={handleLayout}
+                    style={cardHeight ? { height: cardHeight } : undefined}
                   >
-                    <AppIcon
-                      icon={item.icon}
-                      size={36}
-                      className={
-                        selected ? 'text-primary' : 'text-text-secondary'
-                      }
-                      strokeWidth={1}
-                    />
+                    {selected && (
+                      <View className="absolute right-3 top-5 h-7 w-7 items-center justify-center rounded-full bg-primary">
+                        <AppIcon
+                          icon={Check}
+                          size={16}
+                          className="text-white"
+                        />
+                      </View>
+                    )}
 
-                    <View className="flex-1 ml-4">
-                      <AppText variant="xl" className="text-text">
-                        {item.title}
-                      </AppText>
+                    {!selected && (
+                      <View className="absolute right-3 top-5 h-7 w-7 rounded-full border-2 border-divider" />
+                    )}
 
-                      <AppText variant="sm" className=" text-text-secondary">
-                        {item.subtitle}
+                    <View className="mt-1 items-center justify-center">
+                      <AppText className="text-5xl leading-h2">
+                        {item.emoji}
                       </AppText>
                     </View>
 
-                    <View className="absolute right-4 top-7">
-                      {isSelected && (
-                        <View className="h-6 w-6 items-center justify-center rounded-full bg-primary">
-                          <AppIcon
-                            icon={Check}
-                            size={16}
-                            className="text-white"
-                          />
-                        </View>
-                      )}
-                    </View>
+                    <AppText
+                      variant="xl"
+                      className="mt-4 text-center text-text"
+                    >
+                      {item.title}
+                    </AppText>
+
+                    <AppText
+                      variant="sm"
+                      className=" text-center text-text-secondary"
+                    >
+                      {item.subtitle}
+                    </AppText>
                   </AppCard>
                 </AppPressable>
               );
@@ -131,7 +167,7 @@ export function HowLongHasItBeenScreen() {
             size="lg"
             fullWidth
             onPress={() => {
-              navigation.navigate('HowAreYouFeeling');
+              navigation.navigate('WhatWouldYouLikeHelpWith');
             }}
             rightIcon={ArrowRight}
           />

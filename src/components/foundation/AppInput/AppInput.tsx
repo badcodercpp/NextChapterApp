@@ -146,7 +146,7 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
             multiline={multiline}
             textAlignVertical={multiline ? 'top' : 'center'}
             maxLength={maxLength}
-            placeholderTextColor={Colors.textMuted}
+            placeholderTextColorClassName={cn('accent-text-secondary')}
             className={cn(
               InputVariants.input.base,
 

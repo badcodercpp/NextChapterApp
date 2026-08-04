@@ -11,8 +11,6 @@ export function AppText({
   className,
   ...props
 }: AppTextProps) {
-  const variantClassName = `text-${variant}`;
-  console.log('variantClassName', variantClassName);
   return (
     <Text
       {...props}
