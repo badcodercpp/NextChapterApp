@@ -11,7 +11,6 @@ export function LandingCTA() {
     <View className="px-4 pb-16">
       <AppButton
         title="Begin Your Journey"
-        // variant="gradient"
         size="md"
         rightIcon={ArrowRightIcon}
         fullWidth
@@ -23,7 +22,7 @@ export function LandingCTA() {
           Already have an account?
         </AppText>
 
-        <Pressable onPress={() => navigation.navigate('Login' as never)}>
+        <Pressable onPress={() => navigation.navigate('Login')}>
           <AppText variant="md" className="ml-2 font-bold text-text">
             Log In
           </AppText>

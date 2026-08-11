@@ -12,11 +12,11 @@ export const InputVariants = {
   },
 
   input: {
-    base: 'flex-1 py-4 text-base text-white',
+    base: 'flex-1 py-4 items-center text-text-secondary leading-none',
 
     multiline: 'min-h-[120px] py-4',
 
-    disabled: 'text-textSecondary',
+    disabled: 'text-text-secondary',
   },
 
   label: {

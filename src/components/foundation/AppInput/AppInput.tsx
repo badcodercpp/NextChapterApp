@@ -97,7 +97,7 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
       onChangeText?.('');
     }, [onChangeText]);
 
-    const isEditable = !disabled && !readOnly && disabled !== false;
+    const isEditable = !disabled && !readOnly;
 
     const showClearButton = clearable && !!value && !loading && isEditable;
 
@@ -144,7 +144,7 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
             value={value}
             editable={isEditable}
             multiline={multiline}
-            textAlignVertical={multiline ? 'top' : 'center'}
+            textAlignVertical={multiline ? 'top' : undefined}
             maxLength={maxLength}
             placeholderTextColorClassName={cn('accent-text-secondary')}
             className={cn(

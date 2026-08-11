@@ -18,4 +18,14 @@ export type LandingStackParamList = {
   [LandingRoutes.Reminder]: undefined;
 
   [LandingRoutes.RecoveryStartsToday]: undefined;
+
+  [LandingRoutes.Login]: undefined;
+
+  [LandingRoutes.CreatePassword]: undefined;
+
+  [LandingRoutes.VerifyEmail]: undefined;
+
+  [LandingRoutes.ForgotPassword]: undefined;
+
+  [LandingRoutes.VerifyIdentity]: undefined;
 };

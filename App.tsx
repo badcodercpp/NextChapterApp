@@ -8,25 +8,32 @@
 //@ts-ignore
 import './src/global.css';
 
-import { StatusBar, useColorScheme } from 'react-native';
-
+import { Provider } from 'react-redux';
 import RootNavigator from './src/navigation/RootStack/RootNavigator';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StatusBar } from 'react-native';
 import { Uniwind } from 'uniwind';
+import { store } from '@/state';
 import { useEffect } from 'react';
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  const isDarkMode =
+    Uniwind.currentTheme === 'dark' || Uniwind.currentTheme === 'ocean';
 
   useEffect(() => {
     Uniwind.setTheme('ocean');
   }, []);
 
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <RootNavigator />
-    </SafeAreaProvider>
+    <Provider store={store}>
+      {/** enable this for persist */}
+      {/* <PersistGate loading={null} persistor={persistor}> */}
+      <SafeAreaProvider>
+        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <RootNavigator />
+      </SafeAreaProvider>
+      {/* </PersistGate> */}
+    </Provider>
   );
 }
 

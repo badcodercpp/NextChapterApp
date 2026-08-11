@@ -1,11 +1,16 @@
 import {
   CreateAccountScreen,
+  CreatePasswordScreen,
+  ForgotPasswordScreen,
   HowAreYouFeelingScreen,
   HowLongHasItBeenScreen,
   LandingScreen,
+  LoginScreen,
   MeetYourAIScreen,
   RecoveryStartsTodayScreen,
   ReminderScreen,
+  VerifyEmailScreen,
+  VerifyIdentityScreen,
   WhatBringsYouHereScreen,
   WhatWouldYouLikeHelpWithScreen,
 } from '../screens';
@@ -93,6 +98,46 @@ export function LandingNavigator() {
         component={RecoveryStartsTodayScreen}
         options={{
           title: 'Reminder',
+        }}
+      />
+
+      <Stack.Screen
+        name={LandingRoutes.Login}
+        component={LoginScreen}
+        options={{
+          title: 'Login',
+        }}
+      />
+
+      <Stack.Screen
+        name={LandingRoutes.CreatePassword}
+        component={CreatePasswordScreen}
+        options={{
+          title: 'Create password',
+        }}
+      />
+
+      <Stack.Screen
+        name={LandingRoutes.VerifyEmail}
+        component={VerifyEmailScreen}
+        options={{
+          title: 'Verify email',
+        }}
+      />
+
+      <Stack.Screen
+        name={LandingRoutes.ForgotPassword}
+        component={ForgotPasswordScreen}
+        options={{
+          title: 'Forgot password',
+        }}
+      />
+
+      <Stack.Screen
+        name={LandingRoutes.VerifyIdentity}
+        component={VerifyIdentityScreen}
+        options={{
+          title: 'Verify identity',
         }}
       />
     </Stack.Navigator>

@@ -8,4 +8,9 @@ export const LandingRoutes = {
   CreateAccount: 'CreateAccount',
   Reminder: 'Reminder',
   RecoveryStartsToday: 'RecoveryStartsToday',
+  Login: 'Login',
+  CreatePassword: 'CreatePassword',
+  VerifyEmail: 'VerifyEmail',
+  ForgotPassword: 'ForgotPassword',
+  VerifyIdentity: 'VerifyIdentity',
 } as const;

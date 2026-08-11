@@ -6,17 +6,10 @@ import {
   AppScreen,
   AppText,
 } from '@/components';
-import {
-  ArrowRight,
-  EyeOff,
-  Lock,
-  LogIn,
-  Mail,
-  User,
-} from 'lucide-react-native';
+import { ArrowRight, Info, Lock, LogIn, Mail, User } from 'lucide-react-native';
 import { ImageBackground, ScrollView, View } from 'react-native';
 
-import { LandingNavigationProp } from '@/features/Landing/navigation/types';
+import { LandingNavigationProp } from '../../navigation/types';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
@@ -83,22 +76,12 @@ export function CreateAccountScreen() {
               size="lg"
               leftIcon={LogIn}
               fullWidth
-              className="mb-4"
+              className="mb-0"
               onPress={() => {}}
-            />
-
-            <AppButton
-              title="Continue with Email"
-              variant="outline"
-              size="lg"
-              leftIcon={Mail}
-              fullWidth
-              onPress={() => {}}
-              className="mb-2"
             />
           </View>
 
-          <View className="my-4 flex-row items-center">
+          <View className="mb-4 mt-6 flex-row items-center">
             <View className="h-px flex-1 bg-divider" />
 
             <AppText
@@ -112,72 +95,68 @@ export function CreateAccountScreen() {
           </View>
 
           <View>
+            <AppText variant="sm" className="mb-1 px-2 text-text">
+              Full name
+            </AppText>
             <AppInput
-              placeholder="Full name"
+              placeholder="Enter your full name"
               startIcon={User}
               className="mb-4"
             />
 
+            <AppText variant="sm" className="mb-1 px-2 text-text">
+              Email address
+            </AppText>
+
             <AppInput
-              placeholder="Email address"
+              placeholder="Enter your email address"
               keyboardType="email-address"
               autoCapitalize="none"
               autoCorrect={false}
               startIcon={Mail}
-              className="mb-4"
+              className="mb-2"
             />
 
-            <AppInput
-              placeholder="Create a password"
-              secureTextEntry
-              startIcon={Lock}
-              endIcon={EyeOff}
-              className="mb-4"
-            />
+            <View className="mb-4 flex-row items-center">
+              <AppPressable className="mr-2">
+                <AppIcon icon={Info} size={16} className="text-primary" />
+              </AppPressable>
 
-            <AppInput
-              placeholder="Confirm password"
-              secureTextEntry
-              startIcon={Lock}
-              endIcon={EyeOff}
-              className="mb-4"
-            />
-          </View>
-
-          <View className="mb-4 flex-row items-center">
-            <AppPressable className="mr-2">
-              <AppIcon icon={Lock} size={16} className="text-primary" />
-            </AppPressable>
-
-            <AppText variant="sm" className="flex-1 text-text-secondary">
-              At least 8 characters with a mix of letters, numbers & symbols
-            </AppText>
+              <AppText variant="sm" className="flex-1 text-text-secondary">
+                We will send verification code to this email
+              </AppText>
+            </View>
           </View>
 
           <AppButton
-            title="Create Account"
+            title="Continue"
             size="lg"
             rightIcon={ArrowRight}
             fullWidth
             onPress={() => {
-              navigation.navigate('Reminder');
+              navigation.navigate('CreatePassword');
             }}
           />
-
+        </ScrollView>
+        <View className=" bg-background pt-2">
           <View className="mt-2 flex-row items-center justify-center">
             <AppText variant="xl" className="text-text-secondary">
               Already have an account?
             </AppText>
 
-            <AppPressable className="ml-2" onPress={() => {}}>
-              <AppText variant="xl" className="font-semibold text-primary">
+            <AppPressable
+              className="ml-2"
+              onPress={() => navigation.navigate('Login')}
+            >
+              <AppText
+                variant="xl"
+                className="font-semibold text-primary underline"
+              >
                 Log in
               </AppText>
             </AppPressable>
           </View>
-        </ScrollView>
-        <View className=" bg-background pt-2">
-          <View className="mt-2 flex-row justify-center items-center">
+          <View className="mt-1 flex-row justify-center items-center">
             <AppIcon icon={Lock} size={16} className="text-primary" />
             <AppText variant="sm" className="px-1 text-center text-text-muted ">
               Your privacy is our privacy.
