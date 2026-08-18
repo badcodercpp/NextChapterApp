@@ -1,32 +1,35 @@
 import { ApolloClient, ApolloLink, InMemoryCache, split } from '@apollo/client';
 
-import { GRAPHQL_CONFIG } from '../constants/graphql';
+import { GRAPHQL_CONFIG } from '@/constants';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
 //@ts-ignore
 import { createUploadLink } from 'apollo-upload-client';
 import { getMainDefinition } from '@apollo/client/utilities';
+import { map } from 'rxjs';
 import { setContext } from '@apollo/client/link/context';
-import { store } from '../state';
+import { store } from '@/state';
 
-export class ClientAccessor {
-  static #instance: ClientAccessor;
+export class ClientCommunicators {
+  static #instance: ClientCommunicators;
 
   private constructor() {}
 
-  public static get instance(): ClientAccessor {
-    if (!ClientAccessor.#instance) {
-      ClientAccessor.#instance = new ClientAccessor();
+  public static get instance(): ClientCommunicators {
+    if (!ClientCommunicators.#instance) {
+      ClientCommunicators.#instance = new ClientCommunicators();
     }
 
-    return ClientAccessor.#instance;
+    return ClientCommunicators.#instance;
   }
 
-  public async getAuthenticatedClient() {
+  public getAuthenticatedClient() {
     const wsLink = new GraphQLWsLink(
       createClient({
         url: `${GRAPHQL_CONFIG.WS_ENDPOINT}/${GRAPHQL_CONFIG.URL}`,
+
         retryAttempts: Infinity,
+
         shouldRetry: () => true,
 
         connectionParams: async () => {
@@ -34,13 +37,13 @@ export class ClientAccessor {
             authtokenSlice: { accessToken },
           } = store.getState();
 
+          const token = accessToken || '';
+
           console.log(
             'Connecting with accessToken:',
             accessToken,
             JSON.stringify(store.getState().authtokenSlice),
           );
-
-          const token = accessToken || '';
 
           return {
             Authorization: token ? `Bearer ${token}` : '',
@@ -48,28 +51,38 @@ export class ClientAccessor {
         },
       }),
     );
-    // const httpLink = createHttpLink({
-    //   uri: `${GRAPHQL_CONFIG.ENDPOINT}/${GRAPHQL_CONFIG.URL}`,
-    // });
-    // Create Apollo Link for logging
+
+    /**
+     * GraphQL logging link
+     */
     const loggingLink = new ApolloLink((operation, forward) => {
-      // Log the GraphQL request (Query/Mutation)
-      //@ts-ignore
+      // Log GraphQL request
+      // @ts-ignore
       console.tron.log('GraphQL Request:', operation);
 
-      // Forward the operation to continue with the chain
-      return forward(operation).map((response: any) => {
-        // Log the GraphQL response
-        //@ts-ignore
-        console.tron.log('GraphQL Response:', response);
-        return response;
-      });
+      const observable = forward(operation);
+
+      return observable.pipe(
+        map(response => {
+          // Log GraphQL response
+          // @ts-ignore
+          console.tron.log('GraphQL Response:', response);
+
+          return response;
+        }),
+      );
     });
+
+    /**
+     * Authentication link
+     */
     const authLink = setContext(async (_, { headers }) => {
       const {
         authtokenSlice: { accessToken },
-      } = await store.getState();
+      } = store.getState();
+
       const token = accessToken || '';
+
       return {
         headers: {
           ...headers,
@@ -77,44 +90,60 @@ export class ClientAccessor {
         },
       };
     });
+
+    /**
+     * Upload / HTTP link
+     */
     const uploadLink = createUploadLink({
       uri: `${GRAPHQL_CONFIG.ENDPOINT}/${GRAPHQL_CONFIG.URL}`,
+
       headers: {
         'apollo-require-preflight': 'true',
       },
-      // isExtractableFile: customIsExtractableFile,
     });
+
+    /**
+     * Subscription → WebSocket
+     * Query/Mutation → HTTP
+     */
     const splitLink = split(
       ({ query }) => {
-        const def = getMainDefinition(query);
+        const definition = getMainDefinition(query);
+
         return (
-          def.kind === 'OperationDefinition' && def.operation === 'subscription'
+          definition.kind === 'OperationDefinition' &&
+          definition.operation === 'subscription'
         );
       },
-      wsLink, // 🔥 subscriptions
-      uploadLink, // queries & mutations
+
+      wsLink,
+
+      uploadLink,
     );
-    const graphqlGuardedClient = new ApolloClient({
-      // link: authLink.concat(httpLink),
-      // link: ApolloLink.from([loggingLink, authLink, uploadLink, httpLink]),
+
+    /**
+     * Authenticated Apollo Client
+     */
+    return new ApolloClient({
       link: ApolloLink.from([loggingLink, authLink, splitLink]),
+
       cache: new InMemoryCache(),
     });
-    return graphqlGuardedClient;
   }
 
-  public async getClient() {
-    const graphqlOpenClient = new ApolloClient({
-      // uri: `${GRAPHQL_CONFIG.ENDPOINT}/${GRAPHQL_CONFIG.URL}`,
-      cache: new InMemoryCache(),
-      link: createUploadLink({
-        uri: `${GRAPHQL_CONFIG.ENDPOINT}/${GRAPHQL_CONFIG.URL}`,
-        headers: {
-          'apollo-require-preflight': 'true',
-        },
-      }),
+  public getClient() {
+    const uploadLink = createUploadLink({
+      uri: `${GRAPHQL_CONFIG.ENDPOINT}/${GRAPHQL_CONFIG.URL}`,
+
+      headers: {
+        'apollo-require-preflight': 'true',
+      },
     });
 
-    return graphqlOpenClient;
+    return new ApolloClient({
+      cache: new InMemoryCache(),
+
+      link: uploadLink,
+    });
   }
 }

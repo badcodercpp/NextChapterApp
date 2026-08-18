@@ -15,16 +15,23 @@ import {
   LogIn,
   Mail,
 } from 'lucide-react-native';
-import { ImageBackground, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
-import { LandingNavigationProp } from '../../navigation/types';
-import LinearGradient from 'react-native-linear-gradient';
-import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { Controller } from 'react-hook-form';
+import { LayoutTopImageComponent } from '@/features/Landing/components/LayoutTopImageComponent';
+import { useLogin } from './useLogin';
 
 export function LoginScreen() {
-  const navigation = useNavigation<LandingNavigationProp>();
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const {
+    navigation,
+    loading,
+    showPassword,
+    setShowPassword,
+    control,
+    errors,
+    pending,
+    submitLogin,
+  } = useLogin();
 
   return (
     <AppScreen
@@ -34,30 +41,9 @@ export function LoginScreen() {
       contentClassName="flex-1 bg-background"
       safeArea={false}
     >
-      <View className="items-center pt-4 h-[150px]">
-        <ImageBackground
-          source={require('@/assets/images/landing-background.png')}
-          resizeMode="cover"
-          className="absolute top-0 left-0 right-0 h-[150px] w-full"
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{ width: '100%' }}
-        >
-          <LinearGradient
-            colors={[
-              '#141129',
-              'rgba(20,17,41,0.75)',
-              'transparent',
-              'rgba(20,17,41,0.75)',
-            ]}
-            locations={[0, 0.7, 0.45, 0.2]}
-            // eslint-disable-next-line react-native/no-inline-styles
-            style={{
-              position: 'absolute',
-              inset: 0,
-            }}
-          />
-        </ImageBackground>
-      </View>
+      <LayoutTopImageComponent
+        source={require('@/assets/images/landing-background.png')}
+      />
       <View className="flex-1 px-4">
         <View className="mt-2 items-center pb-4">
           <AppText variant="4xl" className="text-center text-text">
@@ -88,25 +74,45 @@ export function LoginScreen() {
               Email address
             </AppText>
 
-            <AppInput
-              placeholder="Enter your email"
-              startIcon={Mail}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              className="mb-6"
+            <Controller
+              control={control}
+              name="login.email"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <AppInput
+                  placeholder="Enter your email"
+                  startIcon={Mail}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  className="mb-6"
+                  error={errors?.login?.email?.message}
+                />
+              )}
             />
 
             <AppText variant="sm" className="mb-1 px-2 text-text">
               Password
             </AppText>
 
-            <AppInput
-              placeholder="Enter your password"
-              startIcon={Lock}
-              secureTextEntry={!showPassword}
-              endIcon={showPassword ? EyeOff : Eye}
-              onEndIconPress={() => setShowPassword(!showPassword)}
+            <Controller
+              control={control}
+              name="login.password"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <AppInput
+                  placeholder="Enter your password"
+                  startIcon={Lock}
+                  secureTextEntry={!showPassword}
+                  endIcon={showPassword ? EyeOff : Eye}
+                  onEndIconPress={() => setShowPassword(!showPassword)}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  error={errors?.login?.password?.message}
+                />
+              )}
             />
 
             <AppPressable
@@ -124,9 +130,8 @@ export function LoginScreen() {
               rightIcon={ArrowRight}
               fullWidth
               className="mt-4"
-              onPress={() => {
-                // Login
-              }}
+              loading={loading || pending}
+              onPress={submitLogin}
             />
 
             <View className="my-4 flex-row items-center">
@@ -154,7 +159,7 @@ export function LoginScreen() {
         <View className=" bg-background pt-1">
           <AppPressable
             className="mt-2"
-            onPress={() => navigation.navigate('CreateAccount' as never)}
+            onPress={() => navigation.navigate('CreateAccount')}
           >
             <AppCard className="flex-row items-center rounded-2xl border border-border bg-surface px-6 py-4">
               <View className="flex-1 flex-row items-center justify-center">

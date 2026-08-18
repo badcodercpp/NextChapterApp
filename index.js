@@ -1,7 +1,6 @@
 /**
  * @format
  */
-
 // app locale support
 import './src/translation/i18n';
 

@@ -1,10 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-interface OtpState {
+interface AuthtokenState {
   accessToken?: string;
+  refreshToken?: string;
 }
 
-const initialState: OtpState = {};
+const initialState: AuthtokenState = {};
 
 // Then, handle actions in your reducers:
 export const authtokenSlice = createSlice({
@@ -12,21 +13,24 @@ export const authtokenSlice = createSlice({
   initialState,
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
-    setAccessToken: (
+    setAuthTokens: (
       state,
       action: PayloadAction<{
         accessToken: string;
+        refreshToken: string;
       }>,
     ) => {
       state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
     },
-    resetAccessToken: state => {
+    resetAuthTokens: state => {
       state.accessToken = undefined;
+      state.refreshToken = undefined;
     },
   },
   extraReducers: _builder => {},
 });
 
-export const { setAccessToken, resetAccessToken } = authtokenSlice.actions;
+export const { setAuthTokens, resetAuthTokens } = authtokenSlice.actions;
 
 export default authtokenSlice.reducer;

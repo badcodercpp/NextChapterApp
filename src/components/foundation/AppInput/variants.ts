@@ -24,7 +24,7 @@ export const InputVariants = {
   },
 
   helper: {
-    container: 'mt-2 flex-row items-center justify-between',
+    container: 'ml-2 mt-1 flex-row items-center justify-between',
 
     text: '',
 

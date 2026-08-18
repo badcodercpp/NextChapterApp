@@ -193,9 +193,12 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
         {(helperText || error || (showCharacterCount && maxLength)) && (
           <View className={InputVariants.helper.container}>
             <AppText
-              variant="lg"
-              color={error ? 'error' : 'textSecondary'}
-              className={helperTextClassName}
+              variant="md"
+              // color={error ? 'error' : 'textSecondary'}
+              className={cn(
+                helperTextClassName,
+                error ? 'text-error' : 'text-secondary',
+              )}
             >
               {error || helperText}
             </AppText>
