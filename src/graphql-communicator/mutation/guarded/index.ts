@@ -7,5 +7,5 @@ export * from './verifyChangePasswordOtp';
 export * from './startJourney';
 export * from './pauseJourney';
 export * from './resumeJourney';
-export * from './cmpleteJourney';
+export * from './completeJourney';
 export * from './followUp';

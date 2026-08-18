@@ -28,7 +28,7 @@ export const loginSlice = createSlice({
       .addCase(initiateLogin.fulfilled, (state, action) => {
         state.pending = false;
         // Add Claims to the state array
-        state.success = action.payload.data?.login;
+        state.success = action.payload;
       })
       // rejected
       .addCase(initiateLogin.rejected, (state, action) => {
