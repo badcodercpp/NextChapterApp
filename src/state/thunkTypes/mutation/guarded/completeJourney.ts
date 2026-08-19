@@ -1,1 +1,1 @@
-export const INITIATE_LOGIN_ACTION = 'completeJourney/initiate';
+export const INITIATE_COMPLETE_JOURNEY_ACTION = 'completeJourney/initiate';

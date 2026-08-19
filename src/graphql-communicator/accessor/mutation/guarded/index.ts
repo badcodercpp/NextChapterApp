@@ -1,1 +1,1 @@
-export * from './completeJourney';
+export * from './guardedMutation';
