@@ -1,15 +1,26 @@
+import {
+  ResendEmailVerificationOtpMutation,
+  ResendEmailVerificationOtpMutationVariables,
+} from '@/__generated__/graphql';
+
+import { GuardedOrOpenMutationAccessor } from 'redux-graphql-native';
+import { INITIATE_RESEND_EMAIL_VERIFICATION_OTP } from '@/graphql-communicator';
 import { INITIATE_RESEND_EMAIL_VERIFICATION_OTP_ACTION } from '@/state/thunkTypes';
-import { ResendEmailOtpInput } from '@/__generated__/graphql';
-import { ResendEmailVerificationOtpAccessor } from '@/graphql-communicator';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const initiateResendEmailVerificationOtp = createAsyncThunk(
   INITIATE_RESEND_EMAIL_VERIFICATION_OTP_ACTION,
-  async (input: ResendEmailOtpInput) => {
+  async (data: ResendEmailVerificationOtpMutationVariables) => {
     const resendEmailVerificationOtpAccessor =
-      new ResendEmailVerificationOtpAccessor();
+      new GuardedOrOpenMutationAccessor<
+        ResendEmailVerificationOtpMutationVariables,
+        ResendEmailVerificationOtpMutation
+      >();
     const initiateResendEmailVerificationOtpOutput =
-      await resendEmailVerificationOtpAccessor.execute({ input });
+      await resendEmailVerificationOtpAccessor.execute(
+        data,
+        INITIATE_RESEND_EMAIL_VERIFICATION_OTP,
+      );
     if (initiateResendEmailVerificationOtpOutput.error) {
       throw new Error(
         initiateResendEmailVerificationOtpOutput.error?.message ??

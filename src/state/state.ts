@@ -8,6 +8,7 @@ import {
   persistStore,
 } from 'redux-persist';
 
+import { ClientCommunicators } from 'redux-graphql-native';
 import { configureStore } from '@reduxjs/toolkit';
 import { getCombinedSlices } from './slices';
 import reactotron from '../../ReactotronConfig';
@@ -43,6 +44,7 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+ClientCommunicators.instance.initialize(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

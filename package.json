@@ -50,6 +50,7 @@
     "react-redux": "^9.3.0",
     "reactotron-react-native": "^5.2.0",
     "reactotron-redux": "^3.2.1",
+    "redux-graphql-native": "^4.3.0",
     "redux-persist": "^6.0.0",
     "rxjs": "^7.8.2",
     "tailwind-merge": "^3.6.0",
