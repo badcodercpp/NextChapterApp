@@ -7719,6 +7719,11 @@ redux-graphql-native@^4.3.0:
   resolved "https://registry.yarnpkg.com/redux-graphql-native/-/redux-graphql-native-4.3.0.tgz#f4a8edfdda60a2b41b9aba09531415a766cd01e1"
   integrity sha512-1vGDHd0O3QIAftTR3UaNXvdPaKsvmhcsTAc+InE7kwW4atKxWNrv9ZD6xH5WSkJRmppNgN6lxIGgO9OsCzXGiA==
 
+redux-named-reducer@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/redux-named-reducer/-/redux-named-reducer-3.2.0.tgz#05c7822bdb55078ef617df90b5b34fa131c44299"
+  integrity sha512-Cx9pkfIhAcn/XZkgl6UQ/9m/sM7tTjEvTLtzGO1D9cJKQLV425O49GF/5cy2cuixV20JDlVd5cbkYQ9aXjB4pg==
+
 redux-persist@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-6.0.0.tgz#b4d2972f9859597c130d40d4b146fecdab51b3a8"

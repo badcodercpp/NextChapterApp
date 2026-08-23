@@ -1,5 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
+import { createReduxNamedReducer } from 'redux-named-reducer';
+
 interface AuthtokenState {
   accessToken?: string;
   refreshToken?: string;
@@ -33,4 +35,7 @@ export const authtokenSlice = createSlice({
 
 export const { setAuthTokens, resetAuthTokens } = authtokenSlice.actions;
 
-export default authtokenSlice.reducer;
+export const authtokenSliceReducer = createReduxNamedReducer(
+  authtokenSlice.reducer,
+  authtokenSlice.name,
+);

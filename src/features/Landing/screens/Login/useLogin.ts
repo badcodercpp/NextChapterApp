@@ -3,6 +3,7 @@ import {
   DeviceType,
   LoginInput,
 } from '@/__generated__/graphql';
+import { selectLoginPending, selectLoginSuccess } from '@/state/selectors';
 import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -11,11 +12,10 @@ import DeviceInfo from 'react-native-device-info';
 import { LandingNavigationProp } from '@/features/Landing/navigation/types';
 import { MasterFormData } from '@/form/types';
 import { Platform } from 'react-native';
-import { getLoginSliceSelector } from '@/state/selectors';
 import { getPublicIpAddress } from '@/utils/ipAddress';
 import { getUserAgent } from '@/utils/userAgent';
 import { initiateLogin } from '@/state/thunkCreators';
-import { setAuthTokens } from '@/state/slices/authtoken';
+import { setAuthTokens } from '@/state/slices/local/authtoken';
 import { useFormContext } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 
@@ -28,7 +28,8 @@ export const useLogin = () => {
     formState: { errors },
     getValues,
   } = useFormContext<MasterFormData>();
-  const { pending, success } = useSelector(getLoginSliceSelector);
+  const pending = useSelector(selectLoginPending);
+  const success = useSelector(selectLoginSuccess);
   const dispatch = useDispatch<AppDispatch>();
 
   const submitLogin = useCallback(async () => {
@@ -58,7 +59,11 @@ export const useLogin = () => {
         userAgent,
         ipAddress,
       };
-      await dispatch(initiateLogin(loginInput)).unwrap();
+      await dispatch(
+        initiateLogin({
+          input: loginInput,
+        }),
+      ).unwrap();
       dispatch(
         setAuthTokens({
           accessToken: success?.accessToken ?? '',

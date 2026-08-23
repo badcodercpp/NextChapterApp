@@ -1,5 +1,6 @@
 import { ErrorLike } from '@apollo/client';
 import { LoginMutation } from '@/__generated__/graphql';
+import { createReduxNamedReducer } from 'redux-named-reducer';
 import { createSlice } from '@reduxjs/toolkit';
 import { initiateLogin } from '@/state/thunkCreators';
 
@@ -38,4 +39,7 @@ export const loginSlice = createSlice({
   },
 });
 
-export default loginSlice.reducer;
+export const loginSliceReducer = createReduxNamedReducer(
+  loginSlice.reducer,
+  loginSlice.name,
+);
