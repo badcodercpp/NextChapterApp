@@ -1,5 +1,3 @@
-// components/AppHeader/index.tsx
-
 import { AppHeaderProps } from './types';
 import { AppIcon } from '../AppIcon';
 import { AppPressable } from '../AppPressable';
@@ -10,22 +8,26 @@ import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export function AppHeader({ title }: AppHeaderProps) {
+export function AppHeader({ title, backDisabled }: AppHeaderProps) {
   const navigation = useNavigation();
   const { top } = useSafeAreaInsets();
+
+  const handleBack = () => {
+    if (backDisabled) {
+      return;
+    }
+
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    }
+  };
 
   return (
     <View
       className="flex-row items-center bg-background px-6 py-4 pt-safe border-b border-border shadow-md"
       style={{ paddingTop: top }}
     >
-      <AppPressable
-        onPress={() => {
-          if (navigation.canGoBack()) {
-            navigation.goBack();
-          }
-        }}
-      >
+      <AppPressable onPress={handleBack}>
         <AppIcon icon={ArrowLeft} size={22} className="text-text" />
       </AppPressable>
 
@@ -39,5 +41,5 @@ export function AppHeader({ title }: AppHeaderProps) {
 }
 
 export const NavigatorAppHeader = ({ options }: NativeStackHeaderProps) => (
-  <AppHeader title={options.title} />
+  <AppHeader title={options.title} backDisabled={false} />
 );

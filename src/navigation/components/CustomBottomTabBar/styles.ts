@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native';
 import { TAB_BAR_HEIGHT } from '@/navigation/constants';
-import { Theme } from '@/theme';
 
 export const styles = StyleSheet.create({
   parentContainer: {
@@ -11,7 +10,6 @@ export const styles = StyleSheet.create({
     bottom: 0,
 
     height: TAB_BAR_HEIGHT + 20,
-    backgroundColor: Theme.colors.surface,
   },
   container: {
     position: 'absolute',
@@ -29,8 +27,6 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 12,
 
     borderRadius: 24,
-
-    backgroundColor: Theme.colors.surface,
   },
 
   button: {
@@ -47,14 +43,10 @@ export const styles = StyleSheet.create({
   activeButton: {
     flexDirection: 'row',
 
-    backgroundColor: Theme.colors.reflectionBackground,
-
     paddingHorizontal: 18,
   },
 
   label: {
     marginLeft: 8,
-
-    color: Theme.colors.primary,
   },
 });

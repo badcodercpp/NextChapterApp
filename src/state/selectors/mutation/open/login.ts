@@ -17,3 +17,8 @@ export const selectLoginSuccess = createSelector(
   [selectLoginState],
   login => login.success,
 );
+
+export const selectIsLoggedIn = createSelector(
+  [selectLoginState],
+  login => !!login.success?.accessToken,
+);

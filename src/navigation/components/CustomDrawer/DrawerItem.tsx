@@ -3,7 +3,6 @@ import { Pressable, View } from 'react-native';
 import { AppText } from '@/components/foundation/AppText';
 import { DrawerItemProps } from './types';
 import React from 'react';
-import { Theme } from '@/theme';
 import { styles } from './styles';
 
 export function DrawerItem({ item, focused, onPress }: DrawerItemProps) {
@@ -11,9 +10,11 @@ export function DrawerItem({ item, focused, onPress }: DrawerItemProps) {
 
   return (
     <Pressable
-      android_ripple={{
-        color: Theme.colors.primaryLight,
-      }}
+      android_ripple={
+        {
+          // color: Theme.colors.primaryLight,
+        }
+      }
       onPress={onPress}
       style={[styles.item, focused && styles.activeItem]}
     >
@@ -21,7 +22,7 @@ export function DrawerItem({ item, focused, onPress }: DrawerItemProps) {
         <Icon
           width={22}
           height={22}
-          color={focused ? Theme.colors.primary : Theme.colors.textSecondary}
+          // color={focused ? Theme.colors.primary : Theme.colors.textSecondary}
         />
       </View>
 

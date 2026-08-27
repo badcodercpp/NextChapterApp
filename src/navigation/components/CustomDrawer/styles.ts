@@ -1,16 +1,13 @@
 import { StyleSheet } from 'react-native';
-import { Theme } from '@/theme';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Theme.colors.background,
     paddingHorizontal: 0,
   },
 
   scrollContent: {
     flexGrow: 1,
-    backgroundColor: Theme.colors.background,
   },
 
   /* Header */
@@ -50,7 +47,6 @@ export const styles = StyleSheet.create({
 
   divider: {
     height: 1,
-    backgroundColor: Theme.colors.border,
     marginVertical: 24,
   },
 
@@ -61,13 +57,10 @@ export const styles = StyleSheet.create({
     paddingVertical: 18,
     flexDirection: 'row',
     alignItems: 'center',
-    borderColor: Theme.colors.border,
     borderBottomWidth: 2,
   },
 
-  activeItem: {
-    backgroundColor: Theme.colors.primaryLight,
-  },
+  activeItem: {},
 
   iconContainer: {
     width: 24,
@@ -81,7 +74,6 @@ export const styles = StyleSheet.create({
   },
 
   activeLabel: {
-    color: Theme.colors.primary,
     fontWeight: '600',
   },
 

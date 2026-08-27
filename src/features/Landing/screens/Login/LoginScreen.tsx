@@ -16,6 +16,7 @@ import {
   Mail,
 } from 'lucide-react-native';
 import { ScrollView, View } from 'react-native';
+import { usePreventBackNavigation, useScreenHeader } from '@/navigation/hooks';
 
 import { Controller } from 'react-hook-form';
 import { LayoutTopImageComponent } from '@/features/Landing/components/LayoutTopImageComponent';
@@ -29,9 +30,18 @@ export function LoginScreen() {
     setShowPassword,
     control,
     errors,
-    pending,
+    loginPending,
     submitLogin,
   } = useLogin();
+
+  const isLoading = loading || loginPending;
+
+  useScreenHeader({
+    title: 'Login',
+    backDisabled: isLoading,
+  });
+
+  usePreventBackNavigation(isLoading);
 
   return (
     <AppScreen
@@ -130,7 +140,7 @@ export function LoginScreen() {
               rightIcon={ArrowRight}
               fullWidth
               className="mt-4"
-              loading={loading || pending}
+              loading={isLoading}
               onPress={submitLogin}
             />
 

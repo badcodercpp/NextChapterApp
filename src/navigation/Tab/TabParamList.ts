@@ -1,6 +1,6 @@
 // import { AIStackParamList } from '@/features/ai/navigation';
 import { HomeStackParamList } from '@/features/home/navigation';
-import { JournalStackParamList } from '@/features/journal/navigation';
+// import { JournalStackParamList } from '@/features/journal/navigation';
 // import { JournalStackParamList } from '@/features/journal/navigation';
 import { NavigatorScreenParams } from '@react-navigation/native';
 // import { ProfileStackParamList } from '@/features/profile/navigation';
@@ -10,7 +10,7 @@ import { TabRoutes } from './TabRoutes';
 export type TabParamList = {
   [TabRoutes.Home]: NavigatorScreenParams<HomeStackParamList>;
 
-  [TabRoutes.Journal]: NavigatorScreenParams<JournalStackParamList>;
+  [TabRoutes.Journal]: NavigatorScreenParams<HomeStackParamList>;
 
   [TabRoutes.AI]: NavigatorScreenParams<HomeStackParamList>;
 

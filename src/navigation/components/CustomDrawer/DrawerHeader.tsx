@@ -7,17 +7,17 @@ import { styles } from './styles';
 export function DrawerHeader() {
   return (
     <View style={styles.header}>
-      <AppAvatar size={72} name="Ajay Jha" />
+      <AppAvatar size="xl" name="Ajay Jha" />
 
-      <AppText variant="bodySmallBold" style={styles.greeting}>
+      <AppText variant="xl" style={styles.greeting}>
         Good Evening 👋
       </AppText>
 
-      <AppText variant="titleLargeBold" style={styles.name}>
+      <AppText variant="xl" style={styles.name}>
         Ajay Jha
       </AppText>
 
-      <AppText variant="bodySmall" style={styles.subtitle}>
+      <AppText variant="md" style={styles.subtitle}>
         Keep growing one day at a time 🌱
       </AppText>
     </View>

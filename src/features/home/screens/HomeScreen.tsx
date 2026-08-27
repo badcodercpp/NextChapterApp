@@ -4,8 +4,14 @@ import React from 'react';
 
 export function HomeScreen() {
   return (
-    <AppScreen scroll horizontalPadding="md">
-      <AppText variant="titleLargeBold">HomeScreen</AppText>
+    <AppScreen
+      safeBottom={true}
+      safeTop={false}
+      className="flex-1 bg-background"
+      contentClassName="flex-1 bg-background"
+      safeArea={false}
+    >
+      <AppText variant="xl">HomeScreen</AppText>
     </AppScreen>
   );
 }

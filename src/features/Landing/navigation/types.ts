@@ -1,7 +1,5 @@
+import { LandingStackParamList } from '@/features/Landing/navigation/LandingStackParamList';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../navigation/RootStack/RootStackParamList';
 
-export type LandingNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  'LandingStack'
->;
+export type LandingNavigationProp =
+  NativeStackNavigationProp<LandingStackParamList>;
