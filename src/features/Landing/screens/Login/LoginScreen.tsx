@@ -32,6 +32,7 @@ export function LoginScreen() {
     errors,
     loginPending,
     submitLogin,
+    clearErrors,
   } = useLogin();
 
   const isLoading = loading || loginPending;
@@ -99,6 +100,9 @@ export function LoginScreen() {
                   value={value}
                   className="mb-6"
                   error={errors?.login?.email?.message}
+                  onFocus={() => {
+                    clearErrors('login.email');
+                  }}
                 />
               )}
             />
@@ -121,6 +125,9 @@ export function LoginScreen() {
                   onBlur={onBlur}
                   value={value}
                   error={errors?.login?.password?.message}
+                  onFocus={() => {
+                    clearErrors('login.password');
+                  }}
                 />
               )}
             />

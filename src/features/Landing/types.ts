@@ -1,12 +1,19 @@
+import {
+  FeelingEnum,
+  GoalEnum,
+  RecoveryReasonEnum,
+  TimelineEnum,
+} from '@/features/Landing/enums';
+
 export type RecoveryReason = {
-  id: string;
+  id: RecoveryReasonEnum;
   title: string;
   description: string;
   icon: any;
 };
 
 export type Timeline = {
-  id: string;
+  id: TimelineEnum;
   title: string;
   subtitle: string;
   icon: any;
@@ -14,14 +21,14 @@ export type Timeline = {
 };
 
 export type Feeling = {
-  id: string;
+  id: FeelingEnum;
   title: string;
   subtitle: string;
   emoji: string;
 };
 
 export type Goal = {
-  id: string;
+  id: GoalEnum;
   title: string;
   subtitle: string;
   icon: any;

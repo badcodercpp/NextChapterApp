@@ -9,16 +9,14 @@ import {
 import { ArrowRight, Check, Lock } from 'lucide-react-native';
 import { ImageBackground, ScrollView, View } from 'react-native';
 
-import { LandingNavigationProp } from '../../navigation/types';
+import { Controller } from 'react-hook-form';
 import LinearGradient from 'react-native-linear-gradient';
 import { TIMELINES } from '../../constants';
 import { cn } from '@/utils';
-import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useHowLongHasItBeen } from './useHowLongHasItBeen';
 
 export function HowLongHasItBeenScreen() {
-  const [selected, setSelected] = useState('today');
-  const navigation = useNavigation<LandingNavigationProp>();
+  const { control, submitHowLongHasItBeen } = useHowLongHasItBeen();
 
   return (
     <AppScreen
@@ -71,57 +69,70 @@ export function HowLongHasItBeenScreen() {
 
         <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
           <View className="flex-1">
-            {TIMELINES.map(item => {
-              const isSelected = selected === item.id;
+            <Controller
+              control={control}
+              name="howLongHasItBeen"
+              render={({ field: { value, onChange } }) => (
+                <View className="flex-1">
+                  {TIMELINES.map(item => {
+                    const isSelected = value === item.id;
 
-              return (
-                <AppPressable
-                  key={item.id}
-                  className="mb-5"
-                  onPress={() => setSelected(item.id)}
-                >
-                  <AppCard
-                    className={cn(
-                      'flex-row items-center rounded-2xl border px-4 py-4',
-                      isSelected
-                        ? 'border-primary bg-card'
-                        : 'border-border bg-surface',
-                    )}
-                  >
-                    <AppIcon
-                      icon={item.icon}
-                      size={36}
-                      className={
-                        selected ? 'text-primary' : 'text-text-secondary'
-                      }
-                      strokeWidth={1}
-                    />
-
-                    <View className="flex-1 ml-4">
-                      <AppText variant="xl" className="text-text">
-                        {item.title}
-                      </AppText>
-
-                      <AppText variant="sm" className=" text-text-secondary">
-                        {item.subtitle}
-                      </AppText>
-                    </View>
-
-                    <View className="absolute right-4 top-7">
-                      {isSelected && (
-                        <View className="h-6 w-6 items-center justify-center rounded-full bg-primary">
+                    return (
+                      <AppPressable
+                        key={item.id}
+                        className="mb-5"
+                        onPress={() => onChange(item.id)}
+                      >
+                        <AppCard
+                          className={cn(
+                            'flex-row items-center rounded-2xl border px-4 py-4',
+                            isSelected
+                              ? 'border-primary bg-card'
+                              : 'border-border bg-surface',
+                          )}
+                        >
                           <AppIcon
-                            icon={Check}
-                            size={16}
-                            className="text-white"
+                            icon={item.icon}
+                            size={36}
+                            className={
+                              isSelected
+                                ? 'text-primary'
+                                : 'text-text-secondary'
+                            }
+                            strokeWidth={1}
                           />
-                        </View>
-                      )}
-                    </View>
-                  </AppCard>
-                </AppPressable>
-              );
-            })}
+
+                          <View className="flex-1 ml-4">
+                            <AppText variant="xl" className="text-text">
+                              {item.title}
+                            </AppText>
+
+                            <AppText
+                              variant="sm"
+                              className=" text-text-secondary"
+                            >
+                              {item.subtitle}
+                            </AppText>
+                          </View>
+
+                          <View className="absolute right-4 top-7">
+                            {isSelected && (
+                              <View className="h-6 w-6 items-center justify-center rounded-full bg-primary">
+                                <AppIcon
+                                  icon={Check}
+                                  size={16}
+                                  className="text-white"
+                                />
+                              </View>
+                            )}
+                          </View>
+                        </AppCard>
+                      </AppPressable>
+                    );
+                  })}
+                </View>
+              )}
+            />
           </View>
         </ScrollView>
 
@@ -130,9 +141,7 @@ export function HowLongHasItBeenScreen() {
             title="Continue"
             size="lg"
             fullWidth
-            onPress={() => {
-              navigation.navigate('HowAreYouFeeling');
-            }}
+            onPress={submitHowLongHasItBeen}
             rightIcon={ArrowRight}
           />
 

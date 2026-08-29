@@ -15,7 +15,7 @@ import { Colors } from '@/theme/colors';
 import { INPUT_ICON_SIZE } from './constants';
 import { InputVariants } from './variants';
 import { X } from 'lucide-react-native';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils';
 
 export const AppInput = forwardRef<AppInputRef, AppInputProps>(
   (

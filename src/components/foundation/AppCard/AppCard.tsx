@@ -2,7 +2,7 @@ import { AppCardProps } from './types';
 import { CardVariants } from './variants';
 import React from 'react';
 import { View } from 'react-native';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils';
 
 export function AppCard({
   children,

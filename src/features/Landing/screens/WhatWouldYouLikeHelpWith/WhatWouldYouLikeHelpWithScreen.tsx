@@ -9,28 +9,15 @@ import {
 import { ArrowRight, Check, Lock } from 'lucide-react-native';
 import { ImageBackground, ScrollView, View } from 'react-native';
 
+import { Controller } from 'react-hook-form';
 import { GOALS } from '../../constants';
-import { LandingNavigationProp } from '../../navigation/types';
 import LinearGradient from 'react-native-linear-gradient';
 import { cn } from '@/utils';
-import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useWhatWouldYouLikeHelpWith } from './useWhatWouldYouLikeHelpWith';
 
 export function WhatWouldYouLikeHelpWithScreen() {
-  const navigation = useNavigation<LandingNavigationProp>();
-  const [selectedGoals, setSelectedGoals] = useState<string[]>([
-    'overthinking',
-    'sleep',
-    'confidence',
-    'heal',
-    'motivation',
-  ]);
-
-  const toggleGoal = (id: string) => {
-    setSelectedGoals(current =>
-      current.includes(id) ? current.filter(x => x !== id) : [...current, id],
-    );
-  };
+  const { control, submitWhatWouldYouLikeHelpWith } =
+    useWhatWouldYouLikeHelpWith();
 
   return (
     <AppScreen
@@ -91,51 +78,68 @@ export function WhatWouldYouLikeHelpWithScreen() {
         </View>
 
         <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-          {GOALS.map(goal => {
-            const selected = selectedGoals.includes(goal.id);
+          <Controller
+            control={control}
+            name="whatWouldYouLikeHelpWith"
+            render={({ field: { value, onChange } }) => (
+              <View className="flex-1">
+                {GOALS.map(goal => {
+                  const selected = value.includes(goal.id);
 
-            return (
-              <AppPressable
-                key={goal.id}
-                className="mb-4"
-                onPress={() => toggleGoal(goal.id)}
-              >
-                <AppCard
-                  className={cn(
-                    'flex-row items-center rounded-2xl border p-4',
-                    selected
-                      ? 'border-primary bg-card'
-                      : 'border-border bg-surface',
-                  )}
-                >
-                  {selected && (
-                    <View className="absolute right-3 top-8 h-7 w-7 items-center justify-center rounded-full bg-primary">
-                      <AppIcon icon={Check} size={16} className="text-white" />
-                    </View>
-                  )}
+                  return (
+                    <AppPressable
+                      key={goal.id}
+                      className="mb-4"
+                      onPress={() =>
+                        onChange(Array.from(new Set([...value, goal.id])))
+                      }
+                    >
+                      <AppCard
+                        className={cn(
+                          'flex-row items-center rounded-2xl border p-4',
+                          selected
+                            ? 'border-primary bg-card'
+                            : 'border-border bg-surface',
+                        )}
+                      >
+                        {selected && (
+                          <View className="absolute right-3 top-8 h-7 w-7 items-center justify-center rounded-full bg-primary">
+                            <AppIcon
+                              icon={Check}
+                              size={16}
+                              className="text-white"
+                            />
+                          </View>
+                        )}
 
-                  {!selected && (
-                    <View className="absolute right-3 top-8 h-7 w-7 rounded-full border-2 border-divider" />
-                  )}
-                  <AppIcon
-                    icon={goal.icon}
-                    size={30}
-                    className="text-primary"
-                  />
+                        {!selected && (
+                          <View className="absolute right-3 top-8 h-7 w-7 rounded-full border-2 border-divider" />
+                        )}
+                        <AppIcon
+                          icon={goal.icon}
+                          size={30}
+                          className="text-primary"
+                        />
 
-                  <View className="flex-1 pr-8 ml-4">
-                    <AppText variant="xl" className="text-text">
-                      {goal.title}
-                    </AppText>
+                        <View className="flex-1 pr-8 ml-4">
+                          <AppText variant="xl" className="text-text">
+                            {goal.title}
+                          </AppText>
 
-                    <AppText variant="sm" className="mt-1 text-text-secondary">
-                      {goal.subtitle}
-                    </AppText>
-                  </View>
-                </AppCard>
-              </AppPressable>
-            );
-          })}
+                          <AppText
+                            variant="sm"
+                            className="mt-1 text-text-secondary"
+                          >
+                            {goal.subtitle}
+                          </AppText>
+                        </View>
+                      </AppCard>
+                    </AppPressable>
+                  );
+                })}
+              </View>
+            )}
+          />
         </ScrollView>
 
         <View className=" bg-background pt-4">
@@ -143,9 +147,7 @@ export function WhatWouldYouLikeHelpWithScreen() {
             title="Continue"
             size="lg"
             fullWidth
-            onPress={() => {
-              navigation.navigate('MeetYourAI');
-            }}
+            onPress={submitWhatWouldYouLikeHelpWith}
             rightIcon={ArrowRight}
           />
 

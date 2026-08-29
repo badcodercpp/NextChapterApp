@@ -5,7 +5,7 @@ import { AppPressable } from '../AppPressable';
 import { AppText } from '../AppText';
 import { AvatarSizes } from './variants';
 import React from 'react';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils';
 
 export function AppAvatar({
   name,

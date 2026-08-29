@@ -14,19 +14,19 @@ import {
   ShieldCheck,
 } from 'lucide-react-native';
 import { ImageBackground, ScrollView, TextInput, View } from 'react-native';
-import { useRef, useState } from 'react';
 
+import { Controller } from 'react-hook-form';
 import { LandingNavigationProp } from '../../navigation/types';
 import LinearGradient from 'react-native-linear-gradient';
 import { cn } from '@/utils';
 import { useNavigation } from '@react-navigation/native';
+import { useRef } from 'react';
+import { useVerifyIdentity } from './useVerifyIdentity';
 
 export function VerifyIdentityScreen() {
   const navigation = useNavigation<LandingNavigationProp>();
 
-  const email = 'aj***@gmail.com';
-
-  const [otp, setOtp] = useState(['', '', '', '']);
+  const { control, otp, maskedEmail } = useVerifyIdentity();
 
   const inputRefs = useRef<Array<TextInput | null>>([]);
 
@@ -76,7 +76,7 @@ export function VerifyIdentityScreen() {
         </AppText>
 
         <AppText variant="sm" className="text-center text-text-secondary">
-          {email}
+          {maskedEmail}
         </AppText>
       </View>
       <View className="flex-1 px-4">
@@ -84,51 +84,57 @@ export function VerifyIdentityScreen() {
           <View className="mt-4">
             {/* OTP */}
 
-            <View className="flex-row justify-between">
-              {otp.map((digit, index) => (
-                <View
-                  key={index}
-                  className={cn(
-                    'h-16 w-16 items-center justify-center rounded-2xl border bg-surface',
-                    digit ? 'border-primary' : 'border-border',
-                  )}
-                >
-                  <TextInput
-                    ref={ref => {
-                      inputRefs.current[index] = ref;
-                    }}
-                    value={digit}
-                    keyboardType="number-pad"
-                    maxLength={1}
-                    cursorColor="#A855F7"
-                    selectionColor="#A855F7"
-                    className="w-full text-center text-3xl text-text"
-                    onChangeText={text => {
-                      const value = text.replace(/[^0-9]/g, '');
+            <Controller
+              control={control}
+              name="verifyIdentity.otp"
+              render={({ field: { value, onChange } }) => (
+                <View className="flex-row justify-between">
+                  {otp.map((digit, index) => (
+                    <View
+                      key={index}
+                      className={cn(
+                        'h-16 w-16 items-center justify-center rounded-2xl border bg-surface',
+                        digit ? 'border-primary' : 'border-border',
+                      )}
+                    >
+                      <TextInput
+                        ref={ref => {
+                          inputRefs.current[index] = ref;
+                        }}
+                        value={value[index]}
+                        keyboardType="number-pad"
+                        maxLength={1}
+                        cursorColor="#A855F7"
+                        selectionColor="#A855F7"
+                        className="w-full text-center text-3xl text-text"
+                        onChangeText={text => {
+                          const val = text.replace(/[^0-9]/g, '');
 
-                      const next = [...otp];
+                          const next = [...value];
 
-                      next[index] = value;
+                          next[index] = val;
 
-                      setOtp(next);
+                          onChange(next);
 
-                      if (value && index < 5) {
-                        inputRefs.current[index + 1]?.focus();
-                      }
-                    }}
-                    onKeyPress={({ nativeEvent }) => {
-                      if (
-                        nativeEvent.key === 'Backspace' &&
-                        !otp[index] &&
-                        index > 0
-                      ) {
-                        inputRefs.current[index - 1]?.focus();
-                      }
-                    }}
-                  />
+                          if (value && index < 5) {
+                            inputRefs.current[index + 1]?.focus();
+                          }
+                        }}
+                        onKeyPress={({ nativeEvent }) => {
+                          if (
+                            nativeEvent.key === 'Backspace' &&
+                            !otp[index] &&
+                            index > 0
+                          ) {
+                            inputRefs.current[index - 1]?.focus();
+                          }
+                        }}
+                      />
+                    </View>
+                  ))}
                 </View>
-              ))}
-            </View>
+              )}
+            />
 
             <View className="mt-6 items-center">
               <AppText variant="md" className="mt-3 mb-3 text-text-secondary">
@@ -188,7 +194,7 @@ export function VerifyIdentityScreen() {
               fullWidth
               rightIcon={ArrowRight}
               className="mt-0"
-              onPress={() => navigation.navigate('Reminder')}
+              onPress={() => navigation.navigate('Login')}
             />
           </View>
           <View className="mt-2 flex-row items-center justify-center">

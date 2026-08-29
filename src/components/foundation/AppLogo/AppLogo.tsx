@@ -2,7 +2,7 @@ import { AppLogoProps } from './types';
 import { Image } from 'react-native';
 import { LogoVariants } from './variants';
 import React from 'react';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils';
 
 export function AppLogo({
   size = 96,

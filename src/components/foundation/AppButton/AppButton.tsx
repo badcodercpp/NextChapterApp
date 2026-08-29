@@ -7,7 +7,7 @@ import { AppPressable } from '../AppPressable';
 import { AppText } from '../AppText';
 import LinearGradient from 'react-native-linear-gradient';
 import React from 'react';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils';
 
 export function AppButton({
   title,

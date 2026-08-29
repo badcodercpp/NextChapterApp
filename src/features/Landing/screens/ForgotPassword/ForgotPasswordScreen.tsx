@@ -2,12 +2,16 @@ import { AppButton, AppIcon, AppInput, AppScreen, AppText } from '@/components';
 import { ArrowRight, Lock, Mail } from 'lucide-react-native';
 import { ImageBackground, ScrollView, View } from 'react-native';
 
+import { Controller } from 'react-hook-form';
 import { LandingNavigationProp } from '../../navigation/types';
 import LinearGradient from 'react-native-linear-gradient';
+import { useForgotPassword } from './useForgotPassword';
 import { useNavigation } from '@react-navigation/native';
 
 export function ForgotPasswordScreen() {
   const navigation = useNavigation<LandingNavigationProp>();
+
+  const { control, errors } = useForgotPassword();
 
   return (
     <AppScreen
@@ -60,19 +64,30 @@ export function ForgotPasswordScreen() {
       </View>
       <View className="flex-1 px-4">
         <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-          <View className="mt-4">
-            <AppText variant="sm" className="mb-3 text-text">
-              Email address
-            </AppText>
+          <Controller
+            control={control}
+            name="forgotPassword.email"
+            render={({ field: { value, onBlur, onChange } }) => (
+              <View className="mt-4">
+                <AppText variant="sm" className="mb-3 text-text">
+                  Email address
+                </AppText>
 
-            <AppInput
-              placeholder="Enter your email address"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              startIcon={Mail}
-            />
-          </View>
+                <AppInput
+                  placeholder="Enter your email address"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  startIcon={Mail}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  error={errors?.forgotPassword?.email?.message}
+                />
+              </View>
+            )}
+          />
+
           <View className="mt-3 flex-row justify-center items-start px-2">
             <AppIcon icon={Lock} size={16} className="text-primary" />
             <AppText variant="sm" className="text-center pl-2 text-text-muted ">

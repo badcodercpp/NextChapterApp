@@ -1,3 +1,9 @@
+import {
+  FeelingEnum,
+  GoalEnum,
+  RecoveryReasonEnum,
+  TimelineEnum,
+} from '@/features/Landing/enums';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { MasterFormData } from '@/form/types';
@@ -14,6 +20,26 @@ export function MasterFormProvider({
   const methods = useForm<MasterFormData>({
     resolver: zodResolver(masterSchema),
     mode: 'onTouched',
+    defaultValues: {
+      whatBringsYouHere: RecoveryReasonEnum.Breakup,
+      howLongHasItBeen: TimelineEnum.Today,
+      howAreYouFeeling: [
+        FeelingEnum.Heartbroken,
+        FeelingEnum.Lonely,
+        FeelingEnum.Numb,
+      ],
+      whatWouldYouLikeHelpWith: [
+        GoalEnum.Overthinking,
+        GoalEnum.Sleep,
+        GoalEnum.Heal,
+      ],
+      verifyEmail: {
+        otp: ['', '', '', ''],
+      },
+      verifyIdentity: {
+        otp: ['', '', '', ''],
+      },
+    },
   });
 
   return <FormProvider {...methods}>{children}</FormProvider>;

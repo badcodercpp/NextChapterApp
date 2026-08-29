@@ -4,7 +4,7 @@ import { setAuthStatus, setAuthTokens } from '@/state/slices/local';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { AppDispatch } from '@/state';
-import { isTokenExpired } from '@/utils/jwt';
+import { isTokenExpired } from '@/utils';
 import { useEffect } from 'react';
 
 export const useAuthBootstrap = () => {

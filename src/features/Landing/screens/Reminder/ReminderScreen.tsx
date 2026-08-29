@@ -15,14 +15,14 @@ import {
 } from 'lucide-react-native';
 import { ImageBackground, ScrollView, Switch, View } from 'react-native';
 
-import { LandingNavigationProp } from '../../navigation/types';
 import LinearGradient from 'react-native-linear-gradient';
-import { useNavigation } from '@react-navigation/native';
+import { useReminder } from './useReminder';
 import { useState } from 'react';
 
 export function ReminderScreen() {
-  const navigation = useNavigation<LandingNavigationProp>();
   const [enabled, setEnabled] = useState(true);
+
+  const { submitReminder, skipReminder } = useReminder();
 
   return (
     <AppScreen
@@ -175,18 +175,11 @@ export function ReminderScreen() {
             title="Continue"
             size="lg"
             fullWidth
-            onPress={() => {
-              navigation.navigate('RecoveryStartsToday');
-            }}
+            onPress={submitReminder}
             rightIcon={ArrowRight}
           />
 
-          <AppPressable
-            className="mt-2 items-center"
-            onPress={() => {
-              navigation.navigate('RecoveryStartsToday');
-            }}
-          >
+          <AppPressable className="mt-2 items-center" onPress={skipReminder}>
             <AppText variant="xl" className="text-primary">
               Maybe later
             </AppText>

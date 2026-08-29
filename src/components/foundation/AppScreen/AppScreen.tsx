@@ -7,7 +7,7 @@ import {
 import { AppScreenProps } from './types';
 import React from 'react';
 import { TAB_BAR_HEIGHT } from '@/navigation/constants';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils';
 
 export function AppScreen({
   children,

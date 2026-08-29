@@ -8,26 +8,24 @@ import {
 } from '@/components';
 import { ArrowRight, Check, Eye, EyeOff, Lock, X } from 'lucide-react-native';
 import { ImageBackground, ScrollView, View } from 'react-native';
-import { PASSWORD_RULES, usePassword } from './usePassword';
 
-import { LandingNavigationProp } from '../../navigation/types';
+import { Controller } from 'react-hook-form';
 import LinearGradient from 'react-native-linear-gradient';
+import { PASSWORD_RULES } from './rules';
 import { cn } from '@/utils';
-import { useNavigation } from '@react-navigation/native';
+import { useCreatePassword } from './useCreatePassword';
 
 export function CreatePasswordScreen() {
-  const navigation = useNavigation<LandingNavigationProp>();
   const {
-    password,
-    setPassword,
-    confirmPassword,
-    setConfirmPassword,
     showPassword,
     setShowPassword,
     showConfirmPassword,
     setShowConfirmPassword,
     calculatePasswordStrength,
-  } = usePassword();
+    control,
+    errors,
+    submitCreatePassword,
+  } = useCreatePassword();
 
   const passwordInfo = calculatePasswordStrength();
 
@@ -83,18 +81,28 @@ export function CreatePasswordScreen() {
       <View className="flex-1 px-4">
         <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
           <View className="mt-0">
-            <AppText variant="sm" className="mb-2 text-text">
-              Create password
-            </AppText>
+            <Controller
+              control={control}
+              name="createPassword.password"
+              render={({ field: { value, onBlur, onChange } }) => (
+                <>
+                  <AppText variant="sm" className="mb-2 text-text">
+                    Create password
+                  </AppText>
 
-            <AppInput
-              value={password}
-              onChangeText={setPassword}
-              placeholder="Enter password"
-              startIcon={Lock}
-              secureTextEntry={!showPassword}
-              endIcon={showPassword ? EyeOff : Eye}
-              onEndIconPress={() => setShowPassword(!showPassword)}
+                  <AppInput
+                    placeholder="Enter password"
+                    startIcon={Lock}
+                    secureTextEntry={!showPassword}
+                    endIcon={showPassword ? EyeOff : Eye}
+                    onEndIconPress={() => setShowPassword(!showPassword)}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    error={errors?.createPassword?.password?.message}
+                  />
+                </>
+              )}
             />
 
             <View className="mt-5">
@@ -121,20 +129,30 @@ export function CreatePasswordScreen() {
               </View>
             </View>
 
-            <AppText variant="sm" className="mb-3 mt-8 text-text">
-              Confirm password
-            </AppText>
+            <Controller
+              control={control}
+              name="createPassword.confirmPassword"
+              render={({ field: { value, onBlur, onChange } }) => (
+                <>
+                  <AppText variant="sm" className="mb-3 mt-8 text-text">
+                    Confirm password
+                  </AppText>
 
-            <AppInput
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              placeholder="Confirm password"
-              startIcon={Lock}
-              secureTextEntry={!showConfirmPassword}
-              endIcon={showConfirmPassword ? EyeOff : Eye}
-              onEndIconPress={() =>
-                setShowConfirmPassword(!showConfirmPassword)
-              }
+                  <AppInput
+                    placeholder="Confirm password"
+                    startIcon={Lock}
+                    secureTextEntry={!showConfirmPassword}
+                    endIcon={showConfirmPassword ? EyeOff : Eye}
+                    onEndIconPress={() =>
+                      setShowConfirmPassword(!showConfirmPassword)
+                    }
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    error={errors?.createPassword?.confirmPassword?.message}
+                  />
+                </>
+              )}
             />
 
             <AppText variant="sm" className="mb-1 mt-8 text-text">
@@ -184,9 +202,7 @@ export function CreatePasswordScreen() {
               fullWidth
               rightIcon={ArrowRight}
               className="mt-0"
-              onPress={() => {
-                navigation.navigate('VerifyEmail');
-              }}
+              onPress={submitCreatePassword}
             />
           </View>
           <View className="mt-2 flex-row justify-center items-center">

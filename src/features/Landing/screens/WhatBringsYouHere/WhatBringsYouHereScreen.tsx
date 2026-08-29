@@ -14,23 +14,22 @@ import {
   View,
 } from 'react-native';
 
-import { LandingNavigationProp } from '../../navigation/types';
+import { Controller } from 'react-hook-form';
 import LinearGradient from 'react-native-linear-gradient';
 import { REASONS } from '../../constants';
 import { cn } from '@/utils';
-import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
+import { useWhatBringsYouHere } from './useWhatBringsYouHere';
 
 export function WhatBringsYouHereScreen() {
-  const navigation = useNavigation<LandingNavigationProp>();
-
-  const [selectedReason, setSelectedReason] = useState('breakup');
   const [cardHeight, setCardHeight] = useState(0);
 
   const handleLayout = (e: LayoutChangeEvent) => {
     const { height } = e.nativeEvent.layout;
     setCardHeight(prev => Math.max(prev, height));
   };
+
+  const { control, submitWhatBringsYouHere } = useWhatBringsYouHere();
 
   return (
     <View className="flex-1 bg-background">
@@ -86,63 +85,75 @@ export function WhatBringsYouHereScreen() {
             </AppText>
           </View>
           <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-            <View className="flex-row flex-wrap justify-between">
-              {REASONS.map(reason => {
-                const selected = selectedReason === reason.id;
+            <View className="flex-1">
+              <Controller
+                control={control}
+                name="whatBringsYouHere"
+                render={({ field: { value, onChange } }) => (
+                  <View className="flex-row flex-wrap justify-between">
+                    {REASONS.map(reason => {
+                      const selected = value === reason.id;
 
-                return (
-                  <AppPressable
-                    key={reason.id}
-                    className="mb-4 w-[48%]"
-                    onPress={() => setSelectedReason(reason.id)}
-                  >
-                    <AppCard
-                      className={cn(
-                        'rounded-2xl border p-4',
-                        selected
-                          ? 'border-primary bg-card'
-                          : 'border-border bg-surface',
-                      )}
-                      onLayout={handleLayout}
-                      style={cardHeight ? { height: cardHeight } : undefined}
-                    >
-                      <View className="absolute right-4 top-5">
-                        {selected && (
-                          <View className="h-6 w-6 items-center justify-center rounded-full bg-primary">
-                            <AppIcon
-                              icon={Check}
-                              size={16}
-                              className="text-white"
-                            />
-                          </View>
-                        )}
-                      </View>
-
-                      <AppIcon
-                        icon={reason.icon}
-                        size={36}
-                        className={
-                          selected ? 'text-primary' : 'text-text-secondary'
-                        }
-                        strokeWidth={1}
-                      />
-
-                      <View className="mt-5">
-                        <AppText variant="lg" className="text-text">
-                          {reason.title}
-                        </AppText>
-
-                        <AppText
-                          variant="sm"
-                          className="mt-2 text-text-secondary"
+                      return (
+                        <AppPressable
+                          key={reason.id}
+                          className="mb-4 w-[48%]"
+                          onPress={() => onChange(reason.id)}
                         >
-                          {reason.description}
-                        </AppText>
-                      </View>
-                    </AppCard>
-                  </AppPressable>
-                );
-              })}
+                          <AppCard
+                            className={cn(
+                              'rounded-2xl border p-4',
+                              selected
+                                ? 'border-primary bg-card'
+                                : 'border-border bg-surface',
+                            )}
+                            onLayout={handleLayout}
+                            style={
+                              cardHeight ? { height: cardHeight } : undefined
+                            }
+                          >
+                            <View className="absolute right-4 top-5">
+                              {selected && (
+                                <View className="h-6 w-6 items-center justify-center rounded-full bg-primary">
+                                  <AppIcon
+                                    icon={Check}
+                                    size={16}
+                                    className="text-white"
+                                  />
+                                </View>
+                              )}
+                            </View>
+
+                            <AppIcon
+                              icon={reason.icon}
+                              size={36}
+                              className={
+                                selected
+                                  ? 'text-primary'
+                                  : 'text-text-secondary'
+                              }
+                              strokeWidth={1}
+                            />
+
+                            <View className="mt-5">
+                              <AppText variant="lg" className="text-text">
+                                {reason.title}
+                              </AppText>
+
+                              <AppText
+                                variant="sm"
+                                className="mt-2 text-text-secondary"
+                              >
+                                {reason.description}
+                              </AppText>
+                            </View>
+                          </AppCard>
+                        </AppPressable>
+                      );
+                    })}
+                  </View>
+                )}
+              />
             </View>
           </ScrollView>
 
@@ -152,7 +163,7 @@ export function WhatBringsYouHereScreen() {
                 title="Continue"
                 size="lg"
                 fullWidth
-                onPress={() => navigation.navigate('HowLongHasItBeen')}
+                onPress={submitWhatBringsYouHere}
                 rightIcon={ArrowRight}
               />
             </View>

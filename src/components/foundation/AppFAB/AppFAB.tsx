@@ -7,7 +7,7 @@ import { AppPressable } from '../AppPressable';
 import { AppText } from '../AppText';
 import { Colors } from '@/theme/colors';
 import React from 'react';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils';
 
 export function AppFab({
   icon,

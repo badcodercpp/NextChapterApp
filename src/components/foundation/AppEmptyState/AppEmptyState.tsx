@@ -2,7 +2,7 @@ import { AppEmptyStateProps } from './types';
 import { AppText } from '../AppText';
 import React from 'react';
 import { View } from 'react-native';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils';
 
 export function AppEmptyState({
   title,

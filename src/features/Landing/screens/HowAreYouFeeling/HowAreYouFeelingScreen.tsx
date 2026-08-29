@@ -14,27 +14,17 @@ import {
   View,
 } from 'react-native';
 
+import { Controller } from 'react-hook-form';
 import { FEELINGS } from '../../constants';
-import { LandingNavigationProp } from '../../navigation/types';
 import LinearGradient from 'react-native-linear-gradient';
 import { cn } from '@/utils';
-import { useNavigation } from '@react-navigation/native';
+import { useHowAreYouFeeling } from './useHowAreYouFeeling';
 import { useState } from 'react';
 
 export function HowAreYouFeelingScreen() {
-  const navigation = useNavigation<LandingNavigationProp>();
-  const [selectedFeelings, setSelectedFeelings] = useState<string[]>([
-    'heartbroken',
-    'lonely',
-    'hopeful',
-  ]);
   const [cardHeight, setCardHeight] = useState(0);
 
-  const toggleFeeling = (id: string) => {
-    setSelectedFeelings(current =>
-      current.includes(id) ? current.filter(x => x !== id) : [...current, id],
-    );
-  };
+  const { control, submitHowAreYouFeeling } = useHowAreYouFeeling();
 
   const handleLayout = (e: LayoutChangeEvent) => {
     const { height } = e.nativeEvent.layout;
@@ -101,63 +91,75 @@ export function HowAreYouFeelingScreen() {
         </View>
 
         <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-          <View className="flex-row flex-wrap justify-between">
-            {FEELINGS.map(item => {
-              const selected = selectedFeelings.includes(item.id);
+          <View className="flex-1">
+            <Controller
+              control={control}
+              name="howAreYouFeeling"
+              render={({ field: { value, onChange } }) => (
+                <View className="flex-row flex-wrap justify-between">
+                  {FEELINGS.map(item => {
+                    const selected = value.includes(item.id);
 
-              return (
-                <AppPressable
-                  key={item.id}
-                  className="mb-4 w-[48%]"
-                  onPress={() => toggleFeeling(item.id)}
-                >
-                  <AppCard
-                    className={cn(
-                      'rounded-2xl border p-4',
-                      selected
-                        ? 'border-primary bg-card'
-                        : 'border-border bg-surface',
-                    )}
-                    onLayout={handleLayout}
-                    style={cardHeight ? { height: cardHeight } : undefined}
-                  >
-                    {selected && (
-                      <View className="absolute right-3 top-5 h-7 w-7 items-center justify-center rounded-full bg-primary">
-                        <AppIcon
-                          icon={Check}
-                          size={16}
-                          className="text-white"
-                        />
-                      </View>
-                    )}
+                    return (
+                      <AppPressable
+                        key={item.id}
+                        className="mb-4 w-[48%]"
+                        onPress={() =>
+                          onChange(Array.from(new Set([...value, item.id])))
+                        }
+                      >
+                        <AppCard
+                          className={cn(
+                            'rounded-2xl border p-4',
+                            selected
+                              ? 'border-primary bg-card'
+                              : 'border-border bg-surface',
+                          )}
+                          onLayout={handleLayout}
+                          style={
+                            cardHeight ? { height: cardHeight } : undefined
+                          }
+                        >
+                          {selected && (
+                            <View className="absolute right-3 top-5 h-7 w-7 items-center justify-center rounded-full bg-primary">
+                              <AppIcon
+                                icon={Check}
+                                size={16}
+                                className="text-white"
+                              />
+                            </View>
+                          )}
 
-                    {!selected && (
-                      <View className="absolute right-3 top-5 h-7 w-7 rounded-full border-2 border-divider" />
-                    )}
+                          {!selected && (
+                            <View className="absolute right-3 top-5 h-7 w-7 rounded-full border-2 border-divider" />
+                          )}
 
-                    <View className="mt-1 items-center justify-center">
-                      <AppText className="text-5xl leading-h2">
-                        {item.emoji}
-                      </AppText>
-                    </View>
+                          <View className="mt-1 items-center justify-center">
+                            <AppText className="text-5xl leading-h2">
+                              {item.emoji}
+                            </AppText>
+                          </View>
 
-                    <AppText
-                      variant="xl"
-                      className="mt-4 text-center text-text"
-                    >
-                      {item.title}
-                    </AppText>
+                          <AppText
+                            variant="xl"
+                            className="mt-4 text-center text-text"
+                          >
+                            {item.title}
+                          </AppText>
 
-                    <AppText
-                      variant="sm"
-                      className=" text-center text-text-secondary"
-                    >
-                      {item.subtitle}
-                    </AppText>
-                  </AppCard>
-                </AppPressable>
-              );
-            })}
+                          <AppText
+                            variant="sm"
+                            className=" text-center text-text-secondary"
+                          >
+                            {item.subtitle}
+                          </AppText>
+                        </AppCard>
+                      </AppPressable>
+                    );
+                  })}
+                </View>
+              )}
+            />
           </View>
         </ScrollView>
 
@@ -166,9 +168,7 @@ export function HowAreYouFeelingScreen() {
             title="Continue"
             size="lg"
             fullWidth
-            onPress={() => {
-              navigation.navigate('WhatWouldYouLikeHelpWith');
-            }}
+            onPress={submitHowAreYouFeeling}
             rightIcon={ArrowRight}
           />
 

@@ -21,40 +21,46 @@ import {
   Sunrise,
 } from 'lucide-react-native';
 import { Feature, Feeling, Goal, RecoveryReason, Timeline } from './types';
+import {
+  FeelingEnum,
+  GoalEnum,
+  RecoveryReasonEnum,
+  TimelineEnum,
+} from '@/features/Landing/enums';
 
 export const REASONS: RecoveryReason[] = [
   {
-    id: 'breakup',
+    id: RecoveryReasonEnum.Breakup,
     title: 'Going through a breakup',
     description: 'Heal from heartbreak and move forward.',
     icon: HeartCrack,
   },
   {
-    id: 'divorce',
+    id: RecoveryReasonEnum.Divorce,
     title: 'Divorce / Separation',
     description: 'Find peace after a relationship ends.',
     icon: HeartMinus,
   },
   {
-    id: 'grief',
+    id: RecoveryReasonEnum.Grief,
     title: 'Grief & Loss',
     description: 'Navigate loss with gentle support.',
     icon: CloudRain,
   },
   {
-    id: 'lonely',
+    id: RecoveryReasonEnum.Lonely,
     title: 'Feeling Lonely',
     description: 'Reconnect with yourself and others.',
     icon: Moon,
   },
   {
-    id: 'burnout',
+    id: RecoveryReasonEnum.Burnout,
     title: 'Burnout',
     description: 'Recharge mentally and emotionally.',
     icon: Brain,
   },
   {
-    id: 'growth',
+    id: RecoveryReasonEnum.Growth,
     title: 'Personal Growth',
     description: 'Become the best version of yourself.',
     icon: Sparkles,
@@ -63,35 +69,35 @@ export const REASONS: RecoveryReason[] = [
 
 export const TIMELINES: Timeline[] = [
   {
-    id: 'today',
+    id: TimelineEnum.Today,
     title: 'Today',
     subtitle: 'It just happened',
     icon: CalendarClock,
     iconColor: 'text-primary',
   },
   {
-    id: 'week',
+    id: TimelineEnum.Week,
     title: 'This week',
     subtitle: 'Within the last 7 days',
     icon: CalendarRange,
     iconColor: 'text-primary',
   },
   {
-    id: 'month',
+    id: TimelineEnum.Month,
     title: 'This month',
     subtitle: 'Within the last 30 days',
     icon: CalendarHeart,
     iconColor: 'text-warning',
   },
   {
-    id: 'months',
+    id: TimelineEnum.Months,
     title: 'A few months',
     subtitle: '2 to 6 months ago',
     icon: ClockArrowDown,
     iconColor: 'text-success',
   },
   {
-    id: 'year',
+    id: TimelineEnum.Year,
     title: 'Over a year',
     subtitle: 'More than 12 months ago',
     icon: Hourglass,
@@ -101,55 +107,55 @@ export const TIMELINES: Timeline[] = [
 
 export const FEELINGS: Feeling[] = [
   {
-    id: 'heartbroken',
+    id: FeelingEnum.Heartbroken,
     title: 'Heartbroken',
     subtitle: 'Overwhelmed with sadness',
     emoji: '😭',
   },
   {
-    id: 'sad',
+    id: FeelingEnum.Sad,
     title: 'Sad',
     subtitle: 'Feeling down and low',
     emoji: '😔',
   },
   {
-    id: 'angry',
+    id: FeelingEnum.Angry,
     title: 'Angry',
     subtitle: 'Frustrated or irritated',
     emoji: '😡',
   },
   {
-    id: 'anxious',
+    id: FeelingEnum.Anxious,
     title: 'Anxious',
     subtitle: 'Worried and overthinking',
     emoji: '😰',
   },
   {
-    id: 'lonely',
+    id: FeelingEnum.Lonely,
     title: 'Lonely',
     subtitle: 'Feeling alone and empty',
     emoji: '☹️',
   },
   {
-    id: 'numb',
+    id: FeelingEnum.Numb,
     title: 'Numb',
     subtitle: 'Feeling empty or nothing',
     emoji: '😐',
   },
   {
-    id: 'hopeful',
+    id: FeelingEnum.Hopeful,
     title: 'Hopeful',
     subtitle: 'Positive about the future',
     emoji: '😊',
   },
   {
-    id: 'grateful',
+    id: FeelingEnum.Grateful,
     title: 'Grateful',
     subtitle: 'Thankful and appreciative',
     emoji: '🥰',
   },
   {
-    id: 'confident',
+    id: FeelingEnum.Confident,
     title: 'Confident',
     subtitle: 'Feeling strong and ready',
     emoji: '🙂',
@@ -158,43 +164,43 @@ export const FEELINGS: Feeling[] = [
 
 export const GOALS: Goal[] = [
   {
-    id: 'overthinking',
+    id: GoalEnum.Overthinking,
     title: 'Stop overthinking',
     subtitle: 'Calm my mind and find peace',
     icon: Brain,
   },
   {
-    id: 'sleep',
+    id: GoalEnum.Sleep,
     title: 'Sleep better',
     subtitle: 'Rest deeply and wake up refreshed',
     icon: Moon,
   },
   {
-    id: 'profile',
+    id: GoalEnum.Profile,
     title: 'Stop checking their profile',
     subtitle: 'Break the habit and move on',
     icon: EyeOff,
   },
   {
-    id: 'confidence',
+    id: GoalEnum.Confidence,
     title: 'Build confidence',
     subtitle: 'Believe in myself again',
     icon: Shield,
   },
   {
-    id: 'heal',
+    id: GoalEnum.Heal,
     title: 'Heal emotionally',
     subtitle: 'Process my emotions and let go',
     icon: HeartHandshake,
   },
   {
-    id: 'move-on',
+    id: GoalEnum.MoveOn,
     title: 'Move on',
     subtitle: 'Let go of the past and look ahead',
     icon: Flag,
   },
   {
-    id: 'motivation',
+    id: GoalEnum.Motivation,
     title: 'Daily motivation',
     subtitle: 'Stay inspired and keep going',
     icon: Sunrise,

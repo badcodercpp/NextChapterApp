@@ -9,12 +9,14 @@ import {
 import { ArrowRight, Info, Lock, LogIn, Mail, User } from 'lucide-react-native';
 import { ImageBackground, ScrollView, View } from 'react-native';
 
-import { LandingNavigationProp } from '../../navigation/types';
+import { Controller } from 'react-hook-form';
 import LinearGradient from 'react-native-linear-gradient';
-import { useNavigation } from '@react-navigation/native';
+import { useCreateAccount } from './useCreateAccount';
 
 export function CreateAccountScreen() {
-  const navigation = useNavigation<LandingNavigationProp>();
+  const { control, errors, submitCreateAccount, navigation } =
+    useCreateAccount();
+
   return (
     <AppScreen
       safeBottom={true}
@@ -95,37 +97,63 @@ export function CreateAccountScreen() {
           </View>
 
           <View>
-            <AppText variant="sm" className="mb-1 px-2 text-text">
-              Full name
-            </AppText>
-            <AppInput
-              placeholder="Enter your full name"
-              startIcon={User}
-              className="mb-4"
+            <Controller
+              control={control}
+              name="createAccount.fullName"
+              render={({ field: { value, onBlur, onChange } }) => (
+                <View>
+                  <AppText variant="sm" className="mb-1 px-2 text-text">
+                    Full name
+                  </AppText>
+                  <AppInput
+                    placeholder="Enter your full name"
+                    startIcon={User}
+                    className="mb-4"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    error={errors?.createAccount?.fullName?.message}
+                  />
+                </View>
+              )}
             />
+            <Controller
+              control={control}
+              name="createAccount.email"
+              render={({ field: { value, onBlur, onChange } }) => (
+                <View>
+                  <AppText variant="sm" className="mb-1 px-2 text-text">
+                    Email address
+                  </AppText>
 
-            <AppText variant="sm" className="mb-1 px-2 text-text">
-              Email address
-            </AppText>
+                  <AppInput
+                    placeholder="Enter your email address"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    startIcon={Mail}
+                    className="mb-2"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    error={errors?.createAccount?.email?.message}
+                  />
 
-            <AppInput
-              placeholder="Enter your email address"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              startIcon={Mail}
-              className="mb-2"
+                  <View className="mb-4 flex-row items-center">
+                    <AppPressable className="mr-2">
+                      <AppIcon icon={Info} size={16} className="text-primary" />
+                    </AppPressable>
+
+                    <AppText
+                      variant="sm"
+                      className="flex-1 text-text-secondary"
+                    >
+                      We will send verification code to this email
+                    </AppText>
+                  </View>
+                </View>
+              )}
             />
-
-            <View className="mb-4 flex-row items-center">
-              <AppPressable className="mr-2">
-                <AppIcon icon={Info} size={16} className="text-primary" />
-              </AppPressable>
-
-              <AppText variant="sm" className="flex-1 text-text-secondary">
-                We will send verification code to this email
-              </AppText>
-            </View>
           </View>
 
           <AppButton
@@ -133,9 +161,7 @@ export function CreateAccountScreen() {
             size="lg"
             rightIcon={ArrowRight}
             fullWidth
-            onPress={() => {
-              navigation.navigate('CreatePassword');
-            }}
+            onPress={submitCreateAccount}
           />
         </ScrollView>
         <View className=" bg-background pt-2">

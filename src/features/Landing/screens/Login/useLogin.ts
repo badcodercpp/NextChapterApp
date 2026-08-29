@@ -3,6 +3,7 @@ import {
   DeviceType,
   LoginInput,
 } from '@/__generated__/graphql';
+import { getPublicIpAddress, getUserAgent, mapZodErrorsToForm } from '@/utils';
 import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -13,9 +14,8 @@ import { MasterFormData } from '@/form/types';
 import { Platform } from 'react-native';
 import { RootNavigationProp } from '@/navigation/RootStack/types';
 import { RootRoutes } from '@/navigation/RootStack/RootRoutes';
-import { getPublicIpAddress } from '@/utils/ipAddress';
-import { getUserAgent } from '@/utils/userAgent';
 import { initiateLogin } from '@/state/thunkCreators';
+import { loginSchema } from '@/form';
 import { selectLoginPending } from '@/state/selectors';
 import { setAuthTokens } from '@/state/slices/local/authtoken';
 import { setReduxGraphqlAuthTokens } from 'redux-graphql-native';
@@ -33,15 +33,29 @@ export const useLogin = () => {
     control,
     formState: { errors },
     getValues,
+    setError,
+    clearErrors,
   } = useFormContext<MasterFormData>();
   const loginPending = useSelector(selectLoginPending);
   const dispatch = useDispatch<AppDispatch>();
 
+  console.log('form errors', errors);
+
   const submitLogin = useCallback(async () => {
+    const email = getValues('login.email');
+    const password = getValues('login.password');
+    const result = loginSchema.safeParse({ email, password });
+    if (!result.success) {
+      mapZodErrorsToForm({
+        error: result.error,
+        setError,
+        clearErrors,
+        parentKey: 'login', // Pass your master context namespace here
+      });
+      return;
+    }
     setLoading(true);
     try {
-      const email = getValues('login.email');
-      const password = getValues('login.password');
       const platform: DevicePlatform =
         Platform.OS.toUpperCase() as DevicePlatform;
       const deviceType: DeviceType = (
@@ -97,7 +111,7 @@ export const useLogin = () => {
     } finally {
       setLoading(false);
     }
-  }, [dispatch, getValues, setLoading, rootNavigation]);
+  }, [dispatch, getValues, setLoading, rootNavigation, clearErrors, setError]);
 
   return {
     navigation,
@@ -109,5 +123,6 @@ export const useLogin = () => {
     errors,
     loginPending,
     submitLogin,
+    clearErrors,
   };
 };

@@ -3,12 +3,12 @@ import { ArrowRight, Heart, Lock } from 'lucide-react-native';
 import { Image, ImageBackground, ScrollView, View } from 'react-native';
 
 import { FEATURES } from '../../constants';
-import { LandingNavigationProp } from '../../navigation/types';
 import LinearGradient from 'react-native-linear-gradient';
-import { useNavigation } from '@react-navigation/native';
+import { useMeetYourAI } from './useMeetYourAI';
 
 export function MeetYourAIScreen() {
-  const navigation = useNavigation<LandingNavigationProp>();
+  const { submitMeetYourAI } = useMeetYourAI();
+
   return (
     <AppScreen
       safeBottom={true}
@@ -118,9 +118,7 @@ export function MeetYourAIScreen() {
             title="Continue"
             size="lg"
             fullWidth
-            onPress={() => {
-              navigation.navigate('CreateAccount');
-            }}
+            onPress={submitMeetYourAI}
             rightIcon={ArrowRight}
           />
 
