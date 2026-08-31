@@ -6,10 +6,12 @@ export const useForgotPassword = () => {
     control,
     formState: { errors },
     // getValues,
+    clearErrors,
   } = useFormContext<MasterFormData>();
 
   return {
     control,
     errors,
+    clearErrors,
   };
 };

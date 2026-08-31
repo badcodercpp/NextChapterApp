@@ -14,7 +14,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useCreateAccount } from './useCreateAccount';
 
 export function CreateAccountScreen() {
-  const { control, errors, submitCreateAccount, navigation } =
+  const { control, errors, submitCreateAccount, navigation, clearErrors } =
     useCreateAccount();
 
   return (
@@ -109,6 +109,9 @@ export function CreateAccountScreen() {
                     placeholder="Enter your full name"
                     startIcon={User}
                     className="mb-4"
+                    onFocus={() => {
+                      clearErrors('createAccount.fullName');
+                    }}
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
@@ -133,6 +136,9 @@ export function CreateAccountScreen() {
                     autoCorrect={false}
                     startIcon={Mail}
                     className="mb-2"
+                    onFocus={() => {
+                      clearErrors('createAccount.email');
+                    }}
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}

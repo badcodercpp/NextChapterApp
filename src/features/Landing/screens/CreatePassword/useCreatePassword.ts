@@ -88,5 +88,6 @@ export const useCreatePassword = () => {
     control,
     errors,
     submitCreatePassword,
+    clearErrors,
   };
 };

@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 export function ForgotPasswordScreen() {
   const navigation = useNavigation<LandingNavigationProp>();
 
-  const { control, errors } = useForgotPassword();
+  const { control, errors, clearErrors } = useForgotPassword();
 
   return (
     <AppScreen
@@ -79,6 +79,9 @@ export function ForgotPasswordScreen() {
                   autoCapitalize="none"
                   autoCorrect={false}
                   startIcon={Mail}
+                  onFocus={() => {
+                    clearErrors('forgotPassword.email');
+                  }}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}

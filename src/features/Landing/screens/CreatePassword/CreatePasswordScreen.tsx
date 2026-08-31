@@ -25,6 +25,7 @@ export function CreatePasswordScreen() {
     control,
     errors,
     submitCreatePassword,
+    clearErrors,
   } = useCreatePassword();
 
   const passwordInfo = calculatePasswordStrength();
@@ -96,6 +97,9 @@ export function CreatePasswordScreen() {
                     secureTextEntry={!showPassword}
                     endIcon={showPassword ? EyeOff : Eye}
                     onEndIconPress={() => setShowPassword(!showPassword)}
+                    onFocus={() => {
+                      clearErrors('createPassword.password');
+                    }}
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
@@ -146,6 +150,9 @@ export function CreatePasswordScreen() {
                     onEndIconPress={() =>
                       setShowConfirmPassword(!showConfirmPassword)
                     }
+                    onFocus={() => {
+                      clearErrors('createPassword.confirmPassword');
+                    }}
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}

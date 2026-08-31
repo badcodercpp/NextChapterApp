@@ -37,5 +37,6 @@ export const useCreateAccount = () => {
     errors,
     submitCreateAccount,
     navigation,
+    clearErrors,
   };
 };

@@ -2,6 +2,7 @@ import {
   AppButton,
   AppCard,
   AppIcon,
+  AppOtpTimer,
   AppPressable,
   AppScreen,
   AppText,
@@ -131,6 +132,9 @@ export function VerifyEmailScreen() {
                 </View>
               )}
             />
+            <View className="mt-4 flex-1 items-end">
+              <AppOtpTimer minute={2} second={0} />
+            </View>
 
             <View className="mt-6 items-center">
               <AppText variant="md" className="mt-3 mb-3 text-text-secondary">

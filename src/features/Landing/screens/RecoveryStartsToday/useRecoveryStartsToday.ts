@@ -2,14 +2,14 @@ import { LandingNavigationProp } from '@/features/Landing/navigation/types';
 import { useCallback } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-export const useMeetYourAI = () => {
+export const useRecoveryStartsToday = () => {
   const navigation = useNavigation<LandingNavigationProp>();
 
-  const submitMeetYourAI = useCallback(() => {
+  const submitRecoveryStartsToday = useCallback(() => {
     navigation.navigate('CreateAccount');
   }, [navigation]);
 
   return {
-    submitMeetYourAI,
+    submitRecoveryStartsToday,
   };
 };

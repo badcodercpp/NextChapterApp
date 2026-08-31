@@ -13,3 +13,4 @@ export * from './AppText';
 export * from './AppLogo';
 export * from './AppHeader';
 export * from './AppLoader';
+export * from './AppOtpTimer';
