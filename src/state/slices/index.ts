@@ -5,6 +5,8 @@ import {
 import {
   completeJourneySliceReducer,
   followUpSliceReducer,
+  googleLoginSliceReducer,
+  googleRegisterSliceReducer,
   loginSliceReducer,
   logoutAllSliceReducer,
   logoutSliceReducer,
@@ -42,6 +44,9 @@ export const getCombinedSlices = () => {
     registerSliceReducer,
     resendEmailVerificationOtpSliceReducer,
     verifyEmailOtpSliceReducer,
+    // google
+    googleLoginSliceReducer,
+    googleRegisterSliceReducer,
 
     // guarded mutation
     completeJourneySliceReducer,

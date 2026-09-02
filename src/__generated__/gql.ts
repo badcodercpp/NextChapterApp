@@ -25,6 +25,8 @@ type Documents = {
     "\n  mutation StartJourney($input: StartJourneyInput!) {\n    startJourney(input: $input) {\n      id\n      userId\n      program\n      status\n      currentDay\n      currentRecoveryScore\n      startedAt\n      pausedAt\n      completedAt\n      createdAt\n      updatedAt\n    }\n  }\n": typeof types.StartJourneyDocument,
     "\n  mutation UpdateProfile($input: UpdateProfileInput!) {\n    updateProfile(input: $input) {\n      id\n      email\n      displayName\n      gender\n      avatarUrl\n      timezone\n      locale\n      emailVerified\n      isActive\n      createdAt\n      updatedAt\n    }\n  }\n": typeof types.UpdateProfileDocument,
     "\n  mutation VerifyChangePasswordOtp($input: VerifyChangePasswordOtpInput!) {\n    verifyChangePasswordOtp(input: $input)\n  }\n": typeof types.VerifyChangePasswordOtpDocument,
+    "\n  mutation GoogleLogin($input: GoogleLoginInput!) {\n    googleLogin(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n": typeof types.GoogleLoginDocument,
+    "\n  mutation GoogleRegister($input: GoogleRegisterInput!) {\n    googleRegister(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n": typeof types.GoogleRegisterDocument,
     "\n  mutation Login($input: LoginInput!) {\n    login(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n": typeof types.LoginDocument,
     "\n  mutation Register($input: RegisterInput!) {\n    register(input: $input)\n  }\n": typeof types.RegisterDocument,
     "\n  mutation ResendEmailVerificationOtp($input: ResendEmailOtpInput!) {\n    resendEmailVerificationOtp(input: $input)\n  }\n": typeof types.ResendEmailVerificationOtpDocument,
@@ -32,6 +34,11 @@ type Documents = {
     "\n  query ActiveJourney {\n    activeJourney {\n      id\n      userId\n      program\n      status\n      currentDay\n      currentRecoveryScore\n      startedAt\n      pausedAt\n      completedAt\n      createdAt\n      updatedAt\n    }\n  }\n": typeof types.ActiveJourneyDocument,
     "\n  query Me {\n    me {\n      id\n      email\n      displayName\n      gender\n      avatarUrl\n      timezone\n      locale\n      emailVerified\n      isActive\n      createdAt\n      updatedAt\n    }\n  }\n": typeof types.MeDocument,
     "\n  query TodayQuestion {\n    todayQuestion {\n      id\n      journeyId\n      missionId\n      day\n      status\n      askedAt\n      conversation {\n        role\n        content\n        createdAt\n      }\n    }\n  }\n": typeof types.TodayQuestionDocument,
+    "\n  mutation RegisterDevice($input: DeviceInfoInput!) {\n    registerDevice(input: $input)\n  }\n": typeof types.RegisterDeviceDocument,
+    "\n  query GetRecoveryReason {\n    getRecoveryReason\n  }\n": typeof types.GetRecoveryReasonDocument,
+    "\n  query GetRecoveryTimeline {\n    getRecoveryTimeline\n  }\n": typeof types.GetRecoveryTimelineDocument,
+    "\n  query GetRecoveryFeeling {\n    getRecoveryFeeling\n  }\n": typeof types.GetRecoveryFeelingDocument,
+    "\n  query GetRecoveryGoal {\n    getRecoveryGoal\n  }\n": typeof types.GetRecoveryGoalDocument,
 };
 const documents: Documents = {
     "\n  mutation CompleteJourney {\n    completeJourney {\n      id\n      status\n      currentDay\n      currentRecoveryScore\n      completedAt\n      updatedAt\n    }\n  }\n": types.CompleteJourneyDocument,
@@ -45,6 +52,8 @@ const documents: Documents = {
     "\n  mutation StartJourney($input: StartJourneyInput!) {\n    startJourney(input: $input) {\n      id\n      userId\n      program\n      status\n      currentDay\n      currentRecoveryScore\n      startedAt\n      pausedAt\n      completedAt\n      createdAt\n      updatedAt\n    }\n  }\n": types.StartJourneyDocument,
     "\n  mutation UpdateProfile($input: UpdateProfileInput!) {\n    updateProfile(input: $input) {\n      id\n      email\n      displayName\n      gender\n      avatarUrl\n      timezone\n      locale\n      emailVerified\n      isActive\n      createdAt\n      updatedAt\n    }\n  }\n": types.UpdateProfileDocument,
     "\n  mutation VerifyChangePasswordOtp($input: VerifyChangePasswordOtpInput!) {\n    verifyChangePasswordOtp(input: $input)\n  }\n": types.VerifyChangePasswordOtpDocument,
+    "\n  mutation GoogleLogin($input: GoogleLoginInput!) {\n    googleLogin(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n": types.GoogleLoginDocument,
+    "\n  mutation GoogleRegister($input: GoogleRegisterInput!) {\n    googleRegister(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n": types.GoogleRegisterDocument,
     "\n  mutation Login($input: LoginInput!) {\n    login(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n": types.LoginDocument,
     "\n  mutation Register($input: RegisterInput!) {\n    register(input: $input)\n  }\n": types.RegisterDocument,
     "\n  mutation ResendEmailVerificationOtp($input: ResendEmailOtpInput!) {\n    resendEmailVerificationOtp(input: $input)\n  }\n": types.ResendEmailVerificationOtpDocument,
@@ -52,6 +61,11 @@ const documents: Documents = {
     "\n  query ActiveJourney {\n    activeJourney {\n      id\n      userId\n      program\n      status\n      currentDay\n      currentRecoveryScore\n      startedAt\n      pausedAt\n      completedAt\n      createdAt\n      updatedAt\n    }\n  }\n": types.ActiveJourneyDocument,
     "\n  query Me {\n    me {\n      id\n      email\n      displayName\n      gender\n      avatarUrl\n      timezone\n      locale\n      emailVerified\n      isActive\n      createdAt\n      updatedAt\n    }\n  }\n": types.MeDocument,
     "\n  query TodayQuestion {\n    todayQuestion {\n      id\n      journeyId\n      missionId\n      day\n      status\n      askedAt\n      conversation {\n        role\n        content\n        createdAt\n      }\n    }\n  }\n": types.TodayQuestionDocument,
+    "\n  mutation RegisterDevice($input: DeviceInfoInput!) {\n    registerDevice(input: $input)\n  }\n": types.RegisterDeviceDocument,
+    "\n  query GetRecoveryReason {\n    getRecoveryReason\n  }\n": types.GetRecoveryReasonDocument,
+    "\n  query GetRecoveryTimeline {\n    getRecoveryTimeline\n  }\n": types.GetRecoveryTimelineDocument,
+    "\n  query GetRecoveryFeeling {\n    getRecoveryFeeling\n  }\n": types.GetRecoveryFeelingDocument,
+    "\n  query GetRecoveryGoal {\n    getRecoveryGoal\n  }\n": types.GetRecoveryGoalDocument,
 };
 
 /**
@@ -115,6 +129,14 @@ export function graphql(source: "\n  mutation VerifyChangePasswordOtp($input: Ve
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "\n  mutation GoogleLogin($input: GoogleLoginInput!) {\n    googleLogin(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n"): (typeof documents)["\n  mutation GoogleLogin($input: GoogleLoginInput!) {\n    googleLogin(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation GoogleRegister($input: GoogleRegisterInput!) {\n    googleRegister(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n"): (typeof documents)["\n  mutation GoogleRegister($input: GoogleRegisterInput!) {\n    googleRegister(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "\n  mutation Login($input: LoginInput!) {\n    login(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n"): (typeof documents)["\n  mutation Login($input: LoginInput!) {\n    login(input: $input) {\n      accessToken\n      refreshToken\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -140,6 +162,26 @@ export function graphql(source: "\n  query Me {\n    me {\n      id\n      email
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query TodayQuestion {\n    todayQuestion {\n      id\n      journeyId\n      missionId\n      day\n      status\n      askedAt\n      conversation {\n        role\n        content\n        createdAt\n      }\n    }\n  }\n"): (typeof documents)["\n  query TodayQuestion {\n    todayQuestion {\n      id\n      journeyId\n      missionId\n      day\n      status\n      askedAt\n      conversation {\n        role\n        content\n        createdAt\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation RegisterDevice($input: DeviceInfoInput!) {\n    registerDevice(input: $input)\n  }\n"): (typeof documents)["\n  mutation RegisterDevice($input: DeviceInfoInput!) {\n    registerDevice(input: $input)\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetRecoveryReason {\n    getRecoveryReason\n  }\n"): (typeof documents)["\n  query GetRecoveryReason {\n    getRecoveryReason\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetRecoveryTimeline {\n    getRecoveryTimeline\n  }\n"): (typeof documents)["\n  query GetRecoveryTimeline {\n    getRecoveryTimeline\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetRecoveryFeeling {\n    getRecoveryFeeling\n  }\n"): (typeof documents)["\n  query GetRecoveryFeeling {\n    getRecoveryFeeling\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetRecoveryGoal {\n    getRecoveryGoal\n  }\n"): (typeof documents)["\n  query GetRecoveryGoal {\n    getRecoveryGoal\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

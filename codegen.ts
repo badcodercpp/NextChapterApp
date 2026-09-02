@@ -11,6 +11,8 @@ const config: CodegenConfig = {
         // Force codegen to avoid referencing main @apollo/client barrel package
         useTypeImports: true,
         gqlImport: 'graphql-tag#gql',
+        enumType: 'native',
+        enumsAsTypes: false,
       },
     },
   },

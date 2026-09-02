@@ -2223,6 +2223,11 @@
     prompts "^2.4.2"
     semver "^7.5.2"
 
+"@react-native-google-signin/google-signin@^16.1.4":
+  version "16.1.4"
+  resolved "https://registry.yarnpkg.com/@react-native-google-signin/google-signin/-/google-signin-16.1.4.tgz#64838d2c39d0f001081a900a008817841f42eeea"
+  integrity sha512-Lt4vjihJ+Nk9I4HjScWHzch3ebtIlP3QIea0XEHVN0PJumwUwiK/J2tU8qs7H9DIqNblC0qlXkR0Ts4ELvq7yA==
+
 "@react-native/assets-registry@0.86.0":
   version "0.86.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets-registry/-/assets-registry-0.86.0.tgz#560e78135969d1198aabfdc4ae74faae336463d0"
@@ -4110,6 +4115,11 @@ domutils@^3.0.1:
     dom-serializer "^2.0.0"
     domelementtype "^2.3.0"
     domhandler "^5.0.3"
+
+dotenv@^17.4.2:
+  version "17.4.2"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-17.4.2.tgz#c07e54a746e11eba021dd9e1047ced5afdc1c034"
+  integrity sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw==
 
 dunder-proto@^1.0.0, dunder-proto@^1.0.1:
   version "1.0.1"
@@ -7490,6 +7500,13 @@ react-native-device-info@^15.0.2:
   version "15.0.2"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-15.0.2.tgz#c7de1bb6baeb07e1bab70159ad540c5705cb8dc0"
   integrity sha512-dd71eXG2l3Cwp66IvKNadMTB8fhU3PEjyVddI97sYan+D4bgIAUmgGDhbSOFvHcGavksb2U17kiQYaDiK2WK2g==
+
+react-native-dotenv@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-4.1.1.tgz#010670826ce2759a8f11a536b279f033d10f32e3"
+  integrity sha512-Y7aMj6uFa/KJO7AFbUYGvr1YXYlFrVIC0HVhB+mFw2yGgtDrWvnfrpXP7LHX4Zh+xOwsnlZTHOoNrhv/uE9AcA==
+  dependencies:
+    dotenv "^17.4.2"
 
 react-native-drawer-layout@^4.2.9:
   version "4.2.9"

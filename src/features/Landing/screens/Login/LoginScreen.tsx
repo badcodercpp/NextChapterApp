@@ -20,6 +20,7 @@ import { usePreventBackNavigation, useScreenHeader } from '@/navigation/hooks';
 
 import { Controller } from 'react-hook-form';
 import { LayoutTopImageComponent } from '@/features/Landing/components/LayoutTopImageComponent';
+import useGoogleSignIn from '@/hooks/useGoogleSignIn';
 import { useLogin } from './useLogin';
 
 export function LoginScreen() {
@@ -34,6 +35,8 @@ export function LoginScreen() {
     submitLogin,
     clearErrors,
   } = useLogin();
+
+  const { doGoogleSignIn } = useGoogleSignIn();
 
   const isLoading = loading || loginPending;
 
@@ -168,7 +171,7 @@ export function LoginScreen() {
                 leftIcon={LogIn}
                 fullWidth
                 className="mb-4"
-                onPress={() => {}}
+                onPress={doGoogleSignIn}
               />
             </View>
           </AppCard>

@@ -1,5 +1,5 @@
 import * as z from 'zod';
 
-import { GoalEnum } from '@/features/Landing/enums';
+import { RecoveryGoal } from '@/__generated__/graphql';
 
-export const whatWouldYouLikeHelpWithSchema = z.array(z.enum(GoalEnum));
+export const whatWouldYouLikeHelpWithSchema = z.array(z.enum(RecoveryGoal));

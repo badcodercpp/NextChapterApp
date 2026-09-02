@@ -3,17 +3,10 @@ import {
   AppCard,
   AppIcon,
   AppOtpTimer,
-  AppPressable,
   AppScreen,
   AppText,
 } from '@/components';
-import {
-  ArrowRight,
-  Clock3,
-  Lock,
-  RefreshCcw,
-  ShieldCheck,
-} from 'lucide-react-native';
+import { ArrowRight, Clock3, Lock, ShieldCheck } from 'lucide-react-native';
 import { ImageBackground, ScrollView, TextInput, View } from 'react-native';
 
 import { Controller } from 'react-hook-form';
@@ -132,21 +125,17 @@ export function VerifyEmailScreen() {
                 </View>
               )}
             />
+
             <View className="mt-4 flex-1 items-end">
               <AppOtpTimer minute={2} second={0} />
             </View>
 
-            <View className="mt-6 items-center">
+            <View className="mt-2 items-center flex-row justify-center">
+              <AppIcon icon={Clock3} size={22} className="mr-2 text-primary" />
               <AppText variant="md" className="mt-3 mb-3 text-text-secondary">
                 Code will expire in
               </AppText>
-              <View className="flex-row items-center">
-                <AppIcon
-                  icon={Clock3}
-                  size={22}
-                  className="mr-3 text-primary"
-                />
-
+              <View className="flex-row items-center ml-2">
                 <AppText variant="md" className="text-primary">
                   10:00
                 </AppText>
@@ -166,25 +155,6 @@ export function VerifyEmailScreen() {
               code.
             </AppText>
           </AppCard>
-
-          <View className="mt-4 flex-row rounded-2xl border border-border bg-surface">
-            <AppPressable
-              className="flex-1 flex-row items-center justify-center py-3"
-              onPress={() => {
-                // resend otp
-              }}
-            >
-              <AppIcon
-                icon={RefreshCcw}
-                size={22}
-                className="mr-3 text-primary"
-              />
-
-              <AppText variant="md" className="text-primary">
-                Resend Code
-              </AppText>
-            </AppPressable>
-          </View>
         </ScrollView>
         <View className="bg-background pt-2">
           <View className="mt-2 items-center justify-center">

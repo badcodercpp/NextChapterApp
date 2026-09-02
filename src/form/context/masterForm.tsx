@@ -1,10 +1,10 @@
-import {
-  FeelingEnum,
-  GoalEnum,
-  RecoveryReasonEnum,
-  TimelineEnum,
-} from '@/features/Landing/enums';
 import { FormProvider, useForm } from 'react-hook-form';
+import {
+  RecoveryFeeling,
+  RecoveryGoal,
+  RecoveryReason,
+  RecoveryTimeline,
+} from '@/__generated__/graphql';
 
 import { MasterFormData } from '@/form/types';
 import React from 'react';
@@ -21,17 +21,17 @@ export function MasterFormProvider({
     resolver: zodResolver(masterSchema),
     mode: 'onTouched',
     defaultValues: {
-      whatBringsYouHere: RecoveryReasonEnum.Breakup,
-      howLongHasItBeen: TimelineEnum.Today,
+      whatBringsYouHere: RecoveryReason.Breakup,
+      howLongHasItBeen: RecoveryTimeline.Today,
       howAreYouFeeling: [
-        FeelingEnum.Heartbroken,
-        FeelingEnum.Lonely,
-        FeelingEnum.Numb,
+        RecoveryFeeling.Heartbroken,
+        RecoveryFeeling.Lonely,
+        RecoveryFeeling.Numb,
       ],
       whatWouldYouLikeHelpWith: [
-        GoalEnum.Overthinking,
-        GoalEnum.Sleep,
-        GoalEnum.Heal,
+        RecoveryGoal.Overthinking,
+        RecoveryGoal.Sleep,
+        RecoveryGoal.Heal,
       ],
       verifyEmail: {
         otp: ['', '', '', ''],

@@ -108,14 +108,14 @@ export function CreateAccountScreen() {
                   <AppInput
                     placeholder="Enter your full name"
                     startIcon={User}
-                    className="mb-4"
-                    onFocus={() => {
-                      clearErrors('createAccount.fullName');
-                    }}
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
+                    className="mb-2"
                     error={errors?.createAccount?.fullName?.message}
+                    onFocus={() => {
+                      clearErrors('createAccount.fullName');
+                    }}
                   />
                 </View>
               )}
@@ -130,19 +130,19 @@ export function CreateAccountScreen() {
                   </AppText>
 
                   <AppInput
-                    placeholder="Enter your email address"
+                    placeholder="Enter your email"
+                    startIcon={Mail}
                     keyboardType="email-address"
                     autoCapitalize="none"
                     autoCorrect={false}
-                    startIcon={Mail}
-                    className="mb-2"
-                    onFocus={() => {
-                      clearErrors('createAccount.email');
-                    }}
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
+                    className="mb-2"
                     error={errors?.createAccount?.email?.message}
+                    onFocus={() => {
+                      clearErrors('createAccount.email');
+                    }}
                   />
 
                   <View className="mb-4 flex-row items-center">

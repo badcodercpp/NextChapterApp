@@ -15,7 +15,8 @@
     "App.tsx",
     "**/*.ts",
     "**/*.tsx",
-    "**/*.d.ts"
+    "**/*.d.ts",
+    "env.d.ts"
   ],
   "exclude": ["**/node_modules", "**/Pods"]
 }

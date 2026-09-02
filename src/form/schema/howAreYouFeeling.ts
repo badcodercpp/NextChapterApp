@@ -1,5 +1,5 @@
 import * as z from 'zod';
 
-import { FeelingEnum } from '@/features/Landing/enums';
+import { RecoveryFeeling } from '@/__generated__/graphql';
 
-export const howAreYouFeelingSchema = z.array(z.enum(FeelingEnum));
+export const howAreYouFeelingSchema = z.array(z.enum(RecoveryFeeling));

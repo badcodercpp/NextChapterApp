@@ -1,19 +1,19 @@
 import {
-  FeelingEnum,
-  GoalEnum,
-  RecoveryReasonEnum,
-  TimelineEnum,
-} from '@/features/Landing/enums';
+  RecoveryFeeling,
+  RecoveryGoal,
+  RecoveryReason,
+  RecoveryTimeline,
+} from '@/__generated__/graphql';
 
-export type RecoveryReason = {
-  id: RecoveryReasonEnum;
+export type TRecoveryReason = {
+  id: RecoveryReason;
   title: string;
   description: string;
   icon: any;
 };
 
 export type Timeline = {
-  id: TimelineEnum;
+  id: RecoveryTimeline;
   title: string;
   subtitle: string;
   icon: any;
@@ -21,14 +21,14 @@ export type Timeline = {
 };
 
 export type Feeling = {
-  id: FeelingEnum;
+  id: RecoveryFeeling;
   title: string;
   subtitle: string;
   emoji: string;
 };
 
 export type Goal = {
-  id: GoalEnum;
+  id: RecoveryGoal;
   title: string;
   subtitle: string;
   icon: any;

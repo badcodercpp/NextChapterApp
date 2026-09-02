@@ -12,12 +12,15 @@ import { Provider } from 'react-redux';
 import RootNavigator from './src/navigation/RootStack/RootNavigator';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'react-native';
+import { ToastProvider } from '@/components';
 import { Uniwind } from 'uniwind';
 import { initializeReduxGraphqlNativeConfig } from 'redux-graphql-native';
 import { store } from '@/state';
 import { useEffect } from 'react';
+import { useGoogleAuthConfiguration } from '@/hooks/useGoogleAuthConfiguration';
 
 function App() {
+  useGoogleAuthConfiguration();
   const isDarkMode =
     Uniwind.currentTheme === 'dark' || Uniwind.currentTheme === 'ocean';
 
@@ -49,6 +52,7 @@ function App() {
         <MasterFormProvider>
           <RootNavigator />
         </MasterFormProvider>
+        <ToastProvider />
       </SafeAreaProvider>
       {/* </PersistGate> */}
     </Provider>

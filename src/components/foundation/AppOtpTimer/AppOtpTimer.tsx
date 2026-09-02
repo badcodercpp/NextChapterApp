@@ -70,7 +70,7 @@ export const AppOtpTimer: React.FC<AppOtpTimerProps> = ({
       >
         {isTimerActive ? (
           <AppText variant="md" className="text-text-secondary">
-            {formatTime(timeLeft)}
+            Resend OTP in - {formatTime(timeLeft)}
           </AppText>
         ) : (
           <AppText variant="md" className="text-text-secondary underline">

@@ -1,24 +1,19 @@
-import {
-  DevicePlatform,
-  DeviceType,
-  LoginInput,
-} from '@/__generated__/graphql';
-import { getPublicIpAddress, getUserAgent, mapZodErrorsToForm } from '@/utils';
+import { DeviceInfoInput, LoginInput } from '@/__generated__/graphql';
 import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { AppDispatch } from '@/state';
-import DeviceInfo from 'react-native-device-info';
 import { LandingNavigationProp } from '@/features/Landing/navigation/types';
 import { MasterFormData } from '@/form/types';
-import { Platform } from 'react-native';
 import { RootNavigationProp } from '@/navigation/RootStack/types';
 import { RootRoutes } from '@/navigation/RootStack/RootRoutes';
 import { initiateLogin } from '@/state/thunkCreators';
 import { loginSchema } from '@/form';
+import { mapZodErrorsToForm } from '@/utils';
 import { selectLoginPending } from '@/state/selectors';
 import { setAuthTokens } from '@/state/slices/local/authtoken';
 import { setReduxGraphqlAuthTokens } from 'redux-graphql-native';
+import { useDeviceInfoSessionPayload } from '@/hooks/useDeviceInfoSessionPayload';
 import { useFormContext } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 
@@ -29,6 +24,7 @@ export const useLogin = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const { getDeviceInfoSessionPayload } = useDeviceInfoSessionPayload();
   const {
     control,
     formState: { errors },
@@ -56,27 +52,23 @@ export const useLogin = () => {
     }
     setLoading(true);
     try {
-      const platform: DevicePlatform =
-        Platform.OS.toUpperCase() as DevicePlatform;
-      const deviceType: DeviceType = (
-        await DeviceInfo.getDeviceType()
-      ).toUpperCase() as DeviceType;
-      const deviceName = await DeviceInfo.getDeviceName();
-      const deviceId = await DeviceInfo.getUniqueId();
-      const appVersion = DeviceInfo.getVersion();
-      const userAgent = await getUserAgent();
-      const ipAddress = await getPublicIpAddress();
+      // const platform: DevicePlatform =
+      //   Platform.OS.toUpperCase() as DevicePlatform;
+      // const deviceType: DeviceType = (
+      //   await DeviceInfo.getDeviceType()
+      // ).toUpperCase() as DeviceType;
+      // const deviceName = await DeviceInfo.getDeviceName();
+      // const deviceId = await DeviceInfo.getUniqueId();
+      // const appVersion = DeviceInfo.getVersion();
+      // const userAgent = await getUserAgent();
+      // const ipAddress = await getPublicIpAddress();
+      const deviceInfoSessionPayload: DeviceInfoInput =
+        await getDeviceInfoSessionPayload();
 
       const loginInput: LoginInput = {
         email,
         password,
-        platform,
-        deviceType,
-        deviceName,
-        deviceId,
-        appVersion,
-        userAgent,
-        ipAddress,
+        ...deviceInfoSessionPayload,
       };
       const loginSuccess = await dispatch(
         initiateLogin({
@@ -111,7 +103,15 @@ export const useLogin = () => {
     } finally {
       setLoading(false);
     }
-  }, [dispatch, getValues, setLoading, rootNavigation, clearErrors, setError]);
+  }, [
+    dispatch,
+    getValues,
+    setLoading,
+    rootNavigation,
+    clearErrors,
+    setError,
+    getDeviceInfoSessionPayload,
+  ]);
 
   return {
     navigation,

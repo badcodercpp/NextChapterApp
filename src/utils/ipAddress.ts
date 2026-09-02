@@ -1,7 +1,9 @@
+import { IPFY_API_URL } from '@env';
+
 export async function getPublicIpAddress(): Promise<string> {
   try {
     // Queries a secure, hyper-fast public JSON text endpoint
-    const response = await fetch('https://ipify.org');
+    const response = await fetch(IPFY_API_URL);
     const data = await response.json();
     return data.ip; // Returns something like "172.56.21.89"
   } catch (error) {
