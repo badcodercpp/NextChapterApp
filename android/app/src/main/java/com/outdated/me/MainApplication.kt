@@ -1,4 +1,4 @@
-package com.nextchapter
+package com.outdated.me
 
 import android.app.Application
 import com.facebook.react.PackageList
