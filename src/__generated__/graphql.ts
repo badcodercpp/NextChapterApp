@@ -74,10 +74,14 @@ export type GoogleRegisterInput = {
   deviceType: DeviceType;
   displayName?: string | null | undefined;
   gender?: Gender | null | undefined;
+  howAreYouFeeling?: RecoveryReasonCurrentFeeling;
+  howLongHasItBeen?: RecoveryReasonTimeline;
   idToken: string;
   ipAddress?: string | null | undefined;
   platform: DevicePlatform;
   userAgent?: string | null | undefined;
+  whatBringsYouHere?: RecoveryReason;
+  whatWouldYouLikeHelpWith?: RecoveryReasonEndGoal;
 };
 
 /** Journey Status */
@@ -105,30 +109,6 @@ export enum QuestionStatus {
   Completed = 'COMPLETED'
 }
 
-/** Recovery Feeling */
-export enum RecoveryFeeling {
-  Angry = 'Angry',
-  Anxious = 'Anxious',
-  Confident = 'Confident',
-  Grateful = 'Grateful',
-  Heartbroken = 'Heartbroken',
-  Hopeful = 'Hopeful',
-  Lonely = 'Lonely',
-  Numb = 'Numb',
-  Sad = 'Sad'
-}
-
-/** Recovery Goal */
-export enum RecoveryGoal {
-  Confidence = 'Confidence',
-  Heal = 'Heal',
-  Motivation = 'Motivation',
-  MoveOn = 'MoveOn',
-  Overthinking = 'Overthinking',
-  Profile = 'Profile',
-  Sleep = 'Sleep'
-}
-
 /** Recovery Program */
 export enum RecoveryProgram {
   Breakup = 'BREAKUP',
@@ -148,8 +128,32 @@ export enum RecoveryReason {
   Lonely = 'Lonely'
 }
 
-/** Recovery Timeline */
-export enum RecoveryTimeline {
+/** Recovery Reason Current Feeling */
+export enum RecoveryReasonCurrentFeeling {
+  Angry = 'Angry',
+  Anxious = 'Anxious',
+  Confident = 'Confident',
+  Grateful = 'Grateful',
+  Heartbroken = 'Heartbroken',
+  Hopeful = 'Hopeful',
+  Lonely = 'Lonely',
+  Numb = 'Numb',
+  Sad = 'Sad'
+}
+
+/** Recovery Reason End Goal */
+export enum RecoveryReasonEndGoal {
+  Confidence = 'Confidence',
+  Heal = 'Heal',
+  Motivation = 'Motivation',
+  MoveOn = 'MoveOn',
+  Overthinking = 'Overthinking',
+  Profile = 'Profile',
+  Sleep = 'Sleep'
+}
+
+/** Recovery Reason Timeline */
+export enum RecoveryReasonTimeline {
   Month = 'Month',
   Months = 'Months',
   Today = 'Today',
@@ -170,10 +174,14 @@ export type RegisterInput = {
   displayName: string;
   email: string;
   gender?: Gender | null | undefined;
+  howAreYouFeeling?: RecoveryReasonCurrentFeeling;
+  howLongHasItBeen?: RecoveryReasonTimeline;
   ipAddress?: string | null | undefined;
   password: string;
   platform: DevicePlatform;
   userAgent?: string | null | undefined;
+  whatBringsYouHere?: RecoveryReason;
+  whatWouldYouLikeHelpWith?: RecoveryReasonEndGoal;
 };
 
 export type ResendEmailOtpInput = {
@@ -350,17 +358,17 @@ export type GetRecoveryReasonQuery = { getRecoveryReason: RecoveryReason };
 export type GetRecoveryTimelineQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetRecoveryTimelineQuery = { getRecoveryTimeline: RecoveryTimeline };
+export type GetRecoveryTimelineQuery = { getRecoveryTimeline: RecoveryReasonTimeline };
 
 export type GetRecoveryFeelingQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetRecoveryFeelingQuery = { getRecoveryFeeling: RecoveryFeeling };
+export type GetRecoveryFeelingQuery = { getRecoveryFeeling: RecoveryReasonCurrentFeeling };
 
 export type GetRecoveryGoalQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetRecoveryGoalQuery = { getRecoveryGoal: RecoveryGoal };
+export type GetRecoveryGoalQuery = { getRecoveryGoal: RecoveryReasonEndGoal };
 
 
 export const CompleteJourneyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CompleteJourney"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"completeJourney"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"currentDay"}},{"kind":"Field","name":{"kind":"Name","value":"currentRecoveryScore"}},{"kind":"Field","name":{"kind":"Name","value":"completedAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<CompleteJourneyMutation, CompleteJourneyMutationVariables>;

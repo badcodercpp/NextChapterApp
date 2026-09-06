@@ -22,10 +22,10 @@ import {
 } from 'lucide-react-native';
 import { Feature, Feeling, Goal, TRecoveryReason, Timeline } from './types';
 import {
-  RecoveryFeeling,
-  RecoveryGoal,
   RecoveryReason,
-  RecoveryTimeline,
+  RecoveryReasonCurrentFeeling,
+  RecoveryReasonEndGoal,
+  RecoveryReasonTimeline,
 } from '@/__generated__/graphql';
 
 export const REASONS: TRecoveryReason[] = [
@@ -69,35 +69,35 @@ export const REASONS: TRecoveryReason[] = [
 
 export const TIMELINES: Timeline[] = [
   {
-    id: RecoveryTimeline.Today,
+    id: RecoveryReasonTimeline.Today,
     title: 'Today',
     subtitle: 'It just happened',
     icon: CalendarClock,
     iconColor: 'text-primary',
   },
   {
-    id: RecoveryTimeline.Week,
+    id: RecoveryReasonTimeline.Week,
     title: 'This week',
     subtitle: 'Within the last 7 days',
     icon: CalendarRange,
     iconColor: 'text-primary',
   },
   {
-    id: RecoveryTimeline.Month,
+    id: RecoveryReasonTimeline.Month,
     title: 'This month',
     subtitle: 'Within the last 30 days',
     icon: CalendarHeart,
     iconColor: 'text-warning',
   },
   {
-    id: RecoveryTimeline.Months,
+    id: RecoveryReasonTimeline.Months,
     title: 'A few months',
     subtitle: '2 to 6 months ago',
     icon: ClockArrowDown,
     iconColor: 'text-success',
   },
   {
-    id: RecoveryTimeline.Year,
+    id: RecoveryReasonTimeline.Year,
     title: 'Over a year',
     subtitle: 'More than 12 months ago',
     icon: Hourglass,
@@ -107,55 +107,55 @@ export const TIMELINES: Timeline[] = [
 
 export const FEELINGS: Feeling[] = [
   {
-    id: RecoveryFeeling.Heartbroken,
+    id: RecoveryReasonCurrentFeeling.Heartbroken,
     title: 'Heartbroken',
     subtitle: 'Overwhelmed with sadness',
     emoji: '😭',
   },
   {
-    id: RecoveryFeeling.Sad,
+    id: RecoveryReasonCurrentFeeling.Sad,
     title: 'Sad',
     subtitle: 'Feeling down and low',
     emoji: '😔',
   },
   {
-    id: RecoveryFeeling.Angry,
+    id: RecoveryReasonCurrentFeeling.Angry,
     title: 'Angry',
     subtitle: 'Frustrated or irritated',
     emoji: '😡',
   },
   {
-    id: RecoveryFeeling.Anxious,
+    id: RecoveryReasonCurrentFeeling.Anxious,
     title: 'Anxious',
     subtitle: 'Worried and overthinking',
     emoji: '😰',
   },
   {
-    id: RecoveryFeeling.Lonely,
+    id: RecoveryReasonCurrentFeeling.Lonely,
     title: 'Lonely',
     subtitle: 'Feeling alone and empty',
     emoji: '☹️',
   },
   {
-    id: RecoveryFeeling.Numb,
+    id: RecoveryReasonCurrentFeeling.Numb,
     title: 'Numb',
     subtitle: 'Feeling empty or nothing',
     emoji: '😐',
   },
   {
-    id: RecoveryFeeling.Hopeful,
+    id: RecoveryReasonCurrentFeeling.Hopeful,
     title: 'Hopeful',
     subtitle: 'Positive about the future',
     emoji: '😊',
   },
   {
-    id: RecoveryFeeling.Grateful,
+    id: RecoveryReasonCurrentFeeling.Grateful,
     title: 'Grateful',
     subtitle: 'Thankful and appreciative',
     emoji: '🥰',
   },
   {
-    id: RecoveryFeeling.Confident,
+    id: RecoveryReasonCurrentFeeling.Confident,
     title: 'Confident',
     subtitle: 'Feeling strong and ready',
     emoji: '🙂',
@@ -164,43 +164,43 @@ export const FEELINGS: Feeling[] = [
 
 export const GOALS: Goal[] = [
   {
-    id: RecoveryGoal.Overthinking,
+    id: RecoveryReasonEndGoal.Overthinking,
     title: 'Stop overthinking',
     subtitle: 'Calm my mind and find peace',
     icon: Brain,
   },
   {
-    id: RecoveryGoal.Sleep,
+    id: RecoveryReasonEndGoal.Sleep,
     title: 'Sleep better',
     subtitle: 'Rest deeply and wake up refreshed',
     icon: Moon,
   },
   {
-    id: RecoveryGoal.Profile,
+    id: RecoveryReasonEndGoal.Profile,
     title: 'Stop checking their profile',
     subtitle: 'Break the habit and move on',
     icon: EyeOff,
   },
   {
-    id: RecoveryGoal.Confidence,
+    id: RecoveryReasonEndGoal.Confidence,
     title: 'Build confidence',
     subtitle: 'Believe in myself again',
     icon: Shield,
   },
   {
-    id: RecoveryGoal.Heal,
+    id: RecoveryReasonEndGoal.Heal,
     title: 'Heal emotionally',
     subtitle: 'Process my emotions and let go',
     icon: HeartHandshake,
   },
   {
-    id: RecoveryGoal.MoveOn,
+    id: RecoveryReasonEndGoal.MoveOn,
     title: 'Move on',
     subtitle: 'Let go of the past and look ahead',
     icon: Flag,
   },
   {
-    id: RecoveryGoal.Motivation,
+    id: RecoveryReasonEndGoal.Motivation,
     title: 'Daily motivation',
     subtitle: 'Stay inspired and keep going',
     icon: Sunrise,

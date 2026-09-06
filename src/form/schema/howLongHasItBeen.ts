@@ -1,5 +1,5 @@
 import * as z from 'zod';
 
-import { RecoveryTimeline } from '@/__generated__/graphql';
+import { RecoveryReasonTimeline } from '@/__generated__/graphql';
 
-export const howLongHasItBeenSchema = z.enum(RecoveryTimeline);
+export const howLongHasItBeenSchema = z.enum(RecoveryReasonTimeline);

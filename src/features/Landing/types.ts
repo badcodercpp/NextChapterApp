@@ -1,8 +1,8 @@
 import {
-  RecoveryFeeling,
-  RecoveryGoal,
   RecoveryReason,
-  RecoveryTimeline,
+  RecoveryReasonCurrentFeeling,
+  RecoveryReasonEndGoal,
+  RecoveryReasonTimeline,
 } from '@/__generated__/graphql';
 
 export type TRecoveryReason = {
@@ -13,7 +13,7 @@ export type TRecoveryReason = {
 };
 
 export type Timeline = {
-  id: RecoveryTimeline;
+  id: RecoveryReasonTimeline;
   title: string;
   subtitle: string;
   icon: any;
@@ -21,14 +21,14 @@ export type Timeline = {
 };
 
 export type Feeling = {
-  id: RecoveryFeeling;
+  id: RecoveryReasonCurrentFeeling;
   title: string;
   subtitle: string;
   emoji: string;
 };
 
 export type Goal = {
-  id: RecoveryGoal;
+  id: RecoveryReasonEndGoal;
   title: string;
   subtitle: string;
   icon: any;

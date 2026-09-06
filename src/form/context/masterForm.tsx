@@ -1,9 +1,9 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import {
-  RecoveryFeeling,
-  RecoveryGoal,
   RecoveryReason,
-  RecoveryTimeline,
+  RecoveryReasonCurrentFeeling,
+  RecoveryReasonEndGoal,
+  RecoveryReasonTimeline,
 } from '@/__generated__/graphql';
 
 import { MasterFormData } from '@/form/types';
@@ -22,16 +22,16 @@ export function MasterFormProvider({
     mode: 'onTouched',
     defaultValues: {
       whatBringsYouHere: RecoveryReason.Breakup,
-      howLongHasItBeen: RecoveryTimeline.Today,
+      howLongHasItBeen: RecoveryReasonTimeline.Today,
       howAreYouFeeling: [
-        RecoveryFeeling.Heartbroken,
-        RecoveryFeeling.Lonely,
-        RecoveryFeeling.Numb,
+        RecoveryReasonCurrentFeeling.Heartbroken,
+        RecoveryReasonCurrentFeeling.Lonely,
+        RecoveryReasonCurrentFeeling.Numb,
       ],
       whatWouldYouLikeHelpWith: [
-        RecoveryGoal.Overthinking,
-        RecoveryGoal.Sleep,
-        RecoveryGoal.Heal,
+        RecoveryReasonEndGoal.Overthinking,
+        RecoveryReasonEndGoal.Sleep,
+        RecoveryReasonEndGoal.Heal,
       ],
       verifyEmail: {
         otp: ['', '', '', ''],
