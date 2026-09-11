@@ -63,7 +63,7 @@ export function CreateAccountScreen() {
             variant="sm"
             className="mt-2 text-center text-text-secondary"
           >
-            Start your healing journey with NextChapter.
+            Start your healing journey with Outdated Me.
           </AppText>
 
           <AppText variant="sm" className="text-center text-text-secondary">

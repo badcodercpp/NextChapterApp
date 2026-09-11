@@ -19,15 +19,11 @@ export function TabButton({ focused, icon, label, onPress }: Props) {
       onPress={onPress}
       style={[styles.button, focused && styles.activeButton]}
     >
-      <AppIcon
-        icon={icon}
-        size={24}
-        color={focused ? 'primary' : 'textSecondary'}
-      />
+      <AppIcon icon={icon} size={24} />
 
       {focused && (
         <Animated.View entering={FadeIn} exiting={FadeOut}>
-          <AppText style={styles.label}>{label}</AppText>
+          <AppText className="pl-2 text-text">{label}</AppText>
         </Animated.View>
       )}
     </Pressable>

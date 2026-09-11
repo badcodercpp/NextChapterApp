@@ -8,7 +8,7 @@ export function AppText({
   children,
   variant = 'xl',
   color = 'text',
-  className,
+  className = 'text-text',
   ...props
 }: AppTextProps) {
   return (

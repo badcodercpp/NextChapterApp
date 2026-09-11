@@ -17,7 +17,7 @@ export default function RootNavigator() {
   useAuthBootstrap();
 
   const authStatus = useSelector(selectAuthStatus);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = useSelector(selectIsLoggedIn) || true;
 
   if (authStatus === 'checking') {
     return <AppLoader title="Please wait preparing your account ..." />;

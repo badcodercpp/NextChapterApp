@@ -1,11 +1,10 @@
-import { LucideIcon } from 'lucide-react-native';
+import { ComponentType } from 'react';
 
 export interface AppIconProps {
-  icon: LucideIcon;
-
+  icon: ComponentType<any>;
   size?: number;
-
   strokeWidth?: number;
-
   className?: string;
+  count?: number; // Added count prop
+  maxCount?: number; // Optional limit (e.g., 99+)
 }

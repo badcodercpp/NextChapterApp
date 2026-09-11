@@ -34,7 +34,10 @@ export function CustomBottomTabBar({
   const insets = useSafeAreaInsets();
   return (
     <View style={styles.parentContainer}>
-      <View style={[styles.container, { bottom: insets.bottom }]}>
+      <View
+        style={[styles.container, { bottom: insets.bottom }]}
+        className="bg-background"
+      >
         {state.routes.map((route, index) => {
           const focused = state.index === index;
 

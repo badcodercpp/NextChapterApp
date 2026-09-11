@@ -15,7 +15,7 @@ export function LandingBanner() {
 
       <View className="mt-8 items-center">
         <AppText variant="5xl" className="text-text font-bold">
-          NextChapter
+          Outdated Me
         </AppText>
 
         <AppText

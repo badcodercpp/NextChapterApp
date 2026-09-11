@@ -38,6 +38,7 @@
     "react-native-device-info": "^15.0.2",
     "react-native-fast-image": "^8.6.3",
     "react-native-gesture-handler": "^3.0.2",
+    "react-native-gifted-charts": "^1.4.78",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-mmkv": "^4.3.2",
@@ -86,6 +87,7 @@
     "lightningcss": "^1.33.0",
     "prettier": "2.8.8",
     "react-native-dotenv": "^4.1.1",
+    "react-native-svg-transformer": "^1.5.3",
     "react-test-renderer": "19.2.3",
     "typescript": "^5.8.3"
   },
