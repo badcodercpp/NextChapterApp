@@ -4,8 +4,8 @@ import React from 'react';
 
 export function NotificationScreen() {
   return (
-    <AppScreen scroll horizontalPadding="md">
-      <AppText variant="titleLargeBold">NotificationScreen</AppText>
+    <AppScreen scroll>
+      <AppText variant="xl">NotificationScreen</AppText>
     </AppScreen>
   );
 }

@@ -43,7 +43,7 @@ export function TodaysMissionCard({
 
           <AppText
             variant="md"
-            className="mt-1 leading-7 text-text-secondary"
+            className="mt-1 text-text-secondary"
             numberOfLines={2}
           >
             {description}

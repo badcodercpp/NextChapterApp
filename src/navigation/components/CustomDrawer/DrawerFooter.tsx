@@ -1,49 +1,15 @@
-import { Pressable, View } from 'react-native';
-
 import { AppText } from '@/components/foundation/AppText';
-import { LOGOUT_ITEM } from './constants';
 import React from 'react';
-import { styles } from './styles';
+import { View } from 'react-native';
 
 interface Props {
   onLogout: () => void;
 }
 
-export function DrawerFooter({ onLogout }: Props) {
-  const Icon = LOGOUT_ITEM.icon;
-
+export function DrawerFooter({}: Props) {
   return (
-    <View style={styles.footer}>
-      <Pressable
-        onPress={onLogout}
-        style={styles.item}
-        android_ripple={
-          {
-            // color: Theme.colors.primaryLight,
-          }
-        }
-      >
-        <View style={styles.iconContainer}>
-          <Icon
-            width={22}
-            height={22}
-            // color={Theme.colors.error}
-          />
-        </View>
-
-        <AppText
-          style={[
-            styles.label,
-            {
-              // color: Theme.colors.error,
-            },
-          ]}
-        >
-          Logout
-        </AppText>
-      </Pressable>
-
-      <AppText variant="xl" style={styles.version}>
+    <View className="mt-auto pt-5 pb-6">
+      <AppText variant="xl" className="text-center mt-5">
         Version 1.0.0
       </AppText>
     </View>

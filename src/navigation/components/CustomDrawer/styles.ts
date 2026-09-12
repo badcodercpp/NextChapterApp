@@ -57,7 +57,6 @@ export const styles = StyleSheet.create({
     paddingVertical: 18,
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 2,
   },
 
   activeItem: {},

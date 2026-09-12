@@ -4,6 +4,7 @@ import { DrawerParamList } from './DrawerParamList';
 import { DrawerRoutes } from './DrawerRoutes';
 import { HelpScreen } from '@/features/Help/screens';
 import { NotificationScreen } from '@/features/Notification/screens';
+import { ProfileNavigator } from '@/features/Profile/navigation';
 import { SettingsScreen } from '@/features/Settings/screens';
 import { TabNavigator } from '../Tab/TabNavigator';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -13,6 +14,7 @@ const Drawer = createDrawerNavigator<DrawerParamList>();
 export function DrawerNavigator() {
   return (
     <Drawer.Navigator
+      backBehavior="history"
       screenOptions={{
         headerShown: false,
         drawerType: 'front',
@@ -20,6 +22,8 @@ export function DrawerNavigator() {
       drawerContent={CustomDrawer}
     >
       <Drawer.Screen name={DrawerRoutes.Tabs} component={TabNavigator} />
+
+      <Drawer.Screen name={DrawerRoutes.Profile} component={ProfileNavigator} />
 
       <Drawer.Screen name={DrawerRoutes.Settings} component={SettingsScreen} />
 

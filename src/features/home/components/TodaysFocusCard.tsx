@@ -29,11 +29,11 @@ export function TodaysFocusCard({
 
         {/* Focus Content */}
         <View className="ml-3 flex-1">
-          <AppText variant="sm" className="text-primary">
+          <AppText variant="lg" className="text-primary">
             Today's Focus
           </AppText>
 
-          <AppText variant="lg" className="mt-1 text-text" numberOfLines={2}>
+          <AppText variant="md" className="mt-1 text-text">
             {focus}
           </AppText>
         </View>

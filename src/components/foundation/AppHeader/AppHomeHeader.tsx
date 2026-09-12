@@ -1,3 +1,5 @@
+import { DrawerActions, useNavigation } from '@react-navigation/native';
+
 import { AppHeaderProps } from './types';
 import { AppIcon } from '../AppIcon';
 import AppLogo from '@/assets/icons/svg/app_logo.svg';
@@ -6,7 +8,6 @@ import { AppText } from '../AppText';
 import { Bell } from 'lucide-react-native';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export function AppHomeHeader({ backDisabled }: AppHeaderProps) {
@@ -23,13 +24,17 @@ export function AppHomeHeader({ backDisabled }: AppHeaderProps) {
     }
   };
 
+  const handleOpenDrawer = () => {
+    navigation.dispatch(DrawerActions.openDrawer());
+  };
+
   return (
     <View
       className="flex-row items-center bg-background px-4 py-4 pt-safe border-b border-border shadow-md"
       style={{ paddingTop: top }}
     >
       <View className="flex-row items-center">
-        <AppPressable onPress={handleBack}>
+        <AppPressable onPress={handleOpenDrawer}>
           <AppLogo />
         </AppPressable>
 

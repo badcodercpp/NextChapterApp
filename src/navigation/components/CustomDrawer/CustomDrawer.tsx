@@ -37,6 +37,7 @@ export function CustomDrawerComponent({
           paddingTop: insets.top,
         },
       ]}
+      contentContainerClassName="bg-background"
     >
       <View style={styles.container}>
         <DrawerHeader />

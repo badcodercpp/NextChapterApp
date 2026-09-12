@@ -1,12 +1,14 @@
 import {
-  BellIcon,
   BookIcon,
   ChartBarIncreasing,
   HelpCircleIcon,
   HomeIcon,
   LogOutIcon,
   SettingsIcon,
+  Share2,
   SparklesIcon,
+  StarPlus,
+  User,
   UserIcon,
 } from 'lucide-react-native';
 
@@ -49,16 +51,28 @@ export const MAIN_MENU: DrawerMenuItem[] = [
 
 export const SETTINGS_MENU: DrawerMenuItem[] = [
   {
+    id: 'profile',
+    title: 'Profile',
+    route: DrawerRoutes.Profile,
+    icon: User,
+  },
+  {
     id: 'settings',
     title: 'Settings',
     route: DrawerRoutes.Settings,
     icon: SettingsIcon,
   },
   {
-    id: 'notifications',
-    title: 'Notifications',
-    route: DrawerRoutes.Notifications,
-    icon: BellIcon,
+    id: 'rateus',
+    title: 'Rate Us',
+    route: DrawerRoutes.RateUs,
+    icon: StarPlus,
+  },
+  {
+    id: 'refertofriend',
+    title: 'Refer to Friend',
+    route: DrawerRoutes.ReferToFriend,
+    icon: Share2,
   },
   {
     id: 'help',

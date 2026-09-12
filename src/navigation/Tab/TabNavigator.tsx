@@ -1,3 +1,4 @@
+import { AIChatNavigator } from '@/features/AIChat';
 import { BottomTabBar } from '../components/CustomBottomTabBar';
 import { HomeNavigator } from '@/features/home';
 import { TabParamList } from './TabParamList';
@@ -38,9 +39,12 @@ export function TabNavigator() {
         options={{
           headerShown: false,
           title: t('app.locale.ai'),
+          tabBarStyle: {
+            display: 'none',
+          },
         }}
         name={TabRoutes.AI}
-        component={HomeNavigator}
+        component={AIChatNavigator}
       />
 
       <Tab.Screen

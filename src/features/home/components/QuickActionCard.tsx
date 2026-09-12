@@ -50,7 +50,7 @@ export function QuickActionCard({
             {title}
           </AppText>
 
-          <AppText variant="md" className="mt-1 leading-6 text-text-secondary">
+          <AppText variant="md" className="mt-1 text-text-secondary">
             {description}
           </AppText>
         </View>

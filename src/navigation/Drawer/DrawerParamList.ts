@@ -5,6 +5,8 @@ import { TabParamList } from '../Tab/TabParamList';
 export type DrawerParamList = {
   [DrawerRoutes.Tabs]: NavigatorScreenParams<TabParamList>;
 
+  [DrawerRoutes.Profile]: undefined;
+
   [DrawerRoutes.Settings]: undefined;
 
   [DrawerRoutes.Notifications]: undefined;

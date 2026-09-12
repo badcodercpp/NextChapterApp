@@ -11,10 +11,16 @@ export function AppText({
   className = 'text-text',
   ...props
 }: AppTextProps) {
+  const defaultColorClassName = 'text-text';
   return (
     <Text
       {...props}
-      className={cn(variantClassNames[variant], color, className)}
+      className={cn(
+        variantClassNames[variant],
+        color,
+        defaultColorClassName,
+        className,
+      )}
     >
       {children}
     </Text>

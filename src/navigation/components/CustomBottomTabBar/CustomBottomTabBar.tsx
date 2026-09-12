@@ -32,6 +32,15 @@ export function CustomBottomTabBar({
   navigation,
 }: BottomTabBarProps) {
   const insets = useSafeAreaInsets();
+  const currentRoute = state.routes[state.index];
+
+  const { tabBarStyle } = descriptors[currentRoute.key].options;
+
+  //@ts-ignore
+  if (tabBarStyle?.display === 'none') {
+    return null;
+  }
+
   return (
     <View style={styles.parentContainer}>
       <View
