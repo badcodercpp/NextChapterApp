@@ -4,7 +4,7 @@ import { DrawerParamList } from './DrawerParamList';
 import { DrawerRoutes } from './DrawerRoutes';
 import { HelpScreen } from '@/features/Help/screens';
 import { NotificationScreen } from '@/features/Notification/screens';
-import { ProfileNavigator } from '@/features/Profile/navigation';
+import { ProfileNavigator } from '@/features/Profile';
 import { SettingsScreen } from '@/features/Settings/screens';
 import { TabNavigator } from '../Tab/TabNavigator';
 import { createDrawerNavigator } from '@react-navigation/drawer';

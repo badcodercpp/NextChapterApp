@@ -1,4 +1,4 @@
-export const INPUT_ICON_SIZE = 20;
+export const INPUT_ICON_SIZE = 16;
 
 export const INPUT_MIN_HEIGHT = 56;
 

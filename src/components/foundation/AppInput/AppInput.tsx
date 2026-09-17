@@ -101,8 +101,33 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
 
     const showClearButton = clearable && !!value && !loading && isEditable;
 
+    /**
+     * Multiline:
+     *
+     * Container
+     * ┌─────────────────────────────┐
+     * │ icon  Text starts here   icon│
+     * │       second line            │
+     * │       third line             │
+     * └─────────────────────────────┘
+     *
+     * Icons must stay at the top instead
+     * of being vertically centered.
+     */
+
+    const leftIconClassName = cn(
+      InputVariants.icon.left,
+      multiline && 'self-start pt-5',
+    );
+
+    const rightIconClassName = cn(
+      InputVariants.icon.right,
+      multiline && 'self-start pt-5',
+    );
+
     return (
       <View className={cn(className)}>
+        {/* Label */}
         {label && (
           <View className={cn(InputVariants.label.base)}>
             <AppText variant="lg" className={labelClassName}>
@@ -117,6 +142,7 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
           </View>
         )}
 
+        {/* Input Container */}
         <View
           className={cn(
             InputVariants.container.base,
@@ -132,12 +158,14 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
             multiline && 'items-start',
           )}
         >
+          {/* Left Icon */}
           {startIcon && (
-            <View className={InputVariants.icon.left}>
+            <View className={leftIconClassName}>
               <AppIcon icon={startIcon} size={INPUT_ICON_SIZE} />
             </View>
           )}
 
+          {/* Text Input */}
           <TextInput
             ref={inputRef}
             {...props}
@@ -161,13 +189,14 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
             onChangeText={onChangeText}
           />
 
+          {/* Right Side */}
           {loading ? (
-            <View className={InputVariants.icon.right}>
+            <View className={rightIconClassName}>
               <ActivityIndicator color={Colors.primary} />
             </View>
           ) : showClearButton ? (
             <AppPressable
-              className={InputVariants.icon.right}
+              className={rightIconClassName}
               onPress={handleClear}
               accessibilityRole="button"
               accessibilityLabel="Clear text"
@@ -177,24 +206,24 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
           ) : endIcon ? (
             onEndIconPress ? (
               <AppPressable
-                className={InputVariants.icon.right}
+                className={rightIconClassName}
                 onPress={onEndIconPress}
               >
                 <AppIcon icon={endIcon} size={INPUT_ICON_SIZE} />
               </AppPressable>
             ) : (
-              <View className={InputVariants.icon.right}>
+              <View className={rightIconClassName}>
                 <AppIcon icon={endIcon} size={INPUT_ICON_SIZE} />
               </View>
             )
           ) : null}
         </View>
 
+        {/* Helper / Error / Character Count */}
         {(helperText || error || (showCharacterCount && maxLength)) && (
           <View className={InputVariants.helper.container}>
             <AppText
               variant="md"
-              // color={error ? 'error' : 'textSecondary'}
               className={cn(
                 helperTextClassName,
                 error ? 'text-error' : 'text-secondary',

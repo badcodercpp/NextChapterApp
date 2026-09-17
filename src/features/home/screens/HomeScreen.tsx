@@ -9,15 +9,13 @@ import {
   TodaysMissionCard,
 } from '../components';
 
-import { AppText } from '@/components/foundation/AppText';
 import React from 'react';
 import { View } from 'react-native';
 
 export function HomeScreen() {
   return (
     <AppAuthenticatedLayout>
-      <AppText variant="xl">HomeScreen</AppText>
-      <View>
+      <View className="mt-2">
         <RecoveryScoreCard score={8} trend={20} />
       </View>
       <View className="mt-4">

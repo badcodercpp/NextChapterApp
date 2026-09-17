@@ -1,6 +1,11 @@
-import { NavigatorAppHeader } from '@/components';
+import { EditProfileScreen, ProfileScreen } from '../screens';
+import {
+  NavigatorAppDrawerScreenHeader,
+  NavigatorAppHeader,
+} from '@/components';
+
+import { DeleteProfileScreen } from '@/features/Profile/screens';
 import { ProfileRoutes } from './ProfileRoutes';
-import { ProfileScreen } from '../screens';
 import { ProfileStackParamList } from './ProfileStackParamList';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -12,10 +17,28 @@ export function ProfileNavigator() {
       <Stack.Screen
         options={{
           headerShown: true,
-          header: NavigatorAppHeader,
+          header: NavigatorAppDrawerScreenHeader,
         }}
         name={ProfileRoutes.ProfileScreen}
         component={ProfileScreen}
+      />
+
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          header: NavigatorAppHeader,
+        }}
+        name={ProfileRoutes.EditProfileScreen}
+        component={EditProfileScreen}
+      />
+
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          header: NavigatorAppHeader,
+        }}
+        name={ProfileRoutes.DeleteProfileScreen}
+        component={DeleteProfileScreen}
       />
     </Stack.Navigator>
   );
