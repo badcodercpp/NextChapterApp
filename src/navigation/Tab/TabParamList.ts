@@ -1,5 +1,6 @@
 // import { AIStackParamList } from '@/features/ai/navigation';
 import { HomeStackParamList } from '@/features/home/navigation';
+import { MentorChatStackParamList } from '@/features/mentors/navigation';
 // import { JournalStackParamList } from '@/features/journal/navigation';
 // import { JournalStackParamList } from '@/features/journal/navigation';
 import { NavigatorScreenParams } from '@react-navigation/native';
@@ -16,5 +17,5 @@ export type TabParamList = {
 
   [TabRoutes.Progress]: NavigatorScreenParams<HomeStackParamList>;
 
-  [TabRoutes.Profile]: NavigatorScreenParams<HomeStackParamList>;
+  [TabRoutes.Mentor]: NavigatorScreenParams<MentorChatStackParamList>;
 };

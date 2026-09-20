@@ -4,7 +4,7 @@ import {
   HomeIcon,
   LucideIcon,
   SparklesIcon,
-  UserIcon,
+  Users,
 } from 'lucide-react-native';
 
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
@@ -23,7 +23,7 @@ const ICONS: Record<string, LucideIcon> = {
 
   [TabRoutes.Progress]: ChartBarIcon,
 
-  [TabRoutes.Profile]: UserIcon,
+  [TabRoutes.Mentor]: Users,
 };
 
 export function CustomBottomTabBar({

@@ -3,5 +3,5 @@ export const TabRoutes = {
   Journal: 'JournalTab',
   AI: 'AITab',
   Progress: 'ProgressTab',
-  Profile: 'ProfileTab',
+  Mentor: 'MentorTab',
 } as const;

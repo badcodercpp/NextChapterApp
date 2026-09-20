@@ -44,7 +44,7 @@ export const MAIN_MENU: DrawerMenuItem[] = [
   {
     id: 'profile',
     title: 'Profile',
-    route: TabRoutes.Profile,
+    route: TabRoutes.Mentor,
     icon: UserIcon,
   },
 ];

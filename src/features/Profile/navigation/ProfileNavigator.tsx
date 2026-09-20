@@ -1,4 +1,8 @@
-import { EditProfileScreen, ProfileScreen } from '../screens';
+import {
+  EditProfileScreen,
+  EditProfileSuccessScreen,
+  ProfileScreen,
+} from '../screens';
 import {
   NavigatorAppDrawerScreenHeader,
   NavigatorAppHeader,
@@ -39,6 +43,15 @@ export function ProfileNavigator() {
         }}
         name={ProfileRoutes.DeleteProfileScreen}
         component={DeleteProfileScreen}
+      />
+
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          header: NavigatorAppHeader,
+        }}
+        name={ProfileRoutes.EditProfileSuccessScreen}
+        component={EditProfileSuccessScreen}
       />
     </Stack.Navigator>
   );

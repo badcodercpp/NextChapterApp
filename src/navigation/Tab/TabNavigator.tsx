@@ -1,6 +1,7 @@
 import { AIChatNavigator } from '@/features/AIChat';
 import { BottomTabBar } from '../components/CustomBottomTabBar';
 import { HomeNavigator } from '@/features/home';
+import { MentorChatNavigator } from '@/features/mentors/navigation';
 import { TabParamList } from './TabParamList';
 import { TabRoutes } from './TabRoutes';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -59,10 +60,13 @@ export function TabNavigator() {
       <Tab.Screen
         options={{
           headerShown: false,
-          title: t('app.locale.profile'),
+          title: t('app.locale.mentors'),
+          tabBarStyle: {
+            display: 'none',
+          },
         }}
-        name={TabRoutes.Profile}
-        component={HomeNavigator}
+        name={TabRoutes.Mentor}
+        component={MentorChatNavigator}
       />
     </Tab.Navigator>
   );

@@ -10,6 +10,7 @@ export const taLanguage = {
   'app.locale.ai': 'AI',
   'app.locale.progress': 'Progress',
   'app.locale.profile': 'Profile',
+  'app.locale.mentors': 'Mentors',
 };
 
 export default taLanguage;

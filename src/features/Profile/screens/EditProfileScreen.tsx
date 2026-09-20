@@ -51,7 +51,9 @@ export function EditProfileScreen() {
         <WellnessFocusSection
           selectedFocusAreas={[]}
           onFocusAreaToggle={() => {}}
-          onSave={() => {}}
+          onSave={() => {
+            navigation.navigate('EditProfileSuccessScreen');
+          }}
           onDeleteAccount={() => {
             navigation.navigate('DeleteProfileScreen');
           }}

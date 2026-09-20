@@ -6,3 +6,4 @@ export * from './MoodThisWeek';
 export * from './AccountSettings';
 export * from './EditProfile';
 export * from './DeleteProfile';
+export * from './EditProfileSuccess';
