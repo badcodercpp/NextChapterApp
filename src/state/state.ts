@@ -5,6 +5,7 @@ import {
   PURGE,
   REGISTER,
   REHYDRATE,
+  persistReducer,
   persistStore,
 } from 'redux-persist';
 
@@ -12,25 +13,24 @@ import { ClientCommunicators } from 'redux-graphql-native';
 import { configureStore } from '@reduxjs/toolkit';
 import { getCombinedSlices } from './slices';
 import reactotron from '../../ReactotronConfig';
-
 // enable this for data persist
-// import { reduxStorage } from '../storage/appPersist';
+import { reduxStorage } from '../storage/appPersist';
 
 const combinedSlices = getCombinedSlices();
 
 // enable this for data persist
-// const persistConfig = {
-//   key: 'root',
-//   storage: reduxStorage,
-// };
+const persistConfig = {
+  key: 'root',
+  storage: reduxStorage,
+};
 
 // add this to reducer to start ppersisting redux store
-// const persistedReducer = persistReducer(persistConfig, combinedSlices);
+const persistedReducer = persistReducer(persistConfig, combinedSlices);
 
 export const store = configureStore({
-  reducer: combinedSlices,
+  // reducer: combinedSlices,
   // enable this for data persist
-  // reducer: persistedReducer,
+  reducer: persistedReducer,
   enhancers: getDefaultEnhancers =>
     __DEV__
       ? getDefaultEnhancers().concat(reactotron.createEnhancer!())

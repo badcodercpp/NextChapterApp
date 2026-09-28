@@ -2,6 +2,7 @@ import { AIChatNavigator } from '@/features/AIChat';
 import { BottomTabBar } from '../components/CustomBottomTabBar';
 import { HomeNavigator } from '@/features/home';
 import { MentorChatNavigator } from '@/features/mentors/navigation';
+import { RecoveryProgressNavigator } from '@/features/RecoveryProgress/navigation';
 import { TabParamList } from './TabParamList';
 import { TabRoutes } from './TabRoutes';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -54,7 +55,7 @@ export function TabNavigator() {
           title: t('app.locale.progress'),
         }}
         name={TabRoutes.Progress}
-        component={HomeNavigator}
+        component={RecoveryProgressNavigator}
       />
 
       <Tab.Screen

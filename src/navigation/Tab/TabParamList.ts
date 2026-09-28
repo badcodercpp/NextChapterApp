@@ -4,6 +4,7 @@ import { MentorChatStackParamList } from '@/features/mentors/navigation';
 // import { JournalStackParamList } from '@/features/journal/navigation';
 // import { JournalStackParamList } from '@/features/journal/navigation';
 import { NavigatorScreenParams } from '@react-navigation/native';
+import { RecoveryProgressStackParamList } from '@/features/RecoveryProgress/navigation';
 // import { ProfileStackParamList } from '@/features/profile/navigation';
 // import { ProgressStackParamList } from '@/features/progress/navigation';
 import { TabRoutes } from './TabRoutes';
@@ -15,7 +16,7 @@ export type TabParamList = {
 
   [TabRoutes.AI]: NavigatorScreenParams<HomeStackParamList>;
 
-  [TabRoutes.Progress]: NavigatorScreenParams<HomeStackParamList>;
+  [TabRoutes.Progress]: NavigatorScreenParams<RecoveryProgressStackParamList>;
 
   [TabRoutes.Mentor]: NavigatorScreenParams<MentorChatStackParamList>;
 };
