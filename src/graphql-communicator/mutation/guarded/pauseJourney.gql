@@ -1,0 +1,10 @@
+mutation PauseJourney {
+  pauseJourney {
+    id
+    status
+    currentDay
+    currentRecoveryScore
+    pausedAt
+    updatedAt
+  }
+}

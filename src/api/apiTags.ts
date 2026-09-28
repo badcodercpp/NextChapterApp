@@ -18,16 +18,16 @@ export const enhancedApi = api.enhanceEndpoints({
     TodayQuestion: {
       providesTags: ['Question'],
     },
-    GetRecoveryReason: {
-      providesTags: ['Recovery'],
-    },
-    GetRecoveryTimeline: {
-      providesTags: ['Recovery'],
-    },
     GetRecoveryFeeling: {
       providesTags: ['Recovery'],
     },
     GetRecoveryGoal: {
+      providesTags: ['Recovery'],
+    },
+    GetRecoveryReason: {
+      providesTags: ['Recovery'],
+    },
+    GetRecoveryTimeline: {
       providesTags: ['Recovery'],
     },
     CompleteJourney: {

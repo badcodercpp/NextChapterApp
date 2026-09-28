@@ -1,0 +1,3 @@
+mutation ResendEmailVerificationOtp($input: ResendEmailOtpInput!) {
+  resendEmailVerificationOtp(input: $input)
+}

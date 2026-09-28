@@ -1,0 +1,3 @@
+mutation RegisterDevice($input: DeviceInfoInput!) {
+  registerDevice(input: $input)
+}

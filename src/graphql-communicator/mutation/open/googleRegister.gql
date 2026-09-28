@@ -1,0 +1,6 @@
+mutation GoogleRegister($input: GoogleRegisterInput!) {
+  googleRegister(input: $input) {
+    accessToken
+    refreshToken
+  }
+}

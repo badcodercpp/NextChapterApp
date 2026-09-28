@@ -3,7 +3,7 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 const config: CodegenConfig = {
   schema: 'http://localhost:3000/graphql',
 
-  documents: ['src/**/*.{ts,tsx}', '!src/__generated__/**', 'src/**/*.gql'],
+  documents: ['!src/__generated__/**', 'src/**/*.gql'],
 
   generates: {
     './src/__generated__/graphql.ts': {
@@ -13,7 +13,7 @@ const config: CodegenConfig = {
         importBaseApiFrom: '@/api/baseApi',
         exportHooks: true,
 
-        documentMode: 'string',
+        documentMode: 'documentNode',
 
         useTypeImports: true,
         dedupeFragments: true,

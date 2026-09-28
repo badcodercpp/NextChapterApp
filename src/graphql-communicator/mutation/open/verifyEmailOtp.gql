@@ -1,0 +1,6 @@
+mutation VerifyEmailOtp($input: VerifyEmailOtpInput!) {
+  verifyEmailOtp(input: $input) {
+    accessToken
+    refreshToken
+  }
+}

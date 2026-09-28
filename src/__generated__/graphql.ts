@@ -350,16 +350,6 @@ export type RegisterDeviceMutationVariables = Exact<{
 
 export type RegisterDeviceMutation = { registerDevice: boolean };
 
-export type GetRecoveryReasonQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetRecoveryReasonQuery = { getRecoveryReason: RecoveryReason };
-
-export type GetRecoveryTimelineQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetRecoveryTimelineQuery = { getRecoveryTimeline: RecoveryReasonTimeline };
-
 export type GetRecoveryFeelingQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -369,6 +359,16 @@ export type GetRecoveryGoalQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetRecoveryGoalQuery = { getRecoveryGoal: RecoveryReasonEndGoal };
+
+export type GetRecoveryReasonQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetRecoveryReasonQuery = { getRecoveryReason: RecoveryReason };
+
+export type GetRecoveryTimelineQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetRecoveryTimelineQuery = { getRecoveryTimeline: RecoveryReasonTimeline };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -602,16 +602,6 @@ export const RegisterDeviceDocument = new TypedDocumentString(`
   registerDevice(input: $input)
 }
     `);
-export const GetRecoveryReasonDocument = new TypedDocumentString(`
-    query GetRecoveryReason {
-  getRecoveryReason
-}
-    `);
-export const GetRecoveryTimelineDocument = new TypedDocumentString(`
-    query GetRecoveryTimeline {
-  getRecoveryTimeline
-}
-    `);
 export const GetRecoveryFeelingDocument = new TypedDocumentString(`
     query GetRecoveryFeeling {
   getRecoveryFeeling
@@ -620,6 +610,16 @@ export const GetRecoveryFeelingDocument = new TypedDocumentString(`
 export const GetRecoveryGoalDocument = new TypedDocumentString(`
     query GetRecoveryGoal {
   getRecoveryGoal
+}
+    `);
+export const GetRecoveryReasonDocument = new TypedDocumentString(`
+    query GetRecoveryReason {
+  getRecoveryReason
+}
+    `);
+export const GetRecoveryTimelineDocument = new TypedDocumentString(`
+    query GetRecoveryTimeline {
+  getRecoveryTimeline
 }
     `);
 
@@ -688,21 +688,21 @@ const injectedRtkApi = api.injectEndpoints({
     RegisterDevice: build.mutation<RegisterDeviceMutation, RegisterDeviceMutationVariables>({
       query: (variables) => ({ document: RegisterDeviceDocument as unknown as string, variables })
     }),
-    GetRecoveryReason: build.query<GetRecoveryReasonQuery, GetRecoveryReasonQueryVariables | void>({
-      query: (variables) => ({ document: GetRecoveryReasonDocument as unknown as string, variables })
-    }),
-    GetRecoveryTimeline: build.query<GetRecoveryTimelineQuery, GetRecoveryTimelineQueryVariables | void>({
-      query: (variables) => ({ document: GetRecoveryTimelineDocument as unknown as string, variables })
-    }),
     GetRecoveryFeeling: build.query<GetRecoveryFeelingQuery, GetRecoveryFeelingQueryVariables | void>({
       query: (variables) => ({ document: GetRecoveryFeelingDocument as unknown as string, variables })
     }),
     GetRecoveryGoal: build.query<GetRecoveryGoalQuery, GetRecoveryGoalQueryVariables | void>({
       query: (variables) => ({ document: GetRecoveryGoalDocument as unknown as string, variables })
     }),
+    GetRecoveryReason: build.query<GetRecoveryReasonQuery, GetRecoveryReasonQueryVariables | void>({
+      query: (variables) => ({ document: GetRecoveryReasonDocument as unknown as string, variables })
+    }),
+    GetRecoveryTimeline: build.query<GetRecoveryTimelineQuery, GetRecoveryTimelineQueryVariables | void>({
+      query: (variables) => ({ document: GetRecoveryTimelineDocument as unknown as string, variables })
+    }),
   }),
 });
 
 export { injectedRtkApi as api };
-export const { useCompleteJourneyMutation, useFollowUpMutation, useLogoutMutation, useLogoutAllMutation, usePauseJourneyMutation, useRefreshTokenMutation, useRequestChangePasswordOtpMutation, useResumeJourneyMutation, useStartJourneyMutation, useUpdateProfileMutation, useVerifyChangePasswordOtpMutation, useGoogleLoginMutation, useGoogleRegisterMutation, useLoginMutation, useRegisterMutation, useResendEmailVerificationOtpMutation, useVerifyEmailOtpMutation, useActiveJourneyQuery, useLazyActiveJourneyQuery, useMeQuery, useLazyMeQuery, useTodayQuestionQuery, useLazyTodayQuestionQuery, useRegisterDeviceMutation, useGetRecoveryReasonQuery, useLazyGetRecoveryReasonQuery, useGetRecoveryTimelineQuery, useLazyGetRecoveryTimelineQuery, useGetRecoveryFeelingQuery, useLazyGetRecoveryFeelingQuery, useGetRecoveryGoalQuery, useLazyGetRecoveryGoalQuery } = injectedRtkApi;
+export const { useCompleteJourneyMutation, useFollowUpMutation, useLogoutMutation, useLogoutAllMutation, usePauseJourneyMutation, useRefreshTokenMutation, useRequestChangePasswordOtpMutation, useResumeJourneyMutation, useStartJourneyMutation, useUpdateProfileMutation, useVerifyChangePasswordOtpMutation, useGoogleLoginMutation, useGoogleRegisterMutation, useLoginMutation, useRegisterMutation, useResendEmailVerificationOtpMutation, useVerifyEmailOtpMutation, useActiveJourneyQuery, useLazyActiveJourneyQuery, useMeQuery, useLazyMeQuery, useTodayQuestionQuery, useLazyTodayQuestionQuery, useRegisterDeviceMutation, useGetRecoveryFeelingQuery, useLazyGetRecoveryFeelingQuery, useGetRecoveryGoalQuery, useLazyGetRecoveryGoalQuery, useGetRecoveryReasonQuery, useLazyGetRecoveryReasonQuery, useGetRecoveryTimelineQuery, useLazyGetRecoveryTimelineQuery } = injectedRtkApi;
 

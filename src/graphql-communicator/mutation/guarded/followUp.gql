@@ -1,0 +1,15 @@
+mutation FollowUp($input: FollowUpInput!) {
+  followUp(input: $input) {
+    id
+    status
+    conversation {
+      role
+      content
+      reflection
+      insight
+      question
+      summary
+      createdAt
+    }
+  }
+}

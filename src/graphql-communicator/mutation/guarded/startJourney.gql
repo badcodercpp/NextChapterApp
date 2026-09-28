@@ -1,0 +1,15 @@
+mutation StartJourney($input: StartJourneyInput!) {
+  startJourney(input: $input) {
+    id
+    userId
+    program
+    status
+    currentDay
+    currentRecoveryScore
+    startedAt
+    pausedAt
+    completedAt
+    createdAt
+    updatedAt
+  }
+}

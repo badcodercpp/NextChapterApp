@@ -1,0 +1,10 @@
+mutation CompleteJourney {
+  completeJourney {
+    id
+    status
+    currentDay
+    currentRecoveryScore
+    completedAt
+    updatedAt
+  }
+}
