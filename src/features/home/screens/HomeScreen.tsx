@@ -11,14 +11,19 @@ import {
 
 import React from 'react';
 import { View } from 'react-native';
-import { useMe } from '@/features/home/hooks/useMe';
+import { useMeQuery } from '@/__generated__/graphql';
 
 export function HomeScreen() {
-  useMe();
+  const { data } = useMeQuery();
+
   return (
     <AppAuthenticatedLayout>
       <View className="mt-2">
-        <RecoveryScoreCard score={8} trend={20} />
+        <RecoveryScoreCard
+          score={8}
+          trend={20}
+          name={data?.me.displayName ?? ''}
+        />
       </View>
       <View className="mt-4">
         <TodaysFocusCard

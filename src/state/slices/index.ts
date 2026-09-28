@@ -1,68 +1,9 @@
-import {
-  combineNamedSlices,
-  createReduxNamedReducer,
-} from 'redux-named-reducer';
-import {
-  completeJourneySliceReducer,
-  followUpSliceReducer,
-  googleLoginSliceReducer,
-  googleRegisterSliceReducer,
-  loginSliceReducer,
-  logoutAllSliceReducer,
-  logoutSliceReducer,
-  pauseJourneySliceReducer,
-  refreshTokenSliceReducer,
-  registerSliceReducer,
-  requestChangePasswordOtpSliceReducer,
-  resendEmailVerificationOtpSliceReducer,
-  resumeJourneySliceReducer,
-  startJourneySliceReducer,
-  updateProfileSliceReducer,
-  verifyChangePasswordOtpSliceReducer,
-  verifyEmailOtpSliceReducer,
-} from './mutation';
-import { getActiveJourneySliceReducer, getMeSliceReducer } from './query';
-
-import { authtokenSliceReducer } from '@/state/slices/local';
-import { reduxGraphqlReducer } from 'redux-graphql-native';
-
-const reduxGraphqlNamedReducer = createReduxNamedReducer(
-  reduxGraphqlReducer,
-  'reduxGraphqlAuth',
-);
+import authtokenSlice from '@/state/slices/local/authtoken';
+import { combineSlices } from '@reduxjs/toolkit';
 
 export const getCombinedSlices = () => {
-  return combineNamedSlices(
-    // lib state
-    reduxGraphqlNamedReducer,
-
+  return combineSlices(
     // local state
-    authtokenSliceReducer,
-
-    // open mutation
-    loginSliceReducer,
-    registerSliceReducer,
-    resendEmailVerificationOtpSliceReducer,
-    verifyEmailOtpSliceReducer,
-    // google
-    googleLoginSliceReducer,
-    googleRegisterSliceReducer,
-
-    // guarded mutation
-    completeJourneySliceReducer,
-    followUpSliceReducer,
-    logoutSliceReducer,
-    logoutAllSliceReducer,
-    pauseJourneySliceReducer,
-    refreshTokenSliceReducer,
-    requestChangePasswordOtpSliceReducer,
-    resumeJourneySliceReducer,
-    startJourneySliceReducer,
-    updateProfileSliceReducer,
-    verifyChangePasswordOtpSliceReducer,
-
-    // guarded query
-    getActiveJourneySliceReducer,
-    getMeSliceReducer,
+    authtokenSlice,
   );
 };

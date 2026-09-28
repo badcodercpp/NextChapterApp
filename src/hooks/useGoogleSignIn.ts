@@ -1,116 +1,176 @@
 import {
+  DeviceInfoInput,
+  useGoogleLoginMutation,
+  useGoogleRegisterMutation,
+} from '@/__generated__/graphql';
+import {
   GoogleSignin,
   SignInResponse,
   isErrorWithCode,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import {
-  initiateGoogleLogin,
-  initiateGoogleRegister,
-} from '@/state/thunkCreators';
 
-import { AppDispatch } from '../state/state';
-import { DeviceInfoInput } from '@/__generated__/graphql';
 import { showToast } from '@/components';
 import { useCallback } from 'react';
 import { useDeviceInfoSessionPayload } from './useDeviceInfoSessionPayload';
-import { useDispatch } from 'react-redux';
 
 const useGoogleSignIn = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const { getDeviceInfoSessionPayload } = useDeviceInfoSessionPayload();
+
+  const [
+    googleLogin,
+    {
+      isLoading: isGoogleLoginLoading,
+      isError: isGoogleLoginError,
+      error: googleLoginError,
+    },
+  ] = useGoogleLoginMutation();
+
+  const [
+    googleRegister,
+    {
+      isLoading: isGoogleRegisterLoading,
+      isError: isGoogleRegisterError,
+      error: googleRegisterError,
+    },
+  ] = useGoogleRegisterMutation();
 
   const doGoogleSignIn = useCallback(async () => {
     showToast('Starting google sign-in...', 'info');
+
     try {
       await GoogleSignin.hasPlayServices();
+
       const googleSignInResponse: SignInResponse = await GoogleSignin.signIn();
 
-      if (googleSignInResponse.data?.idToken) {
-        const deviceInfoSessionPayload: DeviceInfoInput =
-          await getDeviceInfoSessionPayload();
-        const googleUserDetails = await dispatch(
-          initiateGoogleLogin({
-            input: {
-              idToken: googleSignInResponse.data.idToken,
-              ...deviceInfoSessionPayload,
-            },
-          }),
-        ).unwrap();
-        console.log('userInfo', googleSignInResponse, googleUserDetails);
-      } else {
-        throw new Error('wrong id token');
+      const idToken = googleSignInResponse.data?.idToken;
+
+      if (!idToken) {
+        throw new Error('Wrong id token');
       }
 
-      //setState({ userInfo, error: undefined });
+      const deviceInfoSessionPayload: DeviceInfoInput =
+        await getDeviceInfoSessionPayload();
+
+      const googleUserDetails = await googleLogin({
+        input: {
+          idToken,
+          ...deviceInfoSessionPayload,
+        },
+      }).unwrap();
+
+      console.log('userInfo', googleSignInResponse, googleUserDetails);
+
+      // Store auth tokens here if needed.
+      //
+      // dispatch(
+      //   setAuthTokens({
+      //     accessToken:
+      //       googleUserDetails.googleLogin.accessToken,
+      //     refreshToken:
+      //       googleUserDetails.googleLogin.refreshToken,
+      //     authStatus: 'authenticated',
+      //   }),
+      // );
     } catch (error) {
-      console.log(error, 'google error');
+      console.log(error, 'google login error');
+
       if (isErrorWithCode(error)) {
         switch (error.code) {
           case statusCodes.SIGN_IN_CANCELLED:
-            // user cancelled the login flow
             break;
+
           case statusCodes.IN_PROGRESS:
-            // operation (eg. sign in) already in progress
             break;
+
           case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-            // play services not available or outdated
             break;
+
           default:
-          // some other error happened
+            console.log('Google login error:', error);
+            break;
         }
       } else {
-        // an error that's not related to google sign in occurred
+        console.log('Google login error:', error);
       }
     }
-  }, [dispatch, getDeviceInfoSessionPayload]);
+  }, [getDeviceInfoSessionPayload, googleLogin]);
 
   const doGoogleOnboard = useCallback(async () => {
     try {
       await GoogleSignin.hasPlayServices();
+
       const googleSignInResponse: SignInResponse = await GoogleSignin.signIn();
-      if (googleSignInResponse.data?.idToken) {
-        const deviceInfoSessionPayload: DeviceInfoInput =
-          await getDeviceInfoSessionPayload();
-        const googleUserDetails = await dispatch(
-          initiateGoogleRegister({
-            input: {
-              idToken: googleSignInResponse.data?.idToken,
-              ...deviceInfoSessionPayload,
-            },
-          }),
-        ).unwrap();
-        console.log('userInfo', googleSignInResponse, googleUserDetails);
-      } else {
-        throw new Error('wrong id token');
+
+      const idToken = googleSignInResponse.data?.idToken;
+
+      if (!idToken) {
+        throw new Error('Wrong id token');
       }
 
-      //setState({ userInfo, error: undefined });
+      const deviceInfoSessionPayload: DeviceInfoInput =
+        await getDeviceInfoSessionPayload();
+
+      const googleUserDetails = await googleRegister({
+        input: {
+          idToken,
+          ...deviceInfoSessionPayload,
+        },
+      }).unwrap();
+
+      console.log('userInfo', googleSignInResponse, googleUserDetails);
+
+      // Store auth tokens here if needed.
+      //
+      // dispatch(
+      //   setAuthTokens({
+      //     accessToken:
+      //       googleUserDetails.googleRegister.accessToken,
+      //     refreshToken:
+      //       googleUserDetails.googleRegister.refreshToken,
+      //     authStatus: 'authenticated',
+      //   }),
+      // );
     } catch (error) {
-      console.log(error, 'google error');
+      console.log(error, 'google register error');
+
       if (isErrorWithCode(error)) {
         switch (error.code) {
           case statusCodes.SIGN_IN_CANCELLED:
-            // user cancelled the login flow
             break;
+
           case statusCodes.IN_PROGRESS:
-            // operation (eg. sign in) already in progress
             break;
+
           case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-            // play services not available or outdated
             break;
+
           default:
-          // some other error happened
+            console.log('Google register error:', error);
+            break;
         }
       } else {
-        // an error that's not related to google sign in occurred
+        console.log('Google register error:', error);
       }
     }
-  }, [dispatch, getDeviceInfoSessionPayload]);
+  }, [getDeviceInfoSessionPayload, googleRegister]);
+
+  const isLoading = isGoogleLoginLoading || isGoogleRegisterLoading;
 
   return {
     doGoogleSignIn,
     doGoogleOnboard,
+
+    isLoading,
+
+    isGoogleLoginLoading,
+    isGoogleRegisterLoading,
+
+    isGoogleLoginError,
+    isGoogleRegisterError,
+
+    googleLoginError,
+    googleRegisterError,
   };
 };
 

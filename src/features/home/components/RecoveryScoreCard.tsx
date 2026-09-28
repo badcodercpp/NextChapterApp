@@ -6,14 +6,19 @@ import { View } from 'react-native';
 interface RecoveryScoreCardProps {
   score: number;
   trend: number;
+  name: string;
 }
 
-export function RecoveryScoreCard({ score, trend }: RecoveryScoreCardProps) {
+export function RecoveryScoreCard({
+  name,
+  score,
+  trend,
+}: RecoveryScoreCardProps) {
   return (
     <AppCard className="overflow-hidden rounded-[28px] border border-primary bg-card px-4 py-4">
       <View className="flex-row mb-2 items-center">
         <AppText variant="md" className="text-primary mr-0.5">
-          Good Morning, AJ{' '}
+          Good Morning, {name}{' '}
         </AppText>
         <AppText variant="2xl" className="text-primary mr-1">
           👋{' '}

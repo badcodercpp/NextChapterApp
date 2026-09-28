@@ -1,7 +1,10 @@
-import { initiateLogout, initiateRefreshToken } from '@/state/thunkCreators';
 import { selectAccessToken, selectRefreshToken } from '@/state/selectors';
-import { setAuthStatus, setAuthTokens } from '@/state/slices/local';
+import { setAuthStatus, setAuthTokens } from '@/state/slices/local/authtoken';
 import { useDispatch, useSelector } from 'react-redux';
+import {
+  useLogoutMutation,
+  useRefreshTokenMutation,
+} from '@/__generated__/graphql';
 
 import { AppDispatch } from '@/state';
 import { isTokenExpired } from '@/utils';
@@ -12,6 +15,9 @@ export const useAuthBootstrap = () => {
 
   const accessToken = useSelector(selectAccessToken);
   const refreshToken = useSelector(selectRefreshToken);
+
+  const [refreshTokenMutation] = useRefreshTokenMutation();
+  const [logoutMutation] = useLogoutMutation();
 
   useEffect(() => {
     const bootstrap = async () => {
@@ -29,44 +35,50 @@ export const useAuthBootstrap = () => {
 
       // Access token expired and no refresh token
       if (!refreshToken) {
-        await dispatch(initiateLogout()).unwrap();
+        await logoutMutation().unwrap();
+        dispatch(setAuthStatus('unauthenticated'));
         return;
       }
 
       try {
-        // Refresh access token
-        const response = await dispatch(
-          initiateRefreshToken({
-            input: {
-              refreshToken,
-            },
-          }),
-        ).unwrap();
-        if (response) {
-          dispatch(
-            setAuthTokens({
-              accessToken: response.accessToken,
-              refreshToken: response.refreshToken ?? refreshToken,
-              authStatus: 'authenticated',
-            }),
-          );
+        const response = await refreshTokenMutation({
+          input: {
+            refreshToken,
+          },
+        }).unwrap();
 
-          dispatch(setAuthStatus('authenticated'));
-        } else {
+        if (!response?.refreshToken) {
           throw new Error('Unauthorized');
         }
+
+        dispatch(
+          setAuthTokens({
+            accessToken: response.refreshToken.accessToken,
+            refreshToken: response.refreshToken.refreshToken ?? refreshToken,
+            authStatus: 'authenticated',
+          }),
+        );
       } catch (error) {
-        console.log('error', error);
-        await dispatch(initiateLogout()).unwrap();
+        console.log('Refresh token error:', error);
+
+        try {
+          await logoutMutation().unwrap();
+        } finally {
+          dispatch(setAuthStatus('unauthenticated'));
+        }
       }
     };
 
-    // immediate bootestrap
-    // bootstrap();
-
-    // lazy bootstrap for testing
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       bootstrap();
     }, 5000);
-  }, [accessToken, refreshToken, dispatch]);
+
+    return () => clearTimeout(timer);
+  }, [
+    accessToken,
+    refreshToken,
+    dispatch,
+    refreshTokenMutation,
+    logoutMutation,
+  ]);
 };

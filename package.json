@@ -8,7 +8,9 @@
     "lint": "eslint .",
     "start": "react-native start --reset-cache",
     "test": "jest",
-    "graphql-codegen": "graphql-codegen"
+    "graphql-codegen": "graphql-codegen",
+    "generate:tags": "tsx scripts/generate-api-tags.ts",
+    "generate": "yarn graphql-codegen && yarn generate:tags"
   },
   "dependencies": {
     "@apollo/client": "^4.2.12",
@@ -54,8 +56,6 @@
     "react-redux": "^9.3.0",
     "reactotron-react-native": "^5.2.0",
     "reactotron-redux": "^3.2.1",
-    "redux-graphql-native": "^4.3.0",
-    "redux-named-reducer": "^3.2.0",
     "redux-persist": "^6.0.0",
     "rxjs": "^7.8.2",
     "tailwind-merge": "^3.6.0",
@@ -94,6 +94,7 @@
     "react-native-dotenv": "^4.1.1",
     "react-native-svg-transformer": "^1.5.3",
     "react-test-renderer": "19.2.3",
+    "tsx": "^4.23.15",
     "typescript": "^5.8.3"
   },
   "engines": {

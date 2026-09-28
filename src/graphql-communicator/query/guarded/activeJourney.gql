@@ -1,0 +1,15 @@
+query ActiveJourney {
+  activeJourney {
+    id
+    userId
+    program
+    status
+    currentDay
+    currentRecoveryScore
+    startedAt
+    pausedAt
+    completedAt
+    createdAt
+    updatedAt
+  }
+}

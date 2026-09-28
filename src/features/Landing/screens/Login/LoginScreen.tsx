@@ -26,26 +26,22 @@ import { useLogin } from './useLogin';
 export function LoginScreen() {
   const {
     navigation,
-    loading,
     showPassword,
     setShowPassword,
     control,
     errors,
-    loginPending,
     submitLogin,
     clearErrors,
   } = useLogin();
 
-  const { doGoogleSignIn } = useGoogleSignIn();
-
-  const isLoading = loading || loginPending;
+  const { doGoogleSignIn, isGoogleLoginLoading } = useGoogleSignIn();
 
   useScreenHeader({
     title: 'Login',
-    backDisabled: isLoading,
+    backDisabled: isGoogleLoginLoading,
   });
 
-  usePreventBackNavigation(isLoading);
+  usePreventBackNavigation(isGoogleLoginLoading);
 
   return (
     <AppScreen
@@ -150,7 +146,7 @@ export function LoginScreen() {
               rightIcon={ArrowRight}
               fullWidth
               className="mt-4"
-              loading={isLoading}
+              loading={isGoogleLoginLoading}
               onPress={submitLogin}
             />
 

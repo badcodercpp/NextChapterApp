@@ -1,0 +1,15 @@
+query TodayQuestion {
+  todayQuestion {
+    id
+    journeyId
+    missionId
+    day
+    status
+    askedAt
+    conversation {
+      role
+      content
+      createdAt
+    }
+  }
+}

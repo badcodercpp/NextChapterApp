@@ -1,0 +1,15 @@
+query Me {
+  me {
+    id
+    email
+    displayName
+    gender
+    avatarUrl
+    timezone
+    locale
+    emailVerified
+    isActive
+    createdAt
+    updatedAt
+  }
+}
