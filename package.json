@@ -13,7 +13,6 @@
     "generate": "yarn graphql-codegen && yarn generate:tags"
   },
   "dependencies": {
-    "@apollo/client": "^4.2.12",
     "@hookform/resolvers": "^5.8.0",
     "@react-native-async-storage/async-storage": "^3.1.1",
     "@react-native-google-signin/google-signin": "^16.1.4",
@@ -25,7 +24,6 @@
     "@reduxjs/toolkit": "^2.12.0",
     "@rtk-query/graphql-request-base-query": "^2.3.2",
     "add": "^2.0.9",
-    "apollo-upload-client": "^14.1.1",
     "axios": "^1.18.1",
     "clsx": "^2.1.1",
     "graphql": "^17.0.2",
