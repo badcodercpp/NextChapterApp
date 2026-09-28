@@ -1,21 +1,30 @@
-import { CodegenConfig } from '@graphql-codegen/cli';
+import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   schema: 'http://localhost:3000/graphql',
-  // this assumes that all your source files are in a top-level `src/` directory - you might need to adjust this to your file structure
-  documents: ['src/**/*.{ts,tsx}', 'src/**/**/*.{ts,tsx}'],
+
+  documents: ['src/**/*.{ts,tsx}', '!src/__generated__/**'],
+
   generates: {
-    './src/__generated__/': {
-      preset: 'client',
+    './src/__generated__/graphql.ts': {
+      plugins: ['typescript-operations', 'typescript-rtk-query'],
+
       config: {
-        // Force codegen to avoid referencing main @apollo/client barrel package
+        importBaseApiFrom: '@/api/baseApi',
+        exportHooks: true,
+
+        documentMode: 'string',
+
         useTypeImports: true,
-        gqlImport: 'graphql-tag#gql',
+        dedupeFragments: true,
+        skipTypename: false,
+
+        // Native TS enums
         enumType: 'native',
-        enumsAsTypes: false,
       },
     },
   },
+
   ignoreNoDocuments: true,
 };
 

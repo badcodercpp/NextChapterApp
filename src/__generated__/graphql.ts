@@ -1,9 +1,9 @@
-/* eslint-disable */
 /** Internal type. DO NOT USE DIRECTLY. */
 type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 /** Internal type. DO NOT USE DIRECTLY. */
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import type { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
+import { api } from '@/api/baseApi';
 /** Auth Provider */
 export enum AuthProvider {
   Apple = 'APPLE',
@@ -74,7 +74,7 @@ export type GoogleRegisterInput = {
   deviceType: DeviceType;
   displayName?: string | null | undefined;
   gender?: Gender | null | undefined;
-  howAreYouFeeling?: RecoveryReasonCurrentFeeling;
+  howAreYouFeeling?: Array<RecoveryReasonCurrentFeeling>;
   howLongHasItBeen?: RecoveryReasonTimeline;
   idToken: string;
   ipAddress?: string | null | undefined;
@@ -174,7 +174,7 @@ export type RegisterInput = {
   displayName: string;
   email: string;
   gender?: Gender | null | undefined;
-  howAreYouFeeling?: RecoveryReasonCurrentFeeling;
+  howAreYouFeeling?: Array<RecoveryReasonCurrentFeeling>;
   howLongHasItBeen?: RecoveryReasonTimeline;
   ipAddress?: string | null | undefined;
   password: string;
@@ -370,29 +370,339 @@ export type GetRecoveryGoalQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetRecoveryGoalQuery = { getRecoveryGoal: RecoveryReasonEndGoal };
 
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: NonNullable<DocumentTypeDecoration<TResult, TVariables>['__apiType']>;
+  private value: string;
+  public __meta__?: Record<string, any> | undefined;
 
-export const CompleteJourneyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CompleteJourney"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"completeJourney"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"currentDay"}},{"kind":"Field","name":{"kind":"Name","value":"currentRecoveryScore"}},{"kind":"Field","name":{"kind":"Name","value":"completedAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<CompleteJourneyMutation, CompleteJourneyMutationVariables>;
-export const FollowUpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"FollowUp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"FollowUpInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"followUp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"conversation"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"reflection"}},{"kind":"Field","name":{"kind":"Name","value":"insight"}},{"kind":"Field","name":{"kind":"Name","value":"question"}},{"kind":"Field","name":{"kind":"Name","value":"summary"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]}}]} as unknown as DocumentNode<FollowUpMutation, FollowUpMutationVariables>;
-export const LogoutDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Logout"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"logout"}}]}}]} as unknown as DocumentNode<LogoutMutation, LogoutMutationVariables>;
-export const LogoutAllDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LogoutAll"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"logoutAll"}}]}}]} as unknown as DocumentNode<LogoutAllMutation, LogoutAllMutationVariables>;
-export const PauseJourneyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"PauseJourney"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pauseJourney"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"currentDay"}},{"kind":"Field","name":{"kind":"Name","value":"currentRecoveryScore"}},{"kind":"Field","name":{"kind":"Name","value":"pausedAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<PauseJourneyMutation, PauseJourneyMutationVariables>;
-export const RefreshTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RefreshToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RefreshTokenInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"refreshToken"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]} as unknown as DocumentNode<RefreshTokenMutation, RefreshTokenMutationVariables>;
-export const RequestChangePasswordOtpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RequestChangePasswordOtp"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requestChangePasswordOtp"}}]}}]} as unknown as DocumentNode<RequestChangePasswordOtpMutation, RequestChangePasswordOtpMutationVariables>;
-export const ResumeJourneyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ResumeJourney"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"resumeJourney"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"currentDay"}},{"kind":"Field","name":{"kind":"Name","value":"currentRecoveryScore"}},{"kind":"Field","name":{"kind":"Name","value":"pausedAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<ResumeJourneyMutation, ResumeJourneyMutationVariables>;
-export const StartJourneyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"StartJourney"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"StartJourneyInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"startJourney"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"program"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"currentDay"}},{"kind":"Field","name":{"kind":"Name","value":"currentRecoveryScore"}},{"kind":"Field","name":{"kind":"Name","value":"startedAt"}},{"kind":"Field","name":{"kind":"Name","value":"pausedAt"}},{"kind":"Field","name":{"kind":"Name","value":"completedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<StartJourneyMutation, StartJourneyMutationVariables>;
-export const UpdateProfileDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateProfile"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateProfileInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateProfile"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"gender"}},{"kind":"Field","name":{"kind":"Name","value":"avatarUrl"}},{"kind":"Field","name":{"kind":"Name","value":"timezone"}},{"kind":"Field","name":{"kind":"Name","value":"locale"}},{"kind":"Field","name":{"kind":"Name","value":"emailVerified"}},{"kind":"Field","name":{"kind":"Name","value":"isActive"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<UpdateProfileMutation, UpdateProfileMutationVariables>;
-export const VerifyChangePasswordOtpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"VerifyChangePasswordOtp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"VerifyChangePasswordOtpInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"verifyChangePasswordOtp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<VerifyChangePasswordOtpMutation, VerifyChangePasswordOtpMutationVariables>;
-export const GoogleLoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"GoogleLogin"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GoogleLoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"googleLogin"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]} as unknown as DocumentNode<GoogleLoginMutation, GoogleLoginMutationVariables>;
-export const GoogleRegisterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"GoogleRegister"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GoogleRegisterInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"googleRegister"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]} as unknown as DocumentNode<GoogleRegisterMutation, GoogleRegisterMutationVariables>;
-export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
-export const RegisterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Register"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RegisterInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"register"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<RegisterMutation, RegisterMutationVariables>;
-export const ResendEmailVerificationOtpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ResendEmailVerificationOtp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ResendEmailOtpInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"resendEmailVerificationOtp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<ResendEmailVerificationOtpMutation, ResendEmailVerificationOtpMutationVariables>;
-export const VerifyEmailOtpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"VerifyEmailOtp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"VerifyEmailOtpInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"verifyEmailOtp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]} as unknown as DocumentNode<VerifyEmailOtpMutation, VerifyEmailOtpMutationVariables>;
-export const ActiveJourneyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ActiveJourney"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activeJourney"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userId"}},{"kind":"Field","name":{"kind":"Name","value":"program"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"currentDay"}},{"kind":"Field","name":{"kind":"Name","value":"currentRecoveryScore"}},{"kind":"Field","name":{"kind":"Name","value":"startedAt"}},{"kind":"Field","name":{"kind":"Name","value":"pausedAt"}},{"kind":"Field","name":{"kind":"Name","value":"completedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<ActiveJourneyQuery, ActiveJourneyQueryVariables>;
-export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"gender"}},{"kind":"Field","name":{"kind":"Name","value":"avatarUrl"}},{"kind":"Field","name":{"kind":"Name","value":"timezone"}},{"kind":"Field","name":{"kind":"Name","value":"locale"}},{"kind":"Field","name":{"kind":"Name","value":"emailVerified"}},{"kind":"Field","name":{"kind":"Name","value":"isActive"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
-export const TodayQuestionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TodayQuestion"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"todayQuestion"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"journeyId"}},{"kind":"Field","name":{"kind":"Name","value":"missionId"}},{"kind":"Field","name":{"kind":"Name","value":"day"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"askedAt"}},{"kind":"Field","name":{"kind":"Name","value":"conversation"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]}}]} as unknown as DocumentNode<TodayQuestionQuery, TodayQuestionQueryVariables>;
-export const RegisterDeviceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RegisterDevice"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DeviceInfoInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"registerDevice"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<RegisterDeviceMutation, RegisterDeviceMutationVariables>;
-export const GetRecoveryReasonDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetRecoveryReason"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getRecoveryReason"}}]}}]} as unknown as DocumentNode<GetRecoveryReasonQuery, GetRecoveryReasonQueryVariables>;
-export const GetRecoveryTimelineDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetRecoveryTimeline"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getRecoveryTimeline"}}]}}]} as unknown as DocumentNode<GetRecoveryTimelineQuery, GetRecoveryTimelineQueryVariables>;
-export const GetRecoveryFeelingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetRecoveryFeeling"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getRecoveryFeeling"}}]}}]} as unknown as DocumentNode<GetRecoveryFeelingQuery, GetRecoveryFeelingQueryVariables>;
-export const GetRecoveryGoalDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetRecoveryGoal"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getRecoveryGoal"}}]}}]} as unknown as DocumentNode<GetRecoveryGoalQuery, GetRecoveryGoalQueryVariables>;
+  constructor(value: string, __meta__?: Record<string, any> | undefined) {
+    super(value);
+    this.value = value;
+    this.__meta__ = __meta__;
+  }
+
+  override toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
+
+export const CompleteJourneyDocument = new TypedDocumentString(`
+    mutation CompleteJourney {
+  completeJourney {
+    id
+    status
+    currentDay
+    currentRecoveryScore
+    completedAt
+    updatedAt
+  }
+}
+    `);
+export const FollowUpDocument = new TypedDocumentString(`
+    mutation FollowUp($input: FollowUpInput!) {
+  followUp(input: $input) {
+    id
+    status
+    conversation {
+      role
+      content
+      reflection
+      insight
+      question
+      summary
+      createdAt
+    }
+  }
+}
+    `);
+export const LogoutDocument = new TypedDocumentString(`
+    mutation Logout {
+  logout
+}
+    `);
+export const LogoutAllDocument = new TypedDocumentString(`
+    mutation LogoutAll {
+  logoutAll
+}
+    `);
+export const PauseJourneyDocument = new TypedDocumentString(`
+    mutation PauseJourney {
+  pauseJourney {
+    id
+    status
+    currentDay
+    currentRecoveryScore
+    pausedAt
+    updatedAt
+  }
+}
+    `);
+export const RefreshTokenDocument = new TypedDocumentString(`
+    mutation RefreshToken($input: RefreshTokenInput!) {
+  refreshToken(input: $input) {
+    accessToken
+    refreshToken
+  }
+}
+    `);
+export const RequestChangePasswordOtpDocument = new TypedDocumentString(`
+    mutation RequestChangePasswordOtp {
+  requestChangePasswordOtp
+}
+    `);
+export const ResumeJourneyDocument = new TypedDocumentString(`
+    mutation ResumeJourney {
+  resumeJourney {
+    id
+    status
+    currentDay
+    currentRecoveryScore
+    pausedAt
+    updatedAt
+  }
+}
+    `);
+export const StartJourneyDocument = new TypedDocumentString(`
+    mutation StartJourney($input: StartJourneyInput!) {
+  startJourney(input: $input) {
+    id
+    userId
+    program
+    status
+    currentDay
+    currentRecoveryScore
+    startedAt
+    pausedAt
+    completedAt
+    createdAt
+    updatedAt
+  }
+}
+    `);
+export const UpdateProfileDocument = new TypedDocumentString(`
+    mutation UpdateProfile($input: UpdateProfileInput!) {
+  updateProfile(input: $input) {
+    id
+    email
+    displayName
+    gender
+    avatarUrl
+    timezone
+    locale
+    emailVerified
+    isActive
+    createdAt
+    updatedAt
+  }
+}
+    `);
+export const VerifyChangePasswordOtpDocument = new TypedDocumentString(`
+    mutation VerifyChangePasswordOtp($input: VerifyChangePasswordOtpInput!) {
+  verifyChangePasswordOtp(input: $input)
+}
+    `);
+export const GoogleLoginDocument = new TypedDocumentString(`
+    mutation GoogleLogin($input: GoogleLoginInput!) {
+  googleLogin(input: $input) {
+    accessToken
+    refreshToken
+  }
+}
+    `);
+export const GoogleRegisterDocument = new TypedDocumentString(`
+    mutation GoogleRegister($input: GoogleRegisterInput!) {
+  googleRegister(input: $input) {
+    accessToken
+    refreshToken
+  }
+}
+    `);
+export const LoginDocument = new TypedDocumentString(`
+    mutation Login($input: LoginInput!) {
+  login(input: $input) {
+    accessToken
+    refreshToken
+  }
+}
+    `);
+export const RegisterDocument = new TypedDocumentString(`
+    mutation Register($input: RegisterInput!) {
+  register(input: $input)
+}
+    `);
+export const ResendEmailVerificationOtpDocument = new TypedDocumentString(`
+    mutation ResendEmailVerificationOtp($input: ResendEmailOtpInput!) {
+  resendEmailVerificationOtp(input: $input)
+}
+    `);
+export const VerifyEmailOtpDocument = new TypedDocumentString(`
+    mutation VerifyEmailOtp($input: VerifyEmailOtpInput!) {
+  verifyEmailOtp(input: $input) {
+    accessToken
+    refreshToken
+  }
+}
+    `);
+export const ActiveJourneyDocument = new TypedDocumentString(`
+    query ActiveJourney {
+  activeJourney {
+    id
+    userId
+    program
+    status
+    currentDay
+    currentRecoveryScore
+    startedAt
+    pausedAt
+    completedAt
+    createdAt
+    updatedAt
+  }
+}
+    `);
+export const MeDocument = new TypedDocumentString(`
+    query Me {
+  me {
+    id
+    email
+    displayName
+    gender
+    avatarUrl
+    timezone
+    locale
+    emailVerified
+    isActive
+    createdAt
+    updatedAt
+  }
+}
+    `);
+export const TodayQuestionDocument = new TypedDocumentString(`
+    query TodayQuestion {
+  todayQuestion {
+    id
+    journeyId
+    missionId
+    day
+    status
+    askedAt
+    conversation {
+      role
+      content
+      createdAt
+    }
+  }
+}
+    `);
+export const RegisterDeviceDocument = new TypedDocumentString(`
+    mutation RegisterDevice($input: DeviceInfoInput!) {
+  registerDevice(input: $input)
+}
+    `);
+export const GetRecoveryReasonDocument = new TypedDocumentString(`
+    query GetRecoveryReason {
+  getRecoveryReason
+}
+    `);
+export const GetRecoveryTimelineDocument = new TypedDocumentString(`
+    query GetRecoveryTimeline {
+  getRecoveryTimeline
+}
+    `);
+export const GetRecoveryFeelingDocument = new TypedDocumentString(`
+    query GetRecoveryFeeling {
+  getRecoveryFeeling
+}
+    `);
+export const GetRecoveryGoalDocument = new TypedDocumentString(`
+    query GetRecoveryGoal {
+  getRecoveryGoal
+}
+    `);
+
+const injectedRtkApi = api.injectEndpoints({
+  endpoints: (build) => ({
+    CompleteJourney: build.mutation<CompleteJourneyMutation, CompleteJourneyMutationVariables | void>({
+      query: (variables) => ({ document: CompleteJourneyDocument as unknown as string, variables })
+    }),
+    FollowUp: build.mutation<FollowUpMutation, FollowUpMutationVariables>({
+      query: (variables) => ({ document: FollowUpDocument as unknown as string, variables })
+    }),
+    Logout: build.mutation<LogoutMutation, LogoutMutationVariables | void>({
+      query: (variables) => ({ document: LogoutDocument as unknown as string, variables })
+    }),
+    LogoutAll: build.mutation<LogoutAllMutation, LogoutAllMutationVariables | void>({
+      query: (variables) => ({ document: LogoutAllDocument as unknown as string, variables })
+    }),
+    PauseJourney: build.mutation<PauseJourneyMutation, PauseJourneyMutationVariables | void>({
+      query: (variables) => ({ document: PauseJourneyDocument as unknown as string, variables })
+    }),
+    RefreshToken: build.mutation<RefreshTokenMutation, RefreshTokenMutationVariables>({
+      query: (variables) => ({ document: RefreshTokenDocument as unknown as string, variables })
+    }),
+    RequestChangePasswordOtp: build.mutation<RequestChangePasswordOtpMutation, RequestChangePasswordOtpMutationVariables | void>({
+      query: (variables) => ({ document: RequestChangePasswordOtpDocument as unknown as string, variables })
+    }),
+    ResumeJourney: build.mutation<ResumeJourneyMutation, ResumeJourneyMutationVariables | void>({
+      query: (variables) => ({ document: ResumeJourneyDocument as unknown as string, variables })
+    }),
+    StartJourney: build.mutation<StartJourneyMutation, StartJourneyMutationVariables>({
+      query: (variables) => ({ document: StartJourneyDocument as unknown as string, variables })
+    }),
+    UpdateProfile: build.mutation<UpdateProfileMutation, UpdateProfileMutationVariables>({
+      query: (variables) => ({ document: UpdateProfileDocument as unknown as string, variables })
+    }),
+    VerifyChangePasswordOtp: build.mutation<VerifyChangePasswordOtpMutation, VerifyChangePasswordOtpMutationVariables>({
+      query: (variables) => ({ document: VerifyChangePasswordOtpDocument as unknown as string, variables })
+    }),
+    GoogleLogin: build.mutation<GoogleLoginMutation, GoogleLoginMutationVariables>({
+      query: (variables) => ({ document: GoogleLoginDocument as unknown as string, variables })
+    }),
+    GoogleRegister: build.mutation<GoogleRegisterMutation, GoogleRegisterMutationVariables>({
+      query: (variables) => ({ document: GoogleRegisterDocument as unknown as string, variables })
+    }),
+    Login: build.mutation<LoginMutation, LoginMutationVariables>({
+      query: (variables) => ({ document: LoginDocument as unknown as string, variables })
+    }),
+    Register: build.mutation<RegisterMutation, RegisterMutationVariables>({
+      query: (variables) => ({ document: RegisterDocument as unknown as string, variables })
+    }),
+    ResendEmailVerificationOtp: build.mutation<ResendEmailVerificationOtpMutation, ResendEmailVerificationOtpMutationVariables>({
+      query: (variables) => ({ document: ResendEmailVerificationOtpDocument as unknown as string, variables })
+    }),
+    VerifyEmailOtp: build.mutation<VerifyEmailOtpMutation, VerifyEmailOtpMutationVariables>({
+      query: (variables) => ({ document: VerifyEmailOtpDocument as unknown as string, variables })
+    }),
+    ActiveJourney: build.query<ActiveJourneyQuery, ActiveJourneyQueryVariables | void>({
+      query: (variables) => ({ document: ActiveJourneyDocument as unknown as string, variables })
+    }),
+    Me: build.query<MeQuery, MeQueryVariables | void>({
+      query: (variables) => ({ document: MeDocument as unknown as string, variables })
+    }),
+    TodayQuestion: build.query<TodayQuestionQuery, TodayQuestionQueryVariables | void>({
+      query: (variables) => ({ document: TodayQuestionDocument as unknown as string, variables })
+    }),
+    RegisterDevice: build.mutation<RegisterDeviceMutation, RegisterDeviceMutationVariables>({
+      query: (variables) => ({ document: RegisterDeviceDocument as unknown as string, variables })
+    }),
+    GetRecoveryReason: build.query<GetRecoveryReasonQuery, GetRecoveryReasonQueryVariables | void>({
+      query: (variables) => ({ document: GetRecoveryReasonDocument as unknown as string, variables })
+    }),
+    GetRecoveryTimeline: build.query<GetRecoveryTimelineQuery, GetRecoveryTimelineQueryVariables | void>({
+      query: (variables) => ({ document: GetRecoveryTimelineDocument as unknown as string, variables })
+    }),
+    GetRecoveryFeeling: build.query<GetRecoveryFeelingQuery, GetRecoveryFeelingQueryVariables | void>({
+      query: (variables) => ({ document: GetRecoveryFeelingDocument as unknown as string, variables })
+    }),
+    GetRecoveryGoal: build.query<GetRecoveryGoalQuery, GetRecoveryGoalQueryVariables | void>({
+      query: (variables) => ({ document: GetRecoveryGoalDocument as unknown as string, variables })
+    }),
+  }),
+});
+
+export { injectedRtkApi as api };
+export const { useCompleteJourneyMutation, useFollowUpMutation, useLogoutMutation, useLogoutAllMutation, usePauseJourneyMutation, useRefreshTokenMutation, useRequestChangePasswordOtpMutation, useResumeJourneyMutation, useStartJourneyMutation, useUpdateProfileMutation, useVerifyChangePasswordOtpMutation, useGoogleLoginMutation, useGoogleRegisterMutation, useLoginMutation, useRegisterMutation, useResendEmailVerificationOtpMutation, useVerifyEmailOtpMutation, useActiveJourneyQuery, useLazyActiveJourneyQuery, useMeQuery, useLazyMeQuery, useTodayQuestionQuery, useLazyTodayQuestionQuery, useRegisterDeviceMutation, useGetRecoveryReasonQuery, useLazyGetRecoveryReasonQuery, useGetRecoveryTimelineQuery, useLazyGetRecoveryTimelineQuery, useGetRecoveryFeelingQuery, useLazyGetRecoveryFeelingQuery, useGetRecoveryGoalQuery, useLazyGetRecoveryGoalQuery } = injectedRtkApi;
+

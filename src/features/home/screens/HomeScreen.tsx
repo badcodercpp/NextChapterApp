@@ -11,8 +11,10 @@ import {
 
 import React from 'react';
 import { View } from 'react-native';
+import { useMe } from '@/features/home/hooks/useMe';
 
 export function HomeScreen() {
+  useMe();
   return (
     <AppAuthenticatedLayout>
       <View className="mt-2">
