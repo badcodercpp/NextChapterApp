@@ -2,27 +2,28 @@ import { AppAvatar, AppIcon, AppPressable, AppText } from '@/components';
 import { Pencil, Sprout } from 'lucide-react-native';
 
 import { View } from 'react-native';
+import { selectMe } from '@/state/selectors';
+import { useSelector } from 'react-redux';
 
 interface ProfileSummaryCardProps {
-  name?: string;
   status?: string;
   quote?: string;
   onEditPress?: () => void;
 }
 
 export function ProfileSummaryCard({
-  name = 'Ajay Jha',
   status = 'Recovering & Growing',
   quote = 'One day at a time.\nI choose me. 💜',
   onEditPress,
 }: ProfileSummaryCardProps) {
+  const { data: me } = useSelector(selectMe);
   return (
     <View className="rounded-[28px] border border-secondary/40 bg-card/60 p-4">
       <View className="flex-row items-center">
         {/* Profile Image */}
         <View className="mr-6">
           <View className="items-center justify-center">
-            <AppAvatar size="lg" name="Ajay Jha" />
+            <AppAvatar size="lg" name={me?.displayName ?? ''} />
           </View>
         </View>
 
@@ -35,7 +36,7 @@ export function ProfileSummaryCard({
               className="flex-1 font-semibold text-text"
               numberOfLines={1}
             >
-              {name}
+              {me?.displayName ?? ''}
             </AppText>
 
             <AppPressable

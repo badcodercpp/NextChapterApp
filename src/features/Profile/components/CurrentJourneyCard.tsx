@@ -2,6 +2,8 @@ import { AppIcon, AppPressable, AppText } from '@/components';
 import { ChevronRight, Heart } from 'lucide-react-native';
 
 import { View } from 'react-native';
+import { selectApplicationConfig } from '@/state/selectors';
+import { useSelector } from 'react-redux';
 
 interface CurrentJourneyCardProps {
   title?: string;
@@ -18,10 +20,11 @@ export function CurrentJourneyCard({
   journeyName = 'Breakup Recovery',
   startedDate = 'Started on 30 Apr 2025',
   currentDay = 12,
-  totalDays = 90,
   progress = 13,
   onPress,
 }: CurrentJourneyCardProps) {
+  const { data: applicationConfig } = useSelector(selectApplicationConfig);
+
   return (
     <AppPressable
       onPress={onPress}
@@ -76,7 +79,7 @@ export function CurrentJourneyCard({
       {/* Progress Header */}
       <View className="mt-6 flex-row items-center justify-between">
         <AppText variant="md" className="text-text-muted">
-          Day {currentDay} of {totalDays}
+          Day {currentDay} of {applicationConfig?.totalProgramDays}
         </AppText>
 
         <AppText variant="md" className="font-semibold text-secondary">

@@ -1,6 +1,8 @@
 import { AppAvatar, AppText } from '@/components';
 
 import { View } from 'react-native';
+import { selectMe } from '@/state/selectors';
+import { useSelector } from 'react-redux';
 
 interface ProfileUpdateSuccessProps {
   title?: string;
@@ -11,10 +13,11 @@ export function ProfileUpdateSuccess({
   title = 'Profile Updated Successfully!',
   description = "Your profile is all set. Everything looks great — you're ready to dive in.",
 }: ProfileUpdateSuccessProps) {
+  const { data: me } = useSelector(selectMe);
   return (
     <View className="flex-1 items-center bg-background pt-4">
       {/* Profile Avatar */}
-      <AppAvatar size="xl" name="Ajay Jha" />
+      <AppAvatar size="xl" name={me?.displayName ?? ''} />
 
       {/* All Done */}
       <View className="mt-4 flex-row items-center">

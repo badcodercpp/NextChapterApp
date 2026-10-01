@@ -9,6 +9,8 @@ import {
 
 import { View } from 'react-native';
 import { cn } from '@/utils';
+import { selectApplicationConfig } from '@/state/selectors';
+import { useSelector } from 'react-redux';
 
 type JourneyStat = {
   id: string;
@@ -74,7 +76,6 @@ const JOURNEY_STATS = (
 
 export function JourneySummaryCard({
   currentDay,
-  totalDays = 90,
   daysActive,
   tasksCompleted,
   journalEntries,
@@ -82,6 +83,8 @@ export function JourneySummaryCard({
   onPress,
   className,
 }: JourneySummaryCardProps) {
+  const { data: applicationConfig } = useSelector(selectApplicationConfig);
+
   const stats = JOURNEY_STATS(
     daysActive,
     tasksCompleted,
@@ -99,7 +102,7 @@ export function JourneySummaryCard({
 
         <View className="flex-row items-center">
           <AppText variant="lg" className="font-semibold text-primary">
-            Day {currentDay} of {totalDays}
+            Day {currentDay} of {applicationConfig?.totalProgramDays}
           </AppText>
 
           <AppIcon

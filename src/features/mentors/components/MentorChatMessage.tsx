@@ -2,6 +2,8 @@ import { AppAvatar, AppIcon, AppText } from '@/components';
 import { Bot, CheckCheck } from 'lucide-react-native';
 
 import { View } from 'react-native';
+import { selectMe } from '@/state/selectors';
+import { useSelector } from 'react-redux';
 
 export interface MentorChatMessageData {
   id: string;
@@ -23,6 +25,7 @@ const AssistantAvatar = () => (
 
 export function MentorChatMessage({ message }: MentorChatMessageProps) {
   const isUser = message.role === 'user';
+  const { data: me } = useSelector(selectMe);
 
   return (
     <View className="flex-1 mb-5">
@@ -51,7 +54,7 @@ export function MentorChatMessage({ message }: MentorChatMessageProps) {
             </View>
           </View>
           <View className="ml-2 mt-2">
-            <AppAvatar size="sm" name="Ajay Jha" />
+            <AppAvatar size="sm" name={me?.displayName ?? ''} />
           </View>
         </View>
       ) : (

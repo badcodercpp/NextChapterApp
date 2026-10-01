@@ -1,0 +1,17 @@
+query RecoveryAssessmentHistory {
+  recoveryAssessmentHistory {
+    id
+    userId
+    journeyId
+    dailySessionId
+    overallScore
+    emotionalDistress
+    acceptance
+    selfAwareness
+    selfWorth
+    emotionalStability
+    readinessToMoveForward
+    createdAt
+    updatedAt
+  }
+}

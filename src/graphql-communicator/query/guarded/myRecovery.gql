@@ -1,0 +1,20 @@
+query MyRecovery {
+  myRecovery {
+    id
+    userId
+    overallScore
+    previousScore
+    scoreChange
+    trend
+
+    emotionalDistress
+    acceptance
+    selfAwareness
+    selfWorth
+    emotionalStability
+    readinessToMoveForward
+    assessmentCount
+    createdAt
+    updatedAt
+  }
+}

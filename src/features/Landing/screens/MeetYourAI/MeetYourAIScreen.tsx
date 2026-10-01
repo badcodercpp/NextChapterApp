@@ -4,10 +4,13 @@ import { Image, ImageBackground, ScrollView, View } from 'react-native';
 
 import { FEATURES } from '../../constants';
 import LinearGradient from 'react-native-linear-gradient';
+import { selectApplicationConfig } from '@/state/selectors';
 import { useMeetYourAI } from './useMeetYourAI';
+import { useSelector } from 'react-redux';
 
 export function MeetYourAIScreen() {
   const { submitMeetYourAI } = useMeetYourAI();
+  const { data: applicationConfig } = useSelector(selectApplicationConfig);
 
   return (
     <AppScreen
@@ -52,18 +55,14 @@ export function MeetYourAIScreen() {
           </AppText>
 
           <AppText variant="2xl" className="mt-1 text-primary">
-            I'm AJ 💜
+            I'm {applicationConfig?.aiCoachName} 💜
           </AppText>
 
           <AppText
             variant="sm"
             className="mt-1 text-center text-text-secondary"
           >
-            I'm here to listen, support and guide you
-          </AppText>
-
-          <AppText variant="sm" className="text-center text-text-secondary">
-            on your healing journey — one day at a time.
+            {applicationConfig?.aiCoachMessage}
           </AppText>
         </View>
 

@@ -1,0 +1,17 @@
+query TodayMission($journeyId: ID!, $day: Int!) {
+  todayMission(journeyId: $journeyId, day: $day) {
+    id
+    journeyId
+    day
+    title
+    description
+    overview
+    reminder
+    category
+    difficulty
+    impact
+    time
+    createdAt
+    updatedAt
+  }
+}

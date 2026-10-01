@@ -1,10 +1,12 @@
 import { AppIcon, AppText } from '@/components';
+import { selectApplicationConfig, selectMe } from '@/state/selectors';
 
 import { PieChart } from 'react-native-gifted-charts';
 import { Triangle } from 'lucide-react-native';
 import { View } from 'react-native';
 import { cn } from '@/utils';
 import { useResolveClassNames } from 'uniwind';
+import { useSelector } from 'react-redux';
 
 interface RecoveryProgressCardProps {
   overallScore: number;
@@ -34,12 +36,13 @@ function RecoveryProgressChartLabel({ progress }: { progress: number }) {
 
 export function RecoveryProgressCard({
   overallScore,
-  name = 'Ajay',
   currentDay,
-  totalDays = 90,
   message = "Healing isn't linear, but every step forward matters. Keep going!",
   className,
 }: RecoveryProgressCardProps) {
+  const { data: me } = useSelector(selectMe);
+  const { data: applicationConfig } = useSelector(selectApplicationConfig);
+
   const progress = Math.min(Math.max(overallScore, 0), 100);
   const remaining = 100 - progress;
   const { backgroundColor: chartBackgroundColor } =
@@ -91,7 +94,7 @@ export function RecoveryProgressCard({
         <View className="ml-3 flex-1">
           {/* Heading */}
           <AppText variant="xl" className="font-semibold text-text">
-            You're doing incredible, {name}! ✨
+            You're doing incredible, {me?.displayName}! ✨
           </AppText>
 
           {/* Description */}
@@ -123,7 +126,7 @@ export function RecoveryProgressCard({
 
             <View className="flex-1">
               <AppText variant="md" className="font-semibold text-primary">
-                Day {currentDay} of {totalDays}
+                Day {currentDay} of {applicationConfig?.totalProgramDays}
               </AppText>
 
               <AppText variant="xs" className="mt-1 leading-6 text-text-muted">

@@ -1,0 +1,10 @@
+query ApplicationConfig {
+  applicationConfig {
+    id
+    totalProgramDays
+    aiCoachName
+    aiCoachMessage
+    createdAt
+    updatedAt
+  }
+}

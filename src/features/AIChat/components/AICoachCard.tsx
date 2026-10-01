@@ -1,8 +1,10 @@
 import { AppCard, AppIcon, AppPressable, AppText } from '@/components';
+import { selectApplicationConfig, selectMe } from '@/state/selectors';
 
 import AppAiLogo from '@/assets/icons/svg/app_ai_logo.svg';
 import { Sparkles } from 'lucide-react-native';
 import { View } from 'react-native';
+import { useSelector } from 'react-redux';
 
 interface AICoachCardProps {
   name?: string;
@@ -13,12 +15,14 @@ interface AICoachCardProps {
 }
 
 export function AICoachCard({
-  name = 'Ajay',
   description = "I'm your AI coach. You can talk to me about anything you're feeling. I'm here to listen, support, and guide you forward.",
   onPress,
   isOnline = true,
   responseTime = '< 1s',
 }: AICoachCardProps) {
+  const { data: me } = useSelector(selectMe);
+  const { data: applicationConfig } = useSelector(selectApplicationConfig);
+
   return (
     <AppPressable onPress={onPress}>
       <AppCard className="overflow-hidden rounded-[28px] border border-secondary/40 bg-card px-5 py-5">
@@ -37,7 +41,7 @@ export function AICoachCard({
               </View>
 
               <AppText variant="xl" className="ml-3 font-semibold text-text">
-                Hi {name} 👋
+                Hi {me?.displayName} 👋
               </AppText>
             </View>
 
@@ -46,7 +50,7 @@ export function AICoachCard({
               variant="md"
               className="mt-3 leading-7 text-text-secondary"
             >
-              {description}
+              {applicationConfig?.aiCoachMessage ?? description}
             </AppText>
 
             {/* Status */}

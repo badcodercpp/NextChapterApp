@@ -21,6 +21,8 @@ const config: CodegenConfig = {
 
         // Native TS enums
         enumType: 'native',
+
+        exportApi: true,
       },
     },
   },

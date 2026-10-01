@@ -1,0 +1,11 @@
+query RecoveryScoreTrendForLastNDays($days: Int!) {
+  recoveryScoreTrendForLastNDays(days: $days) {
+    assessmentId
+    day
+    score
+    previousScore
+    scoreChange
+    trend
+    createdAt
+  }
+}

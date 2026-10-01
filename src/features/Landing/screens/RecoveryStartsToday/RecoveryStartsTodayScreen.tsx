@@ -9,8 +9,12 @@ import {
 import { Image, ImageBackground, ScrollView, View } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
+import { selectApplicationConfig } from '@/state/selectors';
+import { useSelector } from 'react-redux';
 
 export function RecoveryStartsTodayScreen() {
+  const { data: applicationConfig } = useSelector(selectApplicationConfig);
+
   return (
     <AppScreen
       safeBottom={true}
@@ -101,7 +105,7 @@ export function RecoveryStartsTodayScreen() {
               </View>
 
               <AppText variant="sm" className="mt-2 text-text-secondary">
-                of 90 days
+                of {applicationConfig?.totalProgramDays} days
               </AppText>
             </View>
           </AppCard>

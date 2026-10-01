@@ -5,40 +5,27 @@ import {
   QuickActionCardComponent,
   QuickActions,
   RecoveryScoreCard,
-  TodaysFocusCard,
   TodaysMissionCard,
+  TodaysQuestionCard,
 } from '../components';
 
 import React from 'react';
 import { View } from 'react-native';
-import { useMeQuery } from '@/__generated__/graphql';
+import { useHomeBootstrap } from '@/features/home/hooks/useHomeBootstrap';
 
 export function HomeScreen() {
-  const { data } = useMeQuery();
+  useHomeBootstrap();
 
   return (
     <AppAuthenticatedLayout>
       <View className="mt-2">
-        <RecoveryScoreCard
-          score={8}
-          trend={20}
-          name={data?.me.displayName ?? ''}
-        />
+        <RecoveryScoreCard />
       </View>
       <View className="mt-4">
-        <TodaysFocusCard
-          focus={'Let go of what hurts, choose what heals.'}
-          day={12}
-          totalDays={90}
-        />
+        <TodaysQuestionCard />
       </View>
       <View className="mt-4">
-        <TodaysMissionCard
-          title="No Contact Challenge"
-          description="Avoid checking your ex's profile or social media today."
-          completed={0}
-          total={1}
-        />
+        <TodaysMissionCard />
       </View>
 
       <View className="mt-4">
@@ -62,13 +49,7 @@ export function HomeScreen() {
       </View>
 
       <View className="mt-4">
-        <DailyAffirmationCard
-          title="Small steps every day lead to big changes."
-          subtitle="You're stronger than you think."
-          onPress={() => {
-            // navigate / open insight
-          }}
-        />
+        <DailyAffirmationCard />
       </View>
     </AppAuthenticatedLayout>
   );

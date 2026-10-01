@@ -1,22 +1,25 @@
 import { AppCard, AppIcon, AppPressable, AppText } from '@/components';
-import { ChevronRight, Sparkles } from 'lucide-react-native';
 
+import { Sparkles } from 'lucide-react-native';
 import { View } from 'react-native';
+import { selectMotivationalMessage } from '@/state/selectors';
+import { useSelector } from 'react-redux';
 
 interface DailyAffirmationCardProps {
-  title: string;
+  title?: string;
   subtitle?: string;
   onPress?: () => void;
 }
 
 export function DailyAffirmationCard({
-  title,
-  subtitle,
+  title = 'Small steps every day lead to big changes.',
+  subtitle = "You're stronger than you think.",
   onPress,
 }: DailyAffirmationCardProps) {
+  const { data: motivationalMessage } = useSelector(selectMotivationalMessage);
   return (
     <AppPressable onPress={onPress}>
-      <AppCard className="rounded-[28px] border border-primary/30 bg-card p-4">
+      <AppCard className="rounded-[24px] border-1 border-border bg-card p-5">
         <View className="flex-row items-center">
           {/* Icon */}
           <View className="mr-4">
@@ -35,7 +38,7 @@ export function DailyAffirmationCard({
               className="font-semibold text-text"
               numberOfLines={2}
             >
-              {title}
+              {motivationalMessage?.title ?? title}
             </AppText>
 
             {subtitle && (
@@ -44,19 +47,9 @@ export function DailyAffirmationCard({
                 className="mt-1 text-text-muted"
                 numberOfLines={1}
               >
-                {subtitle}
+                {motivationalMessage?.description ?? subtitle}
               </AppText>
             )}
-          </View>
-
-          {/* Arrow */}
-          <View className="ml-3">
-            <AppIcon
-              icon={ChevronRight}
-              size={26}
-              className="text-text-muted"
-              strokeWidth={2.5}
-            />
           </View>
         </View>
       </AppCard>

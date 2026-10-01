@@ -8,8 +8,6 @@ import { useCallback, useState } from 'react';
 import { AppDispatch } from '@/state';
 import { LandingNavigationProp } from '@/features/Landing/navigation/types';
 import { MasterFormData } from '@/form/types';
-import { RootNavigationProp } from '@/navigation/RootStack/types';
-import { RootRoutes } from '@/navigation/RootStack/RootRoutes';
 import { loginSchema } from '@/form';
 import { mapZodErrorsToForm } from '@/utils';
 import { setAuthTokens } from '@/state/slices/local/authtoken';
@@ -20,8 +18,6 @@ import { useNavigation } from '@react-navigation/native';
 
 export const useLogin = () => {
   const navigation = useNavigation<LandingNavigationProp>();
-
-  const rootNavigation = useNavigation<RootNavigationProp>();
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -86,15 +82,6 @@ export const useLogin = () => {
           authStatus: 'authenticated',
         }),
       );
-
-      rootNavigation.reset({
-        index: 0,
-        routes: [
-          {
-            name: RootRoutes.Main,
-          },
-        ],
-      });
     } catch (e) {
       console.log('Login error:', e);
     }
@@ -105,7 +92,6 @@ export const useLogin = () => {
     getDeviceInfoSessionPayload,
     login,
     dispatch,
-    rootNavigation,
   ]);
 
   return {

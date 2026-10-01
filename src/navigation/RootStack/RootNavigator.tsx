@@ -13,12 +13,12 @@ import { useSelector } from 'react-redux';
 const Root = createNativeStackNavigator<RootStackParamList>();
 
 export default function RootNavigator() {
-  useAuthBootstrap();
+  const { bootstrapFinished, isBootstrapPending } = useAuthBootstrap();
 
   const authStatus = useSelector(selectAuthStatus);
-  const isLoggedIn = authStatus === 'authenticated';
+  const isLoggedIn = bootstrapFinished && authStatus === 'authenticated';
 
-  if (authStatus === 'checking') {
+  if (isBootstrapPending || authStatus === 'checking') {
     return <AppLoader title="Please wait preparing your account ..." />;
   }
 

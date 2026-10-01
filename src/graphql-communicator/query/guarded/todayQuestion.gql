@@ -6,9 +6,15 @@ query TodayQuestion {
     day
     status
     askedAt
+    answeredAt
+    createdAt
+    updatedAt
     conversation {
       role
       content
+      question
+      reflection
+      insight
       createdAt
     }
   }
