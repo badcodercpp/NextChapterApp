@@ -12,6 +12,7 @@ interface TodaysMissionCardProps {
   completed?: number;
   total?: number;
   onPress?: () => void;
+  showProgress?: boolean;
 }
 
 export function TodaysMissionCard({
@@ -20,6 +21,7 @@ export function TodaysMissionCard({
   completed = 0,
   total = 1,
   onPress,
+  showProgress = true,
 }: TodaysMissionCardProps) {
   const { data: activeJourney } = useSelector(selectActiveJourney);
 
@@ -58,35 +60,37 @@ export function TodaysMissionCard({
           </AppText>
 
           {/* Progress */}
-          <View className="mt-4 flex-row items-center">
-            <AppPressable
-              onPress={onPress}
-              disabled={!onPress}
-              className="h-6 w-6 items-center justify-center rounded-full bg-primary"
-            >
-              <AppIcon
-                icon={Check}
-                size={12}
-                className="text-white"
-                strokeWidth={3}
-              />
-            </AppPressable>
-
-            <View className="mx-3 flex-1">
-              <View className="h-2 overflow-hidden rounded-full bg-primary/20">
-                <View
-                  className="h-full rounded-full bg-primary"
-                  style={{
-                    width: `${Math.min(progress, 1) * 100}%`,
-                  }}
+          {showProgress && (
+            <View className="mt-4 flex-row items-center">
+              <AppPressable
+                onPress={onPress}
+                disabled={!onPress}
+                className="h-6 w-6 items-center justify-center rounded-full bg-primary"
+              >
+                <AppIcon
+                  icon={Check}
+                  size={12}
+                  className="text-white"
+                  strokeWidth={3}
                 />
-              </View>
-            </View>
+              </AppPressable>
 
-            <AppText variant="sm" className="text-text-secondary">
-              {completed}/{total} {isCompleted ? 'Completed' : 'Completed'}
-            </AppText>
-          </View>
+              <View className="mx-3 flex-1">
+                <View className="h-2 overflow-hidden rounded-full bg-primary/20">
+                  <View
+                    className="h-full rounded-full bg-primary"
+                    style={{
+                      width: `${Math.min(progress, 1) * 100}%`,
+                    }}
+                  />
+                </View>
+              </View>
+
+              <AppText variant="sm" className="text-text-secondary">
+                {completed}/{total} {isCompleted ? 'Completed' : 'Completed'}
+              </AppText>
+            </View>
+          )}
         </View>
 
         {/* Mission Icon */}

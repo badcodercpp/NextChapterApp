@@ -11,6 +11,11 @@ query TodayMission($journeyId: ID!, $day: Int!) {
     difficulty
     impact
     time
+    steps {
+      order
+      title
+      description
+    }
     createdAt
     updatedAt
   }

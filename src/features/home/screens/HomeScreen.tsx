@@ -5,13 +5,13 @@ import {
   QuickActionCardComponent,
   QuickActions,
   RecoveryScoreCard,
-  TodaysMissionCard,
   TodaysQuestionCard,
 } from '../components';
 
 import { DailySessionRoutes } from '@/features/DailySession';
 import React from 'react';
 import { TabRoutes } from '@/navigation/Tab/TabRoutes';
+import { TodaysMissionCard } from '@/features/CommonFeature';
 import { View } from 'react-native';
 import { useHomeBootstrap } from '@/features/home/hooks/useHomeBootstrap';
 import { useTabNavigation } from '@/navigation/Tab/hooks/useTabNavigation';

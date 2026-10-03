@@ -34,7 +34,7 @@ export function StartSessionCard({ onRemindLater }: StartSessionCardProps) {
       {/* Remind Later */}
       <AppPressable
         onPress={onRemindLater}
-        className="mt-5 flex-row items-center justify-center"
+        className="mt-2 flex-row items-center justify-center"
       >
         <AppIcon icon={Clock3} size={18} className="text-primary" />
 

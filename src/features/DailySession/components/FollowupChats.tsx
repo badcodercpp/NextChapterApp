@@ -87,9 +87,8 @@ export function FollowUpChats({}: FollowUpChatsProps) {
                 key={`ai_question_cont_${index.toString()}`}
               >
                 <AICoachCardFollowupCard
-                  message={
-                    item.insight ?? item.reflection ?? item.content ?? ''
-                  }
+                  messageInsight={item.insight ?? ''}
+                  messageReflection={item.reflection ?? ''}
                   questions={[
                     {
                       id: `ai_question_${index.toString()}`,

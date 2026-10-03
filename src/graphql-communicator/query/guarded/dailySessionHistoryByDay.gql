@@ -1,0 +1,85 @@
+query DailySessionHistoryByDay($day: Int!) {
+  dailySessionHistoryByDay(day: $day) {
+    id
+    day
+    createdAt
+
+    dailySession {
+      id
+      userId
+      journeyId
+      missionId
+      questionHistoryId
+      day
+      status
+      currentStep
+      startMoods
+      endMoods
+      reflectionId
+      startedAt
+      missionCompletedAt
+      completedAt
+      createdAt
+      updatedAt
+    }
+
+    question {
+      id
+      journeyId
+      missionId
+      day
+      status
+
+      conversation {
+        role
+        content
+        reflection
+        insight
+        question
+        summary
+        createdAt
+      }
+
+      askedAt
+      answeredAt
+      createdAt
+      updatedAt
+    }
+
+    mission {
+      id
+      journeyId
+      day
+      title
+      description
+      overview
+      reminder
+      category
+      difficulty
+      impact
+      time
+      steps {
+        title
+        description
+      }
+
+      createdAt
+      updatedAt
+    }
+
+    reflection {
+      id
+      userId
+      journeyId
+      missionId
+      questionHistoryId
+      realization
+      feeling
+      need
+      action
+      completedAt
+      createdAt
+      updatedAt
+    }
+  }
+}

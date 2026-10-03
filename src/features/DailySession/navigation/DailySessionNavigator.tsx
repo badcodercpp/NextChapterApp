@@ -1,7 +1,9 @@
 import {
   DailySessionFollowUpStepScreen,
   DailySessionLandingScreen,
+  DailySessionMissionStepScreen,
   DailySessionQuestionStepScreen,
+  DailySessionReflectStepScreen,
 } from '../screens';
 
 import { DailySessionRoutes } from './DailySessionRoutes';
@@ -37,6 +39,22 @@ export function DailySessionNavigator() {
         }}
         name={DailySessionRoutes.DailySessionFollowUpStep}
         component={DailySessionFollowUpStepScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          header: NavigatorAppHeader,
+        }}
+        name={DailySessionRoutes.DailySessionMissionStep}
+        component={DailySessionMissionStepScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          header: NavigatorAppHeader,
+        }}
+        name={DailySessionRoutes.DailySessionReflectStep}
+        component={DailySessionReflectStepScreen}
       />
     </Stack.Navigator>
   );

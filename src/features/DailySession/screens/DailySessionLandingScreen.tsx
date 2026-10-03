@@ -7,6 +7,7 @@ import {
 } from '../components';
 
 import { AppAuthenticatedLayout } from '@/components';
+import { MoodSelector } from '@/features/CommonFeature';
 import React from 'react';
 import { View } from 'react-native';
 
@@ -23,10 +24,16 @@ export function DailySessionLandingScreen() {
         <SessionOverviewCard />
       </View>
       <View className="mt-4">
-        <SessionReminderCard />
+        <MoodSelector
+          title="Your current mood"
+          subtitle="How are you feeling now ?"
+        />
       </View>
       <View className="mt-4">
         <StartSessionCard />
+      </View>
+      <View className="mt-4">
+        <SessionReminderCard />
       </View>
     </AppAuthenticatedLayout>
   );

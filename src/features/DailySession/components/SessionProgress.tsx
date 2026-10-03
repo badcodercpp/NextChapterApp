@@ -5,9 +5,9 @@ import { View } from 'react-native';
 
 export type SessionProgressStep =
   | 'QUESTION'
-  | 'REFLECTION'
   | 'FOLLOW_UPS'
   | 'MISSION'
+  | 'REFLECTION'
   | 'COMPLETED';
 
 interface SessionProgressProps {
@@ -20,16 +20,16 @@ const steps = [
     label: 'Question',
   },
   {
-    key: 'REFLECTION',
-    label: 'Reflect',
-  },
-  {
     key: 'FOLLOW_UPS',
     label: 'Follow-ups',
   },
   {
     key: 'MISSION',
     label: 'Mission',
+  },
+  {
+    key: 'REFLECTION',
+    label: 'Reflect',
   },
   {
     key: 'COMPLETED',
@@ -49,7 +49,7 @@ export function SessionProgress({ currentStep }: SessionProgressProps) {
         <View
           className="absolute left-0 top-0 h-full rounded-full bg-primary"
           style={{
-            width: `${Math.max(progress * 100, 18)}%`,
+            width: `${Math.max(progress * 100, 20)}%`,
           }}
         />
       </View>

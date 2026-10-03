@@ -1,7 +1,14 @@
-import { AppCard, AppIcon, AppPressable, AppText } from '@/components';
+import {
+  AppCard,
+  AppExpandableText,
+  AppIcon,
+  AppPressable,
+  AppText,
+} from '@/components';
 
 import { Bot } from 'lucide-react-native';
 import { View } from 'react-native';
+import { formatDistanceToNow } from 'date-fns';
 
 interface AICoachQuestion {
   id: string;
@@ -9,18 +16,24 @@ interface AICoachQuestion {
 }
 
 interface AICoachCardFollowupCardProps {
-  message: string;
+  messageInsight: string;
+  messageReflection: string;
   questions: AICoachQuestion[];
   coachName: string;
   createdAt: string;
 }
 
 export function AICoachCardFollowupCard({
-  message,
+  messageInsight,
+  messageReflection,
   questions,
   coachName,
   createdAt,
 }: AICoachCardFollowupCardProps) {
+  const dateAgo = new Date(createdAt);
+  const timeAgo = formatDistanceToNow(dateAgo, {
+    addSuffix: true,
+  });
   return (
     <>
       <AppCard className="overflow-hidden rounded-[24px] border border-border bg-card p-5">
@@ -36,13 +49,39 @@ export function AICoachCardFollowupCard({
         </View>
 
         {/* Coach Message */}
-        <AppText variant="lg" className="mt-4 text-text-secondary">
-          {message}
-        </AppText>
+        {messageInsight && (
+          <View className="mt-4">
+            <AppText variant="xl" className="text-primary">
+              Insight -{' '}
+            </AppText>
+            <AppExpandableText
+              text={messageInsight}
+              variant="lg"
+              textClassName="mt-1 text-text-secondary"
+            />
+          </View>
+        )}
+
+        <View className="mt-4 h-px flex-1 bg-divider" />
+
+        {messageReflection && (
+          <View className="mt-4">
+            <AppText variant="xl" className="text-primary">
+              Reflection -{' '}
+            </AppText>
+            <AppExpandableText
+              text={messageReflection}
+              variant="lg"
+              textClassName="mt-1 text-text-secondary"
+            />
+          </View>
+        )}
+
+        <View className="mt-4 h-px flex-1 bg-divider" />
 
         {/* Follow-up Heading */}
-        <AppText variant="xl" className="mt-4 font-semibold text-text">
-          Can you tell me more about...
+        <AppText variant="xl" className="mt-4 text-primary">
+          Can you tell me more ...
         </AppText>
 
         {/* Questions */}
@@ -61,8 +100,8 @@ export function AICoachCardFollowupCard({
           ))}
         </View>
       </AppCard>
-      <AppText variant="xs" className="mt-1 ml-1 text-text-muted">
-        {createdAt}
+      <AppText variant="sm" className="mt-1 mr-4 text-right text-text-muted">
+        {timeAgo}
       </AppText>
     </>
   );

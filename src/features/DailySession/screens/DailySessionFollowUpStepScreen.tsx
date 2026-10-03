@@ -1,16 +1,28 @@
-import { AppAuthenticatedLayout, AppInput, AppText } from '@/components';
+import {
+  AppAuthenticatedLayout,
+  AppButton,
+  AppConfirmModal,
+  AppInput,
+  AppText,
+} from '@/components';
+import { ChevronRight, Send } from 'lucide-react-native';
 import {
   FollowUpChats,
   FollowUpProgressCard,
   QuickFollowupReplyCard,
   SessionProgress,
 } from '../components';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
 
-import React from 'react';
-import { Send } from 'lucide-react-native';
+import { DailySessionStackParamList } from '@/features/DailySession/navigation';
 import { View } from 'react-native';
 
 export function DailySessionFollowUpStepScreen() {
+  const [showProceedModal, setShowProceedModal] = useState<boolean>(false);
+  const navigation =
+    useNavigation<NavigationProp<DailySessionStackParamList>>();
+
   return (
     <AppAuthenticatedLayout noBottomPadding>
       <View className="mt-4">
@@ -44,6 +56,32 @@ export function DailySessionFollowUpStepScreen() {
       <View className="mt-4">
         <FollowUpProgressCard current={1} total={5} />
       </View>
+      <View className="mt-4">
+        <AppButton
+          title="Next"
+          size="lg"
+          fullWidth
+          className="mb-0"
+          onPress={() => {
+            setShowProceedModal(true);
+          }}
+          rightIcon={ChevronRight}
+        />
+      </View>
+      <AppConfirmModal
+        visible={showProceedModal}
+        title="Are you sure you want to proceed ?"
+        message="We suggest you to answer atleast 5 followup questions, it will help you to let go of pain."
+        confirmText="Proceed"
+        cancelText="Stay"
+        onCancel={() => {
+          setShowProceedModal(false);
+        }}
+        onConfirm={() => {
+          setShowProceedModal(false);
+          navigation.navigate('DailySessionMissionStep');
+        }}
+      />
     </AppAuthenticatedLayout>
   );
 }

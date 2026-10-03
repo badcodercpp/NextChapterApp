@@ -24,7 +24,7 @@ export function AppConfirmModal({
       animationType="fade"
       onRequestClose={onCancel}
     >
-      <View className="flex-1 items-center justify-center bg-black/50 px-6">
+      <View className="flex-1 items-center justify-center bg-background/80 px-6">
         <Pressable className="absolute inset-0" onPress={onCancel} />
 
         <View className="w-full max-w-[380px] rounded-[28px] bg-background p-6">

@@ -37,19 +37,19 @@ export function SessionOverviewCard({}: SessionOverviewCardProps) {
           />
 
           <SessionStep
-            icon={<AppIcon icon={Heart} size={20} className="text-primary" />}
-            iconClassName="border-primary bg-card"
-            title="Reflect"
-            description="Go deeper with follow-ups"
-          />
-
-          <SessionStep
             icon={
               <AppIcon icon={CheckSquare} size={20} className="text-primary" />
             }
             iconClassName="border-primary bg-card"
             title="Mission"
             description="Take action with a small step"
+          />
+
+          <SessionStep
+            icon={<AppIcon icon={Heart} size={20} className="text-primary" />}
+            iconClassName="border-primary bg-card"
+            title="Reflect"
+            description="Go deeper with follow-ups"
           />
 
           <SessionStep
