@@ -4,8 +4,8 @@ import React from 'react';
 
 export function HelpScreen() {
   return (
-    <AppScreen scroll horizontalPadding="md">
-      <AppText variant="titleLargeBold">HelpScreen</AppText>
+    <AppScreen>
+      <AppText variant="xl">HelpScreen</AppText>
     </AppScreen>
   );
 }

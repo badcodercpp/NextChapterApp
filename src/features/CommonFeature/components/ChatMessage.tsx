@@ -1,27 +1,11 @@
 import { AppAvatar, AppIcon, AppText } from '@/components';
-import { Bot, CheckCheck } from 'lucide-react-native';
 
+import { AssistantAvatar } from '@/features/CommonFeature/components/AssistantAvatar';
+import { ChatMessageProps } from '@/features/CommonFeature/types/ChatMessageTypes';
+import { CheckCheck } from 'lucide-react-native';
 import { View } from 'react-native';
 import { selectMe } from '@/state/selectors';
 import { useSelector } from 'react-redux';
-
-export interface ChatMessageData {
-  id: string;
-  role: 'assistant' | 'user';
-  content: string;
-  createdAt: string;
-  status?: 'sent' | 'read';
-}
-
-interface ChatMessageProps {
-  message: ChatMessageData;
-}
-
-const AssistantAvatar = () => (
-  <View className="h-12 w-12 shrink-0 items-center justify-center rounded-full bg-surface mr-2 mt-2">
-    <AppIcon icon={Bot} size={24} className="text-white" strokeWidth={2} />
-  </View>
-);
 
 export function ChatMessage({ message }: ChatMessageProps) {
   const isUser = message.role === 'user';

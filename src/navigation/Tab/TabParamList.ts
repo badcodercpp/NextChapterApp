@@ -1,3 +1,4 @@
+import { DailySessionStackParamList } from '@/features/DailySession';
 // import { AIStackParamList } from '@/features/ai/navigation';
 import { HomeStackParamList } from '@/features/home/navigation';
 import { MentorChatStackParamList } from '@/features/mentors/navigation';
@@ -19,4 +20,6 @@ export type TabParamList = {
   [TabRoutes.Progress]: NavigatorScreenParams<RecoveryProgressStackParamList>;
 
   [TabRoutes.Mentor]: NavigatorScreenParams<MentorChatStackParamList>;
+
+  [TabRoutes.DailySessionTab]: NavigatorScreenParams<DailySessionStackParamList>;
 };

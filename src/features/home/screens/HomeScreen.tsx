@@ -9,11 +9,15 @@ import {
   TodaysQuestionCard,
 } from '../components';
 
+import { DailySessionRoutes } from '@/features/DailySession';
 import React from 'react';
+import { TabRoutes } from '@/navigation/Tab/TabRoutes';
 import { View } from 'react-native';
 import { useHomeBootstrap } from '@/features/home/hooks/useHomeBootstrap';
+import { useTabNavigation } from '@/navigation/Tab/hooks/useTabNavigation';
 
 export function HomeScreen() {
+  const navigation = useTabNavigation();
   useHomeBootstrap();
 
   return (
@@ -35,7 +39,11 @@ export function HomeScreen() {
           leftIcon={CalendarClock}
           fullWidth
           className="mb-0"
-          onPress={() => {}}
+          onPress={() =>
+            navigation.navigate(TabRoutes.DailySessionTab, {
+              screen: DailySessionRoutes.DailySessionLanding,
+            })
+          }
           rightIcon={ChevronRight}
         />
       </View>

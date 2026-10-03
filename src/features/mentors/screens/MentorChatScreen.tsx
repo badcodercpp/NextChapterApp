@@ -6,7 +6,7 @@ import {
 
 import { AppAuthenticatedLayout } from '@/components';
 import { AppText } from '@/components/foundation/AppText';
-import { MESSAGES_MOCK } from '@/features/AIChat/mocks/msg';
+import { MESSAGES_MOCK } from '@/features/CommonFeature/mocks/msg';
 import React from 'react';
 
 export function MentorChatScreen() {

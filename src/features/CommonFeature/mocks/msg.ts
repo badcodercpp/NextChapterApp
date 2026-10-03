@@ -1,4 +1,4 @@
-import { ChatMessageData } from '@/features/AIChat/components/ChatMessage';
+import { ChatMessageData } from '@/features/CommonFeature/types/ChatMessageTypes';
 
 export const MESSAGES_MOCK: ChatMessageData[] = [
   {

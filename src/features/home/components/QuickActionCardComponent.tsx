@@ -2,11 +2,14 @@ import { BookOpen, Bot } from 'lucide-react-native';
 import { LayoutChangeEvent, View } from 'react-native';
 
 import { QuickActionCard } from './QuickActionCard';
+import { selectApplicationConfig } from '@/state/selectors';
+import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
 interface QuickActionCardComponentProps {}
 
 export function QuickActionCardComponent({}: QuickActionCardComponentProps) {
+  const { data: applicationConfig } = useSelector(selectApplicationConfig);
   const [cardHeight, setCardHeight] = useState(0);
 
   const handleLayout = (e: LayoutChangeEvent) => {
@@ -32,8 +35,8 @@ export function QuickActionCardComponent({}: QuickActionCardComponentProps) {
 
       <QuickActionCard
         icon={Bot}
-        title="AI Coach"
-        description="I'm here for you. Let's talk if you need support."
+        title={`${applicationConfig?.aiCoachName}`}
+        description={applicationConfig?.aiCoachMessage ?? ''}
         actionLabel="Chat Now"
         accentClassName="text-secondary"
         iconBackgroundClassName="bg-secondary/15"

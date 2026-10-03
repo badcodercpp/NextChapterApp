@@ -38,7 +38,7 @@ export function TodaysMissionCard({
   const missionTitle = todayMission?.title?.replace(/^Day\s+\d+:\s*/, '');
 
   return (
-    <AppCard className="rounded-[28px] border border-primary/30 bg-card p-5">
+    <AppCard className="rounded-[28px] border-1 border-border bg-card p-5">
       <View className="flex-row">
         {/* Content */}
         <View className="flex-1 pr-4">
@@ -90,7 +90,7 @@ export function TodaysMissionCard({
         </View>
 
         {/* Mission Icon */}
-        <View className="h-10 w-10 items-center justify-center self-center rounded-full bg-primary/15">
+        <View className="h-10 w-10 items-center justify-center  rounded-full bg-primary/15">
           <AppIcon
             icon={Shield}
             size={24}

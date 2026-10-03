@@ -20,7 +20,7 @@ export function RecoveryScoreCard({}: RecoveryScoreCardProps) {
   );
 
   return (
-    <AppCard className="overflow-hidden rounded-[28px] border border-primary bg-card p-5">
+    <AppCard className="overflow-hidden rounded-[24px] border-1 border-border bg-card p-5">
       <View className="flex-row mb-2 items-center">
         <AppText variant="md" className="text-primary mr-0.5">
           Good Morning, {me?.displayName ?? ''}{' '}

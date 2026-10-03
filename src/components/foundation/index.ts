@@ -16,3 +16,4 @@ export * from './AppLoader';
 export * from './AppOtpTimer';
 export * from './AppLayout';
 export * from './AppContentLoader';
+export * from './AppConfirmModal';

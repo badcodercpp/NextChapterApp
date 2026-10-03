@@ -1,5 +1,6 @@
 import { AIChatNavigator } from '@/features/AIChat';
 import { BottomTabBar } from '../components/CustomBottomTabBar';
+import { DailySessionNavigator } from '@/features/DailySession';
 import { HomeNavigator } from '@/features/home';
 import { MentorChatNavigator } from '@/features/mentors/navigation';
 import { RecoveryProgressNavigator } from '@/features/RecoveryProgress/navigation';
@@ -68,6 +69,19 @@ export function TabNavigator() {
         }}
         name={TabRoutes.Mentor}
         component={MentorChatNavigator}
+      />
+
+      <Tab.Screen
+        options={{
+          headerShown: false,
+          title: t('app.locale.mentors'),
+          tabBarStyle: {
+            display: 'none',
+          },
+          tabBarButton: () => null,
+        }}
+        name={TabRoutes.DailySessionTab}
+        component={DailySessionNavigator}
       />
     </Tab.Navigator>
   );

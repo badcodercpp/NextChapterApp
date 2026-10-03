@@ -4,6 +4,7 @@ import { Sparkles } from 'lucide-react-native';
 import { View } from 'react-native';
 import { selectMotivationalMessage } from '@/state/selectors';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 interface DailyAffirmationCardProps {
   title?: string;
@@ -16,7 +17,9 @@ export function DailyAffirmationCard({
   subtitle = "You're stronger than you think.",
   onPress,
 }: DailyAffirmationCardProps) {
+  const { t } = useTranslation();
   const { data: motivationalMessage } = useSelector(selectMotivationalMessage);
+
   return (
     <AppPressable onPress={onPress}>
       <AppCard className="rounded-[24px] border-1 border-border bg-card p-5">
@@ -38,7 +41,7 @@ export function DailyAffirmationCard({
               className="font-semibold text-text"
               numberOfLines={2}
             >
-              {motivationalMessage?.title ?? title}
+              {t(motivationalMessage?.title ?? title) ?? title}
             </AppText>
 
             {subtitle && (
@@ -47,7 +50,7 @@ export function DailyAffirmationCard({
                 className="mt-1 text-text-muted"
                 numberOfLines={1}
               >
-                {motivationalMessage?.description ?? subtitle}
+                {t(motivationalMessage?.description ?? subtitle) ?? subtitle}
               </AppText>
             )}
           </View>

@@ -4,4 +4,5 @@ export const TabRoutes = {
   AI: 'AITab',
   Progress: 'ProgressTab',
   Mentor: 'MentorTab',
+  DailySessionTab: 'DailySessionTab',
 } as const;

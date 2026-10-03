@@ -34,11 +34,11 @@ export function QuickActionCard({
       >
         {/* Icon */}
         <View
-          className={`h-16 w-16 items-center justify-center rounded-full ${iconBackgroundClassName}`}
+          className={`h-12 w-12 items-center justify-center rounded-full ${iconBackgroundClassName}`}
         >
           <AppIcon
             icon={icon}
-            size={32}
+            size={24}
             className={accentClassName}
             strokeWidth={2}
           />

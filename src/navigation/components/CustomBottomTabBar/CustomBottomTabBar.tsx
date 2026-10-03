@@ -14,6 +14,8 @@ import { View } from 'react-native';
 import { styles } from './styles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+const NO_TAB_ICON_ROUTES: Array<string> = [TabRoutes.DailySessionTab];
+
 const ICONS: Record<string, LucideIcon> = {
   [TabRoutes.Home]: HomeIcon,
 
@@ -48,6 +50,9 @@ export function CustomBottomTabBar({
         className="bg-background"
       >
         {state.routes.map((route, index) => {
+          if (NO_TAB_ICON_ROUTES.includes(route.name)) {
+            return null;
+          }
           const focused = state.index === index;
 
           const label = descriptors[route.key].options.title ?? route.name;

@@ -88,4 +88,14 @@ export interface AppInputProps extends Omit<TextInputProps, 'editable'> {
    * Helper text class.
    */
   helperTextClassName?: string;
+
+  containerClassName?: string;
+
+  startIconClassName?: string;
+
+  startIconSize?: number;
+
+  endIconClassName?: string;
+
+  endIconSize?: number;
 }

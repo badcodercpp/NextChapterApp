@@ -52,6 +52,11 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
       inputClassName,
       labelClassName,
       helperTextClassName,
+      containerClassName,
+      startIconClassName,
+      endIconClassName,
+      startIconSize,
+      endIconSize,
 
       ...props
     },
@@ -117,12 +122,12 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
 
     const leftIconClassName = cn(
       InputVariants.icon.left,
-      multiline && 'self-start pt-5',
+      multiline && 'self-start pt-4',
     );
 
     const rightIconClassName = cn(
       InputVariants.icon.right,
-      multiline && 'self-start pt-5',
+      multiline && 'self-start pt-4',
     );
 
     return (
@@ -156,12 +161,18 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
             readOnly && InputVariants.container.readOnly,
 
             multiline && 'items-start',
+
+            containerClassName ?? '',
           )}
         >
           {/* Left Icon */}
           {startIcon && (
             <View className={leftIconClassName}>
-              <AppIcon icon={startIcon} size={INPUT_ICON_SIZE} />
+              <AppIcon
+                icon={startIcon}
+                size={startIconSize ?? INPUT_ICON_SIZE}
+                className={startIconClassName}
+              />
             </View>
           )}
 
@@ -209,11 +220,19 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
                 className={rightIconClassName}
                 onPress={onEndIconPress}
               >
-                <AppIcon icon={endIcon} size={INPUT_ICON_SIZE} />
+                <AppIcon
+                  icon={endIcon}
+                  size={endIconSize ?? INPUT_ICON_SIZE}
+                  className={endIconClassName}
+                />
               </AppPressable>
             ) : (
               <View className={rightIconClassName}>
-                <AppIcon icon={endIcon} size={INPUT_ICON_SIZE} />
+                <AppIcon
+                  icon={endIcon}
+                  size={endIconSize ?? INPUT_ICON_SIZE}
+                  className={endIconClassName}
+                />
               </View>
             )
           ) : null}
