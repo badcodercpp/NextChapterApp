@@ -5,10 +5,9 @@ import { lazySelectTodayMission, selectActiveJourney } from '@/state/selectors';
 import { View } from 'react-native';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 interface TodaysMissionCardProps {
-  title?: string;
-  description?: string;
   completed?: number;
   total?: number;
   onPress?: () => void;
@@ -16,8 +15,6 @@ interface TodaysMissionCardProps {
 }
 
 export function TodaysMissionCard({
-  title = 'No Contact Challenge',
-  description = "Avoid checking your ex's profile or social media today.",
   completed = 0,
   total = 1,
   onPress,
@@ -39,6 +36,12 @@ export function TodaysMissionCard({
 
   const missionTitle = todayMission?.title?.replace(/^Day\s+\d+:\s*/, '');
 
+  const { t } = useTranslation();
+
+  const title = t('app.locale.common.mission.noContact.title');
+
+  const description = t('app.locale.common.mission.noContact.description');
+
   return (
     <AppCard className="rounded-[28px] border-1 border-border bg-card p-5">
       <View className="flex-row">
@@ -48,7 +51,7 @@ export function TodaysMissionCard({
             variant="sm"
             className="font-medium uppercase tracking-wide text-primary"
           >
-            Today's Mission
+            {t('app.locale.common.mission.todayMission.title')}
           </AppText>
 
           <AppText variant="xl" className="mt-2 font-semibold text-text">
@@ -87,7 +90,10 @@ export function TodaysMissionCard({
               </View>
 
               <AppText variant="sm" className="text-text-secondary">
-                {completed}/{total} {isCompleted ? 'Completed' : 'Completed'}
+                {completed}/{total}{' '}
+                {isCompleted
+                  ? t('app.locale.common.completed')
+                  : t('app.locale.common.completed')}
               </AppText>
             </View>
           )}

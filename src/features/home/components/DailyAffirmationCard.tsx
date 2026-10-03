@@ -12,13 +12,12 @@ interface DailyAffirmationCardProps {
   onPress?: () => void;
 }
 
-export function DailyAffirmationCard({
-  title = 'Small steps every day lead to big changes.',
-  subtitle = "You're stronger than you think.",
-  onPress,
-}: DailyAffirmationCardProps) {
+export function DailyAffirmationCard({ onPress }: DailyAffirmationCardProps) {
   const { t } = useTranslation();
   const { data: motivationalMessage } = useSelector(selectMotivationalMessage);
+
+  const title = t('app.locale.home.dailyAffirmationCard.title');
+  const subtitle = t('app.locale.home.dailyAffirmationCard.description');
 
   return (
     <AppPressable onPress={onPress}>

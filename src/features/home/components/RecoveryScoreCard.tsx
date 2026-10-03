@@ -9,6 +9,7 @@ import { RecoveryTrend } from './RecoveryTrend';
 import { View } from 'react-native';
 import { properCase } from '@/utils/strings';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 interface RecoveryScoreCardProps {}
 
@@ -18,19 +19,20 @@ export function RecoveryScoreCard({}: RecoveryScoreCardProps) {
   const { data: recoveryScoreTrendForLastNDays } = useSelector(
     selectRecoveryScoreTrendForLastNDays,
   );
+  const { t } = useTranslation();
 
   return (
     <AppCard className="overflow-hidden rounded-[24px] border-1 border-border bg-card p-5">
       <View className="flex-row mb-2 items-center">
         <AppText variant="md" className="text-primary mr-0.5">
-          Good Morning, {me?.displayName ?? ''}{' '}
+          {t('app.locale.home.greeting.morning')}, {me?.displayName ?? ''}{' '}
         </AppText>
         <AppText variant="2xl" className="text-primary mr-1">
           👋{' '}
         </AppText>
       </View>
       <AppText variant="3xl" className="text-text mb-4">
-        You've got this.{'\n'}One step at a time.
+        {t('app.locale.home.recoveryScore.encouragement')}
       </AppText>
       {loading ? (
         <View className="gap-3 rounded-2xl bg-surface p-4">
@@ -46,7 +48,7 @@ export function RecoveryScoreCard({}: RecoveryScoreCardProps) {
                 variant="sm"
                 className="font-medium uppercase tracking-wide text-primary"
               >
-                Recovery Score
+                {t('app.locale.home.recoveryScore.scoreTitle')}
               </AppText>
 
               <AppText
@@ -58,14 +60,14 @@ export function RecoveryScoreCard({}: RecoveryScoreCardProps) {
 
               <AppText variant="sm" className="mt-2 text-primary">
                 ↑ {properCase(myRecovery?.trend?.toString()) ?? 'Up'}{' '}
-                {myRecovery?.previousScore ?? myRecovery?.overallScore ?? 0}%
-                from yesterday
+                {myRecovery?.previousScore ?? myRecovery?.overallScore ?? 0}%{' '}
+                {t('app.locale.home.recoveryScore.fromYesterday')}
               </AppText>
             </View>
 
             <View className="items-end pt-3">
               <AppText variant="sm" className="text-primary">
-                7 Day Trend
+                {t('app.locale.home.recoveryScore.trend')}
               </AppText>
 
               {/* Trend graph will go here */}

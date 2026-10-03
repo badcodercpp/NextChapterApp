@@ -3,6 +3,7 @@ import { BarChart3, Heart, Moon, Users, Wind } from 'lucide-react-native';
 
 import { LucideIcon } from 'lucide-react-native';
 import { View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 interface QuickAction {
   id: string;
@@ -12,53 +13,50 @@ interface QuickAction {
 }
 
 interface QuickActionsProps {
-  actions?: QuickAction[];
   onEdit?: () => void;
 }
 
-const DEFAULT_ACTIONS: QuickAction[] = [
-  {
-    id: 'check-in',
-    label: 'Check-in',
-    icon: Heart,
-  },
-  {
-    id: 'night',
-    label: 'Night',
-    icon: Moon,
-  },
-  {
-    id: 'breathe',
-    label: 'Breathe',
-    icon: Wind,
-  },
-  {
-    id: 'progress',
-    label: 'Progress',
-    icon: BarChart3,
-  },
-  {
-    id: 'friend',
-    label: 'Friend',
-    icon: Users,
-  },
-];
+export function QuickActions({ onEdit }: QuickActionsProps) {
+  const { t } = useTranslation();
+  const actions: QuickAction[] = [
+    {
+      id: 'check-in',
+      label: t('app.locale.home.quickAction.checkIn'),
+      icon: Heart,
+    },
+    {
+      id: 'night',
+      label: t('app.locale.home.quickAction.night'),
+      icon: Moon,
+    },
+    {
+      id: 'breathe',
+      label: t('app.locale.home.quickAction.breathe'),
+      icon: Wind,
+    },
+    {
+      id: 'progress',
+      label: t('app.locale.home.quickAction.progress'),
+      icon: BarChart3,
+    },
+    {
+      id: 'friend',
+      label: t('app.locale.home.quickAction.friend'),
+      icon: Users,
+    },
+  ];
 
-export function QuickActions({
-  actions = DEFAULT_ACTIONS,
-  onEdit,
-}: QuickActionsProps) {
   return (
     <View>
       {/* Header */}
       <View className="mb-5 flex-row items-center justify-between">
         <AppText variant="xl" className="font-semibold text-text">
-          Quick Actions
+          {t('app.locale.home.quickAction.title')}
         </AppText>
 
         <AppPressable onPress={onEdit} hitSlop={10}>
           <AppText variant="sm" className="text-primary">
-            Edit
+            {t('app.locale.home.quickAction.edit')}
           </AppText>
         </AppPressable>
       </View>

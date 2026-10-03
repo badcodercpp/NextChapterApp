@@ -15,10 +15,13 @@ import { TodaysMissionCard } from '@/features/CommonFeature';
 import { View } from 'react-native';
 import { useHomeBootstrap } from '@/features/home/hooks/useHomeBootstrap';
 import { useTabNavigation } from '@/navigation/Tab/hooks/useTabNavigation';
+import { useTranslation } from 'react-i18next';
 
 export function HomeScreen() {
   const navigation = useTabNavigation();
   useHomeBootstrap();
+
+  const { t } = useTranslation();
 
   return (
     <AppAuthenticatedLayout>
@@ -34,7 +37,7 @@ export function HomeScreen() {
 
       <View className="mt-4">
         <AppButton
-          title="Continue Daily Session"
+          title={t('app.locale.home.continueSession')}
           size="lg"
           leftIcon={CalendarClock}
           fullWidth

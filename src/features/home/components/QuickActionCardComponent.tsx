@@ -5,6 +5,7 @@ import { QuickActionCard } from './QuickActionCard';
 import { selectApplicationConfig } from '@/state/selectors';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface QuickActionCardComponentProps {}
 
@@ -17,13 +18,15 @@ export function QuickActionCardComponent({}: QuickActionCardComponentProps) {
     setCardHeight(prev => Math.max(prev, height));
   };
 
+  const { t } = useTranslation();
+
   return (
     <View className="flex-row flex-wrap justify-between">
       <QuickActionCard
         icon={BookOpen}
-        title="Journal Prompt"
-        description="What's one feeling you're ready to release today?"
-        actionLabel="Start Journaling"
+        title={t('app.locale.home.quickAction.journalPrompt.title')}
+        description={t('app.locale.home.quickAction.journalPrompt.description')}
+        actionLabel={t('app.locale.home.quickAction.journalPrompt.actionLabel')}
         accentClassName="text-primary"
         iconBackgroundClassName="bg-primary/15"
         onPress={() => {
@@ -35,9 +38,16 @@ export function QuickActionCardComponent({}: QuickActionCardComponentProps) {
 
       <QuickActionCard
         icon={Bot}
-        title={`${applicationConfig?.aiCoachName}`}
-        description={applicationConfig?.aiCoachMessage ?? ''}
-        actionLabel="Chat Now"
+        title={`${
+          applicationConfig?.aiCoachName ??
+          t('app.locale.home.quickAction.aiCoachName')
+        }`}
+        description={
+          applicationConfig?.aiCoachMessage ??
+          t('app.locale.home.quickAction.aiCoachMessage') ??
+          ''
+        }
+        actionLabel={t('app.locale.home.quickAction.aiCoach.actionLabel')}
         accentClassName="text-secondary"
         iconBackgroundClassName="bg-secondary/15"
         onPress={() => {

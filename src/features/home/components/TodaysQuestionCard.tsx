@@ -9,6 +9,7 @@ import { ConversationRole } from '@/__generated__/graphql';
 import { Target } from 'lucide-react-native';
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 interface TodaysQuestionCardProps {}
 
@@ -27,6 +28,8 @@ export function TodaysQuestionCard({}: TodaysQuestionCardProps) {
     return getTodayFocusContent();
   }, [getTodayFocusContent]);
 
+  const { t } = useTranslation();
+
   return (
     <AppCard className="rounded-[28px] border border-primary/30 bg-card p-5">
       <View className="flex-row items-start">
@@ -43,7 +46,7 @@ export function TodaysQuestionCard({}: TodaysQuestionCardProps) {
         {/* Focus Content */}
         <View className="ml-3 flex-1">
           <AppText variant="lg" className="text-primary">
-            Today's Focus
+            {t('app.locale.home.todayFocus.title')}
           </AppText>
 
           <AppText variant="md" className="mt-1 text-text">
@@ -54,11 +57,12 @@ export function TodaysQuestionCard({}: TodaysQuestionCardProps) {
         {/* Day */}
         <View className="ml-3 items-end">
           <AppText variant="xl" className="text-primary">
-            Day {todayQuestion?.day ?? 1}
+            {t('app.locale.home.todayFocus.dayLabel')} {todayQuestion?.day ?? 1}
           </AppText>
 
           <AppText variant="sm" className="mt-0.5 text-text-secondary">
-            of {applicationConfig?.totalProgramDays ?? 90}
+            {t('app.locale.home.todayFocus.ofLabel')}{' '}
+            {applicationConfig?.totalProgramDays ?? 90}
           </AppText>
         </View>
       </View>

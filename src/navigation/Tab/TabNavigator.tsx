@@ -23,7 +23,7 @@ export function TabNavigator() {
       <Tab.Screen
         options={{
           headerShown: false,
-          title: t('app.locale.home'),
+          title: t('app.locale.navigation.home'),
         }}
         name={TabRoutes.Home}
         component={HomeNavigator}
@@ -32,7 +32,7 @@ export function TabNavigator() {
       <Tab.Screen
         options={{
           headerShown: false,
-          title: t('app.locale.journal'),
+          title: t('app.locale.navigation.journal'),
         }}
         name={TabRoutes.Journal}
         component={HomeNavigator}
@@ -41,7 +41,7 @@ export function TabNavigator() {
       <Tab.Screen
         options={{
           headerShown: false,
-          title: t('app.locale.ai'),
+          title: t('app.locale.navigation.ai'),
           tabBarStyle: {
             display: 'none',
           },
@@ -53,7 +53,7 @@ export function TabNavigator() {
       <Tab.Screen
         options={{
           headerShown: false,
-          title: t('app.locale.progress'),
+          title: t('app.locale.navigation.progress'),
         }}
         name={TabRoutes.Progress}
         component={RecoveryProgressNavigator}
@@ -62,7 +62,7 @@ export function TabNavigator() {
       <Tab.Screen
         options={{
           headerShown: false,
-          title: t('app.locale.mentors'),
+          title: t('app.locale.navigation.mentors'),
           tabBarStyle: {
             display: 'none',
           },
@@ -74,7 +74,7 @@ export function TabNavigator() {
       <Tab.Screen
         options={{
           headerShown: false,
-          title: t('app.locale.mentors'),
+          title: t('app.locale.navigation.mentors'),
           tabBarStyle: {
             display: 'none',
           },
