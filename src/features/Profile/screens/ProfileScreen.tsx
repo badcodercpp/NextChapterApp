@@ -13,9 +13,11 @@ import { type ProfileNavigationProp } from '../navigation/types';
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
+import { useProfileBootstrap } from '@/features/Profile/hooks/useProfileBootstrap';
 
 export function ProfileScreen() {
   const navigation = useNavigation<ProfileNavigationProp>();
+  useProfileBootstrap();
 
   const goToEditProfile = useCallback(() => {
     navigation.navigate('EditProfileScreen');

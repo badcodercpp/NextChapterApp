@@ -6,3 +6,4 @@ export * from './todayMission';
 export * from './todayQuestion';
 export * from './motivationalMessage';
 export * from './applicationConfig';
+export * from './moodThisWeek';

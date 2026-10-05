@@ -407,6 +407,11 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeQuery = { me: { id: string, email: string, displayName: string, gender: Gender | null, avatarUrl: string | null, timezone: string | null, locale: string | null, emailVerified: boolean, isActive: boolean, createdAt: unknown, updatedAt: unknown } };
 
+export type MoodThisWeekQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MoodThisWeekQuery = { moodThisWeek: Array<{ dailySessionId: string | null, day: number, date: unknown, startMoods: Array<RecoveryReasonCurrentFeeling>, endMoods: Array<RecoveryReasonCurrentFeeling>, startMoodAverage: number, endMoodAverage: number }> };
+
 export type MotivationalMessageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -771,6 +776,19 @@ export const MeDocument = new TypedDocumentString(`
   }
 }
     `);
+export const MoodThisWeekDocument = new TypedDocumentString(`
+    query MoodThisWeek {
+  moodThisWeek {
+    dailySessionId
+    day
+    date
+    startMoods
+    endMoods
+    startMoodAverage
+    endMoodAverage
+  }
+}
+    `);
 export const MotivationalMessageDocument = new TypedDocumentString(`
     query MotivationalMessage {
   motivationalMessage {
@@ -971,6 +989,9 @@ const injectedRtkApi = api.injectEndpoints({
     Me: build.query<MeQuery, MeQueryVariables | void>({
       query: (variables) => ({ document: MeDocument as unknown as string, variables })
     }),
+    MoodThisWeek: build.query<MoodThisWeekQuery, MoodThisWeekQueryVariables | void>({
+      query: (variables) => ({ document: MoodThisWeekDocument as unknown as string, variables })
+    }),
     MotivationalMessage: build.query<MotivationalMessageQuery, MotivationalMessageQueryVariables | void>({
       query: (variables) => ({ document: MotivationalMessageDocument as unknown as string, variables })
     }),
@@ -1008,5 +1029,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useCompleteJourneyMutation, useFollowUpMutation, useLogoutMutation, useLogoutAllMutation, usePauseJourneyMutation, useRefreshTokenMutation, useRequestChangePasswordOtpMutation, useResumeJourneyMutation, useStartJourneyMutation, useUpdateProfileMutation, useVerifyChangePasswordOtpMutation, useGoogleLoginMutation, useGoogleRegisterMutation, useLoginMutation, useRegisterMutation, useResendEmailVerificationOtpMutation, useVerifyEmailOtpMutation, useActiveJourneyQuery, useLazyActiveJourneyQuery, useApplicationConfigQuery, useLazyApplicationConfigQuery, useDailySessionHistoryByDayQuery, useLazyDailySessionHistoryByDayQuery, useMeQuery, useLazyMeQuery, useMotivationalMessageQuery, useLazyMotivationalMessageQuery, useMyRecoveryQuery, useLazyMyRecoveryQuery, useRecoveryAssessmentHistoryQuery, useLazyRecoveryAssessmentHistoryQuery, useRecoveryScoreTrendForLastNDaysQuery, useLazyRecoveryScoreTrendForLastNDaysQuery, useTodayMissionQuery, useLazyTodayMissionQuery, useTodayQuestionQuery, useLazyTodayQuestionQuery, useRegisterDeviceMutation, useGetRecoveryFeelingQuery, useLazyGetRecoveryFeelingQuery, useGetRecoveryGoalQuery, useLazyGetRecoveryGoalQuery, useGetRecoveryReasonQuery, useLazyGetRecoveryReasonQuery, useGetRecoveryTimelineQuery, useLazyGetRecoveryTimelineQuery } = injectedRtkApi;
+export const { useCompleteJourneyMutation, useFollowUpMutation, useLogoutMutation, useLogoutAllMutation, usePauseJourneyMutation, useRefreshTokenMutation, useRequestChangePasswordOtpMutation, useResumeJourneyMutation, useStartJourneyMutation, useUpdateProfileMutation, useVerifyChangePasswordOtpMutation, useGoogleLoginMutation, useGoogleRegisterMutation, useLoginMutation, useRegisterMutation, useResendEmailVerificationOtpMutation, useVerifyEmailOtpMutation, useActiveJourneyQuery, useLazyActiveJourneyQuery, useApplicationConfigQuery, useLazyApplicationConfigQuery, useDailySessionHistoryByDayQuery, useLazyDailySessionHistoryByDayQuery, useMeQuery, useLazyMeQuery, useMoodThisWeekQuery, useLazyMoodThisWeekQuery, useMotivationalMessageQuery, useLazyMotivationalMessageQuery, useMyRecoveryQuery, useLazyMyRecoveryQuery, useRecoveryAssessmentHistoryQuery, useLazyRecoveryAssessmentHistoryQuery, useRecoveryScoreTrendForLastNDaysQuery, useLazyRecoveryScoreTrendForLastNDaysQuery, useTodayMissionQuery, useLazyTodayMissionQuery, useTodayQuestionQuery, useLazyTodayQuestionQuery, useRegisterDeviceMutation, useGetRecoveryFeelingQuery, useLazyGetRecoveryFeelingQuery, useGetRecoveryGoalQuery, useLazyGetRecoveryGoalQuery, useGetRecoveryReasonQuery, useLazyGetRecoveryReasonQuery, useGetRecoveryTimelineQuery, useLazyGetRecoveryTimelineQuery } = injectedRtkApi;
 

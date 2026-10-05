@@ -1,0 +1,11 @@
+query MoodThisWeek {
+  moodThisWeek {
+    dailySessionId
+    day
+    date
+    startMoods
+    endMoods
+    startMoodAverage
+    endMoodAverage
+  }
+}

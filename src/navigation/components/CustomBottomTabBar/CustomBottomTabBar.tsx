@@ -1,10 +1,10 @@
 import {
   BookIcon,
   ChartBarIcon,
+  History,
   HomeIcon,
   LucideIcon,
   SparklesIcon,
-  Users,
 } from 'lucide-react-native';
 
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
@@ -14,7 +14,10 @@ import { View } from 'react-native';
 import { styles } from './styles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const NO_TAB_ICON_ROUTES: Array<string> = [TabRoutes.DailySessionTab];
+const NO_TAB_ICON_ROUTES: Array<string> = [
+  TabRoutes.DailySessionTab,
+  TabRoutes.Mentor,
+];
 
 const ICONS: Record<string, LucideIcon> = {
   [TabRoutes.Home]: HomeIcon,
@@ -25,7 +28,7 @@ const ICONS: Record<string, LucideIcon> = {
 
   [TabRoutes.Progress]: ChartBarIcon,
 
-  [TabRoutes.Mentor]: Users,
+  [TabRoutes.DailySessionHistoryTab]: History,
 };
 
 export function CustomBottomTabBar({
