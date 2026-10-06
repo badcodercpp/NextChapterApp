@@ -1,29 +1,31 @@
 import { AppAvatar, AppIcon, AppPressable, AppText } from '@/components';
 import { Pencil, Sprout } from 'lucide-react-native';
+import { selectApplicationConfig, selectMe } from '@/state/selectors';
 
 import { View } from 'react-native';
-import { selectMe } from '@/state/selectors';
+import { toHttpsURL } from '@/utils';
 import { useSelector } from 'react-redux';
 
 interface ProfileSummaryCardProps {
-  status?: string;
-  quote?: string;
   onEditPress?: () => void;
 }
 
-export function ProfileSummaryCard({
-  status = 'Recovering & Growing',
-  quote = 'One day at a time.\nI choose me. 💜',
-  onEditPress,
-}: ProfileSummaryCardProps) {
+export function ProfileSummaryCard({ onEditPress }: ProfileSummaryCardProps) {
   const { data: me } = useSelector(selectMe);
+  const { data: applicationConfig } = useSelector(selectApplicationConfig);
+
   return (
     <View className="rounded-[28px] border border-secondary/40 bg-card/60 p-4">
       <View className="flex-row items-center">
         {/* Profile Image */}
         <View className="mr-6">
           <View className="items-center justify-center">
-            <AppAvatar size="lg" name={me?.displayName ?? ''} />
+            <AppAvatar
+              size="lg"
+              name={me?.displayName ?? ''}
+              enablePhotoActions
+              uri={toHttpsURL(me?.avatarUrl) ?? undefined}
+            />
           </View>
         </View>
 
@@ -81,14 +83,14 @@ export function ProfileSummaryCard({
             />
 
             <AppText variant="lg" className="font-medium text-green-400">
-              {status}
+              {applicationConfig?.profileSummaryStatusText}
             </AppText>
           </View>
 
           {/* Quote */}
           <View className="mt-5 flex-row">
             <AppText variant="lg" className="flex-1 text-text-secondary">
-              {quote}
+              {applicationConfig?.profileSummaryQuote}
             </AppText>
           </View>
         </View>

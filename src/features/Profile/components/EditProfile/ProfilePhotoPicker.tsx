@@ -2,6 +2,7 @@ import { AppAvatar, AppPressable, AppText } from '@/components';
 
 import { View } from 'react-native';
 import { selectMe } from '@/state/selectors';
+import { toHttpsURL } from '@/utils';
 import { useSelector } from 'react-redux';
 
 interface ProfilePhotoPickerProps {
@@ -23,7 +24,11 @@ export function ProfilePhotoPicker({
         {/* Gradient-like Border */}
 
         <View className="items-center justify-center">
-          <AppAvatar size="xl" name={me?.displayName ?? ''} />
+          <AppAvatar
+            size="xl"
+            name={me?.displayName ?? ''}
+            uri={toHttpsURL(me?.avatarUrl) ?? undefined}
+          />
         </View>
       </View>
 

@@ -2,6 +2,7 @@ import { AppAvatar, AppText } from '@/components';
 
 import { View } from 'react-native';
 import { selectMe } from '@/state/selectors';
+import { toHttpsURL } from '@/utils';
 import { useSelector } from 'react-redux';
 
 interface ProfileUpdateSuccessProps {
@@ -17,7 +18,11 @@ export function ProfileUpdateSuccess({
   return (
     <View className="flex-1 items-center bg-background pt-4">
       {/* Profile Avatar */}
-      <AppAvatar size="xl" name={me?.displayName ?? ''} />
+      <AppAvatar
+        size="xl"
+        name={me?.displayName ?? ''}
+        uri={toHttpsURL(me?.avatarUrl) ?? undefined}
+      />
 
       {/* All Done */}
       <View className="mt-4 flex-row items-center">

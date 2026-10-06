@@ -3,13 +3,18 @@ import { AppText } from '@/components/foundation/AppText';
 import React from 'react';
 import { View } from 'react-native';
 import { selectMe } from '@/state/selectors';
+import { toHttpsURL } from '@/utils';
 import { useSelector } from 'react-redux';
 
 export function DrawerHeader() {
   const { data: me } = useSelector(selectMe);
   return (
     <View className="items-center py-6">
-      <AppAvatar size="lg" name={me?.displayName ?? ''} />
+      <AppAvatar
+        size="lg"
+        name={me?.displayName ?? ''}
+        uri={toHttpsURL(me?.avatarUrl) ?? undefined}
+      />
 
       <AppText variant="xl" className="mt-3 mb-1">
         Good Evening 👋

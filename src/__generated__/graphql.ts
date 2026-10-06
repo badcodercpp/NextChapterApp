@@ -252,9 +252,15 @@ export type StartJourneyInput = {
 
 export type UpdateProfileInput = {
   avatarUrl?: string | null | undefined;
+  bio?: string | null | undefined;
   displayName?: string | null | undefined;
+  dob?: string | null | undefined;
   gender?: Gender | null | undefined;
   locale?: string | null | undefined;
+  locationLat?: string | null | undefined;
+  locationLong?: string | null | undefined;
+  locationName?: string | null | undefined;
+  phone?: string | null | undefined;
   timezone?: string | null | undefined;
 };
 
@@ -334,7 +340,14 @@ export type UpdateProfileMutationVariables = Exact<{
 }>;
 
 
-export type UpdateProfileMutation = { updateProfile: { id: string, email: string, displayName: string, gender: Gender | null, avatarUrl: string | null, timezone: string | null, locale: string | null, emailVerified: boolean, isActive: boolean, createdAt: unknown, updatedAt: unknown } };
+export type UpdateProfileMutation = { updateProfile: { id: string, email: string, displayName: string, gender: Gender | null, avatarUrl: string | null, bio: string | null, phone: string | null, dob: string | null, locationName: string | null, locationLat: string | null, locationLong: string | null, timezone: string | null, locale: string | null, emailVerified: boolean, isActive: boolean, createdAt: unknown, updatedAt: unknown } };
+
+export type UploadSingleFilesMutationVariables = Exact<{
+  file: unknown;
+}>;
+
+
+export type UploadSingleFilesMutation = { uploadSingleFiles: { url: string, format: string, folder: string, width: number, height: number, bytes: number, asset_id: string, public_id: string } };
 
 export type VerifyChangePasswordOtpMutationVariables = Exact<{
   input: VerifyChangePasswordOtpInput;
@@ -393,7 +406,7 @@ export type ActiveJourneyQuery = { activeJourney: { id: string, userId: string, 
 export type ApplicationConfigQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ApplicationConfigQuery = { applicationConfig: { id: string, totalProgramDays: number, aiCoachName: string, aiCoachMessage: string, createdAt: unknown, updatedAt: unknown } };
+export type ApplicationConfigQuery = { applicationConfig: { id: string, totalProgramDays: number, aiCoachName: string, aiCoachMessage: string, profileSummaryStatusText: string, profileSummaryQuote: string, createdAt: unknown, updatedAt: unknown } };
 
 export type DailySessionHistoryByDayQueryVariables = Exact<{
   day: number;
@@ -405,7 +418,7 @@ export type DailySessionHistoryByDayQuery = { dailySessionHistoryByDay: { id: st
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { me: { id: string, email: string, displayName: string, gender: Gender | null, avatarUrl: string | null, timezone: string | null, locale: string | null, emailVerified: boolean, isActive: boolean, createdAt: unknown, updatedAt: unknown } };
+export type MeQuery = { me: { id: string, email: string, displayName: string, gender: Gender | null, avatarUrl: string | null, bio: string | null, phone: string | null, dob: string | null, locationName: string | null, locationLat: string | null, locationLong: string | null, timezone: string | null, locale: string | null, emailVerified: boolean, isActive: boolean, createdAt: unknown, updatedAt: unknown } };
 
 export type MoodThisWeekQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -594,12 +607,32 @@ export const UpdateProfileDocument = new TypedDocumentString(`
     displayName
     gender
     avatarUrl
+    bio
+    phone
+    dob
+    locationName
+    locationLat
+    locationLong
     timezone
     locale
     emailVerified
     isActive
     createdAt
     updatedAt
+  }
+}
+    `);
+export const UploadSingleFilesDocument = new TypedDocumentString(`
+    mutation UploadSingleFiles($file: Upload!) {
+  uploadSingleFiles(file: $file) {
+    url
+    format
+    folder
+    width
+    height
+    bytes
+    asset_id
+    public_id
   }
 }
     `);
@@ -674,6 +707,8 @@ export const ApplicationConfigDocument = new TypedDocumentString(`
     totalProgramDays
     aiCoachName
     aiCoachMessage
+    profileSummaryStatusText
+    profileSummaryQuote
     createdAt
     updatedAt
   }
@@ -767,6 +802,12 @@ export const MeDocument = new TypedDocumentString(`
     displayName
     gender
     avatarUrl
+    bio
+    phone
+    dob
+    locationName
+    locationLat
+    locationLong
     timezone
     locale
     emailVerified
@@ -956,6 +997,9 @@ const injectedRtkApi = api.injectEndpoints({
     UpdateProfile: build.mutation<UpdateProfileMutation, UpdateProfileMutationVariables>({
       query: (variables) => ({ document: UpdateProfileDocument as unknown as string, variables })
     }),
+    UploadSingleFiles: build.mutation<UploadSingleFilesMutation, UploadSingleFilesMutationVariables>({
+      query: (variables) => ({ document: UploadSingleFilesDocument as unknown as string, variables })
+    }),
     VerifyChangePasswordOtp: build.mutation<VerifyChangePasswordOtpMutation, VerifyChangePasswordOtpMutationVariables>({
       query: (variables) => ({ document: VerifyChangePasswordOtpDocument as unknown as string, variables })
     }),
@@ -1029,5 +1073,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useCompleteJourneyMutation, useFollowUpMutation, useLogoutMutation, useLogoutAllMutation, usePauseJourneyMutation, useRefreshTokenMutation, useRequestChangePasswordOtpMutation, useResumeJourneyMutation, useStartJourneyMutation, useUpdateProfileMutation, useVerifyChangePasswordOtpMutation, useGoogleLoginMutation, useGoogleRegisterMutation, useLoginMutation, useRegisterMutation, useResendEmailVerificationOtpMutation, useVerifyEmailOtpMutation, useActiveJourneyQuery, useLazyActiveJourneyQuery, useApplicationConfigQuery, useLazyApplicationConfigQuery, useDailySessionHistoryByDayQuery, useLazyDailySessionHistoryByDayQuery, useMeQuery, useLazyMeQuery, useMoodThisWeekQuery, useLazyMoodThisWeekQuery, useMotivationalMessageQuery, useLazyMotivationalMessageQuery, useMyRecoveryQuery, useLazyMyRecoveryQuery, useRecoveryAssessmentHistoryQuery, useLazyRecoveryAssessmentHistoryQuery, useRecoveryScoreTrendForLastNDaysQuery, useLazyRecoveryScoreTrendForLastNDaysQuery, useTodayMissionQuery, useLazyTodayMissionQuery, useTodayQuestionQuery, useLazyTodayQuestionQuery, useRegisterDeviceMutation, useGetRecoveryFeelingQuery, useLazyGetRecoveryFeelingQuery, useGetRecoveryGoalQuery, useLazyGetRecoveryGoalQuery, useGetRecoveryReasonQuery, useLazyGetRecoveryReasonQuery, useGetRecoveryTimelineQuery, useLazyGetRecoveryTimelineQuery } = injectedRtkApi;
+export const { useCompleteJourneyMutation, useFollowUpMutation, useLogoutMutation, useLogoutAllMutation, usePauseJourneyMutation, useRefreshTokenMutation, useRequestChangePasswordOtpMutation, useResumeJourneyMutation, useStartJourneyMutation, useUpdateProfileMutation, useUploadSingleFilesMutation, useVerifyChangePasswordOtpMutation, useGoogleLoginMutation, useGoogleRegisterMutation, useLoginMutation, useRegisterMutation, useResendEmailVerificationOtpMutation, useVerifyEmailOtpMutation, useActiveJourneyQuery, useLazyActiveJourneyQuery, useApplicationConfigQuery, useLazyApplicationConfigQuery, useDailySessionHistoryByDayQuery, useLazyDailySessionHistoryByDayQuery, useMeQuery, useLazyMeQuery, useMoodThisWeekQuery, useLazyMoodThisWeekQuery, useMotivationalMessageQuery, useLazyMotivationalMessageQuery, useMyRecoveryQuery, useLazyMyRecoveryQuery, useRecoveryAssessmentHistoryQuery, useLazyRecoveryAssessmentHistoryQuery, useRecoveryScoreTrendForLastNDaysQuery, useLazyRecoveryScoreTrendForLastNDaysQuery, useTodayMissionQuery, useLazyTodayMissionQuery, useTodayQuestionQuery, useLazyTodayQuestionQuery, useRegisterDeviceMutation, useGetRecoveryFeelingQuery, useLazyGetRecoveryFeelingQuery, useGetRecoveryGoalQuery, useLazyGetRecoveryGoalQuery, useGetRecoveryReasonQuery, useLazyGetRecoveryReasonQuery, useGetRecoveryTimelineQuery, useLazyGetRecoveryTimelineQuery } = injectedRtkApi;
 

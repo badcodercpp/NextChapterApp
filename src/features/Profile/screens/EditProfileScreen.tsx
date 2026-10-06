@@ -1,3 +1,4 @@
+import { AppAuthenticatedLayout, showToast } from '@/components';
 import {
   BasicInfoSection,
   ContactSection,
@@ -5,53 +6,49 @@ import {
   ProfilePhotoPicker,
   WellnessFocusSection,
 } from '../components';
-import React, { useState } from 'react';
+import { usePreventBackNavigation, useScreenHeader } from '@/navigation/hooks';
 
-import { AppAuthenticatedLayout } from '@/components';
-import { AppText } from '@/components/foundation/AppText';
 import { ProfileNavigationProp } from '@/features/Profile/navigation/types';
+import React from 'react';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useUpdateProfileBootstrap } from '@/features/Profile/hooks/useUpdateProfileBootstrap';
 
 export function EditProfileScreen() {
   const navigation = useNavigation<ProfileNavigationProp>();
-  const [fullName, setFullName] = useState('Shreya Singh');
-  const [username, setUsername] = useState('@shreya.singh');
-  const [bio, setBio] = useState(
-    'Healing one day at a time. 🌿 Gratitude & growth.',
-  );
+  const { handleStartProfileUpdate, isBootstrapPending, isBootstrapError } =
+    useUpdateProfileBootstrap();
+
+  useScreenHeader({
+    backDisabled: isBootstrapPending,
+  });
+
+  usePreventBackNavigation(isBootstrapPending);
+
   return (
     <AppAuthenticatedLayout noBottomPadding>
-      <AppText variant="xl">EditProfileScreen</AppText>
       <View className="mt-4">
         <ProfilePhotoPicker />
       </View>
       <View className="mt-4">
-        <BasicInfoSection
-          fullName={fullName}
-          username={username}
-          bio={bio}
-          onFullNameChange={setFullName}
-          onUsernameChange={setUsername}
-          onBioChange={setBio}
-        />
+        <BasicInfoSection />
       </View>
       <View className="mt-4">
-        <ContactSection phone={''} email={''} />
+        <ContactSection />
       </View>
       <View className="mt-4">
-        <PersonalDetailsSection
-          gender={'other'}
-          dateOfBirth={''}
-          location={''}
-          onGenderChange={() => {}}
-        />
+        <PersonalDetailsSection />
       </View>
       <View className="mt-4">
         <WellnessFocusSection
-          selectedFocusAreas={[]}
-          onFocusAreaToggle={() => {}}
-          onSave={() => {
+          onSave={async () => {
+            await handleStartProfileUpdate();
+
+            if (isBootstrapError) {
+              showToast('Failed to update profile', 'error');
+              return;
+            }
+            showToast('Profile updated successfully', 'success');
             navigation.navigate('EditProfileSuccessScreen');
           }}
           onDeleteAccount={() => {

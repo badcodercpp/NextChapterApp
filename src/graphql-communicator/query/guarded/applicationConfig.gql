@@ -4,6 +4,8 @@ query ApplicationConfig {
     totalProgramDays
     aiCoachName
     aiCoachMessage
+    profileSummaryStatusText
+    profileSummaryQuote
     createdAt
     updatedAt
   }

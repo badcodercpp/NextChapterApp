@@ -162,8 +162,6 @@ export function MoodThisWeek({}: MoodThisWeekProps) {
         : `${format(startDate, 'MMM d')} - ${format(endDate, 'MMM d')}`
       : '';
 
-  console.log('MoodThisWeek entries:', entries); // Debugging log
-
   return (
     <View className="rounded-[24px] border border-border bg-card p-4">
       {/* Header */}

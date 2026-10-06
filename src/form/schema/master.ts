@@ -6,6 +6,7 @@ import { forgotPasswordSchema } from '@/form/schema/forgotPassword';
 import { howAreYouFeelingSchema } from '@/form/schema/howAreYouFeeling';
 import { howLongHasItBeenSchema } from '@/form/schema/howLongHasItBeen';
 import { loginSchema } from '@/form/schema/login';
+import { updateProfileSchema } from '@/form/schema/updateProfile';
 import { verifyEmailSchema } from '@/form/schema/verifyEmail';
 import { verifyIdentitySchema } from '@/form/schema/verifyIdentity';
 import { whatBringsYouHereSchema } from '@/form/schema/whatBringsYouHere';
@@ -22,4 +23,5 @@ export const masterSchema = z.object({
   verifyEmail: verifyEmailSchema,
   forgotPassword: forgotPasswordSchema,
   verifyIdentity: verifyIdentitySchema,
+  updateProfile: updateProfileSchema,
 });

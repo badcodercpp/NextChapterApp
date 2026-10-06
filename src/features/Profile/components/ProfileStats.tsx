@@ -1,7 +1,9 @@
 import { AppIcon, AppText } from '@/components';
 import { CalendarDays, CircleCheck, Flame, Star } from 'lucide-react-native';
+import { selectActiveJourney, selectMyRecovery } from '@/state/selectors';
 
 import { View } from 'react-native';
+import { useSelector } from 'react-redux';
 
 interface ProfileStat {
   id: string;
@@ -12,46 +14,46 @@ interface ProfileStat {
   iconBackgroundClassName: string;
 }
 
-interface ProfileStatsProps {
-  stats?: ProfileStat[];
-}
+interface ProfileStatsProps {}
 
-const DEFAULT_STATS: ProfileStat[] = [
-  {
-    id: 'days-active',
-    value: 12,
-    label: 'Days Active',
-    icon: CalendarDays,
-    iconClassName: 'text-purple-400',
-    iconBackgroundClassName: 'bg-purple-500/20',
-  },
-  {
-    id: 'tasks-completed',
-    value: 48,
-    label: 'Tasks Completed',
-    icon: CircleCheck,
-    iconClassName: 'text-emerald-400',
-    iconBackgroundClassName: 'bg-emerald-500/20',
-  },
-  {
-    id: 'day-streak',
-    value: 7,
-    label: 'Day Streak',
-    icon: Flame,
-    iconClassName: 'text-amber-400',
-    iconBackgroundClassName: 'bg-amber-500/20',
-  },
-  {
-    id: 'recovery-score',
-    value: 720,
-    label: 'Recovery Score',
-    icon: Star,
-    iconClassName: 'text-cyan-400',
-    iconBackgroundClassName: 'bg-cyan-500/20',
-  },
-];
+export function ProfileStats({}: ProfileStatsProps) {
+  const { data: activeJourney } = useSelector(selectActiveJourney);
+  const { data: myRecovery } = useSelector(selectMyRecovery);
 
-export function ProfileStats({ stats = DEFAULT_STATS }: ProfileStatsProps) {
+  const stats: ProfileStat[] = [
+    {
+      id: 'days-active',
+      value: activeJourney?.currentDay ?? 1,
+      label: 'Day',
+      icon: CalendarDays,
+      iconClassName: 'text-primary',
+      iconBackgroundClassName: 'bg-surface',
+    },
+    {
+      id: 'tasks-completed',
+      value: 48,
+      label: 'Tasks Completed',
+      icon: CircleCheck,
+      iconClassName: 'text-primary',
+      iconBackgroundClassName: 'bg-surface',
+    },
+    {
+      id: 'day-streak',
+      value: activeJourney?.currentDay ?? 1,
+      label: 'Day Streak',
+      icon: Flame,
+      iconClassName: 'text-primary',
+      iconBackgroundClassName: 'bg-surface',
+    },
+    {
+      id: 'recovery-score',
+      value: myRecovery?.overallScore ?? 0,
+      label: 'Recovery Score',
+      icon: Star,
+      iconClassName: 'text-primary',
+      iconBackgroundClassName: 'bg-surface',
+    },
+  ];
   return (
     <View className="flex-row gap-3">
       {stats.map(stat => (
@@ -61,11 +63,11 @@ export function ProfileStats({ stats = DEFAULT_STATS }: ProfileStatsProps) {
         >
           {/* Icon */}
           <View
-            className={`h-[32px] w-[32px] items-center justify-center rounded-full ${stat.iconBackgroundClassName}`}
+            className={`h-12 w-12 items-center justify-center rounded-full ${stat.iconBackgroundClassName}`}
           >
             <AppIcon
               icon={stat.icon}
-              size={16}
+              size={20}
               strokeWidth={2.5}
               className={stat.iconClassName}
             />

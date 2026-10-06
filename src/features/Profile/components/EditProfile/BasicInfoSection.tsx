@@ -1,24 +1,19 @@
 import { AppInput, AppText } from '@/components';
+import { Controller, useFormContext } from 'react-hook-form';
 import { FileText, Pencil, UserRound } from 'lucide-react-native';
 
+import { MasterFormData } from '@/form/types';
 import { View } from 'react-native';
 
-interface BasicInfoSectionProps {
-  fullName: string;
-  username: string;
-  bio: string;
+interface BasicInfoSectionProps {}
 
-  onFullNameChange: (value: string) => void;
-  onUsernameChange: (value: string) => void;
-  onBioChange: (value: string) => void;
-}
+export function BasicInfoSection({}: BasicInfoSectionProps) {
+  const {
+    control,
+    formState: { errors },
+    clearErrors,
+  } = useFormContext<MasterFormData>();
 
-export function BasicInfoSection({
-  fullName,
-  bio,
-  onFullNameChange,
-  onBioChange,
-}: BasicInfoSectionProps) {
   return (
     <View className="w-full">
       {/* Section Header */}
@@ -37,27 +32,51 @@ export function BasicInfoSection({
       <AppText variant="sm" className="mb-1 px-2 text-text">
         Full Name
       </AppText>
-      <AppInput
-        value={fullName}
-        onChangeText={onFullNameChange}
-        startIcon={UserRound}
-        endIcon={Pencil}
-        inputClassName="text-text-secondary"
-        className="mb-4"
+      <Controller
+        control={control}
+        name="updateProfile.displayName"
+        render={({ field: { onChange, onBlur, value } }) => (
+          <AppInput
+            placeholder="Enter your full name"
+            value={value}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            error={errors?.updateProfile?.displayName?.message}
+            onFocus={() => {
+              clearErrors('updateProfile.displayName');
+            }}
+            startIcon={UserRound}
+            endIcon={Pencil}
+            inputClassName="text-text-secondary"
+            className="mb-4"
+          />
+        )}
       />
 
       {/* Bio */}
       <AppText variant="sm" className="mb-1 px-2 text-text">
         Bio
       </AppText>
-      <AppInput
-        value={bio}
-        multiline
-        onChangeText={onBioChange}
-        startIcon={FileText}
-        endIcon={Pencil}
-        inputClassName="text-text-secondary"
-        className="mb-0"
+      <Controller
+        control={control}
+        name="updateProfile.bio"
+        render={({ field: { onChange, onBlur, value } }) => (
+          <AppInput
+            placeholder="Enter your bio"
+            multiline
+            value={value ?? ''}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            error={errors?.updateProfile?.bio?.message}
+            onFocus={() => {
+              clearErrors('updateProfile.bio');
+            }}
+            startIcon={FileText}
+            endIcon={Pencil}
+            inputClassName="text-text-secondary"
+            className="mb-4"
+          />
+        )}
       />
     </View>
   );

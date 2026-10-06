@@ -5,6 +5,12 @@ mutation UpdateProfile($input: UpdateProfileInput!) {
     displayName
     gender
     avatarUrl
+    bio
+    phone
+    dob
+    locationName
+    locationLat
+    locationLong
     timezone
     locale
     emailVerified

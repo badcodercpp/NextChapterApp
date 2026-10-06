@@ -4,3 +4,5 @@ export * from './ipAddress';
 export * from './jwt';
 export * from './maskEmail';
 export * from './userAgent';
+export * from './file';
+export * from './url';

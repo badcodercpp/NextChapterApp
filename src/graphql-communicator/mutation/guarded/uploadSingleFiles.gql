@@ -1,0 +1,12 @@
+mutation UploadSingleFiles($file: Upload!) {
+  uploadSingleFiles(file: $file) {
+    url
+    format
+    folder
+    width
+    height
+    bytes
+    asset_id
+    public_id
+  }
+}

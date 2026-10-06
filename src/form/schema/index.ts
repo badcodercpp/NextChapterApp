@@ -9,3 +9,4 @@ export * from './createPassword';
 export * from './verifyEmail';
 export * from './forgotPassword';
 export * from './verifyIdentity';
+export * from './updateProfile';

@@ -12,4 +12,11 @@ export interface AppAvatarProps extends Omit<AppPressableProps, 'children'> {
   size?: AvatarSize;
 
   className?: string;
+
+  onPress?: () => void;
+
+  /**
+   * Enables built-in View / Change photo actions.
+   */
+  enablePhotoActions?: boolean;
 }
