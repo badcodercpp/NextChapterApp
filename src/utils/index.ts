@@ -6,3 +6,4 @@ export * from './maskEmail';
 export * from './userAgent';
 export * from './file';
 export * from './url';
+export * from './date';

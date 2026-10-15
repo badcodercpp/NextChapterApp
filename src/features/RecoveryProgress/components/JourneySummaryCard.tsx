@@ -6,10 +6,13 @@ import {
   Heart,
   MessageCircle,
 } from 'lucide-react-native';
+import {
+  selectActiveJourney,
+  selectApplicationConfig,
+} from '@/state/selectors';
 
 import { View } from 'react-native';
 import { cn } from '@/utils';
-import { selectApplicationConfig } from '@/state/selectors';
 import { useSelector } from 'react-redux';
 
 type JourneyStat = {
@@ -22,75 +25,60 @@ type JourneyStat = {
 };
 
 interface JourneySummaryCardProps {
-  currentDay: number;
   totalDays?: number;
-
-  daysActive: number;
-  tasksCompleted: number;
-  journalEntries: number;
-  reflections: number;
 
   onPress?: () => void;
   className?: string;
 }
 
-const JOURNEY_STATS = (
-  daysActive: number,
-  tasksCompleted: number,
-  journalEntries: number,
-  reflections: number,
-): JourneyStat[] => [
-  {
-    id: 'days-active',
-    value: daysActive,
-    label: 'Days Active',
-    icon: MessageCircle,
-    iconColorClassName: 'text-primary',
-    iconBackgroundClassName: 'bg-primary/15',
-  },
-  {
-    id: 'tasks-completed',
-    value: tasksCompleted,
-    label: 'Tasks\nCompleted',
-    icon: CheckCircle,
-    iconColorClassName: 'text-teal-400',
-    iconBackgroundClassName: 'bg-teal-400/15',
-  },
-  {
-    id: 'journal-entries',
-    value: journalEntries,
-    label: 'Journal Entries',
-    icon: BookOpen,
-    iconColorClassName: 'text-cyan-400',
-    iconBackgroundClassName: 'bg-cyan-400/15',
-  },
-  {
-    id: 'reflections',
-    value: reflections,
-    label: 'Reflections',
-    icon: Heart,
-    iconColorClassName: 'text-pink-400',
-    iconBackgroundClassName: 'bg-pink-400/15',
-  },
-];
-
 export function JourneySummaryCard({
-  currentDay,
-  daysActive,
-  tasksCompleted,
-  journalEntries,
-  reflections,
   onPress,
   className,
 }: JourneySummaryCardProps) {
   const { data: applicationConfig } = useSelector(selectApplicationConfig);
+  const { data: activeJourney } = useSelector(selectActiveJourney);
 
-  const stats = JOURNEY_STATS(
-    daysActive,
-    tasksCompleted,
-    journalEntries,
-    reflections,
-  );
+  const JOURNEY_STATS = (
+    daysActive: number,
+    tasksCompleted: number,
+    journalEntries: number,
+    reflections: number,
+  ): JourneyStat[] => [
+    {
+      id: 'days-active',
+      value: daysActive,
+      label: 'Days Active',
+      icon: MessageCircle,
+      iconColorClassName: 'text-primary',
+      iconBackgroundClassName: 'bg-primary/15',
+    },
+    {
+      id: 'tasks-completed',
+      value: tasksCompleted,
+      label: 'Tasks\nCompleted',
+      icon: CheckCircle,
+      iconColorClassName: 'text-teal-400',
+      iconBackgroundClassName: 'bg-teal-400/15',
+    },
+    {
+      id: 'journal-entries',
+      value: journalEntries,
+      label: 'Journal Entries',
+      icon: BookOpen,
+      iconColorClassName: 'text-cyan-400',
+      iconBackgroundClassName: 'bg-cyan-400/15',
+    },
+    {
+      id: 'reflections',
+      value: reflections,
+      label: 'Reflections',
+      icon: Heart,
+      iconColorClassName: 'text-pink-400',
+      iconBackgroundClassName: 'bg-pink-400/15',
+    },
+  ];
+
+  const stats = JOURNEY_STATS(activeJourney?.currentDay ?? 1, 10, 5, 3);
 
   const content = (
     <>
@@ -102,7 +90,8 @@ export function JourneySummaryCard({
 
         <View className="flex-row items-center">
           <AppText variant="lg" className="font-semibold text-primary">
-            Day {currentDay} of {applicationConfig?.totalProgramDays}
+            Day {activeJourney?.currentDay} of{' '}
+            {applicationConfig?.totalProgramDays}
           </AppText>
 
           <AppIcon

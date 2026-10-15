@@ -55,6 +55,9 @@ export function TabNavigator() {
         options={{
           headerShown: false,
           title: t('app.locale.navigation.progress'),
+          tabBarStyle: {
+            display: 'none',
+          },
         }}
         name={TabRoutes.Progress}
         component={RecoveryProgressNavigator}

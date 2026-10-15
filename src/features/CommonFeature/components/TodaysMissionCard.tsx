@@ -1,9 +1,8 @@
 import { AppCard, AppIcon, AppPressable, AppText } from '@/components';
 import { Check, Shield } from 'lucide-react-native';
-import { lazySelectTodayMission, selectActiveJourney } from '@/state/selectors';
 
 import { View } from 'react-native';
-import { useMemo } from 'react';
+import { selectTodayMission } from '@/state/selectors';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -20,19 +19,10 @@ export function TodaysMissionCard({
   onPress,
   showProgress = true,
 }: TodaysMissionCardProps) {
-  const { data: activeJourney } = useSelector(selectActiveJourney);
-
   const progress = total > 0 ? completed / total : 0;
   const isCompleted = completed >= total;
 
-  const todayMissionSelector = useMemo(() => {
-    return lazySelectTodayMission(
-      activeJourney?.id ?? '',
-      activeJourney?.currentDay ?? 1,
-    );
-  }, [activeJourney]);
-
-  const { data: todayMission } = useSelector(todayMissionSelector);
+  const { data: todayMission } = useSelector(selectTodayMission);
 
   const missionTitle = todayMission?.title?.replace(/^Day\s+\d+:\s*/, '');
 

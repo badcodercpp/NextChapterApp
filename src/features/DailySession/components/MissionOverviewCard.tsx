@@ -6,26 +6,17 @@ import {
   RefreshCw,
   Star,
 } from 'lucide-react-native';
-import React, { useMemo } from 'react';
-import { lazySelectTodayMission, selectActiveJourney } from '@/state/selectors';
 
+import React from 'react';
 import { View } from 'react-native';
 import { properCase } from '@/utils/strings';
+import { selectTodayMission } from '@/state/selectors';
 import { useSelector } from 'react-redux';
 
 interface MissionOverviewCardProps {}
 
 export function MissionOverviewCard({}: MissionOverviewCardProps) {
-  const { data: activeJourney } = useSelector(selectActiveJourney);
-
-  const todayMissionSelector = useMemo(() => {
-    return lazySelectTodayMission(
-      activeJourney?.id ?? '',
-      activeJourney?.currentDay ?? 1,
-    );
-  }, [activeJourney]);
-
-  const { data: todayMission } = useSelector(todayMissionSelector);
+  const { data: todayMission } = useSelector(selectTodayMission);
 
   return (
     <AppCard className="rounded-[28px] border border-border bg-card p-5">

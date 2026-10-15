@@ -1,40 +1,35 @@
 import {
+  useLazyCompletedMissionHistoryQuery,
+  useLazyGetRecoveryScoreTrendForLastNDayQuery,
   useLazyMyRecoveryQuery,
-  useLazyRecoveryScoreTrendForLastNDaysQuery,
   useLazyTodayMissionQuery,
   useLazyTodayQuestionQuery,
 } from '@/__generated__/graphql';
 
-import { selectActiveJourney } from '@/state/selectors';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
 export const useHomeBootstrap = () => {
-  const { data: activeJourney } = useSelector(selectActiveJourney);
   const [triggerMyRecoveryQuery] = useLazyMyRecoveryQuery();
-  const [triggerLazyRecoveryScoreTrendForLastNDaysQuery] =
-    useLazyRecoveryScoreTrendForLastNDaysQuery();
+  const [triggerLazyGetRecoveryScoreTrendForLastNDayQuery] =
+    useLazyGetRecoveryScoreTrendForLastNDayQuery();
 
   const [triggerTodayMissionQuery] = useLazyTodayMissionQuery();
+  const [triggerCompletedMissionHistoryQuery] =
+    useLazyCompletedMissionHistoryQuery();
   const [triggerLazyTodayQuestionQuery] = useLazyTodayQuestionQuery();
 
   useEffect(() => {
     triggerMyRecoveryQuery();
     triggerLazyTodayQuestionQuery();
-    triggerLazyRecoveryScoreTrendForLastNDaysQuery({ days: 7 });
+    triggerLazyGetRecoveryScoreTrendForLastNDayQuery({ days: 7 });
   }, [
     triggerMyRecoveryQuery,
-    triggerLazyRecoveryScoreTrendForLastNDaysQuery,
+    triggerLazyGetRecoveryScoreTrendForLastNDayQuery,
     triggerLazyTodayQuestionQuery,
   ]);
 
   useEffect(() => {
-    if (!activeJourney || !activeJourney?.id) {
-      return;
-    }
-    triggerTodayMissionQuery({
-      journeyId: activeJourney?.id,
-      day: activeJourney?.currentDay ?? 1,
-    });
-  }, [activeJourney, triggerTodayMissionQuery]);
+    triggerTodayMissionQuery();
+    triggerCompletedMissionHistoryQuery();
+  }, [triggerTodayMissionQuery, triggerCompletedMissionHistoryQuery]);
 };

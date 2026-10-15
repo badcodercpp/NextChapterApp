@@ -1,13 +1,5 @@
 import { AppIcon, AppPressable, AppText } from '@/components';
-import {
-  Bell,
-  ChevronRight,
-  CircleHelp,
-  Download,
-  LogOut,
-  Shield,
-  UserRound,
-} from 'lucide-react-native';
+import { ChevronRight, Download, LogOut, UserRound } from 'lucide-react-native';
 
 import { View } from 'react-native';
 import { cn } from '@/utils';
@@ -26,29 +18,24 @@ interface AccountSettingsProps {
 
 const ACCOUNT_ITEMS: AccountSettingItem[] = [
   {
+    id: 'basic-information',
+    title: 'Basic Information',
+    icon: UserRound,
+  },
+  {
     id: 'personal-information',
     title: 'Personal Information',
     icon: UserRound,
   },
   {
-    id: 'privacy-security',
-    title: 'Privacy & Security',
-    icon: Shield,
-  },
-  {
-    id: 'notification-preferences',
-    title: 'Notification Preferences',
-    icon: Bell,
+    id: 'contact-information',
+    title: 'Contact Information',
+    icon: UserRound,
   },
   {
     id: 'export-data',
     title: 'Export My Data',
     icon: Download,
-  },
-  {
-    id: 'help-support',
-    title: 'Help & Support',
-    icon: CircleHelp,
   },
   {
     id: 'sign-out',
@@ -72,7 +59,7 @@ function AccountRow({
       onPress={onPress}
       className={cn(
         'flex-row items-center px-4 py-3',
-        !isLast && 'border-b border-white/10',
+        !isLast && 'border-b border-border',
       )}
     >
       {/* Icon */}
@@ -126,7 +113,7 @@ export function AccountSettings({
       </AppText>
 
       {/* Settings Card */}
-      <View className=" overflow-hidden rounded-[27px] border border-white/10 bg-white/[0.03]">
+      <View className=" overflow-hidden rounded-[24px] border border-border bg-card">
         {ACCOUNT_ITEMS.map((item, index) => (
           <AccountRow
             key={item.id}

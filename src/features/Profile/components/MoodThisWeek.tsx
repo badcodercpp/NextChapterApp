@@ -166,7 +166,7 @@ export function MoodThisWeek({}: MoodThisWeekProps) {
     <View className="rounded-[24px] border border-border bg-card p-4">
       {/* Header */}
       <View className="mb-4 flex-row items-center justify-between">
-        <AppText variant="xl" className="font-semibold text-text">
+        <AppText variant="lg" className="font-semibold text-text">
           Mood This Week
         </AppText>
 
@@ -176,7 +176,7 @@ export function MoodThisWeek({}: MoodThisWeekProps) {
       </View>
 
       {/* Legend */}
-      <View className="mb-1 flex-row items-center gap-2">
+      <View className="mb-1 flex-row items-center mx-2">
         <Pressable
           onPress={() => setFilter('all')}
           className={`flex-row items-center rounded-full px-3 py-1.5 ${
@@ -199,11 +199,11 @@ export function MoodThisWeek({}: MoodThisWeekProps) {
 
         <Pressable
           onPress={() => setFilter('before')}
-          className={`flex-row items-center rounded-full mt-2 px-3 py-1.5 ${
+          className={`flex-row items-center rounded-full px-3 py-1.5 ${
             filter === 'before' ? 'bg-primary/15' : ''
           }`}
         >
-          <View className="mr-2 h-2.5 w-2.5 rounded-full bg-[#4B4385]" />
+          <View className="mr-2 h-2.5 w-2.5 rounded-full bg-primary/15" />
 
           <AppText
             variant="sm"
@@ -223,6 +223,7 @@ export function MoodThisWeek({}: MoodThisWeekProps) {
             filter === 'after' ? 'bg-primary/15' : ''
           }`}
         >
+          <View className="mr-2 h-2.5 w-2.5 rounded-full bg-primary/15" />
           <AppText
             variant="sm"
             className={

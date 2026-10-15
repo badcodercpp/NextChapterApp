@@ -1,5 +1,5 @@
-query TodayMission($journeyId: ID!, $day: Int!) {
-  todayMission(journeyId: $journeyId, day: $day) {
+query TodayMission {
+  todayMission {
     id
     journeyId
     day

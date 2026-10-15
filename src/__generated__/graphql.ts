@@ -408,6 +408,11 @@ export type ApplicationConfigQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ApplicationConfigQuery = { applicationConfig: { id: string, totalProgramDays: number, aiCoachName: string, aiCoachMessage: string, profileSummaryStatusText: string, profileSummaryQuote: string, createdAt: unknown, updatedAt: unknown } };
 
+export type CompletedMissionHistoryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CompletedMissionHistoryQuery = { completedMissionHistory: Array<{ id: string, day: number, completedAt: unknown, mission: { id: string, day: number, title: string, description: string, overview: string, reminder: string, category: MissionCategory, difficulty: MissionDifficulty, impact: MissionImpact, time: MissionTime, steps: Array<{ order: number, title: string, description: string }> } }> };
+
 export type DailySessionHistoryByDayQueryVariables = Exact<{
   day: number;
 }>;
@@ -415,10 +420,24 @@ export type DailySessionHistoryByDayQueryVariables = Exact<{
 
 export type DailySessionHistoryByDayQuery = { dailySessionHistoryByDay: { id: string, day: number, createdAt: unknown, dailySession: { id: string, userId: string, journeyId: string, missionId: string, questionHistoryId: string | null, day: number, status: DailySessionStatus, currentStep: DailySessionStep, startMoods: Array<RecoveryReasonCurrentFeeling>, endMoods: Array<RecoveryReasonCurrentFeeling>, reflectionId: string | null, startedAt: unknown, missionCompletedAt: unknown, completedAt: unknown, createdAt: unknown, updatedAt: unknown }, question: { id: string, journeyId: string, missionId: string, day: number, status: QuestionStatus, askedAt: unknown, answeredAt: unknown, createdAt: unknown, updatedAt: unknown, conversation: Array<{ role: ConversationRole, content: string | null, reflection: string | null, insight: string | null, question: string | null, summary: string | null, createdAt: unknown }> } | null, mission: { id: string, journeyId: string, day: number, title: string, description: string, overview: string, reminder: string, category: MissionCategory, difficulty: MissionDifficulty, impact: MissionImpact, time: MissionTime, createdAt: unknown, updatedAt: unknown, steps: Array<{ title: string, description: string }> } | null, reflection: { id: string, userId: string, journeyId: string, missionId: string, questionHistoryId: string, realization: string | null, feeling: string | null, need: string | null, action: string | null, completedAt: unknown, createdAt: unknown, updatedAt: unknown } | null } | null };
 
+export type GetRecoveryScoreTrendForLastNDayQueryVariables = Exact<{
+  days: number;
+}>;
+
+
+export type GetRecoveryScoreTrendForLastNDayQuery = { getRecoveryScoreTrendForLastNDay: Array<{ assessmentId: string | null, day: number, score: number | null, previousScore: number | null, scoreChange: number | null, trend: RecoveryTrend | null, createdAt: unknown }> };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MeQuery = { me: { id: string, email: string, displayName: string, gender: Gender | null, avatarUrl: string | null, bio: string | null, phone: string | null, dob: string | null, locationName: string | null, locationLat: string | null, locationLong: string | null, timezone: string | null, locale: string | null, emailVerified: boolean, isActive: boolean, createdAt: unknown, updatedAt: unknown } };
+
+export type MissionHistoryQueryVariables = Exact<{
+  journeyId: string | number;
+}>;
+
+
+export type MissionHistoryQuery = { missionHistory: Array<{ id: string, journeyId: string, day: number, title: string, description: string, overview: string, reminder: string, category: MissionCategory, difficulty: MissionDifficulty, impact: MissionImpact, time: MissionTime, createdAt: unknown, updatedAt: unknown, steps: Array<{ order: number, title: string, description: string }> }> };
 
 export type MoodThisWeekQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -440,17 +459,7 @@ export type RecoveryAssessmentHistoryQueryVariables = Exact<{ [key: string]: nev
 
 export type RecoveryAssessmentHistoryQuery = { recoveryAssessmentHistory: Array<{ id: string, userId: string, journeyId: string, dailySessionId: string, overallScore: number, emotionalDistress: number, acceptance: number, selfAwareness: number, selfWorth: number, emotionalStability: number, readinessToMoveForward: number, createdAt: unknown, updatedAt: unknown }> };
 
-export type RecoveryScoreTrendForLastNDaysQueryVariables = Exact<{
-  days: number;
-}>;
-
-
-export type RecoveryScoreTrendForLastNDaysQuery = { recoveryScoreTrendForLastNDays: Array<{ assessmentId: string | null, day: number, score: number | null, previousScore: number | null, scoreChange: number | null, trend: RecoveryTrend | null, createdAt: unknown }> };
-
-export type TodayMissionQueryVariables = Exact<{
-  journeyId: string | number;
-  day: number;
-}>;
+export type TodayMissionQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type TodayMissionQuery = { todayMission: { id: string, journeyId: string, day: number, title: string, description: string, overview: string, reminder: string, category: MissionCategory, difficulty: MissionDifficulty, impact: MissionImpact, time: MissionTime, createdAt: unknown, updatedAt: unknown, steps: Array<{ order: number, title: string, description: string }> } };
@@ -714,6 +723,32 @@ export const ApplicationConfigDocument = new TypedDocumentString(`
   }
 }
     `);
+export const CompletedMissionHistoryDocument = new TypedDocumentString(`
+    query CompletedMissionHistory {
+  completedMissionHistory {
+    id
+    day
+    completedAt
+    mission {
+      id
+      day
+      title
+      description
+      overview
+      reminder
+      category
+      difficulty
+      impact
+      time
+      steps {
+        order
+        title
+        description
+      }
+    }
+  }
+}
+    `);
 export const DailySessionHistoryByDayDocument = new TypedDocumentString(`
     query DailySessionHistoryByDay($day: Int!) {
   dailySessionHistoryByDay(day: $day) {
@@ -794,6 +829,19 @@ export const DailySessionHistoryByDayDocument = new TypedDocumentString(`
   }
 }
     `);
+export const GetRecoveryScoreTrendForLastNDayDocument = new TypedDocumentString(`
+    query GetRecoveryScoreTrendForLastNDay($days: Int!) {
+  getRecoveryScoreTrendForLastNDay(days: $days) {
+    assessmentId
+    day
+    score
+    previousScore
+    scoreChange
+    trend
+    createdAt
+  }
+}
+    `);
 export const MeDocument = new TypedDocumentString(`
     query Me {
   me {
@@ -812,6 +860,30 @@ export const MeDocument = new TypedDocumentString(`
     locale
     emailVerified
     isActive
+    createdAt
+    updatedAt
+  }
+}
+    `);
+export const MissionHistoryDocument = new TypedDocumentString(`
+    query MissionHistory($journeyId: ID!) {
+  missionHistory(journeyId: $journeyId) {
+    id
+    journeyId
+    day
+    title
+    description
+    overview
+    reminder
+    category
+    difficulty
+    impact
+    time
+    steps {
+      order
+      title
+      description
+    }
     createdAt
     updatedAt
   }
@@ -879,22 +951,9 @@ export const RecoveryAssessmentHistoryDocument = new TypedDocumentString(`
   }
 }
     `);
-export const RecoveryScoreTrendForLastNDaysDocument = new TypedDocumentString(`
-    query RecoveryScoreTrendForLastNDays($days: Int!) {
-  recoveryScoreTrendForLastNDays(days: $days) {
-    assessmentId
-    day
-    score
-    previousScore
-    scoreChange
-    trend
-    createdAt
-  }
-}
-    `);
 export const TodayMissionDocument = new TypedDocumentString(`
-    query TodayMission($journeyId: ID!, $day: Int!) {
-  todayMission(journeyId: $journeyId, day: $day) {
+    query TodayMission {
+  todayMission {
     id
     journeyId
     day
@@ -1027,11 +1086,20 @@ const injectedRtkApi = api.injectEndpoints({
     ApplicationConfig: build.query<ApplicationConfigQuery, ApplicationConfigQueryVariables | void>({
       query: (variables) => ({ document: ApplicationConfigDocument as unknown as string, variables })
     }),
+    CompletedMissionHistory: build.query<CompletedMissionHistoryQuery, CompletedMissionHistoryQueryVariables | void>({
+      query: (variables) => ({ document: CompletedMissionHistoryDocument as unknown as string, variables })
+    }),
     DailySessionHistoryByDay: build.query<DailySessionHistoryByDayQuery, DailySessionHistoryByDayQueryVariables>({
       query: (variables) => ({ document: DailySessionHistoryByDayDocument as unknown as string, variables })
     }),
+    GetRecoveryScoreTrendForLastNDay: build.query<GetRecoveryScoreTrendForLastNDayQuery, GetRecoveryScoreTrendForLastNDayQueryVariables>({
+      query: (variables) => ({ document: GetRecoveryScoreTrendForLastNDayDocument as unknown as string, variables })
+    }),
     Me: build.query<MeQuery, MeQueryVariables | void>({
       query: (variables) => ({ document: MeDocument as unknown as string, variables })
+    }),
+    MissionHistory: build.query<MissionHistoryQuery, MissionHistoryQueryVariables>({
+      query: (variables) => ({ document: MissionHistoryDocument as unknown as string, variables })
     }),
     MoodThisWeek: build.query<MoodThisWeekQuery, MoodThisWeekQueryVariables | void>({
       query: (variables) => ({ document: MoodThisWeekDocument as unknown as string, variables })
@@ -1045,10 +1113,7 @@ const injectedRtkApi = api.injectEndpoints({
     RecoveryAssessmentHistory: build.query<RecoveryAssessmentHistoryQuery, RecoveryAssessmentHistoryQueryVariables | void>({
       query: (variables) => ({ document: RecoveryAssessmentHistoryDocument as unknown as string, variables })
     }),
-    RecoveryScoreTrendForLastNDays: build.query<RecoveryScoreTrendForLastNDaysQuery, RecoveryScoreTrendForLastNDaysQueryVariables>({
-      query: (variables) => ({ document: RecoveryScoreTrendForLastNDaysDocument as unknown as string, variables })
-    }),
-    TodayMission: build.query<TodayMissionQuery, TodayMissionQueryVariables>({
+    TodayMission: build.query<TodayMissionQuery, TodayMissionQueryVariables | void>({
       query: (variables) => ({ document: TodayMissionDocument as unknown as string, variables })
     }),
     TodayQuestion: build.query<TodayQuestionQuery, TodayQuestionQueryVariables | void>({
@@ -1073,5 +1138,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useCompleteJourneyMutation, useFollowUpMutation, useLogoutMutation, useLogoutAllMutation, usePauseJourneyMutation, useRefreshTokenMutation, useRequestChangePasswordOtpMutation, useResumeJourneyMutation, useStartJourneyMutation, useUpdateProfileMutation, useUploadSingleFilesMutation, useVerifyChangePasswordOtpMutation, useGoogleLoginMutation, useGoogleRegisterMutation, useLoginMutation, useRegisterMutation, useResendEmailVerificationOtpMutation, useVerifyEmailOtpMutation, useActiveJourneyQuery, useLazyActiveJourneyQuery, useApplicationConfigQuery, useLazyApplicationConfigQuery, useDailySessionHistoryByDayQuery, useLazyDailySessionHistoryByDayQuery, useMeQuery, useLazyMeQuery, useMoodThisWeekQuery, useLazyMoodThisWeekQuery, useMotivationalMessageQuery, useLazyMotivationalMessageQuery, useMyRecoveryQuery, useLazyMyRecoveryQuery, useRecoveryAssessmentHistoryQuery, useLazyRecoveryAssessmentHistoryQuery, useRecoveryScoreTrendForLastNDaysQuery, useLazyRecoveryScoreTrendForLastNDaysQuery, useTodayMissionQuery, useLazyTodayMissionQuery, useTodayQuestionQuery, useLazyTodayQuestionQuery, useRegisterDeviceMutation, useGetRecoveryFeelingQuery, useLazyGetRecoveryFeelingQuery, useGetRecoveryGoalQuery, useLazyGetRecoveryGoalQuery, useGetRecoveryReasonQuery, useLazyGetRecoveryReasonQuery, useGetRecoveryTimelineQuery, useLazyGetRecoveryTimelineQuery } = injectedRtkApi;
+export const { useCompleteJourneyMutation, useFollowUpMutation, useLogoutMutation, useLogoutAllMutation, usePauseJourneyMutation, useRefreshTokenMutation, useRequestChangePasswordOtpMutation, useResumeJourneyMutation, useStartJourneyMutation, useUpdateProfileMutation, useUploadSingleFilesMutation, useVerifyChangePasswordOtpMutation, useGoogleLoginMutation, useGoogleRegisterMutation, useLoginMutation, useRegisterMutation, useResendEmailVerificationOtpMutation, useVerifyEmailOtpMutation, useActiveJourneyQuery, useLazyActiveJourneyQuery, useApplicationConfigQuery, useLazyApplicationConfigQuery, useCompletedMissionHistoryQuery, useLazyCompletedMissionHistoryQuery, useDailySessionHistoryByDayQuery, useLazyDailySessionHistoryByDayQuery, useGetRecoveryScoreTrendForLastNDayQuery, useLazyGetRecoveryScoreTrendForLastNDayQuery, useMeQuery, useLazyMeQuery, useMissionHistoryQuery, useLazyMissionHistoryQuery, useMoodThisWeekQuery, useLazyMoodThisWeekQuery, useMotivationalMessageQuery, useLazyMotivationalMessageQuery, useMyRecoveryQuery, useLazyMyRecoveryQuery, useRecoveryAssessmentHistoryQuery, useLazyRecoveryAssessmentHistoryQuery, useTodayMissionQuery, useLazyTodayMissionQuery, useTodayQuestionQuery, useLazyTodayQuestionQuery, useRegisterDeviceMutation, useGetRecoveryFeelingQuery, useLazyGetRecoveryFeelingQuery, useGetRecoveryGoalQuery, useLazyGetRecoveryGoalQuery, useGetRecoveryReasonQuery, useLazyGetRecoveryReasonQuery, useGetRecoveryTimelineQuery, useLazyGetRecoveryTimelineQuery } = injectedRtkApi;
 

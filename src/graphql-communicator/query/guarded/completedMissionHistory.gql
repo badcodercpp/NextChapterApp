@@ -1,0 +1,24 @@
+query CompletedMissionHistory {
+  completedMissionHistory {
+    id
+    day
+    completedAt
+    mission {
+      id
+      day
+      title
+      description
+      overview
+      reminder
+      category
+      difficulty
+      impact
+      time
+      steps {
+        order
+        title
+        description
+      }
+    }
+  }
+}

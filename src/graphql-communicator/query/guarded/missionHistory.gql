@@ -1,0 +1,22 @@
+query MissionHistory($journeyId: ID!) {
+  missionHistory(journeyId: $journeyId) {
+    id
+    journeyId
+    day
+    title
+    description
+    overview
+    reminder
+    category
+    difficulty
+    impact
+    time
+    steps {
+      order
+      title
+      description
+    }
+    createdAt
+    updatedAt
+  }
+}

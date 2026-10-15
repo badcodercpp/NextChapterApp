@@ -1,5 +1,10 @@
 import { AppIcon, AppText } from '@/components';
-import { selectApplicationConfig, selectMe } from '@/state/selectors';
+import {
+  selectActiveJourney,
+  selectApplicationConfig,
+  selectMe,
+} from '@/state/selectors';
+import { useCallback, useMemo } from 'react';
 
 import { PieChart } from 'react-native-gifted-charts';
 import { Triangle } from 'lucide-react-native';
@@ -9,10 +14,6 @@ import { useResolveClassNames } from 'uniwind';
 import { useSelector } from 'react-redux';
 
 interface RecoveryProgressCardProps {
-  overallScore: number;
-  name?: string;
-  currentDay: number;
-  totalDays?: number;
   message?: string;
   className?: string;
 }
@@ -35,15 +36,26 @@ function RecoveryProgressChartLabel({ progress }: { progress: number }) {
 }
 
 export function RecoveryProgressCard({
-  overallScore,
-  currentDay,
   message = "Healing isn't linear, but every step forward matters. Keep going!",
   className,
 }: RecoveryProgressCardProps) {
   const { data: me } = useSelector(selectMe);
   const { data: applicationConfig } = useSelector(selectApplicationConfig);
+  const { data: activeJourney } = useSelector(selectActiveJourney);
 
-  const progress = Math.min(Math.max(overallScore, 0), 100);
+  const calculateProgress = useCallback(() => {
+    if (!activeJourney || !applicationConfig) {
+      return 0;
+    }
+
+    const totalDays = applicationConfig.totalProgramDays;
+    const currentDay = activeJourney.currentDay;
+
+    return Math.round((currentDay / totalDays) * 100);
+  }, [activeJourney, applicationConfig]);
+
+  const progress = useMemo(() => calculateProgress(), [calculateProgress]);
+
   const remaining = 100 - progress;
   const { backgroundColor: chartBackgroundColor } =
     useResolveClassNames('bg-surface');
@@ -93,12 +105,12 @@ export function RecoveryProgressCard({
         {/* Content */}
         <View className="ml-3 flex-1">
           {/* Heading */}
-          <AppText variant="xl" className="font-semibold text-text">
-            You're doing incredible, {me?.displayName}! ✨
+          <AppText variant="xl" className="font-semibold text-primary">
+            You're doing incredible, {me?.displayName}!
           </AppText>
 
           {/* Description */}
-          <AppText variant="xs" className="mt-1 text-text-muted">
+          <AppText variant="sm" className="mt-1 text-text-muted">
             {message}
           </AppText>
 
@@ -126,12 +138,12 @@ export function RecoveryProgressCard({
 
             <View className="flex-1">
               <AppText variant="md" className="font-semibold text-primary">
-                Day {currentDay} of {applicationConfig?.totalProgramDays}
+                Day {activeJourney?.currentDay} of{' '}
+                {applicationConfig?.totalProgramDays}
               </AppText>
 
-              <AppText variant="xs" className="mt-1 leading-6 text-text-muted">
-                Keep showing up for{'\n'}
-                yourself.
+              <AppText variant="xs" className="mt-1 text-text-muted">
+                Keep showing up for yourself.
               </AppText>
             </View>
           </View>

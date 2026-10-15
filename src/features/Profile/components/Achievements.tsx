@@ -70,7 +70,7 @@ function AchievementItem({
   return (
     <AppPressable
       onPress={onPress}
-      className="mr-4 items-center border-1 border-border rounded-[16px] p-4"
+      className="mr-2 items-center border-1 border-border rounded-[16px] p-4 bg-card"
     >
       {/* Badge */}
       <View
@@ -116,13 +116,13 @@ export function Achievements({
   return (
     <View className="w-full">
       {/* Header */}
-      <View className="mb-4 flex-row items-center justify-between">
-        <AppText variant="xl" className="font-semibold text-text">
+      <View className="mb-2 flex-row items-center justify-between">
+        <AppText variant="lg" className="font-semibold text-primary">
           Achievements
         </AppText>
 
         <AppPressable onPress={onViewAllPress}>
-          <AppText variant="md" className="font-medium text-secondary">
+          <AppText variant="lg" className="font-medium text-secondary">
             View All
           </AppText>
         </AppPressable>

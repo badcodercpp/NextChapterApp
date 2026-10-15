@@ -1,7 +1,7 @@
 import { AppAvatar, AppIcon, AppPressable, AppText } from '@/components';
-import { Pencil, Sprout } from 'lucide-react-native';
 import { selectApplicationConfig, selectMe } from '@/state/selectors';
 
+import { Pencil } from 'lucide-react-native';
 import { View } from 'react-native';
 import { toHttpsURL } from '@/utils';
 import { useSelector } from 'react-redux';
@@ -18,7 +18,7 @@ export function ProfileSummaryCard({ onEditPress }: ProfileSummaryCardProps) {
     <View className="rounded-[28px] border border-secondary/40 bg-card/60 p-4">
       <View className="flex-row items-center">
         {/* Profile Image */}
-        <View className="mr-6">
+        <View className="mr-4">
           <View className="items-center justify-center">
             <AppAvatar
               size="lg"
@@ -34,7 +34,7 @@ export function ProfileSummaryCard({ onEditPress }: ProfileSummaryCardProps) {
           {/* Name + Edit */}
           <View className="flex-row items-start justify-between">
             <AppText
-              variant="2xl"
+              variant="xl"
               className="flex-1 font-semibold text-text"
               numberOfLines={1}
             >
@@ -45,7 +45,8 @@ export function ProfileSummaryCard({ onEditPress }: ProfileSummaryCardProps) {
               onPress={onEditPress}
               className="
                 ml-3
-                min-w-[105px]
+                w-10
+                h-10
                 flex-row
                 items-center
                 justify-center
@@ -55,6 +56,8 @@ export function ProfileSummaryCard({ onEditPress }: ProfileSummaryCardProps) {
                 bg-white/5
                 px-4
                 py-2.5
+                absolute
+                right-0
               "
             >
               <AppIcon
@@ -63,34 +66,12 @@ export function ProfileSummaryCard({ onEditPress }: ProfileSummaryCardProps) {
                 strokeWidth={2.5}
                 className="text-secondary"
               />
-
-              <AppText
-                variant="md"
-                className="ml-2 font-semibold text-secondary"
-              >
-                Edit
-              </AppText>
             </AppPressable>
           </View>
-
-          {/* Status */}
-          <View className="mt-2 flex-row items-center">
-            <AppIcon
-              icon={Sprout}
-              size={21}
-              strokeWidth={2.5}
-              className="mr-2 text-green-400"
-            />
-
-            <AppText variant="lg" className="font-medium text-green-400">
-              {applicationConfig?.profileSummaryStatusText}
-            </AppText>
-          </View>
-
           {/* Quote */}
-          <View className="mt-5 flex-row">
-            <AppText variant="lg" className="flex-1 text-text-secondary">
-              {applicationConfig?.profileSummaryQuote}
+          <View className="mt-1 flex-row">
+            <AppText variant="md" className="mr-8 flex-1 text-text-secondary">
+              {me?.bio ?? applicationConfig?.profileSummaryQuote}
             </AppText>
           </View>
         </View>

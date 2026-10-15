@@ -15,7 +15,7 @@ export function RecoveryProgressHeader({
       {/* Header */}
       <View className="flex-row items-start justify-between">
         <View className="flex-1 pr-4">
-          <AppText variant="3xl" className="font-bold text-white">
+          <AppText variant="xl" className="font-bold text-primary">
             Recovery Progress
           </AppText>
 

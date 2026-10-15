@@ -1,13 +1,14 @@
 import { AppCard, AppText } from '@/components';
 import {
+  lazySelectGetRecoveryScoreTrendForLastNDay,
   selectMe,
   selectMyRecovery,
-  selectRecoveryScoreTrendForLastNDays,
 } from '@/state/selectors';
 
 import { RecoveryTrend } from './RecoveryTrend';
 import { View } from 'react-native';
 import { properCase } from '@/utils/strings';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -16,8 +17,15 @@ interface RecoveryScoreCardProps {}
 export function RecoveryScoreCard({}: RecoveryScoreCardProps) {
   const { data: me } = useSelector(selectMe);
   const { data: myRecovery, loading } = useSelector(selectMyRecovery);
-  const { data: recoveryScoreTrendForLastNDays } = useSelector(
-    selectRecoveryScoreTrendForLastNDays,
+  const selectGetRecoveryScoreTrendForLastNDay = useMemo(() => {
+    return lazySelectGetRecoveryScoreTrendForLastNDay(7);
+  }, []);
+
+  const { data: recoveryScoreTrendForLastNDayData } = useSelector(
+    selectGetRecoveryScoreTrendForLastNDay,
+  );
+  const recoveryScoreTrendForLastNDay = recoveryScoreTrendForLastNDayData.map(
+    e => e.score ?? 0,
   );
   const { t } = useTranslation();
 
@@ -72,7 +80,7 @@ export function RecoveryScoreCard({}: RecoveryScoreCardProps) {
 
               {/* Trend graph will go here */}
               <View className="mt-3 h-10 w-28">
-                <RecoveryTrend data={recoveryScoreTrendForLastNDays} />
+                <RecoveryTrend data={recoveryScoreTrendForLastNDay} />
               </View>
             </View>
           </View>

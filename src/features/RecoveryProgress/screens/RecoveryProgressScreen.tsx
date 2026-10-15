@@ -2,6 +2,7 @@ import {
   JourneySummaryCard,
   RecoveryProgressCard,
   RecoveryProgressHeader,
+  RecoveryScoreChart,
 } from '../components';
 
 import { AppAuthenticatedLayout } from '@/components';
@@ -15,16 +16,13 @@ export function RecoveryProgressScreen() {
         <RecoveryProgressHeader onSharePress={() => {}} />
       </View>
       <View className="mt-4">
-        <RecoveryProgressCard overallScore={64} currentDay={12} />
+        <RecoveryProgressCard />
       </View>
       <View className="mt-4">
-        <JourneySummaryCard
-          currentDay={12}
-          daysActive={8}
-          tasksCompleted={23}
-          journalEntries={10}
-          reflections={8}
-        />
+        <JourneySummaryCard />
+      </View>
+      <View className="mt-4">
+        <RecoveryScoreChart />
       </View>
     </AppAuthenticatedLayout>
   );

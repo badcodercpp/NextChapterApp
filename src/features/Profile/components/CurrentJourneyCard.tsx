@@ -1,38 +1,45 @@
 import { AppIcon, AppPressable, AppText } from '@/components';
 import { ChevronRight, Heart } from 'lucide-react-native';
+import {
+  selectActiveJourney,
+  selectApplicationConfig,
+} from '@/state/selectors';
+import { useCallback, useMemo } from 'react';
 
 import { View } from 'react-native';
-import { selectApplicationConfig } from '@/state/selectors';
+import { format } from 'date-fns';
+import { properCase } from '@/utils/strings';
 import { useSelector } from 'react-redux';
 
 interface CurrentJourneyCardProps {
-  title?: string;
-  journeyName?: string;
-  startedDate?: string;
-  currentDay?: number;
-  totalDays?: number;
-  progress?: number;
   onPress?: () => void;
 }
 
-export function CurrentJourneyCard({
-  title = 'Current Journey',
-  journeyName = 'Breakup Recovery',
-  startedDate = 'Started on 30 Apr 2025',
-  currentDay = 12,
-  progress = 13,
-  onPress,
-}: CurrentJourneyCardProps) {
+export function CurrentJourneyCard({ onPress }: CurrentJourneyCardProps) {
   const { data: applicationConfig } = useSelector(selectApplicationConfig);
+  const { data: activeJourney } = useSelector(selectActiveJourney);
+
+  const calculateProgress = useCallback(() => {
+    if (!activeJourney || !applicationConfig) {
+      return 0;
+    }
+
+    const totalDays = applicationConfig.totalProgramDays;
+    const currentDay = activeJourney.currentDay;
+
+    return Math.round((currentDay / totalDays) * 100);
+  }, [activeJourney, applicationConfig]);
+
+  const progress = useMemo(() => calculateProgress(), [calculateProgress]);
 
   return (
     <AppPressable
       onPress={onPress}
       className="
-        rounded-[26px]
+        rounded-[24px]
         border
-        border-secondary/40
-        bg-card/60
+        border-border
+        bg-card
         p-4
       "
     >
@@ -50,20 +57,23 @@ export function CurrentJourneyCard({
 
         {/* Journey Details */}
         <View className="flex-1">
-          <AppText variant="md" className="font-semibold text-secondary">
-            {title}
+          <AppText variant="lg" className="font-semibold text-secondary">
+            Current Journey
           </AppText>
 
           <AppText
             variant="xl"
-            className="mt-1 font-semibold text-text"
+            className="mt-0 font-semibold text-text"
             numberOfLines={1}
           >
-            {journeyName}
+            {properCase(activeJourney?.program)}
           </AppText>
 
           <AppText variant="md" className="mt-0.5 text-text-muted">
-            {startedDate}
+            {format(
+              new Date(activeJourney?.startedAt?.toString() ?? Date.now()),
+              'MMM dd, yyyy',
+            )}
           </AppText>
         </View>
 
@@ -79,7 +89,8 @@ export function CurrentJourneyCard({
       {/* Progress Header */}
       <View className="mt-6 flex-row items-center justify-between">
         <AppText variant="md" className="text-text-muted">
-          Day {currentDay} of {applicationConfig?.totalProgramDays}
+          Day {activeJourney?.currentDay} of{' '}
+          {applicationConfig?.totalProgramDays}
         </AppText>
 
         <AppText variant="md" className="font-semibold text-secondary">

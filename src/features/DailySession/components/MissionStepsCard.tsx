@@ -1,9 +1,9 @@
 import { AppCard, AppIcon, AppNumberedList, AppText } from '@/components';
 import { List, Sparkles } from 'lucide-react-native';
-import React, { useMemo } from 'react';
-import { lazySelectTodayMission, selectActiveJourney } from '@/state/selectors';
 
+import React from 'react';
 import { View } from 'react-native';
+import { selectTodayMission } from '@/state/selectors';
 import { useSelector } from 'react-redux';
 
 export interface MissionStep {
@@ -21,16 +21,7 @@ export function MissionStepsCard({
   rememberTitle = 'Remember',
   rememberMessage = 'Every time you choose yourself, you heal a little more.',
 }: MissionStepsCardProps) {
-  const { data: activeJourney } = useSelector(selectActiveJourney);
-
-  const todayMissionSelector = useMemo(() => {
-    return lazySelectTodayMission(
-      activeJourney?.id ?? '',
-      activeJourney?.currentDay ?? 1,
-    );
-  }, [activeJourney]);
-
-  const { data: todayMission } = useSelector(todayMissionSelector);
+  const { data: todayMission } = useSelector(selectTodayMission);
 
   return (
     <AppCard className="rounded-[28px] border border-border bg-card p-5">
