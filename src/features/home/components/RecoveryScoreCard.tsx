@@ -7,6 +7,7 @@ import {
 
 import { RecoveryTrend } from './RecoveryTrend';
 import { View } from 'react-native';
+import { getGreetingKey } from '@/utils';
 import { properCase } from '@/utils/strings';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
@@ -27,13 +28,18 @@ export function RecoveryScoreCard({}: RecoveryScoreCardProps) {
   const recoveryScoreTrendForLastNDay = recoveryScoreTrendForLastNDayData.map(
     e => e.score ?? 0,
   );
+  console.log(
+    'recoveryScoreTrendForLastNDay',
+    recoveryScoreTrendForLastNDay,
+    recoveryScoreTrendForLastNDayData,
+  );
   const { t } = useTranslation();
 
   return (
     <AppCard className="overflow-hidden rounded-[24px] border-1 border-border bg-card p-5">
       <View className="flex-row mb-2 items-center">
         <AppText variant="md" className="text-primary mr-0.5">
-          {t('app.locale.home.greeting.morning')}, {me?.displayName ?? ''}{' '}
+          {t(getGreetingKey())}, {me?.displayName ?? ''}{' '}
         </AppText>
         <AppText variant="2xl" className="text-primary mr-1">
           👋{' '}

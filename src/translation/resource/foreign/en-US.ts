@@ -52,11 +52,10 @@ export const enLanguage = {
   'app.locale.home.todayFocus.ofLabel': 'of',
 
   // Home Quick Action Card
-  'app.locale.home.quickActionCard.journalPrompt.title': 'Journal Prompt',
-  'app.locale.home.quickActionCard.journalPrompt.description':
+  'app.locale.home.quickActionCard.journal.title': 'Journal',
+  'app.locale.home.quickActionCard.journal.description':
     "What's one feeling you're ready to release today?",
-  'app.locale.home.quickActionCard.journalPrompt.actionLabel':
-    'Start Journaling',
+  'app.locale.home.quickActionCard.journal.actionLabel': 'Start Journaling',
   'app.locale.home.quickActionCard.aiCoachName': 'S^2(AI Coach)',
   'app.locale.home.quickActionCard.aiCoachMessage':
     "I'm your AI coach. You can talk to me about anything you're feeling. I'm here to listen, support, and guide you forward.",

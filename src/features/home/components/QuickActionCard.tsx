@@ -28,9 +28,9 @@ export function QuickActionCard({
       <AppCard
         {...rest}
         className={` rounded-[28px] border p-4 ${accentClassName.replace(
-          'text-',
-          'border-',
-        )}/30 bg-card`}
+          'text-text',
+          'border-border',
+        )} bg-card`}
       >
         {/* Icon */}
         <View

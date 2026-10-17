@@ -142,9 +142,9 @@ export function MoodThisWeek({}: MoodThisWeekProps) {
 
       // IMPORTANT:
       // Force GraphQL values into real numbers.
-      beforeMood: normalizeMood(item.startMoodAverage) || 2,
+      beforeMood: normalizeMood(item.startMoodAverage) || 0,
 
-      afterMood: normalizeMood(item.endMoodAverage) || 5,
+      afterMood: normalizeMood(item.endMoodAverage) || 0,
     })) ?? [];
 
   const startDate = moodThisWeek?.[0]?.date

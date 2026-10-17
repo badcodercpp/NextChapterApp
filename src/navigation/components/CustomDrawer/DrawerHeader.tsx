@@ -1,13 +1,17 @@
+import { getGreetingKey, toHttpsURL } from '@/utils';
+
 import { AppAvatar } from '@/components/foundation/AppAvatar';
 import { AppText } from '@/components/foundation/AppText';
 import React from 'react';
 import { View } from 'react-native';
 import { selectMe } from '@/state/selectors';
-import { toHttpsURL } from '@/utils';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 export function DrawerHeader() {
   const { data: me } = useSelector(selectMe);
+  const { t } = useTranslation();
+
   return (
     <View className="items-center py-6">
       <AppAvatar
@@ -17,7 +21,7 @@ export function DrawerHeader() {
       />
 
       <AppText variant="xl" className="mt-3 mb-1">
-        Good Evening 👋
+        {t(getGreetingKey())} 👋
       </AppText>
 
       <AppText variant="xl" className="mb-2">

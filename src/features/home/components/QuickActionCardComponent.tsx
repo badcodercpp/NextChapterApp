@@ -24,9 +24,9 @@ export function QuickActionCardComponent({}: QuickActionCardComponentProps) {
     <View className="flex-row flex-wrap justify-between">
       <QuickActionCard
         icon={BookOpen}
-        title={t('app.locale.home.quickAction.journalPrompt.title')}
-        description={t('app.locale.home.quickAction.journalPrompt.description')}
-        actionLabel={t('app.locale.home.quickAction.journalPrompt.actionLabel')}
+        title={t('app.locale.home.quickActionCard.journal.title')}
+        description={t('app.locale.home.quickActionCard.journal.description')}
+        actionLabel={t('app.locale.home.quickActionCard.journal.actionLabel')}
         accentClassName="text-primary"
         iconBackgroundClassName="bg-primary/15"
         onPress={() => {
@@ -40,14 +40,14 @@ export function QuickActionCardComponent({}: QuickActionCardComponentProps) {
         icon={Bot}
         title={`${
           applicationConfig?.aiCoachName ??
-          t('app.locale.home.quickAction.aiCoachName')
+          t('app.locale.home.quickActionCard.aiCoachName')
         }`}
         description={
           applicationConfig?.aiCoachMessage ??
-          t('app.locale.home.quickAction.aiCoachMessage') ??
+          t('app.locale.home.quickActionCard.aiCoachMessage') ??
           ''
         }
-        actionLabel={t('app.locale.home.quickAction.aiCoach.actionLabel')}
+        actionLabel={t('app.locale.home.quickActionCard.aiCoach.actionLabel')}
         accentClassName="text-secondary"
         iconBackgroundClassName="bg-secondary/15"
         onPress={() => {

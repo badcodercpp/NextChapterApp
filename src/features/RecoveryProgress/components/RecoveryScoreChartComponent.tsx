@@ -3,6 +3,7 @@ import { LineChart, LineChartPropsType } from 'react-native-gifted-charts';
 import { AppText } from '@/components';
 import { RangeOption } from './RecoveryScoreChartTypes';
 import { View } from 'react-native';
+import { useResolveClassNames } from 'uniwind';
 
 interface RecoveryScoreChartComponentProps extends LineChartPropsType {
   latestScore?: number | null;
@@ -14,6 +15,7 @@ export function RecoveryScoreChartComponent({
   latestScore,
   selectedRange,
 }: RecoveryScoreChartComponentProps) {
+  const { color: chartPrimaryColor } = useResolveClassNames('text-primary');
   const PURPLE = '#B84CFF';
 
   return (
@@ -32,7 +34,7 @@ export function RecoveryScoreChartComponent({
         endSpacing={12}
         spacing={selectedRange.days === 7 ? 45 : 80}
         thickness={3}
-        color={PURPLE}
+        color={chartPrimaryColor?.toString()}
         startFillColor={PURPLE}
         endFillColor={PURPLE}
         startOpacity={0.28}
@@ -67,7 +69,7 @@ export function RecoveryScoreChartComponent({
         disableScroll={false}
         scrollToEnd
         pointerConfig={{
-          pointerColor: PURPLE,
+          pointerColor: chartPrimaryColor?.toString(),
           radius: 5,
           pointerStripColor: 'rgba(184, 76, 255, 0.25)',
           pointerStripWidth: 1,

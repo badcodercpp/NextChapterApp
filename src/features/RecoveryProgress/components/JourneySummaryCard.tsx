@@ -161,7 +161,7 @@ export function JourneySummaryCard({
             rounded-[24px]
             border
             border-border
-            bg-surface
+            bg-card
             p-4
           "
         >
@@ -176,7 +176,7 @@ export function JourneySummaryCard({
       className={cn(
         'w-full rounded-[24px]',
         'border border-border',
-        'bg-surface',
+        'bg-card',
         'p-4',
         className,
       )}

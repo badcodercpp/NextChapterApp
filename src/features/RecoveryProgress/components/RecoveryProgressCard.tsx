@@ -58,7 +58,7 @@ export function RecoveryProgressCard({
 
   const remaining = 100 - progress;
   const { backgroundColor: chartBackgroundColor } =
-    useResolveClassNames('bg-surface');
+    useResolveClassNames('bg-card');
   const { backgroundColor: chartRadiusPrimaryColor } =
     useResolveClassNames('bg-primary');
   const { backgroundColor: chartRadiusSecondaryColor } =
@@ -70,7 +70,7 @@ export function RecoveryProgressCard({
         'relative w-full overflow-hidden',
         'rounded-[24px]',
         'border border-border',
-        'bg-surface',
+        'bg-card',
         'p-4',
         className,
       )}
@@ -78,7 +78,7 @@ export function RecoveryProgressCard({
       <View className="flex-row items-center">
         {/* Progress Ring */}
         <View className="items-center justify-center">
-          <View className="items-center justify-center bg-surface">
+          <View className="items-center justify-center bg-card">
             <PieChart
               donut
               radius={RING_RADIUS}
