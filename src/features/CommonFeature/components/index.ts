@@ -6,3 +6,4 @@ export * from './AICoachCardFollowupCard';
 export * from './TodaysMissionCard';
 export * from './MoodSelector';
 export * from './RememberCard';
+export * from './EmojiSelector';

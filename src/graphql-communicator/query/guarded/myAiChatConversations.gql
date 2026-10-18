@@ -1,0 +1,15 @@
+query MyAiChatConversations {
+  myAiChatConversations {
+    id
+    title
+    messages {
+      id
+      role
+      content
+      quickReplies
+      createdAt
+    }
+    createdAt
+    updatedAt
+  }
+}

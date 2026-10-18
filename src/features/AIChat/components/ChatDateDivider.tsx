@@ -5,9 +5,9 @@ interface ChatDateDividerProps {
   label?: string;
 }
 
-export function ChatDateDivider({ label = 'Today' }: ChatDateDividerProps) {
+export function ChatDateDivider({ label = 'Chats' }: ChatDateDividerProps) {
   return (
-    <View className="mb-8 flex-row items-center">
+    <View className="my-4 flex-row items-center">
       <View className="h-px flex-1 bg-border" />
 
       <AppText variant="sm" className="mx-5 text-text-muted">

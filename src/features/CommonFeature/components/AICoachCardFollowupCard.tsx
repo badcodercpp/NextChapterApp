@@ -8,7 +8,7 @@ import {
 
 import { Bot } from 'lucide-react-native';
 import { View } from 'react-native';
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNowStrict } from 'date-fns';
 
 interface AICoachQuestion {
   id: string;
@@ -31,7 +31,7 @@ export function AICoachCardFollowupCard({
   createdAt,
 }: AICoachCardFollowupCardProps) {
   const dateAgo = new Date(createdAt);
-  const timeAgo = formatDistanceToNow(dateAgo, {
+  const timeAgo = formatDistanceToNowStrict(dateAgo, {
     addSuffix: true,
   });
   return (

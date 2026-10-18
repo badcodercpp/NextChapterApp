@@ -28,6 +28,7 @@ export function ProfilePhotoPicker({
             size="xl"
             name={me?.displayName ?? ''}
             uri={toHttpsURL(me?.avatarUrl) ?? undefined}
+            enablePhotoActions
           />
         </View>
       </View>

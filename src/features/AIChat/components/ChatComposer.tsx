@@ -1,6 +1,7 @@
 import { AppIcon, AppInput, AppPressable, AppText } from '@/components';
-import { Lock, Send, Smile } from 'lucide-react-native';
+import { Lock, Send } from 'lucide-react-native';
 
+import { EmojiSelector } from '@/features/CommonFeature';
 import { View } from 'react-native';
 
 interface ChatComposerProps {
@@ -26,25 +27,7 @@ export function ChatComposer({
     <View className="w-full">
       {/* Composer */}
       <View className="mt-0 flex-row items-center">
-        <AppPressable
-          onPress={canSend ? onSend : undefined}
-          className={`
-            mr-2
-            h-12
-            w-12
-            items-center
-            justify-center
-            rounded-full
-            bg-primary
-          `}
-        >
-          <AppIcon
-            icon={Smile}
-            size={24}
-            strokeWidth={2.5}
-            className="text-white"
-          />
-        </AppPressable>
+        <EmojiSelector />
 
         {/* Message Input */}
         <View className="flex-1">
@@ -69,15 +52,10 @@ export function ChatComposer({
             items-center
             justify-center
             rounded-full
-            ${canSend ? 'bg-primary' : 'bg-primary/50'}
+            ${canSend ? 'bg-card' : 'bg-card/50'}
           `}
         >
-          <AppIcon
-            icon={Send}
-            size={16}
-            strokeWidth={2.5}
-            className="text-white"
-          />
+          <AppIcon icon={Send} size={20} className="text-white" />
         </AppPressable>
       </View>
 

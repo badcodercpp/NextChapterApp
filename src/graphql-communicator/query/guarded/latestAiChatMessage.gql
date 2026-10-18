@@ -1,0 +1,9 @@
+query LatestAiChatMessage {
+  latestAiChatMessage {
+    id
+    role
+    content
+    quickReplies
+    createdAt
+  }
+}

@@ -1,13 +1,14 @@
 import { AppAvatar, AppIcon, AppText } from '@/components';
 import { Bot, CheckCheck } from 'lucide-react-native';
 
+import { AiChatRole } from '@/__generated__/graphql';
 import { View } from 'react-native';
 import { selectMe } from '@/state/selectors';
 import { useSelector } from 'react-redux';
 
 export interface MentorChatMessageData {
   id: string;
-  role: 'assistant' | 'user';
+  role: AiChatRole;
   content: string;
   createdAt: string;
   status?: 'sent' | 'read';
@@ -24,7 +25,7 @@ const AssistantAvatar = () => (
 );
 
 export function MentorChatMessage({ message }: MentorChatMessageProps) {
-  const isUser = message.role === 'user';
+  const isUser = message.role === AiChatRole.User;
   const { data: me } = useSelector(selectMe);
 
   return (

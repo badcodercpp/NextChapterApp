@@ -1,4 +1,10 @@
-import { AppCard, AppIcon, AppPressable, AppText } from '@/components';
+import {
+  AppCard,
+  AppExpandableText,
+  AppIcon,
+  AppPressable,
+  AppText,
+} from '@/components';
 import { selectApplicationConfig, selectMe } from '@/state/selectors';
 
 import AppAiLogo from '@/assets/icons/svg/app_ai_logo.svg';
@@ -18,7 +24,7 @@ export function AICoachCard({
   description = "I'm your AI coach. You can talk to me about anything you're feeling. I'm here to listen, support, and guide you forward.",
   onPress,
   isOnline = true,
-  responseTime = '< 1s',
+  responseTime = '< 5s',
 }: AICoachCardProps) {
   const { data: me } = useSelector(selectMe);
   const { data: applicationConfig } = useSelector(selectApplicationConfig);
@@ -46,12 +52,12 @@ export function AICoachCard({
             </View>
 
             {/* Description */}
-            <AppText
+            <AppExpandableText
+              text={applicationConfig?.aiCoachMessage ?? description}
               variant="md"
-              className="mt-3 leading-7 text-text-secondary"
-            >
-              {applicationConfig?.aiCoachMessage ?? description}
-            </AppText>
+              textClassName="mt-3 text-text-secondary"
+              collapsedLines={2}
+            />
 
             {/* Status */}
             <View className="mt-4 flex-row items-center">

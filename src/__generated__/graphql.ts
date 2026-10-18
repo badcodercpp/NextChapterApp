@@ -4,6 +4,11 @@ type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import type { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
 import { api } from '@/api/baseApi';
+export enum AiChatRole {
+  Assistant = 'ASSISTANT',
+  User = 'USER'
+}
+
 /** Auth Provider */
 export enum AuthProvider {
   Apple = 'APPLE',
@@ -246,6 +251,10 @@ export type ResendEmailOtpInput = {
   email: string;
 };
 
+export type SendAiChatMessageInput = {
+  message: string;
+};
+
 export type StartJourneyInput = {
   program?: RecoveryProgram | null | undefined;
 };
@@ -327,6 +336,13 @@ export type ResumeJourneyMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ResumeJourneyMutation = { resumeJourney: { id: string, status: JourneyStatus, currentDay: number, currentRecoveryScore: number, pausedAt: unknown, updatedAt: unknown } };
+
+export type SendAiChatMessageMutationVariables = Exact<{
+  input: SendAiChatMessageInput;
+}>;
+
+
+export type SendAiChatMessageMutation = { sendAiChatMessage: { userMessage: { id: string, role: AiChatRole, content: string, quickReplies: Array<string>, createdAt: unknown }, aiMessage: { id: string, role: AiChatRole, content: string, quickReplies: Array<string>, createdAt: unknown } } };
 
 export type StartJourneyMutationVariables = Exact<{
   input: StartJourneyInput;
@@ -427,6 +443,11 @@ export type GetRecoveryScoreTrendForLastNDayQueryVariables = Exact<{
 
 export type GetRecoveryScoreTrendForLastNDayQuery = { getRecoveryScoreTrendForLastNDay: Array<{ assessmentId: string | null, day: number, score: number | null, previousScore: number | null, scoreChange: number | null, trend: RecoveryTrend | null, createdAt: unknown }> };
 
+export type LatestAiChatMessageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LatestAiChatMessageQuery = { latestAiChatMessage: { id: string, role: AiChatRole, content: string, quickReplies: Array<string>, createdAt: unknown } | null };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -448,6 +469,11 @@ export type MotivationalMessageQueryVariables = Exact<{ [key: string]: never; }>
 
 
 export type MotivationalMessageQuery = { motivationalMessage: { id: string, title: string, description: string } };
+
+export type MyAiChatConversationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyAiChatConversationsQuery = { myAiChatConversations: Array<{ id: string, title: string, createdAt: unknown, updatedAt: unknown, messages: Array<{ id: string, role: AiChatRole, content: string, quickReplies: Array<string>, createdAt: unknown }> }> };
 
 export type MyRecoveryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -588,6 +614,26 @@ export const ResumeJourneyDocument = new TypedDocumentString(`
     currentRecoveryScore
     pausedAt
     updatedAt
+  }
+}
+    `);
+export const SendAiChatMessageDocument = new TypedDocumentString(`
+    mutation SendAiChatMessage($input: SendAiChatMessageInput!) {
+  sendAiChatMessage(input: $input) {
+    userMessage {
+      id
+      role
+      content
+      quickReplies
+      createdAt
+    }
+    aiMessage {
+      id
+      role
+      content
+      quickReplies
+      createdAt
+    }
   }
 }
     `);
@@ -842,6 +888,17 @@ export const GetRecoveryScoreTrendForLastNDayDocument = new TypedDocumentString(
   }
 }
     `);
+export const LatestAiChatMessageDocument = new TypedDocumentString(`
+    query LatestAiChatMessage {
+  latestAiChatMessage {
+    id
+    role
+    content
+    quickReplies
+    createdAt
+  }
+}
+    `);
 export const MeDocument = new TypedDocumentString(`
     query Me {
   me {
@@ -908,6 +965,23 @@ export const MotivationalMessageDocument = new TypedDocumentString(`
     id
     title
     description
+  }
+}
+    `);
+export const MyAiChatConversationsDocument = new TypedDocumentString(`
+    query MyAiChatConversations {
+  myAiChatConversations {
+    id
+    title
+    messages {
+      id
+      role
+      content
+      quickReplies
+      createdAt
+    }
+    createdAt
+    updatedAt
   }
 }
     `);
@@ -1050,6 +1124,9 @@ const injectedRtkApi = api.injectEndpoints({
     ResumeJourney: build.mutation<ResumeJourneyMutation, ResumeJourneyMutationVariables | void>({
       query: (variables) => ({ document: ResumeJourneyDocument as unknown as string, variables })
     }),
+    SendAiChatMessage: build.mutation<SendAiChatMessageMutation, SendAiChatMessageMutationVariables>({
+      query: (variables) => ({ document: SendAiChatMessageDocument as unknown as string, variables })
+    }),
     StartJourney: build.mutation<StartJourneyMutation, StartJourneyMutationVariables>({
       query: (variables) => ({ document: StartJourneyDocument as unknown as string, variables })
     }),
@@ -1095,6 +1172,9 @@ const injectedRtkApi = api.injectEndpoints({
     GetRecoveryScoreTrendForLastNDay: build.query<GetRecoveryScoreTrendForLastNDayQuery, GetRecoveryScoreTrendForLastNDayQueryVariables>({
       query: (variables) => ({ document: GetRecoveryScoreTrendForLastNDayDocument as unknown as string, variables })
     }),
+    LatestAiChatMessage: build.query<LatestAiChatMessageQuery, LatestAiChatMessageQueryVariables | void>({
+      query: (variables) => ({ document: LatestAiChatMessageDocument as unknown as string, variables })
+    }),
     Me: build.query<MeQuery, MeQueryVariables | void>({
       query: (variables) => ({ document: MeDocument as unknown as string, variables })
     }),
@@ -1106,6 +1186,9 @@ const injectedRtkApi = api.injectEndpoints({
     }),
     MotivationalMessage: build.query<MotivationalMessageQuery, MotivationalMessageQueryVariables | void>({
       query: (variables) => ({ document: MotivationalMessageDocument as unknown as string, variables })
+    }),
+    MyAiChatConversations: build.query<MyAiChatConversationsQuery, MyAiChatConversationsQueryVariables | void>({
+      query: (variables) => ({ document: MyAiChatConversationsDocument as unknown as string, variables })
     }),
     MyRecovery: build.query<MyRecoveryQuery, MyRecoveryQueryVariables | void>({
       query: (variables) => ({ document: MyRecoveryDocument as unknown as string, variables })
@@ -1138,5 +1221,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useCompleteJourneyMutation, useFollowUpMutation, useLogoutMutation, useLogoutAllMutation, usePauseJourneyMutation, useRefreshTokenMutation, useRequestChangePasswordOtpMutation, useResumeJourneyMutation, useStartJourneyMutation, useUpdateProfileMutation, useUploadSingleFilesMutation, useVerifyChangePasswordOtpMutation, useGoogleLoginMutation, useGoogleRegisterMutation, useLoginMutation, useRegisterMutation, useResendEmailVerificationOtpMutation, useVerifyEmailOtpMutation, useActiveJourneyQuery, useLazyActiveJourneyQuery, useApplicationConfigQuery, useLazyApplicationConfigQuery, useCompletedMissionHistoryQuery, useLazyCompletedMissionHistoryQuery, useDailySessionHistoryByDayQuery, useLazyDailySessionHistoryByDayQuery, useGetRecoveryScoreTrendForLastNDayQuery, useLazyGetRecoveryScoreTrendForLastNDayQuery, useMeQuery, useLazyMeQuery, useMissionHistoryQuery, useLazyMissionHistoryQuery, useMoodThisWeekQuery, useLazyMoodThisWeekQuery, useMotivationalMessageQuery, useLazyMotivationalMessageQuery, useMyRecoveryQuery, useLazyMyRecoveryQuery, useRecoveryAssessmentHistoryQuery, useLazyRecoveryAssessmentHistoryQuery, useTodayMissionQuery, useLazyTodayMissionQuery, useTodayQuestionQuery, useLazyTodayQuestionQuery, useRegisterDeviceMutation, useGetRecoveryFeelingQuery, useLazyGetRecoveryFeelingQuery, useGetRecoveryGoalQuery, useLazyGetRecoveryGoalQuery, useGetRecoveryReasonQuery, useLazyGetRecoveryReasonQuery, useGetRecoveryTimelineQuery, useLazyGetRecoveryTimelineQuery } = injectedRtkApi;
+export const { useCompleteJourneyMutation, useFollowUpMutation, useLogoutMutation, useLogoutAllMutation, usePauseJourneyMutation, useRefreshTokenMutation, useRequestChangePasswordOtpMutation, useResumeJourneyMutation, useSendAiChatMessageMutation, useStartJourneyMutation, useUpdateProfileMutation, useUploadSingleFilesMutation, useVerifyChangePasswordOtpMutation, useGoogleLoginMutation, useGoogleRegisterMutation, useLoginMutation, useRegisterMutation, useResendEmailVerificationOtpMutation, useVerifyEmailOtpMutation, useActiveJourneyQuery, useLazyActiveJourneyQuery, useApplicationConfigQuery, useLazyApplicationConfigQuery, useCompletedMissionHistoryQuery, useLazyCompletedMissionHistoryQuery, useDailySessionHistoryByDayQuery, useLazyDailySessionHistoryByDayQuery, useGetRecoveryScoreTrendForLastNDayQuery, useLazyGetRecoveryScoreTrendForLastNDayQuery, useLatestAiChatMessageQuery, useLazyLatestAiChatMessageQuery, useMeQuery, useLazyMeQuery, useMissionHistoryQuery, useLazyMissionHistoryQuery, useMoodThisWeekQuery, useLazyMoodThisWeekQuery, useMotivationalMessageQuery, useLazyMotivationalMessageQuery, useMyAiChatConversationsQuery, useLazyMyAiChatConversationsQuery, useMyRecoveryQuery, useLazyMyRecoveryQuery, useRecoveryAssessmentHistoryQuery, useLazyRecoveryAssessmentHistoryQuery, useTodayMissionQuery, useLazyTodayMissionQuery, useTodayQuestionQuery, useLazyTodayQuestionQuery, useRegisterDeviceMutation, useGetRecoveryFeelingQuery, useLazyGetRecoveryFeelingQuery, useGetRecoveryGoalQuery, useLazyGetRecoveryGoalQuery, useGetRecoveryReasonQuery, useLazyGetRecoveryReasonQuery, useGetRecoveryTimelineQuery, useLazyGetRecoveryTimelineQuery } = injectedRtkApi;
 

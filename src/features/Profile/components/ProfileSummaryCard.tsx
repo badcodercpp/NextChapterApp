@@ -23,7 +23,6 @@ export function ProfileSummaryCard({ onEditPress }: ProfileSummaryCardProps) {
             <AppAvatar
               size="lg"
               name={me?.displayName ?? ''}
-              enablePhotoActions
               uri={toHttpsURL(me?.avatarUrl) ?? undefined}
             />
           </View>

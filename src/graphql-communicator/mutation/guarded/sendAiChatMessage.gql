@@ -1,0 +1,18 @@
+mutation SendAiChatMessage($input: SendAiChatMessageInput!) {
+  sendAiChatMessage(input: $input) {
+    userMessage {
+      id
+      role
+      content
+      quickReplies
+      createdAt
+    }
+    aiMessage {
+      id
+      role
+      content
+      quickReplies
+      createdAt
+    }
+  }
+}

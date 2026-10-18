@@ -1,43 +1,21 @@
 import {
-  AICoachCard,
+  AIChatComponent,
   ChatComposer,
-  ChatDateDivider,
   QuickReplies,
 } from '@/features/AIChat/components';
-import { FlatList, View } from 'react-native';
 
 import { AppAuthenticatedLayout } from '@/components';
-import { AppText } from '@/components/foundation/AppText';
-import { ChatMessage } from '@/features/CommonFeature';
-import { MESSAGES_MOCK } from '@/features/CommonFeature/mocks/msg';
 import React from 'react';
+import { View } from 'react-native';
+import { useAIChatBootstrap } from '@/features/AIChat/hooks/useAIChatBootstrap';
 
 export function AIChatScreen() {
+  useAIChatBootstrap();
+
   return (
     <AppAuthenticatedLayout noBottomPadding withoutScrollView>
-      <AppText variant="xl">AIChatScreen</AppText>
-
-      <View className="mt-4 flex-1">
-        <FlatList
-          data={MESSAGES_MOCK}
-          keyExtractor={item => item.id}
-          showsVerticalScrollIndicator={false}
-          contentContainerClassName="pb-0"
-          ListHeaderComponent={
-            <View>
-              <AICoachCard />
-              <ChatDateDivider />
-            </View>
-          }
-          renderItem={({ item }) => <ChatMessage message={item} />}
-          ListFooterComponent={
-            <View>
-              <View className="mt-4">
-                <QuickReplies />
-              </View>
-            </View>
-          }
-        />
+      <View className="mt-2 flex-1">
+        <AIChatComponent />
         <View className="mt-2">
           <QuickReplies />
         </View>

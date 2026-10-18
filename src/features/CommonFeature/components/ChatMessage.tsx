@@ -1,5 +1,6 @@
-import { AppAvatar, AppIcon, AppText } from '@/components';
+import { AppAvatar, AppExpandableText, AppIcon, AppText } from '@/components';
 
+import { AiChatRole } from '@/__generated__/graphql';
 import { AssistantAvatar } from '@/features/CommonFeature/components/AssistantAvatar';
 import { ChatMessageProps } from '@/features/CommonFeature/types/ChatMessageTypes';
 import { CheckCheck } from 'lucide-react-native';
@@ -8,7 +9,7 @@ import { selectMe } from '@/state/selectors';
 import { useSelector } from 'react-redux';
 
 export function ChatMessage({ message }: ChatMessageProps) {
-  const isUser = message.role === 'user';
+  const isUser = message.role === AiChatRole.User;
   const { data: me } = useSelector(selectMe);
 
   return (
@@ -16,14 +17,17 @@ export function ChatMessage({ message }: ChatMessageProps) {
       {isUser ? (
         <View className="flex-1 flex-row justify-end">
           <View className="flex-1">
-            <View className="rounded-[22px] border border-border bg-secondary px-4 py-4">
-              <AppText variant="md" className="leading-6">
-                {message.content}
-              </AppText>
+            <View className="rounded-[22px] border border-border bg-card px-4 py-4">
+              <AppExpandableText
+                text={message.content}
+                variant="md"
+                textClassName="text-text-secondary"
+                collapsedLines={3}
+              />
             </View>
 
             <View className="mt-1 flex-row justify-end items-center">
-              <AppText variant="xs" className="text-text-muted">
+              <AppText variant="xs" className="text-text-muted mr-4">
                 {message.createdAt}
               </AppText>
 
@@ -38,7 +42,11 @@ export function ChatMessage({ message }: ChatMessageProps) {
             </View>
           </View>
           <View className="ml-2 mt-2">
-            <AppAvatar size="sm" name={me?.displayName ?? ''} />
+            <AppAvatar
+              className="bg-card"
+              size="sm"
+              name={me?.displayName ?? ''}
+            />
           </View>
         </View>
       ) : (
@@ -47,12 +55,15 @@ export function ChatMessage({ message }: ChatMessageProps) {
 
           <View className="flex-1">
             <View className="rounded-[22px] border border-border bg-surface px-4 py-4">
-              <AppText variant="md" className="leading-6">
-                {message.content}
-              </AppText>
+              <AppExpandableText
+                text={message.content}
+                variant="md"
+                textClassName="text-text-secondary"
+                collapsedLines={3}
+              />
             </View>
 
-            <AppText variant="xs" className="mt-1 ml-1 text-text-muted">
+            <AppText variant="xs" className="mt-1 ml-4 text-text-muted">
               {message.createdAt}
             </AppText>
           </View>

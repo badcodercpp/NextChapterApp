@@ -1,12 +1,13 @@
-import { AppIcon, AppPressable, AppText } from '@/components';
-import { CloudRain, Grid2X2, Heart, Leaf } from 'lucide-react-native';
+import { AppPressable, AppText } from '@/components';
+import { ScrollView, View } from 'react-native';
 
-import { View } from 'react-native';
+import { selectLatestAiChatMessage } from '@/state/selectors';
+import { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
 interface QuickReply {
   id: string;
   label: string;
-  icon: typeof Heart;
   color: string;
 }
 
@@ -19,33 +20,37 @@ const DEFAULT_REPLIES: QuickReply[] = [
   {
     id: 'overthinking',
     label: 'Help me manage overthinking',
-    icon: Heart,
     color: 'text-secondary',
   },
   {
     id: 'motivate',
     label: 'Motivate me today',
-    icon: Leaf,
     color: 'text-green-400',
   },
   {
     id: 'bad-day',
     label: "I'm having a bad day",
-    icon: CloudRain,
     color: 'text-cyan-400',
-  },
-  {
-    id: 'more',
-    label: 'More',
-    icon: Grid2X2,
-    color: 'text-text-muted',
   },
 ];
 
-export function QuickReplies({
-  replies = DEFAULT_REPLIES,
-  onPress,
-}: QuickRepliesProps) {
+export function QuickReplies({ onPress }: QuickRepliesProps) {
+  const { data: latestAiChatMessage } = useSelector(selectLatestAiChatMessage);
+
+  const quickReplies = useMemo(() => {
+    if (
+      !latestAiChatMessage?.quickReplies ||
+      !latestAiChatMessage?.quickReplies?.length
+    ) {
+      return DEFAULT_REPLIES;
+    }
+    return latestAiChatMessage?.quickReplies?.map((e, index) => ({
+      id: `quick_reply_${index}`,
+      label: e,
+      color: 'text-secondary',
+    }));
+  }, [latestAiChatMessage]);
+
   return (
     <View>
       {/* Header */}
@@ -57,28 +62,28 @@ export function QuickReplies({
       </AppText>
 
       {/* Replies */}
-      <View className="flex-row flex-wrap gap-2">
-        {replies.map(reply => (
-          <AppPressable
-            key={reply.id}
-            onPress={() => onPress?.(reply)}
-            className={`flex-row items-center rounded-full border px-4 py-2 ${reply.color.replace(
-              'text-',
-              'border-',
-            )}/40 bg-card/30`}
-          >
-            <AppIcon
-              icon={reply.icon}
-              size={21}
-              strokeWidth={2}
-              className={reply.color}
-            />
-
-            <AppText variant="md" className={`ml-2 font-medium ${reply.color}`}>
-              {reply.label}
-            </AppText>
-          </AppPressable>
-        ))}
+      <View className="flex h-12">
+        <ScrollView horizontal>
+          <View className="flex-row flex-wrap gap-2">
+            {quickReplies.map(reply => (
+              <AppPressable
+                key={reply.id}
+                onPress={() => onPress?.(reply)}
+                className={`flex-row items-center rounded-full border px-4 py-2 ${reply.color.replace(
+                  'text-',
+                  'border-',
+                )}/40 text-primary bg-card/40`}
+              >
+                <AppText
+                  variant="sm"
+                  className={`ml-2 font-medium ${reply.color}`}
+                >
+                  {reply.label}
+                </AppText>
+              </AppPressable>
+            ))}
+          </View>
+        </ScrollView>
       </View>
     </View>
   );

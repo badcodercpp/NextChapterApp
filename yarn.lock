@@ -1825,6 +1825,11 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
+"@hiraku-ai/react-native-emoji-picker@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/@hiraku-ai/react-native-emoji-picker/-/react-native-emoji-picker-1.2.4.tgz#eb3c86016fb4e060c8b1cfe8e5ed847931378ecd"
+  integrity sha512-JuTJKhQA4y19m0zRDL0gmK9/mz8xGtDVYVwE7LktCG8lgHH/Gs1Mu6CM1JeBp39sPgiEHimUx6EF7Cgfp9iYVw==
+
 "@hookform/resolvers@^5.8.0":
   version "5.8.0"
   resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-5.8.0.tgz#164d440d61978be92bc1b18204daae3660591b8b"

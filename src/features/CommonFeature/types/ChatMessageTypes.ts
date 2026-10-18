@@ -1,6 +1,8 @@
+import { AiChatRole } from '@/__generated__/graphql';
+
 export interface ChatMessageData {
   id: string;
-  role: 'assistant' | 'user';
+  role: AiChatRole;
   content: string;
   createdAt: string;
   status?: 'sent' | 'read';
