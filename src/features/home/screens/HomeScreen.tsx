@@ -3,7 +3,6 @@ import { CalendarClock, ChevronRight } from 'lucide-react-native';
 import {
   DailyAffirmationCard,
   QuickActionCardComponent,
-  QuickActions,
   RecoveryScoreCard,
   TodaysQuestionCard,
 } from '../components';
@@ -53,10 +52,6 @@ export function HomeScreen() {
 
       <View className="mt-4">
         <QuickActionCardComponent />
-      </View>
-
-      <View className="mt-4">
-        <QuickActions />
       </View>
 
       <View className="mt-4">

@@ -1,6 +1,11 @@
-import { AppPressable, AppText } from '@/components';
+import {
+  AppContentSingleLineLoader,
+  AppPressable,
+  AppText,
+} from '@/components';
 import { ScrollView, View } from 'react-native';
 
+import { SendAiChatMessageInput } from '@/__generated__/graphql';
 import { selectLatestAiChatMessage } from '@/state/selectors';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
@@ -13,7 +18,8 @@ interface QuickReply {
 
 interface QuickRepliesProps {
   replies?: QuickReply[];
-  onPress?: (reply: QuickReply) => void;
+  onSend?: (input: SendAiChatMessageInput) => void;
+  isBootstrapPending?: boolean;
 }
 
 const DEFAULT_REPLIES: QuickReply[] = [
@@ -34,8 +40,13 @@ const DEFAULT_REPLIES: QuickReply[] = [
   },
 ];
 
-export function QuickReplies({ onPress }: QuickRepliesProps) {
-  const { data: latestAiChatMessage } = useSelector(selectLatestAiChatMessage);
+export function QuickReplies({
+  onSend,
+  isBootstrapPending,
+}: QuickRepliesProps) {
+  const { data: latestAiChatMessage, loading } = useSelector(
+    selectLatestAiChatMessage,
+  );
 
   const quickReplies = useMemo(() => {
     if (
@@ -63,27 +74,30 @@ export function QuickReplies({ onPress }: QuickRepliesProps) {
 
       {/* Replies */}
       <View className="flex h-12">
-        <ScrollView horizontal>
-          <View className="flex-row flex-wrap gap-2">
-            {quickReplies.map(reply => (
-              <AppPressable
-                key={reply.id}
-                onPress={() => onPress?.(reply)}
-                className={`flex-row items-center rounded-full border px-4 py-2 ${reply.color.replace(
-                  'text-',
-                  'border-',
-                )}/40 text-primary bg-card/40`}
-              >
-                <AppText
-                  variant="sm"
-                  className={`ml-2 font-medium ${reply.color}`}
+        {(loading || isBootstrapPending) && <AppContentSingleLineLoader />}
+        {!(loading || isBootstrapPending) && (
+          <ScrollView horizontal>
+            <View className="flex-row flex-wrap gap-2">
+              {quickReplies.map(reply => (
+                <AppPressable
+                  key={reply.id}
+                  onPress={() => onSend?.({ message: reply.label })}
+                  className={`flex-row items-center rounded-full border px-4 py-2 ${reply.color.replace(
+                    'text-',
+                    'border-',
+                  )}/40 text-primary bg-card/40`}
                 >
-                  {reply.label}
-                </AppText>
-              </AppPressable>
-            ))}
-          </View>
-        </ScrollView>
+                  <AppText
+                    variant="sm"
+                    className={`ml-2 font-medium ${reply.color}`}
+                  >
+                    {reply.label}
+                  </AppText>
+                </AppPressable>
+              ))}
+            </View>
+          </ScrollView>
+        )}
       </View>
     </View>
   );

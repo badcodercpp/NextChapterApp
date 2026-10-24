@@ -10,3 +10,5 @@ export * from './verifyEmail';
 export * from './forgotPassword';
 export * from './verifyIdentity';
 export * from './updateProfile';
+export * from './aiChat';
+export * from './createOrUpdateJournal';

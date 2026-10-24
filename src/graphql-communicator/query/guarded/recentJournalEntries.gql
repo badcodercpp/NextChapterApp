@@ -1,0 +1,12 @@
+query RecentJournalEntries {
+  recentJournalEntries {
+    id
+    day
+    title
+    content
+    mood
+    entryDate
+    createdAt
+    updatedAt
+  }
+}

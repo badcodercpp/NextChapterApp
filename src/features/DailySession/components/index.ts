@@ -6,7 +6,6 @@ export * from './StartSessionCard';
 export * from './SessionProgress';
 export * from './TodaysQuestionCardInSession';
 export * from './PrivateAnswerCard';
-export * from './AnswerInputCard';
 export * from './AnswerStarterCard';
 export * from './HealingMessageCard';
 export * from './FollowupChats';

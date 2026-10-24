@@ -94,7 +94,7 @@ export function AppEmojiPicker({
           // eslint-disable-next-line react-native/no-inline-styles
           style={{
             height: 500,
-            backgroundColor: color(background, '#ffffff'),
+            backgroundColor: color('background', '#ffffff'),
           }}
         >
           <EmojiPickerThemeProvider theme={emojiTheme}>

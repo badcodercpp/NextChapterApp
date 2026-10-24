@@ -39,6 +39,13 @@ export function MasterFormProvider({
       verifyIdentity: {
         otp: ['', '', '', ''],
       },
+      aiChat: {
+        message: '',
+      },
+      createOrUpdateJournal: {
+        title: '',
+        content: '',
+      },
     },
   });
 

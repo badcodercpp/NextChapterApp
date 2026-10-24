@@ -22,3 +22,4 @@ export * from './AppNumberedList';
 export * from './AppFileChooseModal';
 export * from './AppImagePreviewModal';
 export * from './AppEmojiPicker';
+export * from './AppPopover';

@@ -1,5 +1,5 @@
 import { AppIcon, AppPressable, AppText } from '@/components';
-import { ChevronRight, Download, LogOut, UserRound } from 'lucide-react-native';
+import { ChevronRight, LogOut, UserRound } from 'lucide-react-native';
 
 import { View } from 'react-native';
 import { cn } from '@/utils';
@@ -31,11 +31,6 @@ const ACCOUNT_ITEMS: AccountSettingItem[] = [
     id: 'contact-information',
     title: 'Contact Information',
     icon: UserRound,
-  },
-  {
-    id: 'export-data',
-    title: 'Export My Data',
-    icon: Download,
   },
   {
     id: 'sign-out',

@@ -13,7 +13,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
   const { data: me } = useSelector(selectMe);
 
   return (
-    <View className="flex-1 mb-5">
+    <View className="flex-1 mb-5" key={message.id}>
       {isUser ? (
         <View className="flex-1 flex-row justify-end">
           <View className="flex-1">

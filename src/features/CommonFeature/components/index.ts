@@ -7,3 +7,4 @@ export * from './TodaysMissionCard';
 export * from './MoodSelector';
 export * from './RememberCard';
 export * from './EmojiSelector';
+export * from './AnswerInputCard';

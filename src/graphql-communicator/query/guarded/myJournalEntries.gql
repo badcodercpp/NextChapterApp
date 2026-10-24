@@ -1,0 +1,12 @@
+query MyJournalEntries {
+  myJournalEntries {
+    id
+    day
+    title
+    content
+    mood
+    entryDate
+    createdAt
+    updatedAt
+  }
+}

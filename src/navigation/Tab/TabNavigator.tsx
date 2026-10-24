@@ -3,6 +3,7 @@ import { BottomTabBar } from '../components/CustomBottomTabBar';
 import { DailySessionHistoryNavigator } from '@/features/DailySessionHistory/navigation';
 import { DailySessionNavigator } from '@/features/DailySession';
 import { HomeNavigator } from '@/features/home';
+import { JournalNavigator } from '@/features/journal';
 import { MentorChatNavigator } from '@/features/mentors/navigation';
 import { RecoveryProgressNavigator } from '@/features/RecoveryProgress/navigation';
 import { TabParamList } from './TabParamList';
@@ -34,9 +35,12 @@ export function TabNavigator() {
         options={{
           headerShown: false,
           title: t('app.locale.navigation.journal'),
+          tabBarStyle: {
+            display: 'none',
+          },
         }}
         name={TabRoutes.Journal}
-        component={HomeNavigator}
+        component={JournalNavigator}
       />
 
       <Tab.Screen

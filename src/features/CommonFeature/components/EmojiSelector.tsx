@@ -4,7 +4,11 @@ import React, { useState } from 'react';
 import { Smile } from 'lucide-react-native';
 import { emojiData } from '@hiraku-ai/react-native-emoji-picker';
 
-export function EmojiSelector() {
+interface EmojiSelectorProps {
+  onEmojiSelect: (emoji: string) => void;
+}
+
+export function EmojiSelector({ onEmojiSelect }: EmojiSelectorProps) {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -26,7 +30,7 @@ export function EmojiSelector() {
       <AppEmojiPicker
         visible={visible}
         onClose={() => setVisible(false)}
-        onEmojiSelect={emoji => console.log(emoji)}
+        onEmojiSelect={onEmojiSelect}
         emojis={emojiData}
       />
     </>

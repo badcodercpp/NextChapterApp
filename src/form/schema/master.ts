@@ -1,6 +1,8 @@
 import * as z from 'zod';
 
+import { aiChatSchema } from '@/form/schema/aiChat';
 import { createAccountSchema } from '@/form/schema/createAccount';
+import { createOrUpdateJournalSchema } from '@/form/schema/createOrUpdateJournal';
 import { createPasswordSchema } from '@/form/schema/createPassword';
 import { forgotPasswordSchema } from '@/form/schema/forgotPassword';
 import { howAreYouFeelingSchema } from '@/form/schema/howAreYouFeeling';
@@ -24,4 +26,6 @@ export const masterSchema = z.object({
   forgotPassword: forgotPasswordSchema,
   verifyIdentity: verifyIdentitySchema,
   updateProfile: updateProfileSchema,
+  aiChat: aiChatSchema,
+  createOrUpdateJournal: createOrUpdateJournalSchema,
 });

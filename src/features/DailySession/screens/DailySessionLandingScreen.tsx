@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   SessionOverviewCard,
   SessionReminderCard,
@@ -8,10 +9,14 @@ import {
 
 import { AppAuthenticatedLayout } from '@/components';
 import { MoodSelector } from '@/features/CommonFeature';
-import React from 'react';
+import { RecoveryReasonCurrentFeeling } from '@/__generated__/graphql';
 import { View } from 'react-native';
 
 export function DailySessionLandingScreen() {
+  const [value, setValue] = useState<
+    Array<RecoveryReasonCurrentFeeling | undefined>
+  >([]);
+
   return (
     <AppAuthenticatedLayout noBottomPadding>
       <View className="mt-2">
@@ -25,6 +30,8 @@ export function DailySessionLandingScreen() {
       </View>
       <View className="mt-4">
         <MoodSelector
+          value={value}
+          setValue={setValue}
           title="Your current mood"
           subtitle="How are you feeling now ?"
         />

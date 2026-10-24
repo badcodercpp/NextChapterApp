@@ -1,0 +1,12 @@
+mutation CreateJournalEntry($input: CreateJournalEntryInput!) {
+  createJournalEntry(input: $input) {
+    id
+    day
+    title
+    content
+    mood
+    entryDate
+    createdAt
+    updatedAt
+  }
+}

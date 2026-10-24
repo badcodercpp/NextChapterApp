@@ -1,0 +1,3 @@
+mutation DeleteJournalEntry($id: String!) {
+  deleteJournalEntry(id: $id)
+}

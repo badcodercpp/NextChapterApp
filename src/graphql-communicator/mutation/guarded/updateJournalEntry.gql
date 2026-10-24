@@ -1,0 +1,12 @@
+mutation UpdateJournalEntry($id: String!, $input: UpdateJournalEntryInput!) {
+  updateJournalEntry(id: $id, input: $input) {
+    id
+    day
+    title
+    content
+    mood
+    entryDate
+    createdAt
+    updatedAt
+  }
+}

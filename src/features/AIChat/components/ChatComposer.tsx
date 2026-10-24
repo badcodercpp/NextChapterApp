@@ -1,49 +1,86 @@
 import { AppIcon, AppInput, AppPressable, AppText } from '@/components';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { Lock, Send } from 'lucide-react-native';
 
 import { EmojiSelector } from '@/features/CommonFeature';
+import { MasterFormData } from '@/form/types';
+import { SendAiChatMessageInput } from '@/__generated__/graphql';
 import { View } from 'react-native';
+import { useCallback } from 'react';
 
 interface ChatComposerProps {
-  value?: string;
-  onChangeText?: (text: string) => void;
-  onSend?: () => void;
-
+  onSend?: (input: SendAiChatMessageInput) => void;
   onMoodPress?: () => void;
-
   disabled?: boolean;
+  isBootstrapPending?: boolean;
 }
 
 export function ChatComposer({
-  value = '',
-  onChangeText,
   onSend,
-
+  isBootstrapPending,
   disabled = false,
 }: ChatComposerProps) {
-  const canSend = value.trim().length > 0 && !disabled;
+  const {
+    control,
+    formState: { errors },
+    setValue,
+    clearErrors,
+  } = useFormContext<MasterFormData>();
+
+  const messageText = useWatch({
+    control,
+    name: 'aiChat.message',
+  });
+
+  const canSend =
+    messageText?.trim().length > 2 &&
+    !errors?.aiChat?.message?.message &&
+    !disabled &&
+    !isBootstrapPending;
+
+  const onEmojiSelect = useCallback(
+    (emoji: string) => {
+      setValue('aiChat.message', messageText + ' ' + emoji + '');
+    },
+    [setValue, messageText],
+  );
 
   return (
     <View className="w-full">
       {/* Composer */}
       <View className="mt-0 flex-row items-center">
-        <EmojiSelector />
+        <EmojiSelector onEmojiSelect={onEmojiSelect} />
 
         {/* Message Input */}
         <View className="flex-1">
-          <AppInput
-            value={value}
-            onChangeText={onChangeText}
-            placeholder="Type your message..."
-            disabled={disabled}
-            className="rounded-[25px]"
-            inputClassName="text-[18px]"
+          <Controller
+            control={control}
+            name="aiChat.message"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <AppInput
+                placeholder="Enter your email"
+                autoCapitalize="none"
+                autoCorrect={false}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                error={errors?.aiChat?.message?.message}
+                onFocus={() => {
+                  clearErrors('aiChat.message');
+                }}
+                disabled={false}
+                className="rounded-[24px]"
+                inputClassName="text-[18px]"
+              />
+            )}
           />
         </View>
 
         {/* Send */}
         <AppPressable
-          onPress={canSend ? onSend : undefined}
+          onPress={
+            canSend ? () => onSend?.({ message: messageText }) : undefined
+          }
           disabled={!canSend}
           className={`
             ml-2

@@ -1,5 +1,6 @@
 import { AppAuthenticatedLayout, AppButton, AppInput } from '@/components';
 import { MoodSelector, RememberCard } from '@/features/CommonFeature';
+import React, { useState } from 'react';
 import {
   ReflectionIntroCard,
   ReflectionPrompts,
@@ -7,10 +8,14 @@ import {
 } from '../components';
 
 import { ChevronRight } from 'lucide-react-native';
-import React from 'react';
+import { RecoveryReasonCurrentFeeling } from '@/__generated__/graphql';
 import { View } from 'react-native';
 
 export function DailySessionReflectStepScreen() {
+  const [value, setValue] = useState<
+    Array<RecoveryReasonCurrentFeeling | undefined>
+  >([]);
+
   return (
     <AppAuthenticatedLayout noBottomPadding>
       <View className="mt-4">
@@ -23,7 +28,7 @@ export function DailySessionReflectStepScreen() {
         <ReflectionPrompts />
       </View>
       <View className="mt-4">
-        <MoodSelector />
+        <MoodSelector value={value} setValue={setValue} />
       </View>
       <View className="mt-4">
         <AppInput

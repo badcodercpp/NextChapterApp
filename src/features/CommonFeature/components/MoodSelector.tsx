@@ -3,7 +3,6 @@ import { ChevronDown, ChevronUp, Heart } from 'lucide-react-native';
 import React, { useState } from 'react';
 
 import { MoodSelectorProps } from '../types/moods';
-import { RecoveryReasonCurrentFeeling } from '@/__generated__/graphql';
 import { View } from 'react-native';
 import { defaultMoodSelectorOptions } from '../constants/moods';
 
@@ -12,23 +11,39 @@ export function MoodSelector({
   subtitle = "How are you feeling after today's session?",
   options = defaultMoodSelectorOptions,
   collapsedCount = 3,
+  value,
+  setValue,
+  selectionMode = 'multiple',
 }: MoodSelectorProps) {
-  const [value, setValue] = useState<
-    Array<RecoveryReasonCurrentFeeling | undefined>
-  >([]);
   const [expanded, setExpanded] = useState(false);
 
   const visibleOptions = expanded ? options : options.slice(0, collapsedCount);
 
   const canExpand = options.length > collapsedCount;
 
+  const handleSelect = (selectedValue: MoodSelectorProps['value'][number]) => {
+    // Single selection
+    if (selectionMode === 'single') {
+      setValue([selectedValue]);
+      return;
+    }
+
+    // Multiple selection
+    if (value.includes(selectedValue)) {
+      setValue(value.filter(item => item !== selectedValue));
+      return;
+    }
+
+    setValue([...new Set([...value, selectedValue])]);
+  };
+
   return (
-    <AppCard className="rounded-[24px] border border-border bg-card p-5">
+    <AppCard className="rounded-[24px] border border-border bg-card p-4">
       {/* Header */}
       <View className="flex-row items-center">
         <AppIcon icon={Heart} size={24} className="text-primary" />
 
-        <AppText variant="xl" className="ml-4 text-primary">
+        <AppText variant="xl" className="ml-2 text-primary">
           {title}
         </AppText>
       </View>
@@ -46,21 +61,14 @@ export function MoodSelector({
           return (
             <AppPressable
               key={option.value}
-              onPress={() => {
-                const target = Array.from(new Set([...value]));
-                if (target.includes(option.value)) {
-                  setValue(target.filter(e => e !== option.value));
-                } else {
-                  setValue(v => Array.from(new Set([...v, option.value])));
-                }
-              }}
+              onPress={() => handleSelect(option.value)}
               className={`
                 min-w-[92px]
                 flex-1
                 basis-[30%]
                 items-center
                 justify-center
-                rounded-[34px]
+                rounded-3xl
                 border
                 p-4
                 ${
@@ -74,9 +82,11 @@ export function MoodSelector({
 
               <AppText
                 variant="md"
-                className={`mt-2 text-center ${
-                  selected ? 'text-text' : 'text-primary'
-                }`}
+                className={`
+                  mt-2
+                  text-center
+                  ${selected ? 'text-text' : 'text-primary'}
+                `}
               >
                 {option.label}
               </AppText>

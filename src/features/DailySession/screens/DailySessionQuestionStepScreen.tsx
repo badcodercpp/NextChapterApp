@@ -1,5 +1,4 @@
 import {
-  AnswerInputCard,
   AnswerStarterCard,
   HealingMessageCard,
   PrivateAnswerCard,
@@ -9,6 +8,7 @@ import {
 import { AppAuthenticatedLayout, AppButton } from '@/components';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
+import { AnswerInputCard } from '@/features/CommonFeature';
 import { ChevronRight } from 'lucide-react-native';
 import { DailySessionStackParamList } from '@/features/DailySession/navigation';
 import React from 'react';

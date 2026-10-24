@@ -1,0 +1,12 @@
+query JournalEntry($id: String!) {
+  journalEntry(id: $id) {
+    id
+    day
+    title
+    content
+    mood
+    entryDate
+    createdAt
+    updatedAt
+  }
+}

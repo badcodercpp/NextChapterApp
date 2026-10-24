@@ -1,6 +1,6 @@
-import { AppInput } from '@/components';
+import { AppInput, AppInputProps } from '@/components';
 
-interface AnswerInputCardProps {
+interface AnswerInputCardProps extends AppInputProps {
   value: string;
   onChangeText: (value: string) => void;
   placeholder?: string;
@@ -11,6 +11,9 @@ export function AnswerInputCard({
   value,
   onChangeText,
   placeholder = 'Type your answer here...',
+  inputClassName,
+  containerClassName,
+  ...rest
 }: AnswerInputCardProps) {
   return (
     <AppInput
@@ -20,8 +23,9 @@ export function AnswerInputCard({
       multiline
       showCharacterCount
       className="w-full"
-      inputClassName=" px-2 pt-4 text-md text-text border-border"
-      containerClassName="border-border"
+      inputClassName={`px-2 pt-4 text-md text-text border-border ${inputClassName}`}
+      containerClassName={`border-border ${containerClassName}`}
+      {...rest}
     />
   );
 }
