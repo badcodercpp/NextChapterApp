@@ -1,4 +1,4 @@
-import { AppCard, AppPressable, AppText } from '@/components';
+import { AppCard, AppIcon, AppPressable, AppText } from '@/components';
 import { ChevronDown, X } from 'lucide-react-native';
 import { Modal, Pressable, View } from 'react-native';
 
@@ -7,8 +7,6 @@ import React from 'react';
 import { RecoveryScoreChartComponent } from './RecoveryScoreChartComponent';
 import { formatLongDate } from '@/utils';
 import { useRecoveryScoreChart } from '../hooks/useRecoveryScoreChart';
-
-const PURPLE = '#B84CFF';
 
 export interface RecoveryScoreChartProps {
   title?: string;
@@ -50,29 +48,34 @@ export function RecoveryScoreChart({}: RecoveryScoreChartProps) {
           <View className="relative ml-3">
             <Pressable
               onPress={() => setShowRangeOptions(previous => !previous)}
-              className="h-11 flex-row items-center justify-center rounded-full border border-purple-500/30 bg-purple-500/10 px-4"
+              className="h-11 flex-row items-center justify-center rounded-full border border-border bg-primary px-4"
             >
-              <AppText variant="sm" className="font-semibold text-purple-400">
+              <AppText variant="sm" className="font-semibold text-text">
                 {selectedRange.label}
               </AppText>
 
-              <ChevronDown size={17} color={PURPLE} strokeWidth={2.5} />
+              <AppIcon
+                icon={ChevronDown}
+                size={18}
+                className="text-text"
+                strokeWidth={2.5}
+              />
             </Pressable>
 
             {showRangeOptions && (
-              <View className="absolute right-0 top-12 z-50 min-w-[150px] overflow-hidden rounded-2xl border border-white/10 bg-[#263B5D]">
+              <View className="absolute right-0 top-12 z-50 min-w-[150px] overflow-hidden rounded-2xl border border-border bg-primary">
                 {RANGE_OPTIONS.map(option => (
                   <Pressable
                     key={option.label}
                     onPress={() => handleRangeSelect(option)}
-                    className="px-4 py-3"
+                    className="px-4 py-3 bg-primary"
                   >
                     <AppText
                       variant="sm"
                       className={
                         selectedRange.label === option.label
-                          ? 'font-semibold text-purple-400'
-                          : 'text-white'
+                          ? 'font-bold text-text'
+                          : 'text-text'
                       }
                     >
                       {option.label}

@@ -1,6 +1,7 @@
 import { AppCard, AppExpandableText, AppText } from '@/components';
 
 import { JournalEntryMenu } from './JournalEntryMenu';
+import { JournalRoutes } from '@/features/journal/navigation';
 import { RecentJournalEntriesQuery } from '@/__generated__/graphql';
 import { View } from 'react-native';
 import { format } from 'date-fns';
@@ -8,7 +9,13 @@ import { getMoodEmojiByValue } from '@/utils';
 
 type JournalEntry = RecentJournalEntriesQuery['recentJournalEntries'][0];
 
-export function JournalEntryCard({ entry }: { entry: JournalEntry }) {
+export function JournalEntryCard({
+  entry,
+  origin,
+}: {
+  entry: JournalEntry;
+  origin: keyof typeof JournalRoutes;
+}) {
   return (
     <AppCard className="mb-4 rounded-3xl border border-border bg-card">
       <View className="flex-row">
@@ -54,7 +61,7 @@ export function JournalEntryCard({ entry }: { entry: JournalEntry }) {
         <View className="ml-3 items-center justify-between">
           {/* More */}
 
-          <JournalEntryMenu entry={entry} />
+          <JournalEntryMenu entry={entry} origin={origin} />
         </View>
       </View>
     </AppCard>

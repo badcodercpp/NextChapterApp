@@ -1,17 +1,22 @@
 import { AppCard, AppContentLoader, AppIcon, AppText } from '@/components';
+import {
+  JournalRoutes,
+  JournalStackParamList,
+} from '@/features/journal/navigation';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Pressable, View } from 'react-native';
 
 import { ChevronRight } from 'lucide-react-native';
 import { JournalEntryCard } from './JournalEntryCard';
-import { JournalStackParamList } from '@/features/journal/navigation';
 import React from 'react';
 import { selectRecentJournalEntries } from '@/state/selectors/api/recentJournalEntries';
 import { useSelector } from 'react-redux';
 
-interface JournalEntriesProps {}
+interface JournalEntriesProps {
+  origin: keyof typeof JournalRoutes;
+}
 
-export function JournalEntries({}: JournalEntriesProps) {
+export function JournalEntries({ origin }: JournalEntriesProps) {
   const { data: recentJournalEntries, loading } = useSelector(
     selectRecentJournalEntries,
   );
@@ -54,7 +59,7 @@ export function JournalEntries({}: JournalEntriesProps) {
       ) : (
         <>
           {recentJournalEntries?.map(entry => (
-            <JournalEntryCard key={entry.id} entry={entry} />
+            <JournalEntryCard key={entry.id} entry={entry} origin={origin} />
           ))}
         </>
       )}

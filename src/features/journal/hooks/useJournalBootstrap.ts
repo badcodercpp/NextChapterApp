@@ -32,6 +32,7 @@ export const useJournalBootstrap = () => {
   const createJournal = useCallback(async () => {
     if (!value || !value?.length) {
       showToast('Please select your mood', 'error');
+      return;
     }
     const title = getValues('createOrUpdateJournal.title');
     const content = getValues('createOrUpdateJournal.content');

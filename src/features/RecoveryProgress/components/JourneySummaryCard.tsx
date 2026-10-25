@@ -84,7 +84,7 @@ export function JourneySummaryCard({
     <>
       {/* Header */}
       <View className="mb-6 flex-row items-start justify-between">
-        <AppText variant="xl" className="font-semibold text-text max-w-[160px]">
+        <AppText variant="lg" className="font-semibold text-text max-w-[160px]">
           Your Journey Summary
         </AppText>
 

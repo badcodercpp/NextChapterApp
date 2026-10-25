@@ -4,6 +4,7 @@ import { Pressable, View } from 'react-native';
 import React, { useState } from 'react';
 
 import { AppDispatch } from '@/state';
+import { JournalRoutes } from '@/features/journal/navigation';
 import { JournalStackParamList } from '@/features/journal/navigation/JournalStackParamList';
 import { MoreVertical } from 'lucide-react-native';
 import { Placement } from 'react-native-popover-view/dist/Types';
@@ -18,9 +19,10 @@ type JournalEntry = RecentJournalEntriesQuery['recentJournalEntries'][0];
 
 interface JournalEntryMenuProps {
   entry: JournalEntry;
+  origin: keyof typeof JournalRoutes;
 }
 
-export function JournalEntryMenu({ entry }: JournalEntryMenuProps) {
+export function JournalEntryMenu({ entry, origin }: JournalEntryMenuProps) {
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const navigation = useNavigation<NavigationProp<JournalStackParamList>>();
@@ -30,15 +32,13 @@ export function JournalEntryMenu({ entry }: JournalEntryMenuProps) {
   const handleEdit = () => {
     setVisible(false);
     dispatch(setEditJournalTarget(entry));
-    navigation.navigate('EditJournal');
+    navigation.navigate(origin);
   };
 
   const handleDelete = () => {
     setVisible(false);
     deleteJournal(entry.id);
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-    }
+    navigation.navigate(origin);
 
     // delete logic
   };

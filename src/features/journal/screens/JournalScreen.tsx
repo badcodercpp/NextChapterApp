@@ -9,6 +9,7 @@ import {
 } from '../components';
 import { usePreventBackNavigation, useScreenHeader } from '@/navigation/hooks';
 
+import { JournalRoutes } from '@/features/journal/navigation';
 import { MoodSelector } from '@/features/CommonFeature';
 import React from 'react';
 import { View } from 'react-native';
@@ -62,7 +63,7 @@ export function JournalScreen() {
         />
       </View>
       <View>
-        <JournalEntries />
+        <JournalEntries origin={JournalRoutes.CreateJournal} />
       </View>
     </AppAuthenticatedLayout>
   );

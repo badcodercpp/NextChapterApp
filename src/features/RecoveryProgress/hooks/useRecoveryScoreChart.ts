@@ -1,16 +1,22 @@
 import { endOfDay, formatDate, startOfDay } from '@/utils';
-import { useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { RANGE_OPTIONS } from '@/features/RecoveryProgress/constants';
 import { RangeOption } from '../components/RecoveryScoreChartTypes';
 import { lazySelectGetRecoveryScoreTrendForLastNDay } from '@/state/selectors';
 import { lineDataItem } from 'react-native-gifted-charts';
+import { useLazyGetRecoveryScoreTrendForLastNDayQuery } from '@/__generated__/graphql';
+import { useResolveClassNames } from 'uniwind';
 import { useSelector } from 'react-redux';
 
 export const useRecoveryScoreChart = () => {
+  const [isChartDataLoading, setIsChartDataLoading] = useState<boolean>(false);
   const [selectedRange, setSelectedRange] = useState<RangeOption>(
     RANGE_OPTIONS[0],
   );
+
+  const [triggerLazyGetRecoveryScoreTrendForLastNDayQuery] =
+    useLazyGetRecoveryScoreTrendForLastNDayQuery();
 
   const [showRangeOptions, setShowRangeOptions] = useState(false);
 
@@ -24,9 +30,26 @@ export const useRecoveryScoreChart = () => {
 
   const [customEndInput, setCustomEndInput] = useState('');
 
+  const { color: chartPrimaryColor } = useResolveClassNames('text-primary');
+  const { color: chartMutedColor } = useResolveClassNames('text-text-muted');
+
+  const refetchChartDataFromApi = useCallback(
+    async (days: number) => {
+      try {
+        setIsChartDataLoading(true);
+        await triggerLazyGetRecoveryScoreTrendForLastNDayQuery({ days });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsChartDataLoading(false);
+      }
+    },
+    [triggerLazyGetRecoveryScoreTrendForLastNDayQuery],
+  );
+
   const selectGetRecoveryScoreTrendForLastNDay = useMemo(() => {
-    return lazySelectGetRecoveryScoreTrendForLastNDay(7);
-  }, []);
+    return lazySelectGetRecoveryScoreTrendForLastNDay(selectedRange.days);
+  }, [selectedRange.days]);
 
   const { data: recoveryScoreTrendForLastNDay } = useSelector(
     selectGetRecoveryScoreTrendForLastNDay,
@@ -102,11 +125,6 @@ export const useRecoveryScoreChart = () => {
     setCustomStartDate(startOfDay(start));
     setCustomEndDate(endOfDay(end));
 
-    setSelectedRange({
-      label: 'Custom',
-      days: null,
-    });
-
     setShowCustomPicker(false);
   };
 
@@ -152,21 +170,28 @@ export const useRecoveryScoreChart = () => {
    * Gifted Charts data
    */
   const chartData: Array<lineDataItem> = useMemo(() => {
-    return filteredData.map((item, index) => ({
+    return filteredData.map(item => ({
       value: Math.max(0, Math.min(100, item.score ?? 0)),
       label: formatDate(item.createdAt?.toString() ?? null),
       labelTextStyle: {
-        color: '#64748B',
-        fontSize: selectedRange.days === 7 ? 16 : 16,
+        color: chartMutedColor?.toString(),
+        fontSize: 16,
+        width: 80,
+        textAlign: 'center',
       },
-      hideDataPoint: index !== filteredData.length - 1,
-      dataPointColor: '#FFFFFF',
-      dataPointRadius: 4,
+
+      hideDataPoint: false,
+      dataPointColor: chartPrimaryColor?.toString(),
+      dataPointRadius: 6,
     }));
-  }, [filteredData, selectedRange.days]);
+  }, [chartMutedColor, chartPrimaryColor, filteredData]);
 
   const latestScore =
     chartData.length > 0 ? chartData[chartData.length - 1].value : null;
+
+  useEffect(() => {
+    refetchChartDataFromApi(selectedRange.days);
+  }, [refetchChartDataFromApi, selectedRange.days]);
 
   return {
     selectedRange,
@@ -188,5 +213,6 @@ export const useRecoveryScoreChart = () => {
     customEndDate,
     setCustomEndDate,
     chartData,
+    isChartDataLoading,
   };
 };

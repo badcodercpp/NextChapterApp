@@ -1,6 +1,7 @@
 import { JournalHeader, JournalHistoryEntries } from '../components';
 
 import { AppAuthenticatedLayout } from '@/components';
+import { JournalRoutes } from '@/features/journal/navigation';
 import React from 'react';
 import { View } from 'react-native';
 import { useJournalHistoryBootstrap } from '../hooks/useJournalHistoryBootstrap';
@@ -18,7 +19,7 @@ export function JournalHistoryScreen() {
         />
       </View>
       <View className="mt-4">
-        <JournalHistoryEntries />
+        <JournalHistoryEntries origin={JournalRoutes.JournalHistory} />
       </View>
     </AppAuthenticatedLayout>
   );

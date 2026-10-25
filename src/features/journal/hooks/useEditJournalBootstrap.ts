@@ -1,4 +1,9 @@
 import {
+  NavigationProp,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
+import {
   RecoveryReasonCurrentFeeling,
   useLazyMyJournalEntriesQuery,
   useLazyRecentJournalEntriesQuery,
@@ -8,6 +13,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { AppDispatch } from '@/state';
+import { JournalStackParamList } from '@/features/journal/navigation';
 import { MasterFormData } from '@/form/types';
 import { createOrUpdateJournalSchema } from '@/form';
 import { mapZodErrorsToForm } from '@/utils';
@@ -15,11 +21,12 @@ import { resetEditJournalTarget } from '@/state/slices/local/editJournalTarget';
 import { selectEditJournalTargetData } from '@/state/selectors';
 import { showToast } from '@/components';
 import { useFormContext } from 'react-hook-form';
-import { useIsFocused } from '@react-navigation/native';
 
 export const useEditJournalBootstrap = () => {
   const { clearErrors, getValues, setError, reset, setValues } =
     useFormContext<MasterFormData>();
+
+  const navigation = useNavigation<NavigationProp<JournalStackParamList>>();
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -43,6 +50,7 @@ export const useEditJournalBootstrap = () => {
     }
     if (!value || !value?.length) {
       showToast('Please select your mood', 'error');
+      return;
     }
     const title = getValues('createOrUpdateJournal.title');
     const content = getValues('createOrUpdateJournal.content');
@@ -89,6 +97,7 @@ export const useEditJournalBootstrap = () => {
       triggerLazyMyJournalEntriesQuery();
 
       setValue([]);
+      navigation.goBack();
     } catch (e) {
       console.log('Login error:', e);
     } finally {
@@ -104,6 +113,7 @@ export const useEditJournalBootstrap = () => {
     reset,
     triggerRecentJournalEntriesQuery,
     triggerLazyMyJournalEntriesQuery,
+    navigation,
   ]);
 
   useEffect(() => {
