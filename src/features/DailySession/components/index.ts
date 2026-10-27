@@ -1,4 +1,4 @@
-export * from './TodayRecoveryCard';
+export * from './TodaySessionOverviewCard';
 export * from './TodaysFocusCard';
 export * from './SessionOverviewCard';
 export * from './SessionReminderCard';

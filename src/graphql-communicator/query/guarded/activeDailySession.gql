@@ -1,0 +1,20 @@
+query ActiveDailySession {
+  activeDailySession {
+    id
+    userId
+    journeyId
+    missionId
+    questionHistoryId
+    reflectionId
+    day
+    status
+    currentStep
+    startMoods
+    endMoods
+    startedAt
+    missionCompletedAt
+    completedAt
+    createdAt
+    updatedAt
+  }
+}

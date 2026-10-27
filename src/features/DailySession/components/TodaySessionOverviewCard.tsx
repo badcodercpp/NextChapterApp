@@ -7,15 +7,15 @@ import {
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 
-interface TodayRecoveryCardProps {
+interface TodaySessionOverviewCardProps {
   title?: string;
   description?: string;
 }
 
-export function TodayRecoveryCard({
+export function TodaySessionOverviewCard({
   title = "Let's take a step toward feeling better.",
   description = 'Answer a few mindful questions, reflect and grow.',
-}: TodayRecoveryCardProps) {
+}: TodaySessionOverviewCardProps) {
   const { data: activeJourney } = useSelector(selectActiveJourney);
   const { data: applicationConfig } = useSelector(selectApplicationConfig);
 

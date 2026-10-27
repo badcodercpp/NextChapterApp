@@ -1,0 +1,10 @@
+mutation AdvanceJourneyDay {
+  advanceJourneyDay {
+    id
+    currentDay
+    phase
+    status
+    currentRecoveryScore
+    startedAt
+  }
+}

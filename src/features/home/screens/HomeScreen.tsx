@@ -7,56 +7,65 @@ import {
   TodaysQuestionCard,
 } from '../components';
 
-import { DailySessionRoutes } from '@/features/DailySession';
+import { HomeScreenLoader } from '@/components/foundation/AppContentLoader/HomeScreenLoader';
 import React from 'react';
-import { TabRoutes } from '@/navigation/Tab/TabRoutes';
 import { TodaysMissionCard } from '@/features/CommonFeature';
 import { View } from 'react-native';
-import { useHomeBootstrap } from '@/features/home/hooks/useHomeBootstrap';
-import { useTabNavigation } from '@/navigation/Tab/hooks/useTabNavigation';
+import { useHomeBootstrap } from '../hooks/useHomeBootstrap';
+import { useStartDailySession } from '../hooks/useStartDailySession';
 import { useTranslation } from 'react-i18next';
 
 export function HomeScreen() {
-  const navigation = useTabNavigation();
-  useHomeBootstrap();
+  const { isBootstrapping } = useHomeBootstrap();
+
+  const {
+    startNewOrResumeCurrentDailySession,
+    dailySessionMetadataProcessing,
+  } = useStartDailySession();
 
   const { t } = useTranslation();
 
   return (
     <AppAuthenticatedLayout>
-      <View className="mt-2">
-        <RecoveryScoreCard />
-      </View>
-      <View className="mt-4">
-        <TodaysQuestionCard />
-      </View>
-      <View className="mt-4">
-        <TodaysMissionCard />
-      </View>
+      {isBootstrapping ? (
+        <>
+          <HomeScreenLoader />
+        </>
+      ) : (
+        <>
+          <View className="mt-2">
+            <RecoveryScoreCard />
+          </View>
+          <View className="mt-4">
+            <TodaysQuestionCard />
+          </View>
+          <View className="mt-4">
+            <TodaysMissionCard />
+          </View>
 
-      <View className="mt-4">
-        <AppButton
-          title={t('app.locale.home.continueSession')}
-          size="lg"
-          leftIcon={CalendarClock}
-          fullWidth
-          className="mb-0"
-          onPress={() =>
-            navigation.navigate(TabRoutes.DailySessionTab, {
-              screen: DailySessionRoutes.DailySessionLanding,
-            })
-          }
-          rightIcon={ChevronRight}
-        />
-      </View>
+          <View className="mt-4">
+            <AppButton
+              title={t('app.locale.home.continueSession')}
+              size="lg"
+              leftIcon={CalendarClock}
+              fullWidth
+              className="mb-0"
+              onPress={startNewOrResumeCurrentDailySession}
+              rightIcon={ChevronRight}
+              loading={dailySessionMetadataProcessing}
+              disabled={dailySessionMetadataProcessing}
+            />
+          </View>
 
-      <View className="mt-4">
-        <QuickActionCardComponent />
-      </View>
+          <View className="mt-4">
+            <QuickActionCardComponent />
+          </View>
 
-      <View className="mt-4">
-        <DailyAffirmationCard />
-      </View>
+          <View className="mt-4">
+            <DailyAffirmationCard />
+          </View>
+        </>
+      )}
     </AppAuthenticatedLayout>
   );
 }

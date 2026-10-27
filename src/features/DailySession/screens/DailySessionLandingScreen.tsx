@@ -3,7 +3,7 @@ import {
   SessionOverviewCard,
   SessionReminderCard,
   StartSessionCard,
-  TodayRecoveryCard,
+  TodaySessionOverviewCard,
   TodaysFocusCard,
 } from '../components';
 
@@ -20,7 +20,7 @@ export function DailySessionLandingScreen() {
   return (
     <AppAuthenticatedLayout noBottomPadding>
       <View className="mt-2">
-        <TodayRecoveryCard />
+        <TodaySessionOverviewCard />
       </View>
       <View className="mt-4">
         <TodaysFocusCard />

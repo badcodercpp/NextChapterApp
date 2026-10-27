@@ -11,3 +11,4 @@ export * from './completedMissionHistory';
 export * from './missionHistory';
 export * from './latestAiChatMessage';
 export * from './myAiChatConversations';
+export * from './activeDailySession';

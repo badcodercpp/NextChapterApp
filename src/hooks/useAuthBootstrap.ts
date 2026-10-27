@@ -1,6 +1,6 @@
 import { selectAccessToken, selectRefreshToken } from '@/state/selectors';
 import { setAuthStatus, setAuthTokens } from '@/state/slices/local/authtoken';
-import { useCallback, useEffect, useState, useTransition } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   useLazyActiveJourneyQuery,
@@ -15,8 +15,13 @@ import { AppDispatch } from '@/state';
 import { isTokenExpired } from '@/utils';
 
 export const useAuthBootstrap = () => {
-  const [bootstrapFinished, setBootstrapFinished] = useState<boolean>(false);
-  const [isBootstrapPending, startTransition] = useTransition();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const accessToken = useSelector(selectAccessToken);
+  const refreshToken = useSelector(selectRefreshToken);
+
+  const [bootstrapFinished, setBootstrapFinished] = useState(false);
+  const [isBootstrapping, setIsBootstrapping] = useState(true);
 
   const [triggerMeQuery] = useLazyMeQuery();
   const [triggerActiveJourneyQuery] = useLazyActiveJourneyQuery();
@@ -26,31 +31,31 @@ export const useAuthBootstrap = () => {
   const [refreshTokenMutation] = useRefreshTokenMutation();
   const [logoutMutation] = useLogoutMutation();
 
-  const dispatch = useDispatch<AppDispatch>();
-
-  const accessToken = useSelector(selectAccessToken);
-  const refreshToken = useSelector(selectRefreshToken);
-
-  const bootstrapAuth = useCallback(async () => {
+  const bootstrapAuth = useCallback(async (): Promise<boolean> => {
     // No access token
     if (!accessToken) {
       dispatch(setAuthStatus('unauthenticated'));
-      return;
+      return false;
     }
 
     // Access token is still valid
     if (!isTokenExpired(accessToken)) {
       dispatch(setAuthStatus('authenticated'));
-      return;
+      return true;
     }
 
     // Access token expired and no refresh token
     if (!refreshToken) {
-      await logoutMutation().unwrap();
-      dispatch(setAuthStatus('unauthenticated'));
-      return;
+      try {
+        await logoutMutation().unwrap();
+      } finally {
+        dispatch(setAuthStatus('unauthenticated'));
+      }
+
+      return false;
     }
 
+    // Access token expired -> refresh it
     try {
       const response = await refreshTokenMutation({
         input: {
@@ -58,75 +63,86 @@ export const useAuthBootstrap = () => {
         },
       }).unwrap();
 
-      if (!response?.refreshToken) {
-        throw new Error('Unauthorized');
+      const newTokens = response?.refreshToken;
+
+      if (!newTokens?.accessToken) {
+        throw new Error('Unable to refresh authentication token');
       }
 
       dispatch(
         setAuthTokens({
-          accessToken: response.refreshToken.accessToken,
-          refreshToken: response.refreshToken.refreshToken ?? refreshToken,
+          accessToken: newTokens.accessToken,
+          refreshToken: newTokens.refreshToken ?? refreshToken,
           authStatus: 'authenticated',
         }),
       );
+
+      return true;
     } catch (error) {
-      console.log('Refresh token error:', error);
+      console.error('Refresh token error:', error);
 
       try {
         await logoutMutation().unwrap();
       } finally {
         dispatch(setAuthStatus('unauthenticated'));
       }
+
+      return false;
     }
   }, [
     accessToken,
-    dispatch,
-    logoutMutation,
     refreshToken,
+    dispatch,
     refreshTokenMutation,
+    logoutMutation,
   ]);
 
-  const handleStartSetup = useCallback(() => {
-    startTransition(async () => {
-      // 2. Instantly update the UI to true
+  const bootstrapApp = useCallback(async () => {
+    const authenticated = await bootstrapAuth();
 
-      try {
-        // 3. Perform the actual background work
-        await bootstrapAuth();
+    if (!authenticated) {
+      return;
+    }
 
-        // call rest of bootstrap setup api here
+    // Independent APIs -> run in parallel
+    await Promise.all([
+      triggerApplicationConfigQuery().unwrap(),
+      triggerMeQuery().unwrap(),
+      triggerActiveJourneyQuery().unwrap(),
+    ]);
 
-        if (accessToken && !isTokenExpired(accessToken)) {
-          triggerMotivationalMessageQuery();
-
-          await triggerApplicationConfigQuery();
-          await triggerMeQuery().unwrap();
-          await triggerActiveJourneyQuery().unwrap();
-        }
-
-        // 4. Update the final source of truth when successful
-        setBootstrapFinished(true);
-      } catch (error) {
-        console.error('Bootstrap failed', error);
-        // If an error happens, React automatically rolls
-        // optimisticBootstrapFinished back to false
-      }
-    });
+    // Not required for Home to become usable
+    // Let it load in the background.
+    triggerMotivationalMessageQuery();
   }, [
-    triggerApplicationConfigQuery,
-    triggerMotivationalMessageQuery,
     bootstrapAuth,
-    accessToken,
+    triggerApplicationConfigQuery,
     triggerMeQuery,
     triggerActiveJourneyQuery,
+    triggerMotivationalMessageQuery,
   ]);
 
+  const handleBootstrap = useCallback(async () => {
+    try {
+      setIsBootstrapping(true);
+      setBootstrapFinished(false);
+
+      await bootstrapApp();
+
+      setBootstrapFinished(true);
+    } catch (error) {
+      console.error('Application bootstrap failed:', error);
+    } finally {
+      setIsBootstrapping(false);
+    }
+  }, [bootstrapApp]);
+
   useEffect(() => {
-    handleStartSetup();
-  }, [handleStartSetup]);
+    handleBootstrap();
+  }, [handleBootstrap]);
 
   return {
-    isBootstrapPending,
+    isBootstrapping,
     bootstrapFinished,
   };
 };
