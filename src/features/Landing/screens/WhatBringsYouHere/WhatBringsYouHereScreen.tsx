@@ -1,185 +1,158 @@
+import { AppIcon, AppPressable, AppScreen, AppText } from '@/components';
 import {
-  AppButton,
-  AppCard,
-  AppIcon,
-  AppPressable,
-  AppScreen,
-  AppText,
-} from '@/components';
-import { ArrowRight, Check, Lock } from 'lucide-react-native';
-import {
-  ImageBackground,
-  LayoutChangeEvent,
-  ScrollView,
-  View,
-} from 'react-native';
-
+  ArrowRight,
+  Check,
+  ChevronLeft,
+  HeartHandshake,
+  Lock,
+} from 'lucide-react-native';
 import { Controller } from 'react-hook-form';
-import LinearGradient from 'react-native-linear-gradient';
+import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+import { LandingNavigationProp } from '@/features/Landing/navigation/types';
 import { REASONS } from '../../constants';
 import { cn } from '@/utils';
-import { useState } from 'react';
+import { useScreenHeader } from '@/navigation/hooks';
 import { useWhatBringsYouHere } from './useWhatBringsYouHere';
 
 export function WhatBringsYouHereScreen() {
-  const [cardHeight, setCardHeight] = useState(0);
-
-  const handleLayout = (e: LayoutChangeEvent) => {
-    const { height } = e.nativeEvent.layout;
-    setCardHeight(prev => Math.max(prev, height));
-  };
-
   const { control, submitWhatBringsYouHere } = useWhatBringsYouHere();
+  const navigation = useNavigation<LandingNavigationProp>();
+
+  useScreenHeader({ headerShown: false });
 
   return (
-    <View className="flex-1 bg-background">
-      <AppScreen
-        safeBottom={true}
-        safeTop={false}
-        className="flex-1 bg-background"
-        contentClassName="flex-1 bg-background"
-        safeArea={false}
-      >
-        <View className="items-center pt-4 h-[150px]">
-          <ImageBackground
-            source={require('@/assets/images/landing-background.png')}
-            resizeMode="cover"
-            className="absolute top-0 left-0 right-0 h-[150px] w-full"
-            // eslint-disable-next-line react-native/no-inline-styles
-            style={{ width: '100%' }}
+    <AppScreen
+      scroll
+      safeArea={false}
+      className="bg-login-background"
+      contentClassName="grow items-center bg-login-background px-5 pb-6 pt-2"
+    >
+      <View className="w-full max-w-md flex-1">
+        <AppPressable
+          accessibilityRole="button"
+          accessibilityLabel="Go back"
+          className="h-10 w-10 items-center justify-center rounded-full border border-login-border bg-login-surface"
+          onPress={() => navigation.goBack()}
+        >
+          <AppIcon icon={ChevronLeft} size={22} className="text-login-text" />
+        </AppPressable>
+
+        <View className="items-center pb-6 pt-5">
+          <View className="h-20 w-20 items-center justify-center rounded-3xl bg-login-primary">
+            <AppIcon icon={HeartHandshake} size={34} className="text-white" />
+          </View>
+          <AppText
+            variant="3xl"
+            className="mt-5 text-center font-bold text-login-text"
           >
-            <LinearGradient
-              colors={[
-                '#141129',
-                'rgba(20,17,41,0.75)',
-                'transparent',
-                'rgba(20,17,41,0.75)',
-              ]}
-              locations={[0, 0.7, 0.45, 0.2]}
-              // eslint-disable-next-line react-native/no-inline-styles
-              style={{
-                position: 'absolute',
-                inset: 0,
-              }}
-            />
-          </ImageBackground>
+            What brings you here?
+          </AppText>
+          <AppText
+            variant="sm"
+            className="mt-3 text-center leading-body text-login-muted"
+          >
+            Everyone's journey is different. Let's personalize yours.
+          </AppText>
         </View>
 
-        <View className="flex-1 px-4">
-          <View className="mt-4 items-center mb-8">
-            <View className="flex-row justify-center items-center">
-              <AppText variant="4xl" className="text-center text-text">
-                What brings
-              </AppText>
-
-              <AppText variant="4xl" className="text-center text-primary pl-1">
-                you here?
-              </AppText>
-            </View>
-
-            <AppText
-              variant="sm"
-              className="mt-2 px-4 text-center text-text-secondary leading-caption"
-            >
-              Everyone's journey is different. {'\n'} Let's personalize yours.
-            </AppText>
-          </View>
-          <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-            <View className="flex-1">
-              <Controller
-                control={control}
-                name="whatBringsYouHere"
-                render={({ field: { value, onChange } }) => (
-                  <View className="flex-row flex-wrap justify-between">
-                    {REASONS.map(reason => {
+        <Controller
+          control={control}
+          name="whatBringsYouHere"
+          render={({ field: { value, onChange }, fieldState: { error } }) => (
+            <>
+              <View accessibilityRole="radiogroup">
+                {REASONS.filter((_, index) => index % 2 === 0).map((_, row) => (
+                  <View key={row} className="mb-3 flex-row items-stretch gap-3">
+                    {REASONS.slice(row * 2, row * 2 + 2).map(reason => {
                       const selected = value === reason.id;
-
                       return (
                         <AppPressable
                           key={reason.id}
-                          className="mb-4 w-[48%]"
+                          accessibilityRole="radio"
+                          accessibilityLabel={reason.title}
+                          accessibilityHint={reason.description}
+                          accessibilityState={{ checked: selected }}
+                          className={cn(
+                            'min-h-44 flex-1 rounded-3xl border p-4',
+                            selected
+                              ? 'border-login-primary bg-login-selected'
+                              : 'border-login-border bg-login-surface',
+                          )}
                           onPress={() => onChange(reason.id)}
                         >
-                          <AppCard
-                            className={cn(
-                              'rounded-2xl border p-4',
-                              selected
-                                ? 'border-primary bg-card'
-                                : 'border-border bg-surface',
+                          <View className="mb-4 flex-row items-start justify-between">
+                            <View className="h-10 w-10 items-center justify-center rounded-xl bg-login-input">
+                              <AppIcon
+                                icon={reason.icon}
+                                size={24}
+                                className="text-login-link"
+                              />
+                            </View>
+                            {selected && (
+                              <View className="h-5 w-5 items-center justify-center rounded-full bg-login-primary">
+                                <AppIcon
+                                  icon={Check}
+                                  size={13}
+                                  className="text-white"
+                                />
+                              </View>
                             )}
-                            onLayout={handleLayout}
-                            style={
-                              cardHeight ? { height: cardHeight } : undefined
-                            }
+                          </View>
+                          <AppText
+                            variant="md"
+                            className="font-semibold text-login-text"
                           >
-                            <View className="absolute right-4 top-5">
-                              {selected && (
-                                <View className="h-6 w-6 items-center justify-center rounded-full bg-primary">
-                                  <AppIcon
-                                    icon={Check}
-                                    size={16}
-                                    className="text-white"
-                                  />
-                                </View>
-                              )}
-                            </View>
-
-                            <AppIcon
-                              icon={reason.icon}
-                              size={36}
-                              className={
-                                selected
-                                  ? 'text-primary'
-                                  : 'text-text-secondary'
-                              }
-                              strokeWidth={1}
-                            />
-
-                            <View className="mt-5">
-                              <AppText variant="lg" className="text-text">
-                                {reason.title}
-                              </AppText>
-
-                              <AppText
-                                variant="sm"
-                                className="mt-2 text-text-secondary"
-                              >
-                                {reason.description}
-                              </AppText>
-                            </View>
-                          </AppCard>
+                            {reason.title}
+                          </AppText>
+                          <AppText
+                            variant="sm"
+                            className="mt-2 text-login-muted"
+                          >
+                            {reason.description}
+                          </AppText>
                         </AppPressable>
                       );
                     })}
                   </View>
-                )}
-              />
-            </View>
-          </ScrollView>
+                ))}
+              </View>
+              {error && (
+                <AppText
+                  accessibilityRole="alert"
+                  variant="sm"
+                  className="mb-3 text-center text-error"
+                >
+                  {error.message}
+                </AppText>
+              )}
+            </>
+          )}
+        />
 
-          <View>
-            <View className="mt-4">
-              <AppButton
-                title="Continue"
-                size="lg"
-                fullWidth
-                onPress={submitWhatBringsYouHere}
-                rightIcon={ArrowRight}
-              />
+        <View className="mt-auto pt-3">
+          <AppPressable
+            accessibilityRole="button"
+            accessibilityLabel="Continue"
+            className="min-h-14 flex-row items-center justify-center rounded-2xl bg-login-primary px-4 py-4"
+            onPress={submitWhatBringsYouHere}
+          >
+            <AppText variant="lg" className="font-semibold text-white">
+              Continue
+            </AppText>
+            <View className="ml-3">
+              <AppIcon icon={ArrowRight} size={22} className="text-white" />
             </View>
-
-            <View className="mt-2 flex-row justify-center items-center">
-              <AppIcon icon={Lock} size={16} className="text-primary" />
-              <AppText
-                variant="sm"
-                className="px-1 text-center text-text-muted "
-              >
-                Your privacy is our privacy.
-              </AppText>
-            </View>
+          </AppPressable>
+          <View className="mt-4 flex-row items-center justify-center">
+            <AppIcon icon={Lock} size={13} className="text-login-muted" />
+            <AppText variant="xs" className="ml-2 text-center text-login-muted">
+              Your privacy is our privacy.
+            </AppText>
           </View>
         </View>
-      </AppScreen>
-    </View>
+      </View>
+    </AppScreen>
   );
 }

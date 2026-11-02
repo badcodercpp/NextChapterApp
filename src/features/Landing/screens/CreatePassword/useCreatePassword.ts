@@ -5,7 +5,7 @@ import { LandingNavigationProp } from '@/features/Landing/navigation/types';
 import { MasterFormData } from '@/form/types';
 import { createPasswordSchema } from '@/form';
 import { mapZodErrorsToForm } from '@/utils';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 
 export function getPasswordStrength(password: string): PasswordStrengthResult {
@@ -48,13 +48,13 @@ export const useCreatePassword = () => {
   const {
     control,
     formState: { errors },
-    getValues,
     setError,
     clearErrors,
   } = useFormContext<MasterFormData>();
 
-  const password = getValues('createPassword.password') || '';
-  const confirmPassword = getValues('createPassword.confirmPassword') || '';
+  const password = useWatch({ control, name: 'createPassword.password' }) || '';
+  const confirmPassword =
+    useWatch({ control, name: 'createPassword.confirmPassword' }) || '';
 
   const calculatePasswordStrength = () => {
     return getPasswordStrength(password);

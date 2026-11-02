@@ -1,25 +1,16 @@
 import {
-  AppButton,
-  AppCard,
   AppIcon,
   AppInput,
   AppPressable,
   AppScreen,
   AppText,
 } from '@/components';
-import {
-  ArrowRight,
-  Eye,
-  EyeOff,
-  Lock,
-  LogIn,
-  Mail,
-} from 'lucide-react-native';
-import { ScrollView, View } from 'react-native';
+import { ArrowRight, Eye, EyeOff, Lock, Mail } from 'lucide-react-native';
+import { Image, View } from 'react-native';
 import { usePreventBackNavigation, useScreenHeader } from '@/navigation/hooks';
 
 import { Controller } from 'react-hook-form';
-import { LayoutTopImageComponent } from '@/features/Landing/components/LayoutTopImageComponent';
+import { GoogleAuthButton } from '@/features/Landing/components/GoogleAuthButton';
 import useGoogleSignIn from '@/hooks/useGoogleSignIn';
 import { useLogin } from './useLogin';
 
@@ -32,173 +23,197 @@ export function LoginScreen() {
     errors,
     submitLogin,
     clearErrors,
+    isLoading,
   } = useLogin();
 
   const { doGoogleSignIn, isGoogleLoginLoading } = useGoogleSignIn();
+  const isAuthenticating = isLoading || isGoogleLoginLoading;
 
   useScreenHeader({
-    title: 'Login',
-    backDisabled: isGoogleLoginLoading,
+    headerShown: false,
+    backDisabled: isAuthenticating,
   });
 
-  usePreventBackNavigation(isGoogleLoginLoading);
+  usePreventBackNavigation(isAuthenticating);
 
   return (
     <AppScreen
-      safeBottom={true}
-      safeTop={false}
-      className="flex-1 bg-background"
-      contentClassName="flex-1 bg-background"
+      scroll
+      keyboard
       safeArea={false}
+      className="bg-login-background"
+      contentClassName="grow items-center bg-login-background px-4 pb-8 pt-8"
     >
-      <LayoutTopImageComponent
-        source={require('@/assets/images/landing-background.png')}
-      />
-      <View className="flex-1 px-4">
-        <View className="mt-2 items-center pb-4">
-          <AppText variant="4xl" className="text-center text-text">
-            Welcome back{' '}
-            <AppText variant="4xl" className="text-center text-primary">
-              to your journey
-            </AppText>
-          </AppText>
-
+      <View className="w-full max-w-md">
+        <View className="items-center pb-8 pt-1">
+          <Image
+            source={require('@/assets/images/logo.png')}
+            resizeMode="contain"
+            className="h-24 w-24 rounded-full"
+            accessibilityLabel="NextChapter logo"
+          />
           <AppText
-            variant="sm"
-            className="mt-1 text-center text-text-secondary"
+            variant="4xl"
+            className="mt-3 text-center font-bold text-login-text"
           >
-            Log in to continue your recovery
+            NextChapter
           </AppText>
-
-          <AppText variant="sm" className="text-center text-text-secondary">
-            and keep moving forward.
+          <AppText variant="md" className="mt-2 text-center text-login-muted">
+            Your healing journey starts here
           </AppText>
         </View>
-        <ScrollView
-          className="flex-1"
-          showsVerticalScrollIndicator={false}
-          contentContainerClassName="pb-1"
-        >
-          <AppCard className="mt-4 rounded-3xl border border-primary bg-surface p-4 pt-6">
-            <AppText variant="sm" className="mb-1 px-2 text-text">
-              Email address
-            </AppText>
 
-            <Controller
-              control={control}
-              name="login.email"
-              render={({ field: { onChange, onBlur, value } }) => (
-                <AppInput
-                  placeholder="Enter your email"
-                  startIcon={Mail}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                  className="mb-6"
-                  error={errors?.login?.email?.message}
-                  onFocus={() => {
-                    clearErrors('login.email');
-                  }}
-                />
-              )}
-            />
-
-            <AppText variant="sm" className="mb-1 px-2 text-text">
-              Password
-            </AppText>
-
-            <Controller
-              control={control}
-              name="login.password"
-              render={({ field: { onChange, onBlur, value } }) => (
-                <AppInput
-                  placeholder="Enter your password"
-                  startIcon={Lock}
-                  secureTextEntry={!showPassword}
-                  endIcon={showPassword ? EyeOff : Eye}
-                  onEndIconPress={() => setShowPassword(!showPassword)}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  value={value}
-                  error={errors?.login?.password?.message}
-                  onFocus={() => {
-                    clearErrors('login.password');
-                  }}
-                />
-              )}
-            />
-
-            <AppPressable
-              className="mt-1 self-end"
-              onPress={() => navigation.navigate('ForgotPassword')}
+        <View className="rounded-3xl border border-login-border bg-login-surface p-5">
+          <View className="mb-6 flex-row rounded-2xl border border-login-border bg-login-input p-1">
+            <View
+              accessibilityRole="tab"
+              accessibilityState={{ selected: true }}
+              className="min-h-11 flex-1 items-center justify-center rounded-xl bg-login-primary px-2 py-3"
             >
-              <AppText variant="md" className="text-primary underline">
-                Forgot password?
+              <AppText variant="sm" className="font-semibold text-white">
+                Sign In
+              </AppText>
+            </View>
+            <AppPressable
+              accessibilityRole="tab"
+              accessibilityLabel="Create Account"
+              accessibilityState={{ selected: false }}
+              disabled={isAuthenticating}
+              className="min-h-11 flex-1 items-center justify-center px-2 py-3"
+              onPress={() => navigation.navigate('CreateAccount')}
+            >
+              <AppText
+                variant="sm"
+                className="text-center font-semibold text-login-muted"
+              >
+                Create Account
               </AppText>
             </AppPressable>
+          </View>
 
-            <AppButton
-              title="Log in"
-              size="lg"
-              rightIcon={ArrowRight}
-              fullWidth
-              className="mt-4"
-              loading={isGoogleLoginLoading}
-              onPress={submitLogin}
-            />
-
-            <View className="my-4 flex-row items-center">
-              <View className="h-px flex-1 bg-divider" />
-
-              <AppText variant="xl" className="mx-4 text-text-secondary">
-                or continue with
-              </AppText>
-
-              <View className="h-px flex-1 bg-divider" />
-            </View>
-
-            <View className="flex-row justify-between">
-              <AppButton
-                title="Google"
-                size="lg"
-                leftIcon={LogIn}
-                fullWidth
+          <AppText variant="sm" className="mb-2 font-semibold text-login-muted">
+            Email
+          </AppText>
+          <Controller
+            control={control}
+            name="login.email"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <AppInput
+                accessibilityLabel="Email"
+                placeholder="Enter your email address"
+                startIcon={Mail}
+                startIconClassName="text-login-muted"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoComplete="email"
+                disabled={isAuthenticating}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
                 className="mb-4"
-                onPress={doGoogleSignIn}
+                containerClassName="min-h-14 rounded-2xl bg-login-input"
+                inputClassName="text-login-text"
+                error={errors?.login?.email?.message}
+                onFocus={() => clearErrors('login.email')}
               />
-            </View>
-          </AppCard>
-        </ScrollView>
-        <View className=" bg-background pt-1">
+            )}
+          />
+
+          <AppText variant="sm" className="mb-2 font-semibold text-login-muted">
+            Password
+          </AppText>
+          <Controller
+            control={control}
+            name="login.password"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <AppInput
+                accessibilityLabel="Password"
+                placeholder="Enter your password"
+                startIcon={Lock}
+                startIconClassName="text-login-muted"
+                secureTextEntry={!showPassword}
+                endIcon={showPassword ? Eye : EyeOff}
+                endIconClassName="text-login-muted"
+                onEndIconPress={() => setShowPassword(!showPassword)}
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoComplete="current-password"
+                disabled={isAuthenticating}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                value={value}
+                containerClassName="min-h-14 rounded-2xl bg-login-input"
+                inputClassName="text-login-text"
+                error={errors?.login?.password?.message}
+                onFocus={() => clearErrors('login.password')}
+              />
+            )}
+          />
+
           <AppPressable
-            className="mt-2"
-            onPress={() => navigation.navigate('CreateAccount')}
+            accessibilityRole="button"
+            accessibilityLabel="Forgot Password"
+            disabled={isAuthenticating}
+            className="min-h-11 self-end justify-center py-2"
+            onPress={() => navigation.navigate('ForgotPassword')}
           >
-            <AppCard className="flex-row items-center rounded-2xl border border-border bg-surface px-6 py-4">
-              <View className="flex-1 flex-row items-center justify-center">
-                <AppText variant="lg" className="text-text-secondary">
-                  New here?
-                </AppText>
-
-                <AppText variant="lg" className="ml-2 text-primary underline">
-                  Create an account
-                </AppText>
-              </View>
-
-              <AppIcon icon={ArrowRight} size={24} className="text-primary" />
-            </AppCard>
+            <AppText variant="sm" className="font-semibold text-login-link">
+              Forgot Password?
+            </AppText>
           </AppPressable>
 
-          <View className="mt-2 flex-row justify-center items-center">
-            <AppIcon icon={Lock} size={16} className="text-primary" />
-            <AppText variant="sm" className="px-1 text-center text-text-muted ">
-              Your privacy is our privacy.
+          <AppPressable
+            accessibilityRole="button"
+            accessibilityLabel="Sign In"
+            accessibilityState={{
+              busy: isLoading,
+              disabled: isAuthenticating,
+            }}
+            className="mt-0 min-h-14 flex-row items-center justify-center rounded-2xl bg-login-primary px-4 py-4"
+            disabled={isAuthenticating}
+            onPress={submitLogin}
+          >
+            <AppIcon icon={ArrowRight} size={22} className="text-white" />
+            <AppText variant="lg" className="ml-3 font-semibold text-white">
+              {isLoading ? 'Signing in...' : 'Sign In'}
             </AppText>
+          </AppPressable>
+
+          <View className="my-5 flex-row items-center">
+            <View className="h-px flex-1 bg-login-border" />
+            <AppText variant="sm" className="mx-3 text-login-muted">
+              or continue with
+            </AppText>
+            <View className="h-px flex-1 bg-login-border" />
           </View>
+
+          <GoogleAuthButton
+            loading={isGoogleLoginLoading}
+            disabled={isAuthenticating}
+            onPress={doGoogleSignIn}
+          />
         </View>
+
+        <View className="mt-5 flex-row flex-wrap items-center justify-center">
+          <AppText variant="sm" className="text-login-muted">
+            Don't have an account?
+          </AppText>
+          <AppPressable
+            accessibilityRole="button"
+            accessibilityLabel="Create an account"
+            disabled={isAuthenticating}
+            className="min-h-11 justify-center px-1 py-2"
+            onPress={() => navigation.navigate('CreateAccount')}
+          >
+            <AppText variant="sm" className="font-semibold text-login-link">
+              Create one
+            </AppText>
+          </AppPressable>
+        </View>
+        <AppText variant="xs" className="mt-5 text-center text-login-muted">
+          Your privacy is our privacy.
+        </AppText>
       </View>
     </AppScreen>
   );

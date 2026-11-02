@@ -3,7 +3,7 @@ import { mapZodErrorsToForm, maskEmailFixed } from '@/utils';
 import { LandingNavigationProp } from '@/features/Landing/navigation/types';
 import { MasterFormData } from '@/form/types';
 import { useCallback } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 import { verifyEmailSchema } from '@/form';
 
@@ -17,9 +17,7 @@ export const useVerifyEmail = () => {
     clearErrors,
   } = useFormContext<MasterFormData>();
 
-  //@ts-ignore
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const otp = getValues('verifyEmail.otp') || [];
+  const otp = useWatch({ control, name: 'verifyEmail.otp' });
   const email = getValues('createAccount.email') || '';
   const maskedEmail = maskEmailFixed(email);
 
@@ -44,5 +42,7 @@ export const useVerifyEmail = () => {
     email,
     maskedEmail,
     submitVerifyEmail,
+    navigation,
+    clearErrors,
   };
 };

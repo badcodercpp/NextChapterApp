@@ -3,12 +3,14 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { AppOtpTimerProps } from './types';
 import { AppText } from '@/components/foundation/AppText';
+import { cn } from '@/utils';
 
 export const AppOtpTimer: React.FC<AppOtpTimerProps> = ({
   minute,
   second,
   labeltext = 'Resend OTP',
   onResendPress,
+  textClassName,
 }) => {
   const [isTimerActive, setIsTimerActive] = useState<boolean>(false);
   const [timeLeft, setTimeLeft] = useState<number>(0);
@@ -64,16 +66,24 @@ export const AppOtpTimer: React.FC<AppOtpTimerProps> = ({
   return (
     <View className="justify-canter items-center">
       <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Resend OTP"
         disabled={isTimerActive} // Lock button touch capabilities during countdowns
         hitSlop={{ top: 5, bottom: 5, left: 50, right: 50 }}
         onPress={handleResendOtp}
       >
         {isTimerActive ? (
-          <AppText variant="md" className="text-text-secondary">
+          <AppText
+            variant="md"
+            className={cn('text-text-secondary', textClassName)}
+          >
             Resend OTP in - {formatTime(timeLeft)}
           </AppText>
         ) : (
-          <AppText variant="md" className="text-text-secondary underline">
+          <AppText
+            variant="md"
+            className={cn('text-text-secondary underline', textClassName)}
+          >
             {labeltext.trim().length > 0 ? labeltext : 'Resend OTP'}
           </AppText>
         )}
