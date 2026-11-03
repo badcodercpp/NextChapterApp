@@ -5,7 +5,7 @@ import { DrawerRoutes } from './DrawerRoutes';
 import { HelpScreen } from '@/features/Help/screens';
 import { NotificationScreen } from '@/features/Notification/screens';
 import { ProfileNavigator } from '@/features/Profile';
-import { SettingsScreen } from '@/features/Settings/screens';
+import { SettingsNavigator } from '@/features/Settings/navigation';
 import { TabNavigator } from '../Tab/TabNavigator';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
@@ -25,7 +25,10 @@ export function DrawerNavigator() {
 
       <Drawer.Screen name={DrawerRoutes.Profile} component={ProfileNavigator} />
 
-      <Drawer.Screen name={DrawerRoutes.Settings} component={SettingsScreen} />
+      <Drawer.Screen
+        name={DrawerRoutes.Settings}
+        component={SettingsNavigator}
+      />
 
       <Drawer.Screen
         name={DrawerRoutes.Notifications}
