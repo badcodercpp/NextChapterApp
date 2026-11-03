@@ -20,6 +20,7 @@ import { cn } from '@/utils';
 export const AppInput = forwardRef<AppInputRef, AppInputProps>(
   (
     {
+      variant = 'default',
       label,
       required,
 
@@ -152,7 +153,12 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
           className={cn(
             InputVariants.container.base,
 
-            focused && InputVariants.container.focused,
+            variant === 'v2' && 'border-border-v2 bg-input-v2',
+
+            focused &&
+              (variant === 'v2'
+                ? 'border-primary-v2'
+                : InputVariants.container.focused),
 
             error && InputVariants.container.error,
 
@@ -185,9 +191,15 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
             multiline={multiline}
             textAlignVertical={multiline ? 'top' : undefined}
             maxLength={maxLength}
-            placeholderTextColorClassName={cn('accent-text-secondary')}
+            placeholderTextColorClassName={
+              variant === 'v2'
+                ? 'accent-text-muted-v2'
+                : 'accent-text-secondary'
+            }
             className={cn(
               InputVariants.input.base,
+
+              variant === 'v2' && 'text-text-v2',
 
               multiline && InputVariants.input.multiline,
 

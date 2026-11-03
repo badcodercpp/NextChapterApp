@@ -1,7 +1,7 @@
 export const ButtonVariants = {
   primary: {
     container: 'bg-primary active:opacity-80',
-    text: 'text-text text-lg',
+    text: 'text-on-primary-v2 text-lg',
     gradient: {
       colors: [],
       start: {},

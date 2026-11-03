@@ -41,23 +41,27 @@ export function VerifyEmailScreen() {
     <AppScreen
       scroll
       safeArea={false}
-      className="bg-login-background"
-      contentClassName="grow items-center bg-login-background px-5 pb-8 pt-2"
+      className="bg-background-v2"
+      contentClassName="grow items-center bg-background-v2 px-5 pb-8 pt-2"
     >
       <View className="w-full max-w-md">
         <AppPressable
           accessibilityRole="button"
           accessibilityLabel="Go back"
-          className="h-10 w-10 items-center justify-center rounded-full border border-login-border bg-login-surface"
+          className="h-10 w-10 items-center justify-center rounded-full border border-border-v2 bg-surface-v2"
           onPress={() => navigation.goBack()}
         >
-          <AppIcon icon={ChevronLeft} size={22} className="text-login-text" />
+          <AppIcon icon={ChevronLeft} size={22} className="text-text-v2" />
         </AppPressable>
 
         <View className="items-center pb-6 pt-6">
-          <View className="h-20 w-20 items-center justify-center rounded-3xl bg-login-primary">
-            <AppIcon icon={Smartphone} size={34} className="text-white" />
-            <View className="absolute -right-1 -top-1 h-6 w-6 items-center justify-center rounded-full border-2 border-login-background bg-success">
+          <View className="h-20 w-20 items-center justify-center rounded-3xl bg-primary-v2">
+            <AppIcon
+              icon={Smartphone}
+              size={34}
+              className="text-on-primary-v2"
+            />
+            <View className="absolute -right-1 -top-1 h-6 w-6 items-center justify-center rounded-full border-2 border-background-v2 bg-success">
               <AppText variant="xs" className="font-bold text-white">
                 {otp.length}
               </AppText>
@@ -65,18 +69,18 @@ export function VerifyEmailScreen() {
           </View>
           <AppText
             variant="4xl"
-            className="mt-6 text-center font-bold text-login-text"
+            className="mt-6 text-center font-bold text-text-v2"
           >
             Enter OTP
           </AppText>
-          <AppText variant="sm" className="mt-3 text-center text-login-muted">
+          <AppText variant="sm" className="mt-3 text-center text-text-muted-v2">
             We sent a {otp.length}-digit code to your email address
           </AppText>
-          <View className="mt-4 max-w-full flex-row items-center rounded-full border border-login-primary bg-login-surface px-3">
-            <AppIcon icon={Mail} size={16} className="text-login-link" />
+          <View className="mt-4 max-w-full flex-row items-center rounded-full border border-primary-v2 bg-surface-v2 px-3">
+            <AppIcon icon={Mail} size={16} className="text-link-v2" />
             <AppText
               variant="sm"
-              className="ml-2 shrink font-semibold text-login-link"
+              className="ml-2 shrink font-semibold text-link-v2"
             >
               {maskedEmail}
             </AppText>
@@ -86,7 +90,10 @@ export function VerifyEmailScreen() {
               className="min-h-11 justify-center pl-2"
               onPress={() => navigation.navigate('CreateAccount')}
             >
-              <AppText variant="sm" className="font-semibold text-login-muted">
+              <AppText
+                variant="sm"
+                className="font-semibold text-text-muted-v2"
+              >
                 Change
               </AppText>
             </AppPressable>
@@ -141,10 +148,9 @@ export function VerifyEmailScreen() {
                     <View
                       key={index}
                       className={cn(
-                        'h-16 max-w-16 flex-1 items-center justify-center rounded-2xl border bg-login-input',
-                        digit ? 'border-login-primary' : 'border-login-border',
-                        index === activeIndex &&
-                          'border-2 border-login-primary',
+                        'h-16 max-w-16 flex-1 items-center justify-center rounded-2xl border bg-input-v2',
+                        digit ? 'border-primary-v2' : 'border-border-v2',
+                        index === activeIndex && 'border-2 border-primary-v2',
                         error && 'border-error',
                       )}
                     >
@@ -160,8 +166,8 @@ export function VerifyEmailScreen() {
                         textContentType="oneTimeCode"
                         maxLength={value.length}
                         selection={{ start: 0, end: digit.length }}
-                        selectionColorClassName="accent-login-link"
-                        className="h-full w-full text-center text-2xl text-login-text"
+                        selectionColorClassName="accent-link-v2"
+                        className="h-full w-full text-center text-2xl text-text-v2"
                         onFocus={() => setActiveIndex(index)}
                         onBlur={onBlur}
                         onChangeText={text => enterDigits(text, index)}
@@ -190,46 +196,46 @@ export function VerifyEmailScreen() {
                     <AppIcon
                       icon={Clock3}
                       size={18}
-                      className="text-login-muted"
+                      className="text-text-muted-v2"
                     />
                   </View>
                   <AppOtpTimer
                     minute={2}
                     second={0}
-                    textClassName="font-semibold text-login-link"
+                    textClassName="font-semibold text-link-v2"
                   />
                 </View>
                 <AppPressable
                   accessibilityRole="button"
                   accessibilityLabel="Verify OTP"
-                  className="min-h-14 flex-row items-center justify-center rounded-2xl bg-login-primary px-4 py-4"
+                  className="min-h-14 flex-row items-center justify-center rounded-2xl bg-primary-v2 px-4 py-4"
                   onPress={submitVerifyEmail}
                 >
                   <AppIcon
                     icon={ShieldCheck}
                     size={22}
-                    className="text-white"
+                    className="text-on-primary-v2"
                   />
                   <AppText
                     variant="lg"
-                    className="ml-3 font-semibold text-white"
+                    className="ml-3 font-semibold text-on-primary-v2"
                   >
                     Verify OTP
                   </AppText>
                 </AppPressable>
                 <AppText
                   variant="xs"
-                  className="mt-4 text-center text-login-muted"
+                  className="mt-4 text-center text-text-muted-v2"
                 >
                   Didn't receive the code? Check your spam folder or resend the
                   code.
                 </AppText>
                 <View className="my-5 flex-row items-center">
-                  <View className="h-px flex-1 bg-login-border" />
-                  <AppText variant="xs" className="mx-3 text-login-muted">
+                  <View className="h-px flex-1 bg-border-v2" />
+                  <AppText variant="xs" className="mx-3 text-text-muted-v2">
                     Or enter manually
                   </AppText>
-                  <View className="h-px flex-1 bg-login-border" />
+                  <View className="h-px flex-1 bg-border-v2" />
                 </View>
 
                 <View className="flex-row flex-wrap justify-between gap-y-3">
@@ -242,8 +248,8 @@ export function VerifyEmailScreen() {
                           key === 'delete' ? 'Delete digit' : `Enter ${key}`
                         }
                         className={cn(
-                          'h-14 w-[31%] items-center justify-center rounded-2xl border border-login-border bg-login-surface',
-                          key === 'delete' && 'border-login-primary',
+                          'h-14 w-[31%] items-center justify-center rounded-2xl border border-border-v2 bg-surface-v2',
+                          key === 'delete' && 'border-primary-v2',
                         )}
                         onPress={() =>
                           key === 'delete'
@@ -255,12 +261,12 @@ export function VerifyEmailScreen() {
                           <AppIcon
                             icon={Delete}
                             size={22}
-                            className="text-login-link"
+                            className="text-link-v2"
                           />
                         ) : (
                           <AppText
                             variant="xl"
-                            className="font-semibold text-login-text"
+                            className="font-semibold text-text-v2"
                           >
                             {key}
                           </AppText>

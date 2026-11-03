@@ -18,7 +18,7 @@ export function GoogleAuthButton({
       accessibilityLabel="Continue with Google"
       accessibilityState={{ busy: loading, disabled }}
       disabled={disabled}
-      className="min-h-14 flex-row items-center justify-center rounded-2xl border border-login-border bg-login-input px-4 py-4"
+      className="min-h-14 flex-row items-center justify-center rounded-2xl border border-border-v2 bg-input-v2 px-4 py-4"
       onPress={onPress}
     >
       <Svg width={22} height={22} viewBox="0 0 24 24" accessible={false}>
@@ -41,7 +41,7 @@ export function GoogleAuthButton({
       </Svg>
       <AppText
         variant="md"
-        className="ml-3 shrink text-center font-semibold text-login-text"
+        className="ml-3 shrink text-center font-semibold text-text-v2"
       >
         {loading ? 'Connecting...' : 'Continue with Google'}
       </AppText>

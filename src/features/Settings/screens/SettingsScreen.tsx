@@ -1,7 +1,6 @@
 import {
   APP_SUPPORTED_LANGUAGES,
   APP_SUPPORTED_THEMES,
-  AppTheme,
 } from '@/features/Settings/constants';
 import {
   AppAuthenticatedLayout,
@@ -11,15 +10,18 @@ import {
 } from '@/components';
 import { ChevronRight, Globe, Moon } from 'lucide-react-native';
 import { LanguageSheet, ThemeSheet } from '@/features/Settings/components';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { AppText } from '@/components/foundation/AppText';
-import { Uniwind } from 'uniwind';
 import { View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '@/state';
+import { setThemePreference } from '@/state/slices/local/preferences';
 
 export const SettingsScreen = () => {
   const [language, setLanguage] = useState('en-US');
-  const [theme, setTheme] = useState<AppTheme>('light');
+  const dispatch = useDispatch();
+  const theme = useSelector((state: RootState) => state.app.preferences.theme);
 
   const [showLanguageSheet, setShowLanguageSheet] = useState(false);
   const [showThemeSheet, setShowThemeSheet] = useState(false);
@@ -31,10 +33,6 @@ export const SettingsScreen = () => {
   const selectedTheme =
     APP_SUPPORTED_THEMES.find(item => item.value === theme)?.label ??
     'System default';
-
-  useEffect(() => {
-    Uniwind.setTheme(theme);
-  }, [theme]);
 
   return (
     <AppAuthenticatedLayout noBottomPadding>
@@ -92,6 +90,8 @@ export const SettingsScreen = () => {
 
           {/* Theme */}
           <AppPressable
+            accessibilityRole="button"
+            accessibilityLabel="Choose theme"
             className="flex-row items-center px-4 py-4"
             onPress={() => setShowThemeSheet(true)}
           >
@@ -138,7 +138,7 @@ export const SettingsScreen = () => {
         <ThemeSheet
           selected={theme}
           onSelect={value => {
-            setTheme(value);
+            dispatch(setThemePreference(value));
             setShowThemeSheet(false);
           }}
           onClose={() => setShowThemeSheet(false)}

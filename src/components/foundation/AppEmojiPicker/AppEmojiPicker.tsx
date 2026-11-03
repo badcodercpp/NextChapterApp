@@ -9,6 +9,7 @@ import React from 'react';
 import { useCSSVariable } from 'uniwind';
 
 interface AppEmojiPickerProps {
+  variant?: 'default' | 'v2';
   visible: boolean;
   emojis: EmojiData[];
   onEmojiSelect: (emoji: string) => void;
@@ -16,21 +17,29 @@ interface AppEmojiPickerProps {
 }
 
 export function AppEmojiPicker({
+  variant = 'default',
   visible,
   emojis,
   onEmojiSelect,
   onClose,
 }: AppEmojiPickerProps) {
-  const background = useCSSVariable('--color-card');
-  const surface = useCSSVariable('--color-surface');
-  const card = useCSSVariable('--color-card');
-  const text = useCSSVariable('--color-text');
-  const textSecondary = useCSSVariable('--color-text-secondary');
-  const textMuted = useCSSVariable('--color-text-muted');
-  const primary = useCSSVariable('--color-primary');
-  const secondary = useCSSVariable('--color-secondary');
-  const border = useCSSVariable('--color-border');
-  const divider = useCSSVariable('--color-divider');
+  const v2 = variant === 'v2';
+  const background = useCSSVariable(v2 ? '--color-surface-v2' : '--color-card');
+  const surface = useCSSVariable(v2 ? '--color-input-v2' : '--color-surface');
+  const card = useCSSVariable(v2 ? '--color-surface-v2' : '--color-card');
+  const text = useCSSVariable(v2 ? '--color-text-v2' : '--color-text');
+  const textSecondary = useCSSVariable(
+    v2 ? '--color-text-muted-v2' : '--color-text-secondary',
+  );
+  const textMuted = useCSSVariable(
+    v2 ? '--color-text-muted-v2' : '--color-text-muted',
+  );
+  const primary = useCSSVariable(v2 ? '--color-primary-v2' : '--color-primary');
+  const secondary = useCSSVariable(
+    v2 ? '--color-link-v2' : '--color-secondary',
+  );
+  const border = useCSSVariable(v2 ? '--color-border-v2' : '--color-border');
+  const divider = useCSSVariable(v2 ? '--color-border-v2' : '--color-divider');
 
   const color = (value: string | number | undefined, fallback: string) =>
     String(value ?? fallback);
@@ -94,7 +103,7 @@ export function AppEmojiPicker({
           // eslint-disable-next-line react-native/no-inline-styles
           style={{
             height: 500,
-            backgroundColor: color('background', '#ffffff'),
+            backgroundColor: color(background, '#ffffff'),
           }}
         >
           <EmojiPickerThemeProvider theme={emojiTheme}>

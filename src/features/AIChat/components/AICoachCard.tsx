@@ -1,15 +1,7 @@
-import {
-  AppCard,
-  AppExpandableText,
-  AppIcon,
-  AppPressable,
-  AppText,
-} from '@/components';
-import { selectApplicationConfig, selectMe } from '@/state/selectors';
-
-import AppAiLogo from '@/assets/icons/svg/app_ai_logo.svg';
-import { Sparkles } from 'lucide-react-native';
+import { AppIcon, AppPressable, AppText } from '@/components';
+import { Bot, Sparkles } from 'lucide-react-native';
 import { View } from 'react-native';
+import { selectApplicationConfig, selectMe } from '@/state/selectors';
 import { useSelector } from 'react-redux';
 
 interface AICoachCardProps {
@@ -21,6 +13,7 @@ interface AICoachCardProps {
 }
 
 export function AICoachCard({
+  name,
   description = "I'm your AI coach. You can talk to me about anything you're feeling. I'm here to listen, support, and guide you forward.",
   onPress,
   isOnline = true,
@@ -28,61 +21,56 @@ export function AICoachCard({
 }: AICoachCardProps) {
   const { data: me } = useSelector(selectMe);
   const { data: applicationConfig } = useSelector(selectApplicationConfig);
+  const displayName = name ?? me?.displayName;
 
-  return (
-    <AppPressable onPress={onPress}>
-      <AppCard className="overflow-hidden rounded-[28px] border border-secondary/40 bg-card px-5 py-5">
-        <View className="flex-row">
-          {/* Left Content */}
-          <View className="flex-1 pr-2">
-            {/* Greeting */}
-            <View className="flex-row items-center">
-              <View className="h-10 w-10 items-center justify-center rounded-full bg-secondary">
-                <AppIcon
-                  icon={Sparkles}
-                  size={20}
-                  className="text-white"
-                  strokeWidth={2}
-                />
-              </View>
-
-              <AppText variant="xl" className="ml-3 font-semibold text-text">
-                Hi {me?.displayName} 👋
-              </AppText>
-            </View>
-
-            {/* Description */}
-            <AppExpandableText
-              text={applicationConfig?.aiCoachMessage ?? description}
-              variant="md"
-              textClassName="mt-3 text-text-secondary"
-              collapsedLines={2}
-            />
-
-            {/* Status */}
-            <View className="mt-4 flex-row items-center">
-              {isOnline && (
-                <View className="flex-row items-center rounded-full border border-green-400/30 bg-green-400/10 px-3 py-1.5">
-                  <View className="mr-2 h-2 w-2 rounded-full bg-green-400" />
-
-                  <AppText variant="xs" className="font-medium text-green-400">
-                    Online
-                  </AppText>
-                </View>
-              )}
-
-              <AppText variant="xs" className="ml-3 text-text-muted">
-                Avg response {responseTime}
-              </AppText>
-            </View>
-          </View>
-
-          {/* Robot Illustration */}
-          <View className="w-[125px] items-center justify-center">
-            <AppAiLogo width={125} height={125} />
-          </View>
+  const card = (
+    <View className="rounded-3xl border border-primary-v2/40 bg-surface-v2 p-4">
+      <View className="flex-row items-center gap-3">
+        <View className="h-10 w-10 items-center justify-center rounded-full bg-primary-v2">
+          <AppIcon icon={Sparkles} size={21} className="text-on-primary-v2" />
         </View>
-      </AppCard>
+        <AppText variant="xl" className="flex-1 font-semibold text-text-v2">
+          Hi{displayName ? ` ${displayName}` : ''} 👋
+        </AppText>
+      </View>
+      <View className="mt-3 flex-row items-center gap-3">
+        <AppText variant="md" className="flex-1 leading-6 text-text-muted-v2">
+          {applicationConfig?.aiCoachMessage ?? description}
+        </AppText>
+        <View
+          accessible={false}
+          className="h-20 w-20 items-center justify-center rounded-3xl border border-primary-v2/30 bg-selected-v2"
+        >
+          <AppIcon
+            icon={Bot}
+            size={60}
+            strokeWidth={1.4}
+            className="text-link-v2"
+          />
+          <View className="mt-1 h-1.5 w-6 rounded-full bg-primary-v2" />
+        </View>
+      </View>
+      <View className="mt-4 flex-row flex-wrap items-center gap-2">
+        {isOnline && (
+          <View className="flex-row items-center gap-2 rounded-full border border-success-v2/30 bg-success-v2/10 px-3 py-1.5">
+            <View className="h-1.5 w-1.5 rounded-full bg-success-v2" />
+            <AppText variant="xs" className="font-semibold text-success-v2">
+              Online
+            </AppText>
+          </View>
+        )}
+        <AppText variant="xs" className="text-text-muted-v2">
+          Avg response {responseTime}
+        </AppText>
+      </View>
+    </View>
+  );
+
+  return onPress ? (
+    <AppPressable accessibilityRole="button" onPress={onPress}>
+      {card}
     </AppPressable>
+  ) : (
+    card
   );
 }

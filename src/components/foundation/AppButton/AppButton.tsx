@@ -35,6 +35,8 @@ export function AppButton({
 
   const LeftIcon = leftIcon;
   const RightIcon = rightIcon;
+  const iconClassName =
+    variant === 'primary' ? 'text-on-primary-v2' : 'text-text';
 
   const isGradient = variant === 'gradient' && button.gradient !== null;
 
@@ -108,7 +110,11 @@ export function AppButton({
             <View className="h-full w-full flex-row items-center flex-1 px-6">
               {LeftIcon && (
                 <View className="mr-2">
-                  <AppIcon icon={LeftIcon} size={buttonSize.icon} />
+                  <AppIcon
+                    icon={LeftIcon}
+                    size={buttonSize.icon}
+                    className={iconClassName}
+                  />
                 </View>
               )}
 
@@ -123,7 +129,7 @@ export function AppButton({
                   <AppIcon
                     icon={RightIcon}
                     size={buttonSize.icon}
-                    className="text-text"
+                    className={iconClassName}
                   />
                 </View>
               )}

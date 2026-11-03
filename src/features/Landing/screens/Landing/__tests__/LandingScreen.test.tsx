@@ -80,8 +80,8 @@ test.each([
 test('extends artwork below the bottom safe area and leaves login unboxed', () => {
   const tree = JSON.stringify(screen.toJSON());
   expect(screen.root.findByProps({ safeBottom: false })).toBeDefined();
-  expect(tree).not.toContain('bg-landing-background/80');
-  expect(tree).not.toContain('bg-landing-background/20');
+  expect(tree).not.toContain('bg-background-v2/80');
+  expect(tree).not.toContain('bg-background-v2/20');
   expect(tree).toContain('landing-artwork-fade');
   expect(tree).toContain(
     'Every ending is the beginning of\\nyour next chapter.',

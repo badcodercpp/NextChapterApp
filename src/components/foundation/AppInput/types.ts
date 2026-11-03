@@ -8,6 +8,8 @@ export interface AppInputRef {
 }
 
 export interface AppInputProps extends Omit<TextInputProps, 'editable'> {
+  variant?: 'default' | 'v2';
+
   /**
    * Label displayed above the input.
    */

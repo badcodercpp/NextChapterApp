@@ -3,7 +3,7 @@ import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import { useCSSVariable } from 'uniwind';
 
 export function LandingBackground() {
-  const background = useCSSVariable('--color-landing-background');
+  const background = useCSSVariable('--color-background-v2');
   if (typeof background !== 'string') {
     throw new Error(
       'The landing background color must be defined in global.css',
