@@ -1,42 +1,40 @@
 import {
   AppContentSingleLineLoader,
+  AppIcon,
   AppPressable,
   AppText,
 } from '@/components';
-import { ScrollView, View } from 'react-native';
-
+import { Heart, Headphones, Sparkles, Sprout } from 'lucide-react-native';
 import { SendAiChatMessageInput } from '@/__generated__/graphql';
+import { View } from 'react-native';
 import { selectLatestAiChatMessage } from '@/state/selectors';
-import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-interface QuickReply {
-  id: string;
-  label: string;
-  color: string;
-}
-
 interface QuickRepliesProps {
-  replies?: QuickReply[];
   onSend?: (input: SendAiChatMessageInput) => void;
   isBootstrapPending?: boolean;
 }
 
-const DEFAULT_REPLIES: QuickReply[] = [
+const DEFAULT_REPLIES = [
+  'Help me manage overthinking',
+  'Motivate me today',
+  "I'm having a bad day",
+];
+const REPLY_STYLES = [
   {
-    id: 'overthinking',
-    label: 'Help me manage overthinking',
-    color: 'text-secondary',
+    icon: Heart,
+    container: 'border-rose-v2/40 bg-rose-v2/10',
+    text: 'text-rose-v2',
   },
   {
-    id: 'motivate',
-    label: 'Motivate me today',
-    color: 'text-green-400',
+    icon: Sprout,
+    container: 'border-success-v2/40 bg-success-v2/10',
+    text: 'text-success-v2',
   },
   {
-    id: 'bad-day',
-    label: "I'm having a bad day",
-    color: 'text-cyan-400',
+    icon: Headphones,
+    container: 'border-link-v2/40 bg-link-v2/10',
+    text: 'text-link-v2',
   },
 ];
 
@@ -47,58 +45,54 @@ export function QuickReplies({
   const { data: latestAiChatMessage, loading } = useSelector(
     selectLatestAiChatMessage,
   );
-
-  const quickReplies = useMemo(() => {
-    if (
-      !latestAiChatMessage?.quickReplies ||
-      !latestAiChatMessage?.quickReplies?.length
-    ) {
-      return DEFAULT_REPLIES;
-    }
-    return latestAiChatMessage?.quickReplies?.map((e, index) => ({
-      id: `quick_reply_${index}`,
-      label: e,
-      color: 'text-secondary',
-    }));
-  }, [latestAiChatMessage]);
+  const replies = latestAiChatMessage?.quickReplies?.length
+    ? latestAiChatMessage.quickReplies
+    : DEFAULT_REPLIES;
 
   return (
-    <View>
-      {/* Header */}
+    <View className="pb-2 pt-2">
       <AppText
-        variant="sm"
-        className="mb-2 font-semibold tracking-wide text-text-muted"
+        variant="xs"
+        className="mb-3 font-semibold tracking-wide text-text-muted-v2"
       >
         QUICK REPLIES
       </AppText>
-
-      {/* Replies */}
-      <View className="flex h-12">
-        {(loading || isBootstrapPending) && <AppContentSingleLineLoader />}
-        {!(loading || isBootstrapPending) && (
-          <ScrollView horizontal>
-            <View className="flex-row flex-wrap gap-2">
-              {quickReplies.map(reply => (
-                <AppPressable
-                  key={reply.id}
-                  onPress={() => onSend?.({ message: reply.label })}
-                  className={`flex-row items-center rounded-full border px-4 py-2 ${reply.color.replace(
-                    'text-',
-                    'border-',
-                  )}/40 text-primary bg-card/40`}
+      {loading ? (
+        <AppContentSingleLineLoader />
+      ) : (
+        <View className="flex-row flex-wrap gap-2">
+          {replies.map((reply, index) => {
+            const style = REPLY_STYLES[index] ?? {
+              icon: Sparkles,
+              container: 'border-border-v2 bg-surface-v2',
+              text: 'text-link-v2',
+            };
+            return (
+              <AppPressable
+                key={`${index}-${reply}`}
+                accessibilityRole="button"
+                accessibilityLabel={reply}
+                accessibilityState={{ disabled: !!isBootstrapPending }}
+                disabled={isBootstrapPending}
+                onPress={() => {
+                  if (!isBootstrapPending) onSend?.({ message: reply });
+                }}
+                className={`min-h-11 max-w-full flex-row items-center gap-2 rounded-full border px-3 py-2 ${
+                  style.container
+                } ${isBootstrapPending ? 'opacity-50' : ''}`}
+              >
+                <AppIcon icon={style.icon} size={16} className={style.text} />
+                <AppText
+                  variant="xs"
+                  className={`shrink font-medium ${style.text}`}
                 >
-                  <AppText
-                    variant="sm"
-                    className={`ml-2 font-medium ${reply.color}`}
-                  >
-                    {reply.label}
-                  </AppText>
-                </AppPressable>
-              ))}
-            </View>
-          </ScrollView>
-        )}
-      </View>
+                  {reply}
+                </AppText>
+              </AppPressable>
+            );
+          })}
+        </View>
+      )}
     </View>
   );
 }

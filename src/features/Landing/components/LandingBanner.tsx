@@ -15,13 +15,13 @@ export function LandingBanner() {
       </View>
 
       <View className="mt-6 items-center">
-        <AppText variant="5xl" className="text-center text-white font-bold">
+        <AppText variant="5xl" className="text-center text-text-v2 font-bold">
           NextChapter
         </AppText>
 
         <AppText
           variant="xs"
-          className="mt-2 text-center font-semibold uppercase tracking-brand text-landing-muted"
+          className="mt-2 text-center font-semibold uppercase tracking-brand text-text-muted-v2"
         >
           AI RECOVERY COMPANION
         </AppText>
@@ -31,12 +31,12 @@ export function LandingBanner() {
         <AppText
           variant="xl"
           accessibilityLabel="Every ending is the beginning of your next chapter."
-          className="text-center leading-title text-white"
+          className="text-center leading-title text-text-v2"
         >
           {'Every ending is the beginning of\nyour next chapter.'}
         </AppText>
 
-        <AppText variant="sm" className="mt-5 text-center text-landing-muted">
+        <AppText variant="sm" className="mt-5 text-center text-text-muted-v2">
           Heal • Grow • Move Forward
         </AppText>
       </View>

@@ -27,10 +27,7 @@ export function QuickActionCard({
     <AppPressable className="w-[48%]" onPress={onPress}>
       <AppCard
         {...rest}
-        className={` rounded-[28px] border p-4 ${accentClassName.replace(
-          'text-text',
-          'border-border',
-        )} bg-card`}
+        className="rounded-[28px] border border-border bg-card p-4"
       >
         {/* Icon */}
         <View

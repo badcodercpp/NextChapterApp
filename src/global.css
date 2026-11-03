@@ -51,55 +51,65 @@
 
   /* Font Families */
   --font-sans: 'PlusJakartaSans-Regular';
+}
 
-  /* Auth screens: solid surfaces, independent of the app's accent theme. */
-  --color-login-background: #14213d;
-  --color-login-surface: #22314f;
-  --color-login-input: #2e3e5b;
-  --color-login-selected: #35305c;
-  --color-login-border: #45516d;
-  --color-login-primary: #7c3aed;
-  --color-login-link: #d0a6ff;
-  --color-login-text: #ffffff;
-  --color-login-muted: #a9b3c8;
+@utility shadow-sm {
+  box-shadow: var(--elevation-sm);
+}
 
-  /* Landing artwork keeps a consistent dark backdrop across themes. */
-  --color-landing-background: #130f2c;
-  --color-landing-primary: #7c3aed;
-  --color-landing-muted: #bcb8cc;
+@utility shadow-md {
+  box-shadow: var(--elevation-md);
+}
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.12);
+@utility shadow-lg {
+  box-shadow: var(--elevation-lg);
+}
 
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.18);
+@utility shadow-xl {
+  box-shadow: var(--elevation-xl);
+}
 
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.24);
+/* Keep highlighted text and icons readable independently of control fills. */
+@utility text-primary {
+  color: var(--color-primary-text);
+}
 
-  --shadow-xl: 0 12px 40px rgba(0, 0, 0, 0.32);
+@utility text-primary-v2 {
+  color: var(--color-primary-text);
 }
 
 /* 2. Light theme variables wrapper */
 @variant light {
   :root {
-    --color-login-background: #f5f6fb;
-    --color-login-surface: #ffffff;
-    --color-login-input: #f1f3f9;
-    --color-login-selected: #ede9fe;
-    --color-login-border: #d5daea;
-    --color-login-link: #6d28d9;
-    --color-login-text: #18233b;
-    --color-login-muted: #647089;
+    --elevation-sm: 0 1px 3px rgba(16, 42, 67, 0.04);
+    --elevation-md: 0 2px 6px rgba(16, 42, 67, 0.05);
+    --elevation-lg: 0 4px 12px rgba(16, 42, 67, 0.07);
+    --elevation-xl: 0 8px 20px rgba(16, 42, 67, 0.1);
+    /* Shared v2 palette for the redesigned screens. */
+    --color-background-v2: #ffffff;
+    --color-surface-v2: #ffffff;
+    --color-input-v2: #faf8ff;
+    --color-selected-v2: #ede9fe;
+    --color-border-v2: #e2ddef;
+    --color-primary-v2: #7c3aed;
+    --color-on-primary-v2: #ffffff;
+    --color-link-v2: #5b21b6;
+    --color-text-v2: #102a43;
+    --color-text-muted-v2: #526b7a;
+    --color-success-v2: #047857;
+    --color-rose-v2: #be185d;
     --color-primary: #7c3aed;
-    --color-secondary: #9333ea;
+    --color-primary-text: #5b21b6;
+    --color-secondary: #5b21b6;
     --color-background: #ffffff;
-    --color-surface: #f8fafc;
+    --color-surface: #ffffff;
     --color-card: #ffffff;
-    --color-text: #111827;
-    --color-text-secondary: #6b7280;
-    --color-text-muted: #9ca3af;
+    --color-text: #102a43;
+    --color-text-secondary: #526b7a;
+    --color-text-muted: #526b7a;
     --color-inverse: #ffffff;
-    --color-border: #e5e7eb;
-    --color-divider: #d1d5db;
+    --color-border: #dce8ef;
+    --color-divider: #e5eef4;
     --color-success: #22c55e;
     --color-warning: #eab308;
     --color-error: #ef4444;
@@ -111,7 +121,24 @@
 /* 3. Dark theme variables wrapper */
 @variant dark {
   :root {
+    --elevation-sm: 0 1px 2px rgba(0, 0, 0, 0.12);
+    --elevation-md: 0 4px 12px rgba(0, 0, 0, 0.18);
+    --elevation-lg: 0 8px 24px rgba(0, 0, 0, 0.24);
+    --elevation-xl: 0 12px 40px rgba(0, 0, 0, 0.32);
+    --color-background-v2: #14213d;
+    --color-surface-v2: #22314f;
+    --color-input-v2: #2e3e5b;
+    --color-selected-v2: #35305c;
+    --color-border-v2: #45516d;
+    --color-primary-v2: #7c3aed;
+    --color-on-primary-v2: #ffffff;
+    --color-link-v2: #d0a6ff;
+    --color-text-v2: #ffffff;
+    --color-text-muted-v2: #a9b3c8;
+    --color-success-v2: #34d399;
+    --color-rose-v2: #f472b6;
     --color-primary: #7c3aed;
+    --color-primary-text: #7c3aed;
     --color-secondary: #9333ea;
     --color-background: #141129;
     --color-surface: #1b1735;
@@ -133,7 +160,24 @@
 /* 4. Custom theme variables wrapper */
 @variant ocean {
   :root {
+    --elevation-sm: 0 1px 2px rgba(0, 0, 0, 0.12);
+    --elevation-md: 0 4px 12px rgba(0, 0, 0, 0.18);
+    --elevation-lg: 0 8px 24px rgba(0, 0, 0, 0.24);
+    --elevation-xl: 0 12px 40px rgba(0, 0, 0, 0.32);
+    --color-background-v2: #0f172a;
+    --color-surface-v2: #172554;
+    --color-input-v2: #1e3a5f;
+    --color-selected-v2: #164e63;
+    --color-border-v2: #345578;
+    --color-primary-v2: #06b6d4;
+    --color-on-primary-v2: #082f49;
+    --color-link-v2: #7dd3fc;
+    --color-text-v2: #e0f2fe;
+    --color-text-muted-v2: #bae6fd;
+    --color-success-v2: #34d399;
+    --color-rose-v2: #f472b6;
     --color-primary: #06b6d4;
+    --color-primary-text: #06b6d4;
     --color-secondary: #0891b2;
     --color-background: #0f172a;
     --color-surface: #172554;

@@ -2,18 +2,24 @@ import { FlatList, View } from 'react-native';
 import { useMemo, useRef } from 'react';
 
 import { AICoachCard } from './AICoachCard';
-import { AppContentLoader } from '@/components';
+import { AppContentLoader, AppText } from '@/components';
 import { ChatDateDivider } from './ChatDateDivider';
-import { ChatMessage } from '@/features/CommonFeature';
+import { AIChatMessage, CoachAvatar } from './AIChatMessage';
+import { QuickReplies } from './QuickReplies';
+import { SendAiChatMessageInput } from '@/__generated__/graphql';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { selectMyAiChatConversations } from '@/state/selectors';
 import { useSelector } from 'react-redux';
 
 interface AIChatComponentProps {
   isBootstrapPending?: boolean;
+  onSend?: (input: SendAiChatMessageInput) => void;
 }
 
-export function AIChatComponent({}: AIChatComponentProps) {
+export function AIChatComponent({
+  isBootstrapPending,
+  onSend,
+}: AIChatComponentProps) {
   const flatListRef = useRef<FlatList>(null);
 
   const { data: myAiChatConversations, loading } = useSelector(
@@ -56,13 +62,43 @@ export function AIChatComponent({}: AIChatComponentProps) {
           data={messageHistory}
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
           ListHeaderComponent={
             <View>
               <AICoachCard />
               <ChatDateDivider />
             </View>
           }
-          renderItem={({ item }) => <ChatMessage message={item} />}
+          renderItem={({ item }) => <AIChatMessage message={item} />}
+          ListFooterComponent={
+            <View>
+              {isBootstrapPending && (
+                <View
+                  accessibilityRole="progressbar"
+                  accessibilityLabel="Coach is replying"
+                  accessibilityLiveRegion="polite"
+                  className="mb-4 flex-row items-center"
+                >
+                  <CoachAvatar />
+                  <View className="flex-row items-center gap-2 rounded-3xl border border-border-v2 bg-input-v2 px-4 py-3">
+                    <View className="h-2 w-2 rounded-full bg-primary-v2" />
+                    <View className="h-2 w-2 rounded-full bg-primary-v2/60" />
+                    <View className="h-2 w-2 rounded-full bg-primary-v2/30" />
+                    <AppText
+                      variant="xs"
+                      className="ml-1 shrink text-text-muted-v2"
+                    >
+                      Coach is typing...
+                    </AppText>
+                  </View>
+                </View>
+              )}
+              <QuickReplies
+                onSend={onSend}
+                isBootstrapPending={isBootstrapPending}
+              />
+            </View>
+          }
           onContentSizeChange={scrollToBottom}
           onLayout={scrollToBottom}
         />

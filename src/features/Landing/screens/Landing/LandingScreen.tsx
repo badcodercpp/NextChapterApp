@@ -13,8 +13,8 @@ export function LandingScreen() {
       scroll
       safeArea={false}
       safeBottom={false}
-      className="bg-landing-background"
-      contentClassName="grow bg-landing-background"
+      className="bg-background-v2"
+      contentClassName="grow bg-background-v2"
     >
       <View className="flex-1 justify-between overflow-hidden">
         <LandingBackground />
