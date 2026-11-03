@@ -38,7 +38,7 @@ export function TodaysMissionCard({
         {/* Content */}
         <View className="flex-1 pr-4">
           <AppText
-            variant="sm"
+            variant="lg"
             className="font-medium uppercase tracking-wide text-primary"
           >
             {t('app.locale.common.mission.todayMission.title')}

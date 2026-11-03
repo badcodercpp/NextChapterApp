@@ -32,7 +32,7 @@ export function JournalEntryMenu({ entry, origin }: JournalEntryMenuProps) {
   const handleEdit = () => {
     setVisible(false);
     dispatch(setEditJournalTarget(entry));
-    navigation.navigate(origin);
+    navigation.navigate('EditJournal');
   };
 
   const handleDelete = () => {

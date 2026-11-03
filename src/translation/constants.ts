@@ -1,0 +1,17 @@
+export const LANGUAGE_CODE = {
+  BN_IN: 'bn-IN',
+  EN_IN: 'en-IN',
+  EN_US: 'en-US',
+  HI_IN: 'hi-IN',
+  AS_IN: 'as-IN',
+  GU_IN: 'gu-IN',
+  KN_IN: 'kn-IN',
+  KOK_IN: 'kok-IN',
+  ML_IN: 'ml-IN',
+  MR_IN: 'mr-IN',
+  OR_IN: 'or-IN',
+  PA_IN: 'pa-IN',
+  SA_IN: 'sa-IN',
+  TA_IN: 'ta-IN',
+  TE_IN: 'te-IN',
+} as const;

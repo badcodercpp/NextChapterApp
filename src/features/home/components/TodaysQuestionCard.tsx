@@ -31,7 +31,7 @@ export function TodaysQuestionCard({}: TodaysQuestionCardProps) {
   const { t } = useTranslation();
 
   return (
-    <AppCard className="rounded-[28px] border border-primary/30 bg-card p-5">
+    <AppCard className="rounded-[28px] border border-border bg-card p-5">
       <View className="flex-row items-start">
         {/* Focus Icon */}
         <View className="h-10 w-10 items-center justify-center rounded-full bg-primary/20">
@@ -45,7 +45,7 @@ export function TodaysQuestionCard({}: TodaysQuestionCardProps) {
 
         {/* Focus Content */}
         <View className="ml-3 flex-1">
-          <AppText variant="lg" className="text-primary">
+          <AppText variant="lg" className="font-medium text-primary">
             {t('app.locale.home.todayFocus.title')}
           </AppText>
 

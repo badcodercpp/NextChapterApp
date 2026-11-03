@@ -1,10 +1,14 @@
 import { BookOpen, Bot } from 'lucide-react-native';
 import { LayoutChangeEvent, View } from 'react-native';
 
+import { AIChatRoutes } from '@/features/AIChat';
+import { JournalRoutes } from '@/features/journal';
 import { QuickActionCard } from './QuickActionCard';
+import { TabRoutes } from '@/navigation/Tab/TabRoutes';
 import { selectApplicationConfig } from '@/state/selectors';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
+import { useTabNavigation } from '@/navigation/Tab/hooks/useTabNavigation';
 import { useTranslation } from 'react-i18next';
 
 interface QuickActionCardComponentProps {}
@@ -12,6 +16,7 @@ interface QuickActionCardComponentProps {}
 export function QuickActionCardComponent({}: QuickActionCardComponentProps) {
   const { data: applicationConfig } = useSelector(selectApplicationConfig);
   const [cardHeight, setCardHeight] = useState(0);
+  const navigation = useTabNavigation();
 
   const handleLayout = (e: LayoutChangeEvent) => {
     const { height } = e.nativeEvent.layout;
@@ -30,6 +35,9 @@ export function QuickActionCardComponent({}: QuickActionCardComponentProps) {
         accentClassName="text-primary"
         iconBackgroundClassName="bg-primary/15"
         onPress={() => {
+          navigation.navigate(TabRoutes.Journal, {
+            screen: JournalRoutes.CreateJournal,
+          });
           // navigate to journal
         }}
         onLayout={handleLayout}
@@ -48,10 +56,13 @@ export function QuickActionCardComponent({}: QuickActionCardComponentProps) {
           ''
         }
         actionLabel={t('app.locale.home.quickActionCard.aiCoach.actionLabel')}
-        accentClassName="text-secondary"
+        accentClassName="text-primary"
         iconBackgroundClassName="bg-secondary/15"
         onPress={() => {
           // navigate to AI coach
+          navigation.navigate(TabRoutes.AI, {
+            screen: AIChatRoutes.AIChat,
+          });
         }}
         onLayout={handleLayout}
         style={cardHeight ? { height: cardHeight } : undefined}

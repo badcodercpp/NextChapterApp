@@ -18,8 +18,6 @@ export function AppDrawerScreenHeader({ title, backDisabled }: AppHeaderProps) {
       return;
     }
 
-    console.log('navigation.canGoBack()', navigation.canGoBack());
-
     if (navigation.canGoBack()) {
       navigation.goBack();
       navigation.dispatch(DrawerActions.openDrawer());
@@ -28,7 +26,7 @@ export function AppDrawerScreenHeader({ title, backDisabled }: AppHeaderProps) {
 
   return (
     <View
-      className="flex-row items-center bg-background px-6 py-4 pt-safe border-b border-border shadow-md"
+      className="flex-row items-center bg-background px-4 py-4 pt-safe border-b border-border shadow-md"
       style={{ paddingTop: top }}
     >
       <AppPressable onPress={handleBack}>
@@ -44,8 +42,12 @@ export function AppDrawerScreenHeader({ title, backDisabled }: AppHeaderProps) {
   );
 }
 
-export const NavigatorAppDrawerScreenHeader = ({
-  options,
-}: NativeStackHeaderProps) => (
-  <AppDrawerScreenHeader title={options.title} backDisabled={false} />
+export const NavigatorAppDrawerScreenHeader = (
+  props: NativeStackHeaderProps,
+) => (
+  <AppDrawerScreenHeader
+    {...props}
+    title={props.options.title}
+    backDisabled={false}
+  />
 );

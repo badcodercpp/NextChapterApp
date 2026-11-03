@@ -24,7 +24,7 @@ export function AppHeader({ title, backDisabled }: AppHeaderProps) {
 
   return (
     <View
-      className="flex-row items-center bg-background px-6 py-4 pt-safe border-b border-border shadow-md"
+      className="flex-row items-center bg-background px-4 py-4 pt-safe border-b border-border shadow-md"
       style={{ paddingTop: top }}
     >
       <AppPressable onPress={handleBack}>
@@ -40,6 +40,6 @@ export function AppHeader({ title, backDisabled }: AppHeaderProps) {
   );
 }
 
-export const NavigatorAppHeader = ({ options }: NativeStackHeaderProps) => (
-  <AppHeader title={options.title} backDisabled={false} />
+export const NavigatorAppHeader = (props: NativeStackHeaderProps) => (
+  <AppHeader {...props} title={props.options.title} backDisabled={false} />
 );

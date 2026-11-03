@@ -1,7 +1,9 @@
+import { AIChatStackParamList } from '@/features/AIChat';
 import { DailySessionHistoryStackParamList } from '@/features/DailySessionHistory/navigation';
 import { DailySessionStackParamList } from '@/features/DailySession';
 // import { AIStackParamList } from '@/features/ai/navigation';
 import { HomeStackParamList } from '@/features/home/navigation';
+import { JournalStackParamList } from '@/features/journal';
 import { MentorChatStackParamList } from '@/features/mentors/navigation';
 // import { JournalStackParamList } from '@/features/journal/navigation';
 // import { JournalStackParamList } from '@/features/journal/navigation';
@@ -14,9 +16,9 @@ import { TabRoutes } from './TabRoutes';
 export type TabParamList = {
   [TabRoutes.Home]: NavigatorScreenParams<HomeStackParamList>;
 
-  [TabRoutes.Journal]: NavigatorScreenParams<HomeStackParamList>;
+  [TabRoutes.Journal]: NavigatorScreenParams<JournalStackParamList>;
 
-  [TabRoutes.AI]: NavigatorScreenParams<HomeStackParamList>;
+  [TabRoutes.AI]: NavigatorScreenParams<AIChatStackParamList>;
 
   [TabRoutes.Progress]: NavigatorScreenParams<RecoveryProgressStackParamList>;
 

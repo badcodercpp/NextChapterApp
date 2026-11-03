@@ -4,8 +4,6 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 
-import { AppHeader } from '@/components/foundation/AppHeader';
-import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { useLayoutEffect } from 'react';
 
 type UseScreenHeaderOptions = {
@@ -15,7 +13,6 @@ type UseScreenHeaderOptions = {
 };
 
 export const useScreenHeader = ({
-  title,
   backDisabled = false,
   headerShown = true,
 }: UseScreenHeaderOptions = {}) => {
@@ -26,13 +23,7 @@ export const useScreenHeader = ({
       headerShown,
 
       gestureEnabled: !backDisabled,
-
-      header: (props: NativeStackHeaderProps) => (
-        <AppHeader
-          title={title ?? props.options.title}
-          backDisabled={backDisabled}
-        />
-      ),
+      backDisabled: backDisabled,
     });
-  }, [navigation, title, backDisabled, headerShown]);
+  }, [navigation, backDisabled, headerShown]);
 };

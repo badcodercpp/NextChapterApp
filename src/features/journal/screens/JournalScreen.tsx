@@ -20,7 +20,6 @@ export function JournalScreen() {
     useJournalBootstrap();
 
   useScreenHeader({
-    title: '',
     backDisabled: creatingJournal,
   });
 

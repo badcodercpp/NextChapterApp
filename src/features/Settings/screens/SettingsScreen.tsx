@@ -1,8 +1,4 @@
 import {
-  APP_SUPPORTED_LANGUAGES,
-  APP_SUPPORTED_THEMES,
-} from '@/features/Settings/constants';
-import {
   AppAuthenticatedLayout,
   AppCard,
   AppIcon,
@@ -10,39 +6,32 @@ import {
 } from '@/components';
 import { ChevronRight, Globe, Moon } from 'lucide-react-native';
 import { LanguageSheet, ThemeSheet } from '@/features/Settings/components';
-import React, { useState } from 'react';
 
 import { AppText } from '@/components/foundation/AppText';
+import React from 'react';
+import { TLanguageCode } from '@/translation/types';
 import { View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '@/state';
-import { setThemePreference } from '@/state/slices/local/preferences';
+import { useSettingsBootstrap } from '../hooks/useSettingsBootstrap';
 
 export const SettingsScreen = () => {
-  const [language, setLanguage] = useState('en-US');
-  const dispatch = useDispatch();
-  const theme = useSelector((state: RootState) => state.app.preferences.theme);
-
-  const [showLanguageSheet, setShowLanguageSheet] = useState(false);
-  const [showThemeSheet, setShowThemeSheet] = useState(false);
-
-  const selectedLanguage =
-    APP_SUPPORTED_LANGUAGES.find(item => item.code === language)?.label ??
-    'English';
-
-  const selectedTheme =
-    APP_SUPPORTED_THEMES.find(item => item.value === theme)?.label ??
-    'System default';
+  const {
+    optimisticLanguage,
+    changeAppLanguage,
+    selectedLanguage,
+    optimisticTheme,
+    changeAppTheme,
+    selectedTheme,
+    showLanguageSheet,
+    setShowLanguageSheet,
+    showThemeSheet,
+    setShowThemeSheet,
+  } = useSettingsBootstrap();
 
   return (
     <AppAuthenticatedLayout noBottomPadding>
       {/* Header */}
-      <View className="mb-8">
-        <AppText variant="xl" className="font-bold text-text-secondary">
-          Settings
-        </AppText>
-
-        <AppText variant="sm" className="mt-1 text-text-secondary">
+      <View className="mb-4 mt-2">
+        <AppText variant="lg" className="mt-1 text-text-secondary">
           Customize your NextChapter experience
         </AppText>
       </View>
@@ -124,9 +113,9 @@ export const SettingsScreen = () => {
       {/* Language Sheet */}
       {showLanguageSheet && (
         <LanguageSheet
-          selected={language}
-          onSelect={code => {
-            setLanguage(code);
+          selected={optimisticLanguage}
+          onSelect={async (code: TLanguageCode) => {
+            changeAppLanguage(code);
             setShowLanguageSheet(false);
           }}
           onClose={() => setShowLanguageSheet(false)}
@@ -136,9 +125,9 @@ export const SettingsScreen = () => {
       {/* Theme Sheet */}
       {showThemeSheet && (
         <ThemeSheet
-          selected={theme}
+          selected={optimisticTheme}
           onSelect={value => {
-            dispatch(setThemePreference(value));
+            changeAppTheme(value);
             setShowThemeSheet(false);
           }}
           onClose={() => setShowThemeSheet(false)}

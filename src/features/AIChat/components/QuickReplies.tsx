@@ -4,9 +4,10 @@ import {
   AppPressable,
   AppText,
 } from '@/components';
-import { Heart, Headphones, Sparkles, Sprout } from 'lucide-react-native';
+import { Headphones, Heart, Sparkles, Sprout } from 'lucide-react-native';
+import { ScrollView, View } from 'react-native';
+
 import { SendAiChatMessageInput } from '@/__generated__/graphql';
-import { View } from 'react-native';
 import { selectLatestAiChatMessage } from '@/state/selectors';
 import { useSelector } from 'react-redux';
 
@@ -60,37 +61,39 @@ export function QuickReplies({
       {loading ? (
         <AppContentSingleLineLoader />
       ) : (
-        <View className="flex-row flex-wrap gap-2">
-          {replies.map((reply, index) => {
-            const style = REPLY_STYLES[index] ?? {
-              icon: Sparkles,
-              container: 'border-border-v2 bg-surface-v2',
-              text: 'text-link-v2',
-            };
-            return (
-              <AppPressable
-                key={`${index}-${reply}`}
-                accessibilityRole="button"
-                accessibilityLabel={reply}
-                accessibilityState={{ disabled: !!isBootstrapPending }}
-                disabled={isBootstrapPending}
-                onPress={() => {
-                  if (!isBootstrapPending) onSend?.({ message: reply });
-                }}
-                className={`min-h-11 max-w-full flex-row items-center gap-2 rounded-full border px-3 py-2 ${
-                  style.container
-                } ${isBootstrapPending ? 'opacity-50' : ''}`}
-              >
-                <AppIcon icon={style.icon} size={16} className={style.text} />
-                <AppText
-                  variant="xs"
-                  className={`shrink font-medium ${style.text}`}
+        <View className="flex-row  gap-2">
+          <ScrollView horizontal>
+            {replies.map((reply, index) => {
+              const style = REPLY_STYLES[index] ?? {
+                icon: Sparkles,
+                container: 'border-border-v2 bg-surface-v2',
+                text: 'text-link-v2',
+              };
+              return (
+                <AppPressable
+                  key={`${index}-${reply}`}
+                  accessibilityRole="button"
+                  accessibilityLabel={reply}
+                  accessibilityState={{ disabled: !!isBootstrapPending }}
+                  disabled={isBootstrapPending}
+                  onPress={() => {
+                    if (!isBootstrapPending) onSend?.({ message: reply });
+                  }}
+                  className={`mr-4 min-h-11 max-w-full flex-row items-center gap-2 rounded-full border px-3 py-2 ${
+                    style.container
+                  } ${isBootstrapPending ? 'opacity-50' : ''}`}
                 >
-                  {reply}
-                </AppText>
-              </AppPressable>
-            );
-          })}
+                  <AppIcon icon={style.icon} size={16} className={style.text} />
+                  <AppText
+                    variant="xs"
+                    className={`shrink font-medium ${style.text}`}
+                  >
+                    {reply}
+                  </AppText>
+                </AppPressable>
+              );
+            })}
+          </ScrollView>
         </View>
       )}
     </View>

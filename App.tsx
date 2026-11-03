@@ -7,18 +7,18 @@
 //@ts-ignore
 import './src/global.css';
 
+import { StatusBar, View } from 'react-native';
 import { persistor, store } from '@/state';
 
+import { AppPrefrencesProvider } from '@/prefrences';
 import { MasterFormProvider } from '@/form';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import RootNavigator from './src/navigation/RootStack/RootNavigator';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ToastProvider } from '@/components';
-import { AppThemeProvider } from '@/theme/AppThemeProvider';
-import { useGoogleAuthConfiguration } from '@/hooks/useGoogleAuthConfiguration';
 import { Uniwind } from 'uniwind';
-import { StatusBar, View } from 'react-native';
+import { useGoogleAuthConfiguration } from '@/hooks/useGoogleAuthConfiguration';
 
 // Use dark during startup; AppThemeProvider restores the user's saved choice.
 Uniwind.setTheme('dark');
@@ -36,14 +36,14 @@ function App() {
         }
         persistor={persistor}
       >
-        <AppThemeProvider>
+        <AppPrefrencesProvider>
           <SafeAreaProvider>
             <MasterFormProvider>
               <RootNavigator />
             </MasterFormProvider>
             <ToastProvider />
           </SafeAreaProvider>
-        </AppThemeProvider>
+        </AppPrefrencesProvider>
       </PersistGate>
     </Provider>
   );

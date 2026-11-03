@@ -1,18 +1,24 @@
 import { DrawerActions, useNavigation } from '@react-navigation/native';
+import { getGreetingKey, toHttpsURL } from '@/utils';
 
+import { AppAvatar } from '@/components/foundation/AppAvatar';
 import { AppHeaderProps } from './types';
 import { AppIcon } from '../AppIcon';
-import AppLogo from '@/assets/icons/svg/app_logo.svg';
 import { AppPressable } from '../AppPressable';
 import { AppText } from '../AppText';
 import { Bell } from 'lucide-react-native';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { View } from 'react-native';
+import { selectMe } from '@/state/selectors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 export function AppHomeHeader({ backDisabled }: AppHeaderProps) {
+  const { data: me } = useSelector(selectMe);
   const navigation = useNavigation();
   const { top } = useSafeAreaInsets();
+  const { t } = useTranslation();
 
   const handleBack = () => {
     if (backDisabled) {
@@ -30,17 +36,20 @@ export function AppHomeHeader({ backDisabled }: AppHeaderProps) {
 
   return (
     <View
-      className="flex-row items-center bg-background px-4 py-4 pt-safe border-b border-border shadow-md"
+      className="flex-row items-center bg-background px-4 py-3 pt-safe border-b border-border shadow-md"
       style={{ paddingTop: top }}
     >
       <View className="flex-row items-center">
-        <AppPressable onPress={handleOpenDrawer}>
-          <AppLogo />
-        </AppPressable>
+        <AppAvatar
+          size="sm"
+          name={me?.displayName ?? ''}
+          uri={toHttpsURL(me?.avatarUrl) ?? undefined}
+          onPress={handleOpenDrawer}
+        />
 
         <View className="flex-1">
-          <AppText variant="xl" className="ml-4 text-text">
-            Outdated Me
+          <AppText variant="xl" className="ml-3 text-text">
+            {t(getGreetingKey())}, {me?.displayName?.split(' ')?.[0] ?? ''}{' '}
           </AppText>
         </View>
 
@@ -52,6 +61,6 @@ export function AppHomeHeader({ backDisabled }: AppHeaderProps) {
   );
 }
 
-export const NavigatorAppHomeHeader = ({ options }: NativeStackHeaderProps) => (
-  <AppHomeHeader title={options.title} backDisabled={false} />
+export const NavigatorAppHomeHeader = (props: NativeStackHeaderProps) => (
+  <AppHomeHeader {...props} title={props.options.title} backDisabled={false} />
 );

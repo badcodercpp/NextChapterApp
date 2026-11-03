@@ -13,7 +13,6 @@ export function EditJournalScreen() {
     useEditJournalBootstrap();
 
   useScreenHeader({
-    title: '',
     backDisabled: editingJournal,
   });
 

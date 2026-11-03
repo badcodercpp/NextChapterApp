@@ -1,11 +1,10 @@
+import { AIChatMessage, CoachAvatar } from './AIChatMessage';
+import { AppContentLoader, AppText } from '@/components';
 import { FlatList, View } from 'react-native';
-import { useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 import { AICoachCard } from './AICoachCard';
-import { AppContentLoader, AppText } from '@/components';
 import { ChatDateDivider } from './ChatDateDivider';
-import { AIChatMessage, CoachAvatar } from './AIChatMessage';
-import { QuickReplies } from './QuickReplies';
 import { SendAiChatMessageInput } from '@/__generated__/graphql';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { selectMyAiChatConversations } from '@/state/selectors';
@@ -16,10 +15,7 @@ interface AIChatComponentProps {
   onSend?: (input: SendAiChatMessageInput) => void;
 }
 
-export function AIChatComponent({
-  isBootstrapPending,
-  onSend,
-}: AIChatComponentProps) {
+export function AIChatComponent({ isBootstrapPending }: AIChatComponentProps) {
   const flatListRef = useRef<FlatList>(null);
 
   const { data: myAiChatConversations, loading } = useSelector(
@@ -42,15 +38,27 @@ export function AIChatComponent({
     }));
   }, [myAiChatConversations]);
 
-  const scrollToBottom = () => {
+  const scrollToBottom = useCallback(() => {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         flatListRef.current?.scrollToEnd({
-          animated: false,
+          animated: true,
         });
       });
     });
-  };
+  }, []);
+
+  useEffect(() => {
+    if (!messageHistory.length) {
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      flatListRef.current?.scrollToEnd({
+        animated: true,
+      });
+    });
+  }, [messageHistory.length]);
 
   return (
     <View className="flex-1">
@@ -93,14 +101,10 @@ export function AIChatComponent({
                   </View>
                 </View>
               )}
-              <QuickReplies
-                onSend={onSend}
-                isBootstrapPending={isBootstrapPending}
-              />
             </View>
           }
           onContentSizeChange={scrollToBottom}
-          onLayout={scrollToBottom}
+          //   onLayout={scrollToBottom}
         />
       )}
     </View>

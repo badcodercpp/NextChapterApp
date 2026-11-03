@@ -1,8 +1,8 @@
 import { APP_SUPPORTED_THEMES, AppTheme } from '@/features/Settings/constants';
 import { AppIcon, AppPressable, AppText } from '@/components';
 import { Check, X } from 'lucide-react-native';
-
 import { Modal, View } from 'react-native';
+
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type ThemeSheetProps = {
@@ -13,6 +13,7 @@ type ThemeSheetProps = {
 
 export function ThemeSheet({ selected, onSelect, onClose }: ThemeSheetProps) {
   const { bottom } = useSafeAreaInsets();
+
   return (
     <Modal transparent animationType="slide" onRequestClose={onClose}>
       <View className="flex-1 justify-end">
@@ -27,7 +28,7 @@ export function ThemeSheet({ selected, onSelect, onClose }: ThemeSheetProps) {
           className="rounded-t-3xl border border-border bg-card p-5"
           style={{ paddingBottom: bottom + 20 }}
         >
-          <View className="mb-6 flex-row items-center justify-between">
+          <View className="mb-4 flex-row items-center justify-between">
             <AppText variant="lg" className="font-bold text-text-secondary">
               Theme
             </AppText>

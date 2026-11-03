@@ -1,13 +1,11 @@
 import { AppCard, AppText } from '@/components';
 import {
   lazySelectGetRecoveryScoreTrendForLastNDay,
-  selectMe,
   selectMyRecovery,
 } from '@/state/selectors';
 
 import { RecoveryTrend } from './RecoveryTrend';
 import { View } from 'react-native';
-import { getGreetingKey } from '@/utils';
 import { properCase } from '@/utils/strings';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
@@ -16,7 +14,6 @@ import { useTranslation } from 'react-i18next';
 interface RecoveryScoreCardProps {}
 
 export function RecoveryScoreCard({}: RecoveryScoreCardProps) {
-  const { data: me } = useSelector(selectMe);
   const { data: myRecovery, loading } = useSelector(selectMyRecovery);
   const selectGetRecoveryScoreTrendForLastNDay = useMemo(() => {
     return lazySelectGetRecoveryScoreTrendForLastNDay(7);
@@ -37,15 +34,7 @@ export function RecoveryScoreCard({}: RecoveryScoreCardProps) {
 
   return (
     <AppCard className="overflow-hidden rounded-[24px] border-1 border-border bg-card p-5">
-      <View className="flex-row mb-2 items-center">
-        <AppText variant="md" className="text-primary mr-0.5">
-          {t(getGreetingKey())}, {me?.displayName ?? ''}{' '}
-        </AppText>
-        <AppText variant="2xl" className="text-primary mr-1">
-          👋{' '}
-        </AppText>
-      </View>
-      <AppText variant="3xl" className="text-text mb-4">
+      <AppText variant="xl" className="text-text mb-2">
         {t('app.locale.home.recoveryScore.encouragement')}
       </AppText>
       {loading ? (
@@ -59,8 +48,8 @@ export function RecoveryScoreCard({}: RecoveryScoreCardProps) {
           <View className="flex-row items-start justify-between">
             <View>
               <AppText
-                variant="sm"
-                className="font-medium uppercase tracking-wide text-primary"
+                variant="lg"
+                className="font-medium uppercase text-primary"
               >
                 {t('app.locale.home.recoveryScore.scoreTitle')}
               </AppText>

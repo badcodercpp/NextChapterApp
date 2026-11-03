@@ -27,7 +27,7 @@ export function QuickActionCard({
     <AppPressable className="w-[48%]" onPress={onPress}>
       <AppCard
         {...rest}
-        className="rounded-[28px] border border-border bg-card p-4"
+        className="rounded-[28px] border border-border bg-card p-4 pb-6"
       >
         {/* Icon */}
         <View
@@ -56,6 +56,7 @@ export function QuickActionCard({
         <AppText
           variant="md"
           className={`font-semibold ${accentClassName} mt-4`}
+          numberOfLines={1}
         >
           {actionLabel} →
         </AppText>
