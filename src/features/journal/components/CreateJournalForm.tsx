@@ -1,7 +1,7 @@
 import { AppCard, AppInput, AppText } from '@/components';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import { AnswerInputCard } from '@/features/CommonFeature';
+import { JournalAnswerInputCard } from '@/features/CommonFeature';
 import { MasterFormData } from '@/form/types';
 
 interface CreateJournalFormProps {}
@@ -36,24 +36,7 @@ export function CreateJournalForm({}: CreateJournalFormProps) {
       <AppText variant="sm" className="mt-4 mb-1 px-2 text-text">
         Content
       </AppText>
-      <Controller
-        control={control}
-        name="createOrUpdateJournal.content"
-        render={({ field: { onChange, onBlur, value } }) => (
-          <AnswerInputCard
-            placeholder="Type your feelings here..."
-            onChangeText={onChange}
-            onBlur={onBlur}
-            value={value}
-            inputClassName="px-0"
-            error={errors?.createOrUpdateJournal?.content?.message}
-            containerClassName="px-4"
-            onFocus={() => {
-              clearErrors('createOrUpdateJournal.content');
-            }}
-          />
-        )}
-      />
+      <JournalAnswerInputCard />
     </AppCard>
   );
 }

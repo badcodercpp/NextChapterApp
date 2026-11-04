@@ -15,6 +15,7 @@ export function AppConfirmModal({
   cancelText = 'Cancel',
   onConfirm,
   onCancel,
+  onBackdropPress,
   icon: Icon = AlertTriangle,
 }: AppConfirmModalProps) {
   return (
@@ -22,10 +23,13 @@ export function AppConfirmModal({
       visible={visible}
       transparent
       animationType="fade"
-      onRequestClose={onCancel}
+      onRequestClose={onBackdropPress ?? onCancel}
     >
       <View className="flex-1 items-center justify-center bg-background/80 px-6">
-        <Pressable className="absolute inset-0" onPress={onCancel} />
+        <Pressable
+          className="absolute inset-0"
+          onPress={onBackdropPress ?? onCancel}
+        />
 
         <View className="w-full max-w-[380px] rounded-[28px] bg-background p-6">
           {/* Icon */}

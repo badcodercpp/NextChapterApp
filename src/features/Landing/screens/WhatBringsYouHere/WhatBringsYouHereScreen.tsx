@@ -6,21 +6,18 @@ import {
   HeartHandshake,
   Lock,
 } from 'lucide-react-native';
-import { Controller } from 'react-hook-form';
-import { View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
+import { Controller } from 'react-hook-form';
 import { LandingNavigationProp } from '@/features/Landing/navigation/types';
 import { REASONS } from '../../constants';
+import { View } from 'react-native';
 import { cn } from '@/utils';
-import { useScreenHeader } from '@/navigation/hooks';
+import { useNavigation } from '@react-navigation/native';
 import { useWhatBringsYouHere } from './useWhatBringsYouHere';
 
 export function WhatBringsYouHereScreen() {
   const { control, submitWhatBringsYouHere } = useWhatBringsYouHere();
   const navigation = useNavigation<LandingNavigationProp>();
-
-  useScreenHeader({ headerShown: false });
 
   return (
     <AppScreen

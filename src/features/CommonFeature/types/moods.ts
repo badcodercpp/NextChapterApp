@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-
 import { RecoveryReasonCurrentFeeling } from '@/__generated__/graphql';
 
 export interface MoodOption {
@@ -17,8 +15,6 @@ export interface MoodSelectorProps {
   onChange?: (value: RecoveryReasonCurrentFeeling) => void;
   collapsedCount?: number;
   value: (RecoveryReasonCurrentFeeling | undefined)[];
-  setValue: Dispatch<
-    SetStateAction<(RecoveryReasonCurrentFeeling | undefined)[]>
-  >;
+  setValue: (newMoods: Array<RecoveryReasonCurrentFeeling | undefined>) => void;
   selectionMode?: MoodSelectionMode;
 }

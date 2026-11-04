@@ -20,16 +20,16 @@ export function DrawerHeader() {
         uri={toHttpsURL(me?.avatarUrl) ?? undefined}
       />
 
-      <AppText variant="xl" className="mt-3 mb-1">
-        {t(getGreetingKey())} 👋
-      </AppText>
-
-      <AppText variant="xl" className="mb-2">
+      <AppText variant="xl" className="mt-2">
         {me?.displayName ?? ''}
       </AppText>
 
-      <AppText variant="md" className="text-center">
-        Keep growing one day at a time 🌱
+      <AppText variant="lg" className="mt-2 mb-1">
+        {t(getGreetingKey())}
+      </AppText>
+
+      <AppText variant="md" className="text-center text-text-secondary">
+        Keep growing one day at a time
       </AppText>
     </View>
   );

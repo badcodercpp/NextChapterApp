@@ -48,7 +48,7 @@ export function TodaysMissionCard({
             {missionTitle ?? title}
           </AppText>
 
-          <AppText variant="md" className="mt-1 text-text-secondary">
+          <AppText variant="md" className="mt-2 text-text-secondary">
             {todayMission?.description ?? description}
           </AppText>
 

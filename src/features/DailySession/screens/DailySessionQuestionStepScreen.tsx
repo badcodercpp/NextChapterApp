@@ -8,15 +8,19 @@ import {
 import { AppAuthenticatedLayout, AppButton } from '@/components';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
-import { AnswerInputCard } from '@/features/CommonFeature';
 import { ChevronRight } from 'lucide-react-native';
-import { DailySessionStackParamList } from '@/features/DailySession/navigation';
+import { DailySessionStackParamList } from '../navigation';
+import { DailySessionStep } from '@/__generated__/graphql';
 import React from 'react';
+import { TodaysQuestionAnswerInputCard } from '@/features/CommonFeature';
 import { View } from 'react-native';
+import { useOptimisticSessionStepUpdate } from '../hooks/useOptimisticSessionStepUpdate';
 
 export function DailySessionQuestionStepScreen() {
   const navigation =
     useNavigation<NavigationProp<DailySessionStackParamList>>();
+  const { updateDailySessionStep } = useOptimisticSessionStepUpdate();
+
   return (
     <AppAuthenticatedLayout noBottomPadding>
       <View className="mt-4">
@@ -29,7 +33,7 @@ export function DailySessionQuestionStepScreen() {
         <PrivateAnswerCard />
       </View>
       <View className="mt-4">
-        <AnswerInputCard value={''} onChangeText={() => {}} />
+        <TodaysQuestionAnswerInputCard />
       </View>
       <View className="mt-4">
         <AnswerStarterCard />
@@ -40,7 +44,10 @@ export function DailySessionQuestionStepScreen() {
           size="lg"
           fullWidth
           className="mb-0"
-          onPress={() => navigation.navigate('DailySessionFollowUpStep')}
+          onPress={() => {
+            updateDailySessionStep(DailySessionStep.FollowUp);
+            navigation.navigate('DailySessionFollowUpStep');
+          }}
           rightIcon={ChevronRight}
         />
       </View>

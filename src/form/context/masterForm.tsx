@@ -46,6 +46,9 @@ export function MasterFormProvider({
         title: '',
         content: '',
       },
+      todaysQuestionAnswer: {
+        answer: '',
+      },
     },
   });
 

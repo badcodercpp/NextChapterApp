@@ -10,3 +10,18 @@ export const selectActiveDailySession = createSelector(
     error: result.error,
   }),
 );
+
+export const selectDailySessionStartMoods = createSelector(
+  [selectActiveDailySession],
+  data => data.data?.startMoods ?? [],
+);
+
+export const selectDailySessionEndMoods = createSelector(
+  [selectActiveDailySession],
+  data => data.data?.endMoods ?? [],
+);
+
+export const selectDailySessionCurrentStep = createSelector(
+  [selectActiveDailySession],
+  data => data.data?.currentStep,
+);

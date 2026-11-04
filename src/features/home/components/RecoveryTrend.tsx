@@ -1,5 +1,6 @@
 import { LineChart } from 'react-native-gifted-charts';
 import { View } from 'react-native';
+import { useResolveClassNames } from 'uniwind';
 
 interface RecoveryTrendProps {
   data: number[];
@@ -14,13 +15,14 @@ export function RecoveryTrend({
   width = 48,
   height = 32,
 }: RecoveryTrendProps) {
+  const { color: chartPrimaryColor } = useResolveClassNames('text-primary');
   return (
     <View>
       <LineChart
         data={data.map(value => ({ value }))}
         width={width}
         height={height}
-        color={color}
+        color={chartPrimaryColor?.toString() ?? color}
         thickness={3}
         curved
         hideRules

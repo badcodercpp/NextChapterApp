@@ -6,21 +6,18 @@ import {
   ChevronLeft,
   Lock,
 } from 'lucide-react-native';
-import { Controller } from 'react-hook-form';
-import { View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
+import { Controller } from 'react-hook-form';
 import { LandingNavigationProp } from '@/features/Landing/navigation/types';
 import { TIMELINES } from '../../constants';
+import { View } from 'react-native';
 import { cn } from '@/utils';
 import { useHowLongHasItBeen } from './useHowLongHasItBeen';
-import { useScreenHeader } from '@/navigation/hooks';
+import { useNavigation } from '@react-navigation/native';
 
 export function HowLongHasItBeenScreen() {
   const { control, submitHowLongHasItBeen } = useHowLongHasItBeen();
   const navigation = useNavigation<LandingNavigationProp>();
-
-  useScreenHeader({ headerShown: false });
 
   return (
     <AppScreen

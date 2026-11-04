@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
 
 import { ActiveDailySessionQuery } from '@/__generated__/graphql';
-import { DailySessionRoutes } from '@/features/DailySession/navigation';
 import { TabRoutes } from '@/navigation/Tab/TabRoutes';
 import { selectActiveDailySession } from '@/state/selectors';
+import { useActiveSessionStepNavigation } from '@/features/DailySession/hooks/useActiveSessionStepNavigation';
 import { useHomeBootstrapQueries } from './useHomeBootstrapQueries';
 import { useSelector } from 'react-redux';
 import { useTabNavigation } from '@/navigation/Tab/hooks/useTabNavigation';
@@ -20,6 +20,8 @@ export const useStartDailySession = () => {
     isError: activeDailySessionLoadingError,
   } = useSelector(selectActiveDailySession);
 
+  const { getNextStepScreenName } = useActiveSessionStepNavigation();
+
   const navigation = useTabNavigation();
 
   const startNewOrResumeCurrentDailySession = useCallback(async () => {
@@ -27,6 +29,7 @@ export const useStartDailySession = () => {
       if (activeDailySessionLoading) {
         return;
       }
+      const nextStepScreenName = getNextStepScreenName();
 
       setDailySessionMetadataProcessing(true);
 
@@ -50,7 +53,7 @@ export const useStartDailySession = () => {
       // session created or resumed successfully now can safely navigate
 
       navigation.navigate(TabRoutes.DailySessionTab, {
-        screen: DailySessionRoutes.DailySessionLanding,
+        screen: nextStepScreenName,
       });
     } catch (error) {
       console.log(error);
@@ -61,6 +64,7 @@ export const useStartDailySession = () => {
     activeDailySession,
     activeDailySessionLoading,
     activeDailySessionLoadingError,
+    getNextStepScreenName,
     navigation,
     triggerLazyActiveDailySessionQuery,
   ]);

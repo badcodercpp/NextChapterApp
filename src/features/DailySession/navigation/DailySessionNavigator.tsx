@@ -1,4 +1,5 @@
 import {
+  DailySessionCompleteStepScreen,
   DailySessionFollowUpStepScreen,
   DailySessionLandingScreen,
   DailySessionMissionStepScreen,
@@ -55,6 +56,14 @@ export function DailySessionNavigator() {
         }}
         name={DailySessionRoutes.DailySessionReflectStep}
         component={DailySessionReflectStepScreen}
+      />
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          header: NavigatorAppHeader,
+        }}
+        name={DailySessionRoutes.DailySessionCompleteStep}
+        component={DailySessionCompleteStepScreen}
       />
     </Stack.Navigator>
   );

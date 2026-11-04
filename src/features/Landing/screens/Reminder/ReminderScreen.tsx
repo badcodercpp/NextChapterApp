@@ -9,12 +9,11 @@ import {
   Moon,
 } from 'lucide-react-native';
 import { Switch, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
 
 import { LandingNavigationProp } from '@/features/Landing/navigation/types';
+import { useNavigation } from '@react-navigation/native';
 import { useReminder } from './useReminder';
-import { useScreenHeader } from '@/navigation/hooks';
+import { useState } from 'react';
 
 const REMINDER_BENEFITS = [
   {
@@ -38,8 +37,6 @@ export function ReminderScreen() {
   const [enabled, setEnabled] = useState(true);
   const { submitReminder, skipReminder } = useReminder();
   const navigation = useNavigation<LandingNavigationProp>();
-
-  useScreenHeader({ headerShown: false });
 
   return (
     <AppScreen

@@ -6,4 +6,5 @@ export type DailySessionStackParamList = {
   [DailySessionRoutes.DailySessionFollowUpStep]: undefined;
   [DailySessionRoutes.DailySessionMissionStep]: undefined;
   [DailySessionRoutes.DailySessionReflectStep]: undefined;
+  [DailySessionRoutes.DailySessionCompleteStep]: undefined;
 };

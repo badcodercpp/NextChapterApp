@@ -3,3 +3,4 @@ export * from './DailySessionQuestionStepScreen';
 export * from './DailySessionFollowUpStepScreen';
 export * from './DailySessionMissionStepScreen';
 export * from './DailySessionReflectStepScreen';
+export * from './DailySessionCompleteStepScreen';

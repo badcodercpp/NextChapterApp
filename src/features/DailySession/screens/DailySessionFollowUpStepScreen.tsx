@@ -15,13 +15,17 @@ import {
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 
-import { DailySessionStackParamList } from '@/features/DailySession/navigation';
+import { DailySessionStackParamList } from '../navigation';
+import { DailySessionStep } from '@/__generated__/graphql';
 import { View } from 'react-native';
+import { useOptimisticSessionStepUpdate } from '../hooks/useOptimisticSessionStepUpdate';
 
 export function DailySessionFollowUpStepScreen() {
   const [showProceedModal, setShowProceedModal] = useState<boolean>(false);
   const navigation =
     useNavigation<NavigationProp<DailySessionStackParamList>>();
+
+  const { updateDailySessionStep } = useOptimisticSessionStepUpdate();
 
   return (
     <AppAuthenticatedLayout noBottomPadding>
@@ -79,6 +83,7 @@ export function DailySessionFollowUpStepScreen() {
         }}
         onConfirm={() => {
           setShowProceedModal(false);
+          updateDailySessionStep(DailySessionStep.Mission);
           navigation.navigate('DailySessionMissionStep');
         }}
       />

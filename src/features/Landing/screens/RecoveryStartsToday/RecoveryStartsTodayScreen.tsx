@@ -9,18 +9,15 @@ import {
   Target,
 } from 'lucide-react-native';
 import { Image, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
 
 import { LandingNavigationProp } from '@/features/Landing/navigation/types';
 import { selectApplicationConfig } from '@/state/selectors';
-import { useScreenHeader } from '@/navigation/hooks';
+import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 export function RecoveryStartsTodayScreen() {
   const { data: applicationConfig } = useSelector(selectApplicationConfig);
   const navigation = useNavigation<LandingNavigationProp>();
-
-  useScreenHeader({ headerShown: false });
 
   return (
     <AppScreen

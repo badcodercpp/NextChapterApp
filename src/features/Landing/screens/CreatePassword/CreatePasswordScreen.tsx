@@ -17,12 +17,11 @@ import {
   X,
 } from 'lucide-react-native';
 import { Controller, useWatch } from 'react-hook-form';
-import { View } from 'react-native';
 
 import { PASSWORD_RULES } from './rules';
+import { View } from 'react-native';
 import { cn } from '@/utils';
 import { useCreatePassword } from './useCreatePassword';
-import { useScreenHeader } from '@/navigation/hooks';
 
 const PASSWORD_TIPS = [
   'Use a mix of letters, numbers & symbols',
@@ -42,8 +41,6 @@ export function CreatePasswordScreen() {
     submitCreatePassword,
     clearErrors,
   } = useCreatePassword();
-
-  useScreenHeader({ headerShown: false });
 
   const email = useWatch({ control, name: 'createAccount.email' });
   const atIndex = email?.lastIndexOf('@') ?? -1;

@@ -1,0 +1,20 @@
+mutation updateDailySessionStep($input: UpdateDailySessionStepInput!) {
+  updateDailySessionStep(input: $input) {
+    id
+    userId
+    journeyId
+    missionId
+    questionHistoryId
+    reflectionId
+    day
+    status
+    currentStep
+    startMoods
+    endMoods
+    startedAt
+    missionCompletedAt
+    completedAt
+    createdAt
+    updatedAt
+  }
+}

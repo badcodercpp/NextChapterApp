@@ -9,12 +9,13 @@ import {
   isErrorWithCode,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import { useCallback, useState } from 'react';
 
 import { showToast } from '@/components';
-import { useCallback } from 'react';
 import { useDeviceInfoSessionPayload } from './useDeviceInfoSessionPayload';
 
 const useGoogleSignIn = () => {
+  const [isAuthCallStarted, setIsAuthCallStarted] = useState<boolean>(false);
   const { getDeviceInfoSessionPayload } = useDeviceInfoSessionPayload();
 
   const [
@@ -36,6 +37,7 @@ const useGoogleSignIn = () => {
   ] = useGoogleRegisterMutation();
 
   const doGoogleSignIn = useCallback(async () => {
+    setIsAuthCallStarted(true);
     showToast('Starting google sign-in...', 'info');
 
     try {
@@ -93,11 +95,14 @@ const useGoogleSignIn = () => {
       } else {
         console.log('Google login error:', error);
       }
+    } finally {
+      setIsAuthCallStarted(false);
     }
   }, [getDeviceInfoSessionPayload, googleLogin]);
 
   const doGoogleOnboard = useCallback(async () => {
     try {
+      setIsAuthCallStarted(true);
       await GoogleSignin.hasPlayServices();
 
       const googleSignInResponse: SignInResponse = await GoogleSignin.signIn();
@@ -152,10 +157,13 @@ const useGoogleSignIn = () => {
       } else {
         console.log('Google register error:', error);
       }
+    } finally {
+      setIsAuthCallStarted(false);
     }
   }, [getDeviceInfoSessionPayload, googleRegister]);
 
-  const isLoading = isGoogleLoginLoading || isGoogleRegisterLoading;
+  const isLoading =
+    isAuthCallStarted || isGoogleLoginLoading || isGoogleRegisterLoading;
 
   return {
     doGoogleSignIn,

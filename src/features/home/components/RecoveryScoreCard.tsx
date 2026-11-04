@@ -25,11 +25,7 @@ export function RecoveryScoreCard({}: RecoveryScoreCardProps) {
   const recoveryScoreTrendForLastNDay = recoveryScoreTrendForLastNDayData.map(
     e => e.score ?? 0,
   );
-  console.log(
-    'recoveryScoreTrendForLastNDay',
-    recoveryScoreTrendForLastNDay,
-    recoveryScoreTrendForLastNDayData,
-  );
+
   const { t } = useTranslation();
 
   return (

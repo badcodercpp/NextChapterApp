@@ -49,7 +49,7 @@ export function TodaysQuestionCard({}: TodaysQuestionCardProps) {
             {t('app.locale.home.todayFocus.title')}
           </AppText>
 
-          <AppText variant="md" className="mt-1 text-text">
+          <AppText variant="md" className="mt-1 text-text-secondary">
             {todayFocusContent}
           </AppText>
         </View>

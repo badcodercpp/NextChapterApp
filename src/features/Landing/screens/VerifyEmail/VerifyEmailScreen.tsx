@@ -18,7 +18,6 @@ import { useRef, useState } from 'react';
 
 import { Controller } from 'react-hook-form';
 import { cn } from '@/utils';
-import { useScreenHeader } from '@/navigation/hooks';
 import { useVerifyEmail } from './useVerifyEmail';
 
 const KEYPAD = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', 'delete'];
@@ -34,8 +33,6 @@ export function VerifyEmailScreen() {
   } = useVerifyEmail();
   const inputRefs = useRef<Array<TextInput | null>>([]);
   const [activeIndex, setActiveIndex] = useState(0);
-
-  useScreenHeader({ headerShown: false });
 
   return (
     <AppScreen

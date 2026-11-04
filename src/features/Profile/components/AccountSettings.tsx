@@ -4,7 +4,7 @@ import { ChevronRight, LogOut, UserRound } from 'lucide-react-native';
 import { View } from 'react-native';
 import { cn } from '@/utils';
 
-interface AccountSettingItem {
+export interface AccountSettingItem {
   id: string;
   title: string;
   icon: typeof UserRound;
@@ -103,7 +103,7 @@ export function AccountSettings({
   return (
     <View className="flex-1">
       {/* Header */}
-      <AppText variant="xl" className=" pb-2 font-semibold text-text">
+      <AppText variant="xl" className="ml-2 pb-1 font-semibold text-text">
         Account
       </AppText>
 

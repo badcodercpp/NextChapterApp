@@ -1,8 +1,9 @@
 import { AppCard, AppIcon, AppPressable, AppText } from '@/components';
-import { ChevronDown, ChevronUp, Heart } from 'lucide-react-native';
+import { Check, ChevronDown, ChevronUp, Heart } from 'lucide-react-native';
 import React, { useState } from 'react';
 
 import { MoodSelectorProps } from '../types/moods';
+import { RecoveryReasonCurrentFeeling } from '@/__generated__/graphql';
 import { View } from 'react-native';
 import { defaultMoodSelectorOptions } from '../constants/moods';
 
@@ -15,6 +16,9 @@ export function MoodSelector({
   setValue,
   selectionMode = 'multiple',
 }: MoodSelectorProps) {
+  const [isDirty, setIsDirty] = useState(false);
+  const [localValue, setLocalValue] =
+    useState<Array<RecoveryReasonCurrentFeeling | undefined>>(value);
   const [expanded, setExpanded] = useState(false);
 
   const visibleOptions = expanded ? options : options.slice(0, collapsedCount);
@@ -22,19 +26,26 @@ export function MoodSelector({
   const canExpand = options.length > collapsedCount;
 
   const handleSelect = (selectedValue: MoodSelectorProps['value'][number]) => {
-    // Single selection
+    // Single selection → immediately update parent
     if (selectionMode === 'single') {
       setValue([selectedValue]);
       return;
     }
 
-    // Multiple selection
-    if (value.includes(selectedValue)) {
-      setValue(value.filter(item => item !== selectedValue));
-      return;
-    }
+    // Multiple selection → only update local state
+    setLocalValue(current => {
+      setIsDirty(true);
+      if (current.includes(selectedValue)) {
+        return current.filter(item => item !== selectedValue);
+      }
 
-    setValue([...new Set([...value, selectedValue])]);
+      return [...new Set([...current, selectedValue])];
+    });
+  };
+
+  const syncLocalvalue = () => {
+    setIsDirty(false);
+    setValue(localValue);
   };
 
   return (
@@ -46,6 +57,17 @@ export function MoodSelector({
         <AppText variant="xl" className="ml-2 text-primary">
           {title}
         </AppText>
+
+        {isDirty && (
+          <View className="flex-row items-end justify-end flex-1">
+            <AppPressable
+              onPress={syncLocalvalue}
+              className="h-10 w-10 items-center justify-center rounded-full border border-primary"
+            >
+              <AppIcon icon={Check} size={24} className="text-primary" />
+            </AppPressable>
+          </View>
+        )}
       </View>
 
       {/* Subtitle */}
@@ -56,7 +78,7 @@ export function MoodSelector({
       {/* Mood options */}
       <View className="mt-4 flex-row flex-wrap gap-1">
         {visibleOptions.map(option => {
-          const selected = value.includes(option.value);
+          const selected = localValue.includes(option.value);
 
           return (
             <AppPressable

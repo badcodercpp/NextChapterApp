@@ -13,14 +13,18 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 
 import { ChevronRight } from 'lucide-react-native';
-import { DailySessionStackParamList } from '@/features/DailySession/navigation';
+import { DailySessionStackParamList } from '../navigation';
+import { DailySessionStep } from '@/__generated__/graphql';
 import { TodaysMissionCard } from '@/features/CommonFeature';
 import { View } from 'react-native';
+import { useOptimisticSessionStepUpdate } from '../hooks/useOptimisticSessionStepUpdate';
 
 export function DailySessionMissionStepScreen() {
   const [showProceedModal, setShowProceedModal] = useState<boolean>(false);
   const navigation =
     useNavigation<NavigationProp<DailySessionStackParamList>>();
+
+  const { updateDailySessionStep } = useOptimisticSessionStepUpdate();
 
   return (
     <AppAuthenticatedLayout noBottomPadding>
@@ -61,6 +65,7 @@ export function DailySessionMissionStepScreen() {
         }}
         onConfirm={() => {
           setShowProceedModal(false);
+          updateDailySessionStep(DailySessionStep.Reflection);
           navigation.navigate('DailySessionReflectStep');
         }}
       />

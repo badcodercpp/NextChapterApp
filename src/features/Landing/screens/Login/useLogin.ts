@@ -17,6 +17,7 @@ import { useFormContext } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 
 export const useLogin = () => {
+  const [isAuthCallStarted, setIsAuthCallStarted] = useState<boolean>(false);
   const navigation = useNavigation<LandingNavigationProp>();
 
   const dispatch = useDispatch<AppDispatch>();
@@ -36,6 +37,7 @@ export const useLogin = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const submitLogin = useCallback(async () => {
+    setIsAuthCallStarted(true);
     const email = getValues('login.email');
     const password = getValues('login.password');
 
@@ -84,6 +86,8 @@ export const useLogin = () => {
       );
     } catch (e) {
       console.log('Login error:', e);
+    } finally {
+      setIsAuthCallStarted(false);
     }
   }, [
     getValues,
@@ -98,8 +102,8 @@ export const useLogin = () => {
     navigation,
 
     // RTK Query loading
-    loading: isLoading,
-    isLoading,
+    loading: isLoading || isAuthCallStarted,
+    isLoading: isLoading || isAuthCallStarted,
 
     // RTK Query error state
     isError,

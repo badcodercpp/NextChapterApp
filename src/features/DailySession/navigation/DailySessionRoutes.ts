@@ -4,4 +4,5 @@ export const DailySessionRoutes = {
   DailySessionFollowUpStep: 'DailySessionFollowUpStep',
   DailySessionMissionStep: 'DailySessionMissionStep',
   DailySessionReflectStep: 'DailySessionReflectStep',
+  DailySessionCompleteStep: 'DailySessionCompleteStep',
 } as const;

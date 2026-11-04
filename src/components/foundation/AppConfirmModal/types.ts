@@ -10,5 +10,7 @@ export type AppConfirmModalProps = {
   onConfirm: () => void;
   onCancel: () => void;
 
+  onBackdropPress?: () => void;
+
   icon?: React.ComponentType<any>;
 };

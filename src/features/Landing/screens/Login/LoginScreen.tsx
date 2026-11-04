@@ -30,7 +30,7 @@ export function LoginScreen() {
   const isAuthenticating = isLoading || isGoogleLoginLoading;
 
   useScreenHeader({
-    headerShown: false,
+    headerShown: true,
     backDisabled: isAuthenticating,
   });
 
@@ -83,7 +83,7 @@ export function LoginScreen() {
               accessibilityState={{ selected: false }}
               disabled={isAuthenticating}
               className="min-h-11 flex-1 items-center justify-center px-2 py-3"
-              onPress={() => navigation.navigate('CreateAccount')}
+              onPress={() => navigation.replace('CreateAccount')}
             >
               <AppText
                 variant="sm"

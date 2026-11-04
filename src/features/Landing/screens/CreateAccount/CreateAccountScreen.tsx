@@ -5,14 +5,14 @@ import {
   AppScreen,
   AppText,
 } from '@/components';
-import { Info, Mail, User, UserPlus } from 'lucide-react-native';
 import { Image, View } from 'react-native';
+import { Info, Mail, User, UserPlus } from 'lucide-react-native';
 import { usePreventBackNavigation, useScreenHeader } from '@/navigation/hooks';
 
 import { Controller } from 'react-hook-form';
 import { GoogleAuthButton } from '@/features/Landing/components/GoogleAuthButton';
-import useGoogleSignIn from '@/hooks/useGoogleSignIn';
 import { useCreateAccount } from './useCreateAccount';
+import useGoogleSignIn from '@/hooks/useGoogleSignIn';
 
 export function CreateAccountScreen() {
   const { control, errors, submitCreateAccount, navigation, clearErrors } =
@@ -20,7 +20,7 @@ export function CreateAccountScreen() {
   const { doGoogleOnboard, isGoogleRegisterLoading } = useGoogleSignIn();
 
   useScreenHeader({
-    headerShown: false,
+    headerShown: true,
     backDisabled: isGoogleRegisterLoading,
   });
   usePreventBackNavigation(isGoogleRegisterLoading);
@@ -60,7 +60,7 @@ export function CreateAccountScreen() {
               accessibilityState={{ selected: false }}
               disabled={isGoogleRegisterLoading}
               className="min-h-11 flex-1 items-center justify-center px-2 py-3"
-              onPress={() => navigation.navigate('Login')}
+              onPress={() => navigation.replace('Login')}
             >
               <AppText
                 variant="sm"
