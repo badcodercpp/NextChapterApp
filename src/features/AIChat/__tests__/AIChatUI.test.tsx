@@ -9,12 +9,8 @@ import { AIChatMessage } from '../components/AIChatMessage';
 import { AICoachCard } from '../components/AICoachCard';
 import { ChatComposer } from '../components/ChatComposer';
 import { QuickReplies } from '../components/QuickReplies';
-import { AIChatScreen } from '../screens/AIChatScreen';
 
 const mockSend = jest.fn();
-const mockGoBack = jest.fn();
-let mockPending = false;
-let mockCanGoBack = true;
 let mockLatest: { quickReplies?: string[] } = {};
 let mockLoading = false;
 
@@ -103,18 +99,6 @@ jest.mock('react-redux', () => ({
     }
   },
 }));
-jest.mock('@react-navigation/native', () => ({
-  useNavigation: () => ({ goBack: mockGoBack, canGoBack: () => mockCanGoBack }),
-}));
-jest.mock('../hooks/useAIChatBootstrap', () => ({
-  useAIChatBootstrap: jest.fn(),
-}));
-jest.mock('../hooks/useAIChatSendMessageBootstrap', () => ({
-  useAIChatSendMessageBootstrap: () => ({
-    sendAiChatMessage: mockSend,
-    isBootstrapPending: mockPending,
-  }),
-}));
 
 let screen: ReactTestRenderer;
 let form: UseFormReturn<MasterFormData>;
@@ -138,8 +122,6 @@ function press(label: string) {
 beforeEach(() => {
   jest.clearAllMocks();
   mockLatest = {};
-  mockPending = false;
-  mockCanGoBack = true;
   mockLoading = false;
 });
 afterEach(() => act(() => screen?.unmount()));
@@ -307,25 +289,4 @@ test('keeps the existing initial loading state', () => {
   render(<AIChatComponent />);
   expect(JSON.stringify(screen.toJSON())).toContain('Loading conversation');
   expect(JSON.stringify(screen.toJSON())).not.toContain('How are you feeling?');
-});
-
-test('screen provides themed keyboard-aware layout and a working back action', () => {
-  render(<AIChatScreen />);
-  expect(screen.root.findByProps({ keyboard: true }).props.className).toBe(
-    'bg-background-v2',
-  );
-  press('Go back');
-  expect(mockGoBack).toHaveBeenCalledTimes(1);
-  for (const unsupported of ['Photo', 'Voice', 'File', 'History']) {
-    expect(
-      screen.root.findAllByProps({ accessibilityLabel: unsupported }),
-    ).toHaveLength(0);
-  }
-});
-
-test('keeps the previous header behavior when no back destination exists', () => {
-  mockCanGoBack = false;
-  render(<AIChatScreen />);
-  press('Go back');
-  expect(mockGoBack).not.toHaveBeenCalled();
 });

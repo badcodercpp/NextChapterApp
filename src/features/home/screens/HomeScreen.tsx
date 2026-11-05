@@ -1,5 +1,5 @@
 import { AppAuthenticatedLayout, AppButton } from '@/components';
-import { CalendarClock, ChevronRight } from 'lucide-react-native';
+import { ChevronRight, CirclePlay } from 'lucide-react-native';
 import {
   DailyAffirmationCard,
   QuickActionCardComponent,
@@ -47,9 +47,9 @@ export function HomeScreen() {
             <AppButton
               title={t('app.locale.home.continueSession')}
               size="lg"
-              leftIcon={CalendarClock}
+              leftIcon={CirclePlay}
               fullWidth
-              className="mb-0"
+              className="mb-0 rounded-full bg-primary-v2 py-4"
               onPress={startNewOrResumeCurrentDailySession}
               rightIcon={ChevronRight}
               loading={dailySessionMetadataProcessing}

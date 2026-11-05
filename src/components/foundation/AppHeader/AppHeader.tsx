@@ -1,14 +1,20 @@
-import { AppHeaderProps } from './types';
+import { AppHeaderOptions, AppHeaderProps } from './types';
 import { AppIcon } from '../AppIcon';
 import { AppPressable } from '../AppPressable';
 import { AppText } from '../AppText';
-import { ArrowLeft } from 'lucide-react-native';
+import { ChevronLeft } from 'lucide-react-native';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export function AppHeader({ title, backDisabled }: AppHeaderProps) {
+export function AppHeader({
+  title,
+  subtitle,
+  titleAccessory,
+  right,
+  backDisabled,
+}: AppHeaderProps) {
   const navigation = useNavigation();
   const { top } = useSafeAreaInsets();
 
@@ -24,22 +30,65 @@ export function AppHeader({ title, backDisabled }: AppHeaderProps) {
 
   return (
     <View
-      className="flex-row items-center bg-background px-4 py-4 pt-safe border-b border-border shadow-md"
-      style={{ paddingTop: top }}
+      className="flex-row items-center gap-3 border-b border-border bg-background px-4 pb-3"
+      style={{ paddingTop: top + 8 }}
     >
-      <AppPressable onPress={handleBack}>
-        <AppIcon icon={ArrowLeft} size={22} className="text-text" />
+      <AppPressable
+        onPress={handleBack}
+        disabled={backDisabled}
+        accessibilityRole="button"
+        accessibilityLabel="Go back"
+        className="h-11 w-11 items-center justify-center rounded-full border border-border-v2 bg-surface-v2"
+      >
+        <AppIcon icon={ChevronLeft} size={22} className="text-text-v2" />
       </AppPressable>
 
-      {title && (
-        <AppText variant="xl" className="ml-4 text-text">
-          {title}
-        </AppText>
-      )}
+      <View className="flex-1">
+        {!!title && (
+          <View className="flex-row items-center gap-2">
+            <AppText
+              variant="lg"
+              className="shrink font-bold text-text-v2"
+              numberOfLines={1}
+              accessibilityRole="header"
+            >
+              {title}
+            </AppText>
+            {titleAccessory}
+          </View>
+        )}
+        {!!subtitle && (
+          <AppText
+            variant="xs"
+            className="mt-0.5 text-text-muted-v2"
+            numberOfLines={1}
+          >
+            {subtitle}
+          </AppText>
+        )}
+      </View>
+
+      {right}
     </View>
   );
 }
 
-export const NavigatorAppHeader = (props: NativeStackHeaderProps) => (
-  <AppHeader {...props} title={props.options.title} backDisabled={false} />
-);
+export const appHeaderOptions = (options: AppHeaderOptions): AppHeaderOptions =>
+  options;
+
+export const NavigatorAppHeader = (props: NativeStackHeaderProps) => {
+  const options = props.options as AppHeaderOptions;
+
+  return (
+    <AppHeader
+      {...props}
+      title={options.title}
+      subtitle={options.subtitle}
+      titleAccessory={options.headerTitleAccessory?.()}
+      right={options.headerRight?.({
+        canGoBack: props.navigation.canGoBack(),
+      })}
+      backDisabled={options.backDisabled ?? false}
+    />
+  );
+};

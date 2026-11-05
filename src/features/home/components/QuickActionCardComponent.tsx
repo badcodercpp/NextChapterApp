@@ -32,8 +32,8 @@ export function QuickActionCardComponent({}: QuickActionCardComponentProps) {
         title={t('app.locale.home.quickActionCard.journal.title')}
         description={t('app.locale.home.quickActionCard.journal.description')}
         actionLabel={t('app.locale.home.quickActionCard.journal.actionLabel')}
-        accentClassName="text-primary"
-        iconBackgroundClassName="bg-primary/15"
+        accentClassName="text-primary-v2"
+        iconBackgroundClassName="bg-primary-v2/15"
         onPress={() => {
           navigation.navigate(TabRoutes.Journal, {
             screen: JournalRoutes.CreateJournal,
@@ -56,8 +56,8 @@ export function QuickActionCardComponent({}: QuickActionCardComponentProps) {
           ''
         }
         actionLabel={t('app.locale.home.quickActionCard.aiCoach.actionLabel')}
-        accentClassName="text-primary"
-        iconBackgroundClassName="bg-secondary/15"
+        accentClassName="text-rose-v2"
+        iconBackgroundClassName="bg-rose-v2/15"
         onPress={() => {
           // navigate to AI coach
           navigation.navigate(TabRoutes.AI, {

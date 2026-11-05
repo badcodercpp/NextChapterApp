@@ -33,72 +33,69 @@ export function TodaysMissionCard({
   const description = t('app.locale.common.mission.noContact.description');
 
   return (
-    <AppCard className="rounded-[28px] border-1 border-border bg-card p-5">
-      <View className="flex-row">
-        {/* Content */}
+    <AppCard className="rounded-[28px] border border-border-v2 bg-surface-v2 p-5">
+      <View className="flex-row items-center">
         <View className="flex-1 pr-4">
           <AppText
-            variant="lg"
-            className="font-medium uppercase tracking-wide text-primary"
+            variant="sm"
+            className="font-bold uppercase tracking-wide text-primary-v2"
           >
             {t('app.locale.common.mission.todayMission.title')}
           </AppText>
 
-          <AppText variant="xl" className="mt-2 font-semibold text-text">
+          <AppText variant="xl" className="mt-2 font-semibold text-text-v2">
             {missionTitle ?? title}
           </AppText>
 
-          <AppText variant="md" className="mt-2 text-text-secondary">
+          <AppText variant="md" className="mt-1 leading-6 text-text-muted-v2">
             {todayMission?.description ?? description}
           </AppText>
-
-          {/* Progress */}
-          {showProgress && (
-            <View className="mt-4 flex-row items-center">
-              <AppPressable
-                onPress={onPress}
-                disabled={!onPress}
-                className="h-6 w-6 items-center justify-center rounded-full bg-primary"
-              >
-                <AppIcon
-                  icon={Check}
-                  size={12}
-                  className="text-white"
-                  strokeWidth={3}
-                />
-              </AppPressable>
-
-              <View className="mx-3 flex-1">
-                <View className="h-2 overflow-hidden rounded-full bg-primary/20">
-                  <View
-                    className="h-full rounded-full bg-primary"
-                    style={{
-                      width: `${Math.min(progress, 1) * 100}%`,
-                    }}
-                  />
-                </View>
-              </View>
-
-              <AppText variant="sm" className="text-text-secondary">
-                {completed}/{total}{' '}
-                {isCompleted
-                  ? t('app.locale.common.completed')
-                  : t('app.locale.common.completed')}
-              </AppText>
-            </View>
-          )}
         </View>
 
-        {/* Mission Icon */}
-        <View className="h-10 w-10 items-center justify-center  rounded-full bg-primary/15">
+        <View className="h-20 w-20 items-center justify-center rounded-full bg-primary-v2/15">
           <AppIcon
             icon={Shield}
-            size={24}
-            className="text-primary"
+            size={34}
+            className="text-primary-v2"
             strokeWidth={2}
           />
         </View>
       </View>
+
+      {showProgress && (
+        <View className="mt-4 flex-row items-center">
+          <AppPressable
+            onPress={onPress}
+            disabled={!onPress}
+            className="h-7 w-7 items-center justify-center rounded-full bg-primary-v2"
+          >
+            <AppIcon
+              icon={Check}
+              size={14}
+              className="text-on-primary-v2"
+              strokeWidth={3}
+            />
+          </AppPressable>
+
+          <View className="mx-3 flex-1">
+            <View className="h-2 overflow-hidden rounded-full bg-primary-v2/20">
+              <View
+                className="h-full rounded-full bg-primary-v2"
+                style={{
+                  width: `${Math.min(progress, 1) * 100}%`,
+                }}
+              />
+            </View>
+          </View>
+
+          <AppText variant="sm" className="text-text-muted-v2">
+            {completed}/{total}{' '}
+            {isCompleted
+              ? t('app.locale.common.completed')
+              : t('app.locale.common.completed')}
+          </AppText>
+        </View>
+      )}
     </AppCard>
   );
 }

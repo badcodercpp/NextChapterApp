@@ -1,6 +1,6 @@
 import { AppCard, AppIcon, AppPressable, AppText } from '@/components';
 
-import { Sparkles } from 'lucide-react-native';
+import { ChevronRight, Sparkles } from 'lucide-react-native';
 import { View } from 'react-native';
 import { selectMotivationalMessage } from '@/state/selectors';
 import { useSelector } from 'react-redux';
@@ -21,14 +21,14 @@ export function DailyAffirmationCard({ onPress }: DailyAffirmationCardProps) {
 
   return (
     <AppPressable onPress={onPress}>
-      <AppCard className="rounded-[24px] border-1 border-border bg-card p-5">
+      <AppCard className="rounded-[28px] border border-rose-v2/30 bg-surface-v2 px-5 py-4">
         <View className="flex-row items-center">
           {/* Icon */}
           <View className="mr-4">
             <AppIcon
               icon={Sparkles}
-              size={30}
-              className="text-secondary"
+              size={28}
+              className="text-rose-v2"
               strokeWidth={2}
             />
           </View>
@@ -37,7 +37,7 @@ export function DailyAffirmationCard({ onPress }: DailyAffirmationCardProps) {
           <View className="flex-1">
             <AppText
               variant="md"
-              className="font-semibold text-text"
+              className="font-semibold text-text-v2"
               numberOfLines={2}
             >
               {t(motivationalMessage?.title ?? title) ?? title}
@@ -46,13 +46,19 @@ export function DailyAffirmationCard({ onPress }: DailyAffirmationCardProps) {
             {subtitle && (
               <AppText
                 variant="sm"
-                className="mt-1 text-text-muted"
+                className="mt-1 text-text-muted-v2"
                 numberOfLines={1}
               >
                 {t(motivationalMessage?.description ?? subtitle) ?? subtitle}
               </AppText>
             )}
           </View>
+
+          <AppIcon
+            icon={ChevronRight}
+            size={20}
+            className="ml-3 text-text-muted-v2"
+          />
         </View>
       </AppCard>
     </AppPressable>
