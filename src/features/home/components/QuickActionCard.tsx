@@ -18,8 +18,8 @@ export function QuickActionCard({
   title,
   description,
   actionLabel,
-  accentClassName = 'text-primary',
-  iconBackgroundClassName = 'bg-primary/15',
+  accentClassName = 'text-primary-v2',
+  iconBackgroundClassName = 'bg-primary-v2/15',
   onPress,
   ...rest
 }: QuickActionCardProps) {
@@ -27,7 +27,7 @@ export function QuickActionCard({
     <AppPressable className="w-[48%]" onPress={onPress}>
       <AppCard
         {...rest}
-        className="rounded-[28px] border border-border bg-card p-4 pb-6"
+        className="rounded-[28px] border border-border bg-surface-v2 p-5"
       >
         {/* Icon */}
         <View
@@ -42,20 +42,28 @@ export function QuickActionCard({
         </View>
 
         {/* Content */}
-        <View className="mt-5 flex-1">
-          <AppText variant="lg" className="font-semibold text-text">
+        <View className="mt-4 flex-1">
+          <AppText
+            variant="lg"
+            className="font-semibold text-text-v2"
+            numberOfLines={1}
+          >
             {title}
           </AppText>
 
-          <AppText variant="md" className="mt-1 text-text-secondary">
+          <AppText
+            variant="sm"
+            className="mt-1 leading-5 text-text-muted-v2"
+            numberOfLines={4}
+          >
             {description}
           </AppText>
         </View>
 
         {/* Action */}
         <AppText
-          variant="md"
-          className={`font-semibold ${accentClassName} mt-4`}
+          variant="sm"
+          className={`mt-4 font-semibold ${accentClassName}`}
           numberOfLines={1}
         >
           {actionLabel} →

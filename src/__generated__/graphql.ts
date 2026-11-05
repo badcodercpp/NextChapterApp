@@ -40,7 +40,8 @@ export enum DailySessionStep {
   FollowUp = 'FOLLOW_UP',
   Mission = 'MISSION',
   Question = 'QUESTION',
-  Reflection = 'REFLECTION'
+  Reflection = 'REFLECTION',
+  Start = 'START'
 }
 
 export type DeviceInfoInput = {

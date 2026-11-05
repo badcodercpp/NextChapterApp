@@ -1,4 +1,3 @@
-export * from './JournalHeader';
 export * from './JournalEmptyCard';
 export * from './JournalPromptCard';
 export * from './JournalEntries';

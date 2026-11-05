@@ -31,36 +31,36 @@ export function TodaysQuestionCard({}: TodaysQuestionCardProps) {
   const { t } = useTranslation();
 
   return (
-    <AppCard className="rounded-[28px] border border-border bg-card p-5">
-      <View className="flex-row items-start">
-        {/* Focus Icon */}
-        <View className="h-10 w-10 items-center justify-center rounded-full bg-primary/20">
+    <AppCard className="rounded-[28px] border border-border-v2 bg-surface-v2 p-5">
+      <View className="flex-row items-center">
+        <View className="h-14 w-14 items-center justify-center rounded-full bg-primary-v2/15">
           <AppIcon
             icon={Target}
-            size={24}
-            className="text-primary"
+            size={28}
+            className="text-primary-v2"
             strokeWidth={2}
           />
         </View>
 
-        {/* Focus Content */}
-        <View className="ml-3 flex-1">
-          <AppText variant="lg" className="font-medium text-primary">
+        <View className="ml-4 flex-1">
+          <AppText variant="sm" className="text-primary-v2">
             {t('app.locale.home.todayFocus.title')}
           </AppText>
 
-          <AppText variant="md" className="mt-1 text-text-secondary">
+          <AppText
+            variant="lg"
+            className="mt-1 font-semibold leading-snug text-text-v2"
+          >
             {todayFocusContent}
           </AppText>
         </View>
 
-        {/* Day */}
-        <View className="ml-3 items-end">
-          <AppText variant="xl" className="text-primary">
+        <View className="ml-3 items-end self-start">
+          <AppText variant="lg" className="font-bold text-primary-v2">
             {t('app.locale.home.todayFocus.dayLabel')} {todayQuestion?.day ?? 1}
           </AppText>
 
-          <AppText variant="sm" className="mt-0.5 text-text-secondary">
+          <AppText variant="sm" className="text-text-muted-v2">
             {t('app.locale.home.todayFocus.ofLabel')}{' '}
             {applicationConfig?.totalProgramDays ?? 90}
           </AppText>

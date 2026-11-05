@@ -36,10 +36,10 @@ export function AppHomeHeader({ backDisabled }: AppHeaderProps) {
 
   return (
     <View
-      className="flex-row items-center bg-background px-4 py-3 pt-safe border-b border-border shadow-md"
-      style={{ paddingTop: top }}
+      className="border-b border-border bg-background px-4 pb-3"
+      style={{ paddingTop: top + 8 }}
     >
-      <View className="flex-row items-center">
+      <View className="flex-row items-center gap-3">
         <AppAvatar
           size="sm"
           name={me?.displayName ?? ''}
@@ -48,13 +48,27 @@ export function AppHomeHeader({ backDisabled }: AppHeaderProps) {
         />
 
         <View className="flex-1">
-          <AppText variant="xl" className="ml-3 text-text">
-            {t(getGreetingKey())}, {me?.displayName?.split(' ')?.[0] ?? ''}{' '}
+          <AppText
+            variant="lg"
+            className="font-semibold text-text-v2"
+            numberOfLines={1}
+          >
+            {t(getGreetingKey())}, {me?.displayName?.split(' ')?.[0] ?? ''}
           </AppText>
         </View>
 
-        <AppPressable onPress={handleBack}>
-          <AppIcon icon={Bell} size={32} className="text-text" count={4} />
+        <AppPressable
+          onPress={handleBack}
+          accessibilityRole="button"
+          accessibilityLabel="Notifications"
+          className="h-11 w-11 items-center justify-center"
+        >
+          <AppIcon
+            icon={Bell}
+            size={32}
+            className="text-primary-v2"
+            count={4}
+          />
         </AppPressable>
       </View>
     </View>

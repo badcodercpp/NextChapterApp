@@ -4,7 +4,6 @@ import {
   CreateJournalForm,
   JournalEmptyCard,
   JournalEntries,
-  JournalHeader,
   JournalPromptCard,
 } from '../components';
 import { usePreventBackNavigation, useScreenHeader } from '@/navigation/hooks';
@@ -28,9 +27,6 @@ export function JournalScreen() {
   return (
     <AppAuthenticatedLayout noBottomPadding>
       <View className="mt-2">
-        <JournalHeader onSearchPress={() => {}} />
-      </View>
-      <View className="mt-4">
         <JournalEmptyCard />
       </View>
       <View className="mt-4">

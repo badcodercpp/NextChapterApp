@@ -1,6 +1,6 @@
 import { AppAuthenticatedLayout, AppButton } from '@/components';
 import { ChevronRight, Save } from 'lucide-react-native';
-import { CreateJournalForm, JournalHeader } from '../components';
+import { CreateJournalForm } from '../components';
 import { usePreventBackNavigation, useScreenHeader } from '@/navigation/hooks';
 
 import { MoodSelector } from '@/features/CommonFeature';
@@ -21,9 +21,6 @@ export function EditJournalScreen() {
   return (
     <AppAuthenticatedLayout noBottomPadding>
       <View className="mt-2">
-        <JournalHeader onSearchPress={() => {}} />
-      </View>
-      <View className="mt-4">
         <MoodSelector
           value={value}
           setValue={setValue}
