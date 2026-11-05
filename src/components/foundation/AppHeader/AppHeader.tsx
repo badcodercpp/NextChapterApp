@@ -1,4 +1,5 @@
 import { AppHeaderOptions, AppHeaderProps } from './types';
+
 import { AppIcon } from '../AppIcon';
 import { AppPressable } from '../AppPressable';
 import { AppText } from '../AppText';
@@ -30,17 +31,17 @@ export function AppHeader({
 
   return (
     <View
-      className="flex-row items-center gap-3 border-b border-border bg-background px-4 pb-3"
-      style={{ paddingTop: top + 8 }}
+      className="flex-row items-center gap-3 border-b border-border bg-background px-3 pb-3"
+      style={{ paddingTop: top }}
     >
       <AppPressable
         onPress={handleBack}
         disabled={backDisabled}
         accessibilityRole="button"
         accessibilityLabel="Go back"
-        className="h-11 w-11 items-center justify-center rounded-full border border-border-v2 bg-surface-v2"
+        className="h-11 w-11 items-start justify-center rounded-full bg-transparent px-none"
       >
-        <AppIcon icon={ChevronLeft} size={22} className="text-text-v2" />
+        <AppIcon icon={ChevronLeft} size={32} className="text-text-v2" />
       </AppPressable>
 
       <View className="flex-1">

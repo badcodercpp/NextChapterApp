@@ -35,9 +35,10 @@ export function TabNavigator() {
         options={{
           headerShown: false,
           title: t('app.locale.navigation.journal'),
-          tabBarStyle: {
-            display: 'none',
-          },
+          // enable this to hide bottom bar
+          // tabBarStyle: {
+          //   display: 'none',
+          // },
         }}
         name={TabRoutes.Journal}
         component={JournalNavigator}

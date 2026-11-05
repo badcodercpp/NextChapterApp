@@ -8,3 +8,5 @@ export * from './file';
 export * from './url';
 export * from './date';
 export * from './mood';
+export * from './userUpdatedFieldIcon';
+export * from './achievementTypeIcon';

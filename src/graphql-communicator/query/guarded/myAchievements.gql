@@ -1,0 +1,12 @@
+query MyAchievements {
+  myAchievements {
+    id
+    key
+    type
+    title
+    description
+    threshold
+    icon
+    unlockedAt
+  }
+}

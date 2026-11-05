@@ -1,8 +1,8 @@
 import { AppAuthenticatedLayout, AppButton } from '@/components';
 import { ChevronRight, Save } from 'lucide-react-native';
-import { CreateJournalForm } from '../components';
 import { usePreventBackNavigation, useScreenHeader } from '@/navigation/hooks';
 
+import { CreateJournalForm } from '../components';
 import { MoodSelector } from '@/features/CommonFeature';
 import React from 'react';
 import { View } from 'react-native';
@@ -19,7 +19,10 @@ export function EditJournalScreen() {
   usePreventBackNavigation(editingJournal);
 
   return (
-    <AppAuthenticatedLayout noBottomPadding>
+    <AppAuthenticatedLayout
+    // uncomment this if bottom bar is hidden
+    // noBottomPadding
+    >
       <View className="mt-2">
         <MoodSelector
           value={value}

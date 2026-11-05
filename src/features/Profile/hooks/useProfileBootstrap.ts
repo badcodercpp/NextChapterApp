@@ -1,16 +1,20 @@
 import { useCallback, useEffect, useState, useTransition } from 'react';
-
-import { useLazyMoodThisWeekQuery } from '@/__generated__/graphql';
+import {
+  useLazyMoodThisWeekQuery,
+  useLazyMyAchievementsQuery,
+} from '@/__generated__/graphql';
 
 export const useProfileBootstrap = () => {
   const [bootstrapFinished, setBootstrapFinished] = useState<boolean>(false);
   const [isBootstrapPending, startTransition] = useTransition();
 
   const [triggerLazyMoodThisWeekQuery] = useLazyMoodThisWeekQuery();
+  const [triggerMyAchievementsQuery] = useLazyMyAchievementsQuery();
 
-  const bootstrapProfile = useCallback(() => {
-    triggerLazyMoodThisWeekQuery();
-  }, [triggerLazyMoodThisWeekQuery]);
+  const bootstrapProfile = useCallback(async () => {
+    await triggerLazyMoodThisWeekQuery().unwrap();
+    await triggerMyAchievementsQuery().unwrap();
+  }, [triggerLazyMoodThisWeekQuery, triggerMyAchievementsQuery]);
 
   const handleStartSetup = useCallback(() => {
     startTransition(async () => {

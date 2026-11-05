@@ -21,6 +21,22 @@ export const usePreventBackNavigation = (isBlocked: boolean) => {
     }
 
     const unsubscribe = navigation.addListener('beforeRemove', event => {
+      const action = event.data.action;
+
+      /**
+       * Allow programmatic replace.
+       *
+       * replace() removes the current route using a REPLACE action,
+       * so it must not be blocked.
+       */
+      if (action.type === 'REPLACE') {
+        return;
+      }
+
+      /**
+       * Block all other navigation actions that remove the
+       * current screen.
+       */
       event.preventDefault();
     });
 

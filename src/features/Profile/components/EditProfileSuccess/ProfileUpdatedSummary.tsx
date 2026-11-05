@@ -1,14 +1,10 @@
 import { AppCard, AppIcon, AppText } from '@/components';
-import {
-  Bell,
-  Check,
-  Image as ImageIcon,
-  Shield,
-  UserRound,
-} from 'lucide-react-native';
+import { Check, UserRound } from 'lucide-react-native';
+import { cn, getUserUpdatedFieldIcon } from '@/utils';
 
 import { View } from 'react-native';
-import { cn } from '@/utils';
+import { selectUpdateProfileUpdatedFields } from '@/state/selectors';
+import { useSelector } from 'react-redux';
 
 interface UpdatedItem {
   id: string;
@@ -21,33 +17,14 @@ interface ProfileUpdatedSummaryProps {
   className?: string;
 }
 
-const DEFAULT_ITEMS: UpdatedItem[] = [
-  {
-    id: 'display-name-bio',
-    label: 'Display name & bio',
-    icon: UserRound,
-  },
-  {
-    id: 'profile-photo',
-    label: 'Profile photo',
-    icon: ImageIcon,
-  },
-  {
-    id: 'notifications',
-    label: 'Notification preferences',
-    icon: Bell,
-  },
-  {
-    id: 'privacy',
-    label: 'Privacy settings',
-    icon: Shield,
-  },
-];
-
 export function ProfileUpdatedSummary({
-  items = DEFAULT_ITEMS,
   className,
 }: ProfileUpdatedSummaryProps) {
+  const updateProfileUpdatedFields =
+    useSelector(selectUpdateProfileUpdatedFields) ?? [];
+
+  console.log('updateProfileUpdatedFields', updateProfileUpdatedFields);
+
   return (
     <AppCard
       className={cn(
@@ -73,17 +50,19 @@ export function ProfileUpdatedSummary({
 
       {/* Updated Items */}
       <View>
-        {items.map((item, index) => (
-          <View
-            key={item.id}
-            className={cn(
-              'flex-row items-center',
-              index !== items.length - 1 && 'mb-4',
-            )}
-          >
-            {/* Icon */}
+        {updateProfileUpdatedFields.map((item, index) => {
+          const UpdatedItemIcon = getUserUpdatedFieldIcon(item);
+          return (
             <View
-              className="
+              key={`${item}_${index}`}
+              className={cn(
+                'flex-row items-center',
+                index !== updateProfileUpdatedFields?.length - 1 && 'mb-4',
+              )}
+            >
+              {/* Icon */}
+              <View
+                className="
                 h-8
                 w-8
                 items-center
@@ -93,31 +72,31 @@ export function ProfileUpdatedSummary({
                 border-teal-400/30
                 bg-teal-400/[0.05]
               "
-            >
-              <AppIcon
-                icon={item.icon}
-                size={16}
-                className="text-teal-400"
-                strokeWidth={2.3}
-              />
-            </View>
+              >
+                <AppIcon
+                  icon={UpdatedItemIcon}
+                  size={16}
+                  className="text-teal-400"
+                  strokeWidth={2.3}
+                />
+              </View>
 
-            {/* Label */}
-            <AppText
-              variant="sm"
-              className="
+              {/* Label */}
+              <AppText
+                variant="sm"
+                className="
                 ml-4
                 flex-1
                 text-text-secondary
               "
-              numberOfLines={1}
-            >
-              {item.label}
-            </AppText>
+                numberOfLines={1}
+              >
+                {item}
+              </AppText>
 
-            {/* Success */}
-            <View
-              className="
+              {/* Success */}
+              <View
+                className="
                 ml-4
                 h-8
                 w-8
@@ -126,16 +105,17 @@ export function ProfileUpdatedSummary({
                 rounded-full
                 bg-teal-400/15
               "
-            >
-              <AppIcon
-                icon={Check}
-                size={16}
-                className="text-teal-400"
-                strokeWidth={3}
-              />
+              >
+                <AppIcon
+                  icon={Check}
+                  size={16}
+                  className="text-teal-400"
+                  strokeWidth={3}
+                />
+              </View>
             </View>
-          </View>
-        ))}
+          );
+        })}
       </View>
     </AppCard>
   );

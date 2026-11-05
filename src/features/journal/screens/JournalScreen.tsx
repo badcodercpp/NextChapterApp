@@ -25,7 +25,10 @@ export function JournalScreen() {
   usePreventBackNavigation(creatingJournal);
 
   return (
-    <AppAuthenticatedLayout noBottomPadding>
+    <AppAuthenticatedLayout
+    // uncomment this if bottom bar is hidden
+    // noBottomPadding
+    >
       <View className="mt-2">
         <JournalEmptyCard />
       </View>

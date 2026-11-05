@@ -2,6 +2,7 @@ import { Image, View } from 'react-native';
 import { PickedAvatar, cn, pickAvatar } from '@/utils';
 import React, { useEffect, useState } from 'react';
 import {
+  useLazyMeQuery,
   useUpdateProfileMutation,
   useUploadSingleFilesMutation,
 } from '@/__generated__/graphql';
@@ -12,6 +13,7 @@ import { AppImagePreviewModal } from '@/components';
 import { AppPressable } from '../AppPressable';
 import { AppText } from '../AppText';
 import { AvatarSizes } from './variants';
+import { RTKQueryFixedCacheKey } from '@/api/fixedCacheKey';
 
 export function AppAvatar({
   name,
@@ -35,7 +37,10 @@ export function AppAvatar({
   const [loading, setLoading] = useState(false);
 
   const [uploadSingleFiles] = useUploadSingleFilesMutation();
-  const [triggerUpdateProfileMutation] = useUpdateProfileMutation();
+  const [triggerUpdateProfileMutation] = useUpdateProfileMutation({
+    fixedCacheKey: RTKQueryFixedCacheKey.UPDATE_PROFILE,
+  });
+  const [triggerMeQuery] = useLazyMeQuery();
 
   const avatarSize = AvatarSizes[size];
 
@@ -139,6 +144,8 @@ export function AppAvatar({
           avatarUrl: uploadResult.uploadSingleFiles.url,
         },
       }).unwrap();
+
+      await triggerMeQuery().unwrap();
 
       setSelectedAvatar(null);
     } catch (error) {

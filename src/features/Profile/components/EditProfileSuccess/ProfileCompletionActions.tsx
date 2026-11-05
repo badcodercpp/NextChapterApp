@@ -1,25 +1,27 @@
 import { AppIcon, AppPressable, AppText } from '@/components';
 import { ArrowRight, Pencil } from 'lucide-react-native';
 
+import { ProfileNavigationProp } from '@/features/Profile/navigation/types';
 import { View } from 'react-native';
 import { cn } from '@/utils';
+import { useNavigation } from '@react-navigation/native';
 
 interface ProfileCompletionActionsProps {
-  onGoToDashboard?: () => void;
-  onEditProfile?: () => void;
   disabled?: boolean;
 }
 
 export function ProfileCompletionActions({
-  onGoToDashboard,
-  onEditProfile,
   disabled = false,
 }: ProfileCompletionActionsProps) {
+  const navigation = useNavigation<ProfileNavigationProp>();
+
   return (
     <View className="w-full">
       {/* Go To Dashboard */}
       <AppPressable
-        onPress={onGoToDashboard}
+        onPress={() => {
+          navigation.replace('ProfileScreen');
+        }}
         disabled={disabled}
         className={cn(
           'w-full flex-row items-center justify-center py-3',
@@ -44,7 +46,9 @@ export function ProfileCompletionActions({
 
       {/* Edit Profile */}
       <AppPressable
-        onPress={onEditProfile}
+        onPress={() => {
+          navigation.replace('EditProfileScreen');
+        }}
         disabled={disabled}
         className={cn(
           'mt-4 py-3 w-full flex-row items-center justify-center',

@@ -18,9 +18,9 @@ export function AppHeaderIconButton({
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
-      className="h-11 w-11 items-center justify-center rounded-full border border-border-v2 bg-surface-v2"
+      className="h-11 w-11 items-center justify-center rounded-full bg-transparent"
     >
-      <AppIcon icon={icon} size={20} className="text-primary-v2" />
+      <AppIcon icon={icon} size={28} className="text-text-v2" />
     </AppPressable>
   );
 }

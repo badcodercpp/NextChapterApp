@@ -3,6 +3,8 @@ import Svg, { Circle } from 'react-native-svg';
 import { useEffect, useRef, useState } from 'react';
 
 import { AppText } from '@/components';
+import { ProfileNavigationProp } from '@/features/Profile/navigation/types';
+import { useNavigation } from '@react-navigation/native';
 
 interface RedirectCountdownProps {
   duration?: number;
@@ -21,6 +23,8 @@ export function RedirectCountdown({
   onComplete,
 }: RedirectCountdownProps) {
   const [seconds, setSeconds] = useState(duration);
+
+  const navigation = useNavigation<ProfileNavigationProp>();
 
   const progress = useRef(new Animated.Value(0)).current;
 
@@ -63,6 +67,12 @@ export function RedirectCountdown({
     inputRange: [0, 1],
     outputRange: [CIRCUMFERENCE, 0],
   });
+
+  useEffect(() => {
+    if (seconds === 0) {
+      navigation.replace('ProfileScreen');
+    }
+  }, [navigation, seconds]);
 
   return (
     <View className="flex-1 items-center justify-center bg-background">

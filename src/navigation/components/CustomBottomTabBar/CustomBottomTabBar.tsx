@@ -47,29 +47,31 @@ export function CustomBottomTabBar({
   }
 
   return (
-    <View style={styles.parentContainer}>
+    <View style={styles.parentContainer} className="">
       <View
-        style={[styles.container, { bottom: insets.bottom }]}
-        className="bg-background"
+        style={[styles.container, { bottom: insets.bottom - 8 }]}
+        className="bg-background border-t border-border"
       >
-        {state.routes.map((route, index) => {
-          if (NO_TAB_ICON_ROUTES.includes(route.name)) {
-            return null;
-          }
-          const focused = state.index === index;
+        <View className="bg-background flex flex-row items-center justify-between px-3 pt-2">
+          {state.routes.map((route, index) => {
+            if (NO_TAB_ICON_ROUTES.includes(route.name)) {
+              return null;
+            }
+            const focused = state.index === index;
 
-          const label = descriptors[route.key].options.title ?? route.name;
+            const label = descriptors[route.key].options.title ?? route.name;
 
-          return (
-            <TabButton
-              key={route.key}
-              focused={focused}
-              icon={ICONS[route.name]}
-              label={label}
-              onPress={() => navigation.navigate(route.name)}
-            />
-          );
-        })}
+            return (
+              <TabButton
+                key={route.key}
+                focused={focused}
+                icon={ICONS[route.name]}
+                label={label}
+                onPress={() => navigation.navigate(route.name)}
+              />
+            );
+          })}
+        </View>
       </View>
     </View>
   );

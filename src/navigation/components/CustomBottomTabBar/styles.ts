@@ -19,14 +19,14 @@ export const styles = StyleSheet.create({
     bottom: 0,
 
     height: TAB_BAR_HEIGHT,
+    // flex: 1,
+    // flexDirection: 'row',
+    // alignItems: 'center',
+    // justifyContent: 'space-between',
 
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    // paddingHorizontal: 12,
 
-    paddingHorizontal: 12,
-
-    borderRadius: 24,
+    // borderRadius: 24,
   },
 
   button: {

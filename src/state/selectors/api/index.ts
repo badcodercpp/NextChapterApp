@@ -12,3 +12,6 @@ export * from './missionHistory';
 export * from './latestAiChatMessage';
 export * from './myAiChatConversations';
 export * from './activeDailySession';
+export * from './myJournalEntries';
+export * from './updateProfile';
+export * from './myAchievements';

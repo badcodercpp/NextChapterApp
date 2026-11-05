@@ -24,20 +24,9 @@ export function ProfileUpdateSuccess({
         uri={toHttpsURL(me?.avatarUrl) ?? undefined}
       />
 
-      {/* All Done */}
-      <View className="mt-4 flex-row items-center">
-        <View className="mr-4 h-2.5 w-2.5 rounded-full bg-primary" />
-
-        <AppText variant="md" className="font-semibold uppercase text-text">
-          All Done
-        </AppText>
-
-        <View className="ml-4 h-2.5 w-2.5 rounded-full bg-primary" />
-      </View>
-
       {/* Title */}
       <AppText
-        variant="3xl"
+        variant="xl"
         className="
           mt-4
           text-center
@@ -50,9 +39,9 @@ export function ProfileUpdateSuccess({
 
       {/* Description */}
       <AppText
-        variant="lg"
+        variant="sm"
         className="
-          mt-4
+          mt-2
           text-center
           text-text-muted
         "

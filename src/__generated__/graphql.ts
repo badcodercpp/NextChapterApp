@@ -4,6 +4,14 @@ type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import type { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
 import { api } from '@/api/baseApi';
+export enum AchievementType {
+  MissionCompletion = 'MISSION_COMPLETION',
+  Question = 'QUESTION',
+  RecoveryScore = 'RECOVERY_SCORE',
+  Reflection = 'REFLECTION',
+  SessionCompletion = 'SESSION_COMPLETION'
+}
+
 export enum AiChatRole {
   Assistant = 'ASSISTANT',
   User = 'USER'
@@ -302,6 +310,27 @@ export type UpdateProfileInput = {
   timezone?: string | null | undefined;
 };
 
+/** User Role */
+export enum UserRole {
+  Admin = 'ADMIN',
+  User = 'USER'
+}
+
+/** Profile fields updated by the user */
+export enum UserUpdatedField {
+  AvatarUrl = 'AvatarUrl',
+  Bio = 'Bio',
+  DisplayName = 'DisplayName',
+  Dob = 'Dob',
+  Gender = 'Gender',
+  Locale = 'Locale',
+  LocationLat = 'LocationLat',
+  LocationLong = 'LocationLong',
+  LocationName = 'LocationName',
+  Phone = 'Phone',
+  Timezone = 'Timezone'
+}
+
 export type VerifyChangePasswordOtpInput = {
   currentPassword: string;
   newPassword: string;
@@ -433,7 +462,7 @@ export type UpdateProfileMutationVariables = Exact<{
 }>;
 
 
-export type UpdateProfileMutation = { updateProfile: { id: string, email: string, displayName: string, gender: Gender | null, avatarUrl: string | null, bio: string | null, phone: string | null, dob: string | null, locationName: string | null, locationLat: string | null, locationLong: string | null, timezone: string | null, locale: string | null, emailVerified: boolean, isActive: boolean, createdAt: unknown, updatedAt: unknown } };
+export type UpdateProfileMutation = { updateProfile: { updatedFields: Array<UserUpdatedField>, user: { id: string, email: string, displayName: string, gender: Gender | null, role: UserRole | null, emailVerified: boolean, isActive: boolean, avatarUrl: string | null, bio: string | null, phone: string | null, dob: string | null, locationName: string | null, locationLat: string | null, locationLong: string | null, timezone: string | null, locale: string | null, createdAt: unknown, updatedAt: unknown, whatBringsYouHere: RecoveryReason, howLongHasItBeen: RecoveryReasonTimeline, howAreYouFeeling: Array<RecoveryReasonCurrentFeeling>, whatWouldYouLikeHelpWith: RecoveryReasonEndGoal } } };
 
 export type UploadSingleFilesMutationVariables = Exact<{
   file: unknown;
@@ -563,6 +592,11 @@ export type MotivationalMessageQueryVariables = Exact<{ [key: string]: never; }>
 
 
 export type MotivationalMessageQuery = { motivationalMessage: { id: string, title: string, description: string } };
+
+export type MyAchievementsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyAchievementsQuery = { myAchievements: Array<{ id: string, key: string, type: AchievementType, title: string, description: string, threshold: number, icon: string, unlockedAt: unknown }> };
 
 export type MyAiChatConversationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -882,23 +916,31 @@ export const UpdateJournalEntryDocument = new TypedDocumentString(`
 export const UpdateProfileDocument = new TypedDocumentString(`
     mutation UpdateProfile($input: UpdateProfileInput!) {
   updateProfile(input: $input) {
-    id
-    email
-    displayName
-    gender
-    avatarUrl
-    bio
-    phone
-    dob
-    locationName
-    locationLat
-    locationLong
-    timezone
-    locale
-    emailVerified
-    isActive
-    createdAt
-    updatedAt
+    user {
+      id
+      email
+      displayName
+      gender
+      role
+      emailVerified
+      isActive
+      avatarUrl
+      bio
+      phone
+      dob
+      locationName
+      locationLat
+      locationLong
+      timezone
+      locale
+      createdAt
+      updatedAt
+      whatBringsYouHere
+      howLongHasItBeen
+      howAreYouFeeling
+      whatWouldYouLikeHelpWith
+    }
+    updatedFields
   }
 }
     `);
@@ -1241,6 +1283,20 @@ export const MotivationalMessageDocument = new TypedDocumentString(`
   }
 }
     `);
+export const MyAchievementsDocument = new TypedDocumentString(`
+    query MyAchievements {
+  myAchievements {
+    id
+    key
+    type
+    title
+    description
+    threshold
+    icon
+    unlockedAt
+  }
+}
+    `);
 export const MyAiChatConversationsDocument = new TypedDocumentString(`
     query MyAiChatConversations {
   myAiChatConversations {
@@ -1518,6 +1574,9 @@ const injectedRtkApi = api.injectEndpoints({
     MotivationalMessage: build.query<MotivationalMessageQuery, MotivationalMessageQueryVariables | void>({
       query: (variables) => ({ document: MotivationalMessageDocument as unknown as string, variables })
     }),
+    MyAchievements: build.query<MyAchievementsQuery, MyAchievementsQueryVariables | void>({
+      query: (variables) => ({ document: MyAchievementsDocument as unknown as string, variables })
+    }),
     MyAiChatConversations: build.query<MyAiChatConversationsQuery, MyAiChatConversationsQueryVariables | void>({
       query: (variables) => ({ document: MyAiChatConversationsDocument as unknown as string, variables })
     }),
@@ -1558,5 +1617,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useCompleteJourneyMutation, useCreateJournalEntryMutation, useDeleteJournalEntryMutation, useFollowUpMutation, useLogoutMutation, useLogoutAllMutation, usePauseJourneyMutation, useRefreshTokenMutation, useRequestChangePasswordOtpMutation, useResumeJourneyMutation, useSendAiChatMessageMutation, useSetDailySessionEndMoodsMutation, useSetDailySessionStartMoodsMutation, useStartDailySessionMutation, useStartJourneyMutation, useUpdateDailySessionStepMutation, useUpdateJournalEntryMutation, useUpdateProfileMutation, useUploadSingleFilesMutation, useVerifyChangePasswordOtpMutation, useGoogleLoginMutation, useGoogleRegisterMutation, useLoginMutation, useRegisterMutation, useResendEmailVerificationOtpMutation, useVerifyEmailOtpMutation, useActiveDailySessionQuery, useLazyActiveDailySessionQuery, useActiveJourneyQuery, useLazyActiveJourneyQuery, useAdvanceJourneyDayMutation, useApplicationConfigQuery, useLazyApplicationConfigQuery, useCompletedMissionHistoryQuery, useLazyCompletedMissionHistoryQuery, useDailySessionHistoryByDayQuery, useLazyDailySessionHistoryByDayQuery, useGetRecoveryScoreTrendForLastNDayQuery, useLazyGetRecoveryScoreTrendForLastNDayQuery, useJournalEntryQuery, useLazyJournalEntryQuery, useLatestAiChatMessageQuery, useLazyLatestAiChatMessageQuery, useMeQuery, useLazyMeQuery, useMissionHistoryQuery, useLazyMissionHistoryQuery, useMoodThisWeekQuery, useLazyMoodThisWeekQuery, useMotivationalMessageQuery, useLazyMotivationalMessageQuery, useMyAiChatConversationsQuery, useLazyMyAiChatConversationsQuery, useMyJournalEntriesQuery, useLazyMyJournalEntriesQuery, useMyRecoveryQuery, useLazyMyRecoveryQuery, useRecentJournalEntriesQuery, useLazyRecentJournalEntriesQuery, useRecoveryAssessmentHistoryQuery, useLazyRecoveryAssessmentHistoryQuery, useTodayMissionQuery, useLazyTodayMissionQuery, useTodayQuestionQuery, useLazyTodayQuestionQuery, useRegisterDeviceMutation, useGetRecoveryFeelingQuery, useLazyGetRecoveryFeelingQuery, useGetRecoveryGoalQuery, useLazyGetRecoveryGoalQuery, useGetRecoveryReasonQuery, useLazyGetRecoveryReasonQuery, useGetRecoveryTimelineQuery, useLazyGetRecoveryTimelineQuery } = injectedRtkApi;
+export const { useCompleteJourneyMutation, useCreateJournalEntryMutation, useDeleteJournalEntryMutation, useFollowUpMutation, useLogoutMutation, useLogoutAllMutation, usePauseJourneyMutation, useRefreshTokenMutation, useRequestChangePasswordOtpMutation, useResumeJourneyMutation, useSendAiChatMessageMutation, useSetDailySessionEndMoodsMutation, useSetDailySessionStartMoodsMutation, useStartDailySessionMutation, useStartJourneyMutation, useUpdateDailySessionStepMutation, useUpdateJournalEntryMutation, useUpdateProfileMutation, useUploadSingleFilesMutation, useVerifyChangePasswordOtpMutation, useGoogleLoginMutation, useGoogleRegisterMutation, useLoginMutation, useRegisterMutation, useResendEmailVerificationOtpMutation, useVerifyEmailOtpMutation, useActiveDailySessionQuery, useLazyActiveDailySessionQuery, useActiveJourneyQuery, useLazyActiveJourneyQuery, useAdvanceJourneyDayMutation, useApplicationConfigQuery, useLazyApplicationConfigQuery, useCompletedMissionHistoryQuery, useLazyCompletedMissionHistoryQuery, useDailySessionHistoryByDayQuery, useLazyDailySessionHistoryByDayQuery, useGetRecoveryScoreTrendForLastNDayQuery, useLazyGetRecoveryScoreTrendForLastNDayQuery, useJournalEntryQuery, useLazyJournalEntryQuery, useLatestAiChatMessageQuery, useLazyLatestAiChatMessageQuery, useMeQuery, useLazyMeQuery, useMissionHistoryQuery, useLazyMissionHistoryQuery, useMoodThisWeekQuery, useLazyMoodThisWeekQuery, useMotivationalMessageQuery, useLazyMotivationalMessageQuery, useMyAchievementsQuery, useLazyMyAchievementsQuery, useMyAiChatConversationsQuery, useLazyMyAiChatConversationsQuery, useMyJournalEntriesQuery, useLazyMyJournalEntriesQuery, useMyRecoveryQuery, useLazyMyRecoveryQuery, useRecentJournalEntriesQuery, useLazyRecentJournalEntriesQuery, useRecoveryAssessmentHistoryQuery, useLazyRecoveryAssessmentHistoryQuery, useTodayMissionQuery, useLazyTodayMissionQuery, useTodayQuestionQuery, useLazyTodayQuestionQuery, useRegisterDeviceMutation, useGetRecoveryFeelingQuery, useLazyGetRecoveryFeelingQuery, useGetRecoveryGoalQuery, useLazyGetRecoveryGoalQuery, useGetRecoveryReasonQuery, useLazyGetRecoveryReasonQuery, useGetRecoveryTimelineQuery, useLazyGetRecoveryTimelineQuery } = injectedRtkApi;
 

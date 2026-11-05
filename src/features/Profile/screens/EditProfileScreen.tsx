@@ -9,6 +9,7 @@ import {
 import { usePreventBackNavigation, useScreenHeader } from '@/navigation/hooks';
 
 import { ProfileNavigationProp } from '@/features/Profile/navigation/types';
+import { ProfileRoutes } from '@/features/Profile/navigation';
 import React from 'react';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -48,11 +49,12 @@ export function EditProfileScreen() {
               showToast('Failed to update profile', 'error');
               return;
             }
-            showToast('Profile updated successfully', 'success');
-            navigation.navigate('EditProfileSuccessScreen');
+            console.log('CURRENT ROUTE:', navigation.getState().routes);
+            console.log('CURRENT INDEX:', navigation.getState().index);
+            navigation.replace(ProfileRoutes.EditProfileSuccessScreen);
           }}
           onDeleteAccount={() => {
-            navigation.navigate('DeleteProfileScreen');
+            navigation.replace('DeleteProfileScreen');
           }}
         />
       </View>

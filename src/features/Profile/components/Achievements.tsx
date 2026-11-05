@@ -1,64 +1,19 @@
 import { AppIcon, AppPressable, AppText } from '@/components';
-import { BookOpen, Check, Flame, Star, Trophy } from 'lucide-react-native';
 import { ScrollView, View } from 'react-native';
 
-interface Achievement {
-  id: string;
-  title: string;
-  date: string;
-  icon: typeof Check;
-  iconColor: string;
-  backgroundColor: string;
-}
+import { MyAchievementsQuery } from '@/__generated__/graphql';
+import { formatDistanceToNowStrict } from 'date-fns';
+import { getAchievementTypeIcon } from '@/utils';
+import { selectMyAchievements } from '@/state/selectors';
+import { useSelector } from 'react-redux';
+
+type Achievement = MyAchievementsQuery['myAchievements'][0];
 
 interface AchievementsProps {
   achievements?: Achievement[];
   onViewAllPress?: () => void;
   onAchievementPress?: (achievement: Achievement) => void;
 }
-
-const DEFAULT_ACHIEVEMENTS: Achievement[] = [
-  {
-    id: 'consistency',
-    title: '10 Days\nConsistency',
-    date: '10 May',
-    icon: Trophy,
-    iconColor: 'text-white',
-    backgroundColor: 'bg-primary',
-  },
-  {
-    id: 'first-mission',
-    title: 'First Mission',
-    date: '8 May',
-    icon: Check,
-    iconColor: 'text-white',
-    backgroundColor: 'bg-emerald-500',
-  },
-  {
-    id: 'journal',
-    title: '5 Journal Entries',
-    date: '7 May',
-    icon: BookOpen,
-    iconColor: 'text-white',
-    backgroundColor: 'bg-cyan-500',
-  },
-  {
-    id: 'streak',
-    title: '7 Day Streak',
-    date: '11 May',
-    icon: Flame,
-    iconColor: 'text-white',
-    backgroundColor: 'bg-amber-500',
-  },
-  {
-    id: 'self-reflector',
-    title: 'Self Reflector',
-    date: '11 May',
-    icon: Star,
-    iconColor: 'text-white',
-    backgroundColor: 'bg-purple-500',
-  },
-];
 
 function AchievementItem({
   achievement,
@@ -67,6 +22,13 @@ function AchievementItem({
   achievement: Achievement;
   onPress?: () => void;
 }) {
+  const timeAgo = formatDistanceToNowStrict(
+    new Date(achievement?.unlockedAt?.toString() ?? Date.now()),
+    {
+      addSuffix: true,
+    },
+  );
+  const AchievementItemIcon = getAchievementTypeIcon(achievement.type);
   return (
     <AppPressable
       onPress={onPress}
@@ -80,21 +42,15 @@ function AchievementItem({
           items-center
           justify-center
           rounded-[22px]
-          ${achievement.backgroundColor}
         `}
       >
-        <AppIcon
-          icon={achievement.icon}
-          size={24}
-          strokeWidth={2.2}
-          className={achievement.iconColor}
-        />
+        <AppIcon icon={AchievementItemIcon} size={24} strokeWidth={2.2} />
       </View>
 
       {/* Title */}
       <AppText
-        variant="sm"
-        className="mt-2 text-center leading-5 text-text-secondary"
+        variant="md"
+        className="mt-4 text-center text-text-secondary"
         numberOfLines={2}
       >
         {achievement.title}
@@ -102,17 +58,18 @@ function AchievementItem({
 
       {/* Date */}
       <AppText variant="xs" className="mt-1 text-text-muted">
-        {achievement.date}
+        {timeAgo}
       </AppText>
     </AppPressable>
   );
 }
 
 export function Achievements({
-  achievements = DEFAULT_ACHIEVEMENTS,
   onViewAllPress,
   onAchievementPress,
 }: AchievementsProps) {
+  const { data: myAchievements } = useSelector(selectMyAchievements);
+
   return (
     <View className="w-full">
       {/* Header */}
@@ -134,7 +91,7 @@ export function Achievements({
         showsHorizontalScrollIndicator={false}
         contentContainerClassName="gap-1 px-1"
       >
-        {achievements.map(achievement => (
+        {(myAchievements || []).map(achievement => (
           <AchievementItem
             key={achievement.id}
             achievement={achievement}
