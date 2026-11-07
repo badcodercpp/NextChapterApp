@@ -48,6 +48,7 @@ export const enLanguage = {
 
   // Home Today's focus
   'app.locale.home.todayFocus.title': "Today's Focus",
+  'app.locale.home.todayFocus.reflectNow': 'Reflect Now',
   'app.locale.home.todayFocus.dayLabel': 'Day',
   'app.locale.home.todayFocus.ofLabel': 'of',
 

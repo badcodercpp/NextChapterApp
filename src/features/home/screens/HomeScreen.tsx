@@ -33,11 +33,14 @@ export function HomeScreen() {
         </>
       ) : (
         <>
-          <View className="mt-2">
+          <View className="mt-6">
             <RecoveryScoreCard />
           </View>
           <View className="mt-4">
-            <TodaysQuestionCard />
+            <TodaysQuestionCard
+              onReflect={startNewOrResumeCurrentDailySession}
+              loading={dailySessionMetadataProcessing}
+            />
           </View>
           <View className="mt-4">
             <TodaysMissionCard />

@@ -1,4 +1,5 @@
-import { AppCard, AppExpandableText, AppText } from '@/components';
+import { AppCard, AppExpandableText, AppIcon, AppText } from '@/components';
+import { CalendarDays } from 'lucide-react-native';
 
 import { JournalEntryMenu } from './JournalEntryMenu';
 import { JournalRoutes } from '@/features/journal/navigation';
@@ -17,33 +18,45 @@ export function JournalEntryCard({
   origin: keyof typeof JournalRoutes;
 }) {
   return (
-    <AppCard className="mb-4 rounded-3xl border border-border bg-card">
-      <View className="flex-row">
-        <View className="mr-3 items-center justify-between">
+    <AppCard className="mb-4 rounded-[26px] border border-primary-v2/30 bg-background-v2 p-4">
+      <View
+        pointerEvents="none"
+        className="absolute bottom-0 right-0 h-20 w-32 rounded-tl-full bg-primary-v2/10"
+      />
+      <View className="flex-row items-center">
+        <View className="mr-3 h-12 w-12 shrink-0 items-center justify-center rounded-[16px] border border-primary-v2/30 bg-primary-v2/15">
           {/* Mood */}
           <AppText variant="2xl" className="">
             {getMoodEmojiByValue(entry.mood)}
           </AppText>
         </View>
         {/* Content */}
-        <View className="flex-1">
+        <View className="flex-1 border-l border-primary-v2/25 pl-3">
           {/* Date + Day */}
-          <View className="flex-row items-center">
-            <AppText variant="sm" className="text-text-muted">
+          <View className="flex-row flex-wrap items-center gap-y-1">
+            <AppIcon
+              icon={CalendarDays}
+              size={15}
+              className="mr-1.5 text-link-v2"
+            />
+            <AppText variant="xs" className="text-text-muted-v2">
               {format(
                 new Date(entry.entryDate?.toString() ?? Date.now()),
                 'MMM dd, yyyy',
               )}
             </AppText>
 
-            <View className="mx-3 h-1.5 w-1.5 rounded-full bg-primary" />
+            <View className="mx-2 h-1 w-1 rounded-full bg-primary-v2" />
 
-            <AppText variant="sm" className="text-primary">
+            <AppText
+              variant="xs"
+              className="rounded-full bg-primary-v2/15 px-2 py-1 font-semibold text-primary-v2"
+            >
               Day {entry.day}
             </AppText>
           </View>
 
-          <AppText variant="xl" className="mt-2 text-primary">
+          <AppText variant="xl" className="mt-2 font-bold text-primary-v2">
             {entry.title}
           </AppText>
 
@@ -51,14 +64,14 @@ export function JournalEntryCard({
           <AppExpandableText
             text={entry.content}
             collapsedLines={3}
-            variant="lg"
-            textClassName=" pr-1 text-text"
+            variant="md"
+            textClassName="mt-1 pr-1 leading-6 text-text-muted-v2"
           />
         </View>
 
         {/* Right actions */}
 
-        <View className="ml-3 items-center justify-between">
+        <View className="ml-2 self-start">
           {/* More */}
 
           <JournalEntryMenu entry={entry} origin={origin} />

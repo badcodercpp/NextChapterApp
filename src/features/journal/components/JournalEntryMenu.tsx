@@ -6,11 +6,11 @@ import React, { useState } from 'react';
 import { AppDispatch } from '@/state';
 import { JournalRoutes } from '@/features/journal/navigation';
 import { JournalStackParamList } from '@/features/journal/navigation/JournalStackParamList';
-import { MoreVertical } from 'lucide-react-native';
+import { MoreVertical, PencilLine, Trash2 } from 'lucide-react-native';
 import { Placement } from 'react-native-popover-view/dist/Types';
 import Popover from 'react-native-popover-view';
 import { RecentJournalEntriesQuery } from '@/__generated__/graphql';
-import { cn } from '@/utils';
+import { useResolveClassNames } from 'uniwind';
 import { setEditJournalTarget } from '@/state/slices/local/editJournalTarget';
 import { useDeleteJournalBootstrap } from '../hooks/useDeleteJournalBootstrap';
 import { useDispatch } from 'react-redux';
@@ -24,6 +24,7 @@ interface JournalEntryMenuProps {
 
 export function JournalEntryMenu({ entry, origin }: JournalEntryMenuProps) {
   const [visible, setVisible] = useState(false);
+  const { backgroundColor } = useResolveClassNames('bg-background-v2');
   const dispatch = useDispatch<AppDispatch>();
   const navigation = useNavigation<NavigationProp<JournalStackParamList>>();
 
@@ -47,34 +48,53 @@ export function JournalEntryMenu({ entry, origin }: JournalEntryMenuProps) {
     <Popover
       isVisible={visible}
       onRequestClose={() => setVisible(false)}
-      placement={Placement.AUTO}
+      placement={[Placement.BOTTOM, Placement.TOP]}
+      offset={8}
+      arrowSize={{ width: 0, height: 0 }}
       // eslint-disable-next-line react-native/no-inline-styles
       backgroundStyle={{ backgroundColor: 'transparent' }}
       // eslint-disable-next-line react-native/no-inline-styles
       popoverStyle={{
         borderRadius: 16,
         overflow: 'hidden',
+        backgroundColor,
       }}
       from={
-        <Pressable onPress={() => setVisible(true)}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={`Actions for ${entry.title}`}
+          onPress={() => setVisible(true)}
+          className="h-9 w-9 items-center justify-center rounded-xl border border-primary-v2/20 bg-primary-v2/10"
+        >
           <AppIcon
             icon={MoreVertical}
             size={23}
             strokeWidth={3}
-            className="text-primary"
+            className="text-link-v2"
           />
         </Pressable>
       }
     >
-      <View className="w-40 bg-transparent border-1 border-border rounded-xl">
-        <AppPressable onPress={handleEdit} className="px-4 py-2">
-          <AppText className="text-primary">Edit</AppText>
+      <View className="w-44 overflow-hidden rounded-2xl border border-primary-v2/30 bg-background-v2 p-2">
+        <AppPressable
+          accessibilityRole="button"
+          onPress={handleEdit}
+          className="flex-row items-center rounded-xl bg-primary-v2/15 px-3 py-3"
+        >
+          <AppIcon icon={PencilLine} size={22} className="mr-3 text-link-v2" />
+          <AppText variant="md" className="font-semibold text-text-v2">
+            Edit
+          </AppText>
         </AppPressable>
-
-        <View className={cn('h-0.5 flex-1 rounded-full', 'bg-border')} />
-
-        <AppPressable onPress={handleDelete} className="px-4 py-2">
-          <AppText className="text-error">Delete</AppText>
+        <AppPressable
+          accessibilityRole="button"
+          onPress={handleDelete}
+          className="mt-1 flex-row items-center rounded-xl px-3 py-3"
+        >
+          <AppIcon icon={Trash2} size={22} className="mr-3 text-error" />
+          <AppText variant="md" className="font-semibold text-error">
+            Delete
+          </AppText>
         </AppPressable>
       </View>
     </Popover>

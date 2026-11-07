@@ -7,7 +7,7 @@ import {
 import { useCallback, useMemo } from 'react';
 
 import { PieChart } from 'react-native-gifted-charts';
-import { Triangle } from 'lucide-react-native';
+import { CalendarDays } from 'lucide-react-native';
 import { View } from 'react-native';
 import { cn } from '@/utils';
 import { useResolveClassNames } from 'uniwind';
@@ -24,11 +24,11 @@ const RING_WIDTH = 12;
 function RecoveryProgressChartLabel({ progress }: { progress: number }) {
   return (
     <View className="items-center justify-center">
-      <AppText variant="xs" className="font-medium leading-none text-primary">
+      <AppText variant="md" className="font-bold text-link-v2">
         {progress}%
       </AppText>
 
-      <AppText variant="xs" className="mt-1 text-text-muted">
+      <AppText variant="xs" className="mt-1 text-text-muted-v2">
         Overall
       </AppText>
     </View>
@@ -51,34 +51,40 @@ export function RecoveryProgressCard({
     const totalDays = applicationConfig.totalProgramDays;
     const currentDay = activeJourney.currentDay;
 
-    return Math.round((currentDay / totalDays) * 100);
+    return totalDays > 0
+      ? Math.min(100, Math.max(0, Math.round((currentDay / totalDays) * 100)))
+      : 0;
   }, [activeJourney, applicationConfig]);
 
   const progress = useMemo(() => calculateProgress(), [calculateProgress]);
 
   const remaining = 100 - progress;
   const { backgroundColor: chartBackgroundColor } =
-    useResolveClassNames('bg-card');
+    useResolveClassNames('bg-background-v2');
   const { backgroundColor: chartRadiusPrimaryColor } =
-    useResolveClassNames('bg-primary');
+    useResolveClassNames('bg-primary-v2');
   const { backgroundColor: chartRadiusSecondaryColor } =
-    useResolveClassNames('bg-background');
+    useResolveClassNames('bg-selected-v2');
 
   return (
     <View
       className={cn(
         'relative w-full overflow-hidden',
-        'rounded-[24px]',
-        'border border-border',
-        'bg-card',
+        'rounded-[26px]',
+        'border border-primary-v2/30',
+        'bg-background-v2',
         'p-4',
         className,
       )}
     >
+      <View
+        pointerEvents="none"
+        className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-primary-v2/10"
+      />
       <View className="flex-row items-center">
         {/* Progress Ring */}
         <View className="items-center justify-center">
-          <View className="items-center justify-center bg-card">
+          <View className="items-center justify-center">
             <PieChart
               donut
               radius={RING_RADIUS}
@@ -105,48 +111,47 @@ export function RecoveryProgressCard({
         {/* Content */}
         <View className="ml-3 flex-1">
           {/* Heading */}
-          <AppText variant="xl" className="font-semibold text-primary">
+          <AppText variant="lg" className="font-bold leading-6 text-text-v2">
             You're doing incredible, {me?.displayName}!
           </AppText>
 
           {/* Description */}
-          <AppText variant="sm" className="mt-1 text-text-muted">
+          <AppText variant="sm" className="mt-2 leading-5 text-text-muted-v2">
             {message}
           </AppText>
-
-          {/* Day Progress */}
-          <View
-            className="
+        </View>
+      </View>
+      {/* Day Progress */}
+      <View
+        className="
               mt-4
-              min-h-[104px]
               flex-row
               items-center
-              rounded-[24px]
+              rounded-[18px]
               border
-              border-border
-              p-4
+              border-primary-v2/25
+              bg-primary-v2/10
+              p-3
             "
-          >
-            <View className="mr-5">
-              <AppIcon
-                icon={Triangle}
-                size={24}
-                className="text-primary"
-                strokeWidth={1.5}
-              />
-            </View>
+      >
+        <View className="mr-3">
+          <AppIcon
+            icon={CalendarDays}
+            size={24}
+            className="text-link-v2"
+            strokeWidth={1.5}
+          />
+        </View>
 
-            <View className="flex-1">
-              <AppText variant="md" className="font-semibold text-primary">
-                Day {activeJourney?.currentDay} of{' '}
-                {applicationConfig?.totalProgramDays}
-              </AppText>
+        <View className="flex-1">
+          <AppText variant="md" className="font-semibold text-link-v2">
+            Day {activeJourney?.currentDay} of{' '}
+            {applicationConfig?.totalProgramDays}
+          </AppText>
 
-              <AppText variant="xs" className="mt-1 text-text-muted">
-                Keep showing up for yourself.
-              </AppText>
-            </View>
-          </View>
+          <AppText variant="xs" className="mt-1 text-text-muted-v2">
+            Keep showing up for yourself.
+          </AppText>
         </View>
       </View>
     </View>

@@ -40,47 +40,55 @@ const steps = [
 export function SessionProgress({ currentStep }: SessionProgressProps) {
   const currentIndex = steps.findIndex(step => step.key === currentStep);
 
-  const progress = currentIndex <= 0 ? 0 : currentIndex / (steps.length - 1);
-
   return (
-    <View className="w-full">
-      {/* Progress bar */}
-      <View className="relative h-2 overflow-hidden rounded-full bg-border">
-        <View
-          className="absolute left-0 top-0 h-full rounded-full bg-primary"
-          style={{
-            width: `${Math.max(progress * 100, 20)}%`,
-          }}
-        />
-      </View>
-
-      {/* Steps */}
-      <View className="mt-5 flex-row justify-between">
+    <View className="w-full px-1">
+      <View className="flex-row justify-between">
         {steps.map((step, index) => {
           const isCompleted = index < currentIndex;
           const isCurrent = index === currentIndex;
           const isActive = index <= currentIndex;
 
           return (
-            <View key={step.key} className="flex-1 items-center">
-              {/* Circle */}
+            <View
+              key={step.key}
+              className="min-h-[64px] flex-1 items-center pt-1"
+              accessible
+              accessibilityState={{ selected: isCurrent }}
+              accessibilityLabel={`${step.label}${
+                isCurrent ? ', current step' : isCompleted ? ', completed' : ''
+              }`}
+            >
+              {index < steps.length - 1 && (
+                <View
+                  pointerEvents="none"
+                  className={`absolute left-1/2 top-[22px] h-0.5 w-full ${
+                    index < currentIndex ? 'bg-primary-v2/70' : 'bg-border-v2'
+                  }`}
+                />
+              )}
               <View
                 className={[
-                  'h-12 w-12 items-center justify-center rounded-full border-2',
-                  isCurrent || isCompleted
-                    ? 'border-primary bg-primary'
-                    : 'border-border bg-surface',
+                  'h-9 w-9 items-center justify-center rounded-full border-2',
+                  isCurrent
+                    ? 'border-link-v2 bg-primary-v2'
+                    : isCompleted
+                    ? 'border-primary-v2 bg-primary-v2'
+                    : 'border-border-v2 bg-background-v2',
                 ].join(' ')}
               >
                 {isCompleted ? (
-                  <AppIcon icon={Check} size={22} className="text-text" />
+                  <AppIcon
+                    icon={Check}
+                    size={16}
+                    className="text-on-primary-v2"
+                  />
                 ) : (
                   <AppText
-                    variant="md"
+                    variant="xs"
                     className={
                       isCurrent
-                        ? 'font-semibold text-white'
-                        : 'font-medium text-text-muted'
+                        ? 'font-semibold text-on-primary-v2'
+                        : 'font-medium text-text-muted-v2'
                     }
                   >
                     {index + 1}
@@ -88,13 +96,18 @@ export function SessionProgress({ currentStep }: SessionProgressProps) {
                 )}
               </View>
 
-              {/* Label */}
               <AppText
-                variant="sm"
+                variant="xs"
                 className={[
                   'mt-2 text-center',
-                  isActive ? 'text-primary' : 'text-text-muted',
+                  isCurrent
+                    ? 'font-semibold text-text-v2'
+                    : isActive
+                    ? 'text-link-v2'
+                    : 'text-text-muted-v2',
                 ].join(' ')}
+                numberOfLines={1}
+                adjustsFontSizeToFit
               >
                 {step.label}
               </AppText>

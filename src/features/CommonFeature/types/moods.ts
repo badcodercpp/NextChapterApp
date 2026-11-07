@@ -9,8 +9,10 @@ export interface MoodOption {
 export type MoodSelectionMode = 'single' | 'multiple';
 
 export interface MoodSelectorProps {
+  variant?: 'default' | 'journal';
   title?: string;
   subtitle?: string;
+  description?: string;
   options?: MoodOption[];
   onChange?: (value: RecoveryReasonCurrentFeeling) => void;
   collapsedCount?: number;

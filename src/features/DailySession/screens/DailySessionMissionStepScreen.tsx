@@ -28,10 +28,10 @@ export function DailySessionMissionStepScreen() {
 
   return (
     <AppAuthenticatedLayout noBottomPadding>
-      <View className="mt-4">
+      <View className="mt-5">
         <SessionProgress currentStep={'MISSION'} />
       </View>
-      <View className="mt-4">
+      <View className="mt-5">
         <TodaysMissionCard showProgress={false} />
       </View>
       <View className="mt-4">

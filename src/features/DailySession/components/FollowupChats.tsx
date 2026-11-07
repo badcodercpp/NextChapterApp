@@ -66,6 +66,7 @@ export function FollowUpChats({}: FollowUpChatsProps) {
   return (
     <View className="flex-1">
       <AssistantChatMessageCard
+        themed
         content={
           todayQuestionContent?.content ?? todayQuestionContent?.question ?? ''
         }
@@ -73,6 +74,7 @@ export function FollowUpChats({}: FollowUpChatsProps) {
       />
       <View className="mt-4">
         <UserChatMessageCard
+          themed
           content={todayUserReplyContent?.content ?? ''}
           createdAt={todayUserReplyContent?.createdAt?.toString() ?? ''}
           userName={me?.displayName ?? ''}
@@ -87,6 +89,7 @@ export function FollowUpChats({}: FollowUpChatsProps) {
                 key={`ai_question_cont_${index.toString()}`}
               >
                 <AICoachCardFollowupCard
+                  themed
                   messageInsight={item.insight ?? ''}
                   messageReflection={item.reflection ?? ''}
                   questions={[
@@ -107,6 +110,7 @@ export function FollowUpChats({}: FollowUpChatsProps) {
               key={`user_question_cont_${index.toString()}`}
             >
               <UserChatMessageCard
+                themed
                 content={item?.content ?? ''}
                 createdAt={item?.createdAt?.toString() ?? ''}
                 userName={me?.displayName ?? ''}

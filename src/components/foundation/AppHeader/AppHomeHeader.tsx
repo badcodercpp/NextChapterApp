@@ -36,7 +36,7 @@ export function AppHomeHeader({ backDisabled }: AppHeaderProps) {
 
   return (
     <View
-      className="border-b border-border bg-background px-4 pb-3"
+      className="border-b border-border-v2 bg-background px-4 pb-3"
       style={{ paddingTop: top + 8 }}
     >
       <View className="flex-row items-center gap-3">
@@ -49,7 +49,7 @@ export function AppHomeHeader({ backDisabled }: AppHeaderProps) {
 
         <View className="flex-1">
           <AppText
-            variant="lg"
+            variant="md"
             className="font-semibold text-text-v2"
             numberOfLines={1}
           >
@@ -61,14 +61,9 @@ export function AppHomeHeader({ backDisabled }: AppHeaderProps) {
           onPress={handleBack}
           accessibilityRole="button"
           accessibilityLabel="Notifications"
-          className="h-11 w-11 items-center justify-center"
+          className="h-10 w-10 items-center justify-center rounded-[14px] border border-primary-v2/20"
         >
-          <AppIcon
-            icon={Bell}
-            size={32}
-            className="text-primary-v2"
-            count={4}
-          />
+          <AppIcon icon={Bell} size={32} className="text-link-v2" count={4} />
         </AppPressable>
       </View>
     </View>

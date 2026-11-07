@@ -14,6 +14,8 @@ import {
 import { View } from 'react-native';
 import { cn } from '@/utils';
 import { useSelector } from 'react-redux';
+import { useResolveClassNames } from 'uniwind';
+import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 
 type JourneyStat = {
   id: string;
@@ -37,6 +39,9 @@ export function JourneySummaryCard({
 }: JourneySummaryCardProps) {
   const { data: applicationConfig } = useSelector(selectApplicationConfig);
   const { data: activeJourney } = useSelector(selectActiveJourney);
+  const { backgroundColor: background } =
+    useResolveClassNames('bg-background-v2');
+  const { backgroundColor: accent } = useResolveClassNames('bg-primary-v2');
 
   const JOURNEY_STATS = (
     daysActive: number,
@@ -49,13 +54,13 @@ export function JourneySummaryCard({
       value: daysActive,
       label: 'Days Active',
       icon: MessageCircle,
-      iconColorClassName: 'text-primary',
-      iconBackgroundClassName: 'bg-primary/15',
+      iconColorClassName: 'text-link-v2',
+      iconBackgroundClassName: 'bg-primary-v2/15',
     },
     {
       id: 'tasks-completed',
       value: tasksCompleted,
-      label: 'Tasks\nCompleted',
+      label: 'Tasks Completed',
       icon: CheckCircle,
       iconColorClassName: 'text-teal-400',
       iconBackgroundClassName: 'bg-teal-400/15',
@@ -73,8 +78,8 @@ export function JourneySummaryCard({
       value: reflections,
       label: 'Reflections',
       icon: Heart,
-      iconColorClassName: 'text-pink-400',
-      iconBackgroundClassName: 'bg-pink-400/15',
+      iconColorClassName: 'text-link-v2',
+      iconBackgroundClassName: 'bg-primary-v2/15',
     },
   ];
 
@@ -82,71 +87,95 @@ export function JourneySummaryCard({
 
   const content = (
     <>
+      <View pointerEvents="none" className="absolute inset-0">
+        <Svg width="100%" height="100%">
+          <Defs>
+            <LinearGradient
+              id="journeySummaryBackground"
+              x1="0"
+              y1="0"
+              x2="1"
+              y2="1"
+            >
+              <Stop offset="0" stopColor={accent} stopOpacity={0.2} />
+              <Stop offset="0.5" stopColor={background} stopOpacity={0.1} />
+              <Stop offset="1" stopColor={accent} stopOpacity={0.12} />
+            </LinearGradient>
+          </Defs>
+          <Rect
+            width="100%"
+            height="100%"
+            fill="url(#journeySummaryBackground)"
+          />
+        </Svg>
+      </View>
+      <View
+        pointerEvents="none"
+        className="absolute -right-20 -top-28 h-56 w-56 rounded-full bg-primary-v2/10"
+      />
+      <View
+        pointerEvents="none"
+        className="absolute -bottom-32 -left-20 h-48 w-64 rounded-full bg-primary-v2/5"
+      />
       {/* Header */}
-      <View className="mb-6 flex-row items-start justify-between">
-        <AppText variant="lg" className="font-semibold text-text max-w-[160px]">
+      <View className="mb-4">
+        <AppText variant="lg" className="font-bold text-text-v2">
           Your Journey Summary
         </AppText>
 
-        <View className="flex-row items-center">
-          <AppText variant="lg" className="font-semibold text-primary">
+        <View className="mt-1 flex-row items-center">
+          <AppText variant="sm" className="font-medium text-link-v2">
             Day {activeJourney?.currentDay} of{' '}
             {applicationConfig?.totalProgramDays}
           </AppText>
 
-          <AppIcon
-            icon={ChevronRight}
-            size={24}
-            className="ml-1 text-primary"
-            strokeWidth={2.8}
-          />
+          {onPress && (
+            <AppIcon
+              icon={ChevronRight}
+              size={24}
+              className="ml-1 text-link-v2"
+              strokeWidth={2.8}
+            />
+          )}
         </View>
       </View>
 
       {/* Stats */}
-      <View className="flex-row gap-3">
+      <View className="flex-row flex-wrap justify-between gap-y-3">
         {stats.map(stat => (
           <View
             key={stat.id}
-            className="
-              flex-1
-              items-center
-              rounded-[24px]
-              border
-              border-border
-              p-2
-            "
+            className="w-[48%] flex-row items-center rounded-[20px] border border-primary-v2/20 bg-background-v2/60 p-3"
           >
             {/* Icon */}
             <View
               className={cn(
-                'h-10 w-10 items-center justify-center rounded-full',
+                'h-10 w-10 shrink-0 items-center justify-center rounded-[14px]',
                 stat.iconBackgroundClassName,
               )}
             >
               <AppIcon
                 icon={stat.icon}
-                size={16}
+                size={22}
                 className={stat.iconColorClassName}
                 strokeWidth={2.4}
               />
             </View>
 
             {/* Value */}
-            <AppText
-              variant="md"
-              className="mt-4 font-semibold leading-none text-white"
-            >
-              {stat.value}
-            </AppText>
+            <View className="ml-3 flex-1">
+              <AppText variant="xl" className="font-bold text-text-v2">
+                {stat.value}
+              </AppText>
 
-            {/* Label */}
-            <AppText
-              variant="md"
-              className="mt-4 text-center leading-6 text-text-muted"
-            >
-              {stat.label}
-            </AppText>
+              {/* Label */}
+              <AppText
+                variant="xs"
+                className="mt-1 leading-4 text-text-muted-v2"
+              >
+                {stat.label}
+              </AppText>
+            </View>
           </View>
         ))}
       </View>
@@ -156,15 +185,7 @@ export function JourneySummaryCard({
   if (onPress) {
     return (
       <AppPressable onPress={onPress} className={cn('w-full', className)}>
-        <AppCard
-          className="
-            rounded-[24px]
-            border
-            border-border
-            bg-card
-            p-4
-          "
-        >
+        <AppCard className="overflow-hidden rounded-[26px] border border-primary-v2/30 bg-background-v2 p-4">
           {content}
         </AppCard>
       </AppPressable>
@@ -174,9 +195,9 @@ export function JourneySummaryCard({
   return (
     <AppCard
       className={cn(
-        'w-full rounded-[24px]',
-        'border border-border',
-        'bg-card',
+        'w-full overflow-hidden rounded-[26px]',
+        'border border-primary-v2/30',
+        'bg-background-v2',
         'p-4',
         className,
       )}

@@ -48,6 +48,20 @@ Then, and every time you update your native dependencies, run:
 bundle exec pod install
 ```
 
+Run this command from the `ios` directory. The Podfile's post-install hook raises
+all pod targets (including privacy and resource bundles) to at least React
+Native's minimum supported iOS version, preserving any higher requirements.
+This prevents newer Xcode versions from rejecting older pod deployment targets.
+Do not edit deployment targets in the generated Pods project; run `pod install`
+again to regenerate them.
+Keep User Script Sandboxing disabled for the OutdatedMe app target so CocoaPods'
+framework embedding scripts can copy React Native frameworks.
+
+The iOS app uses the UIScene lifecycle: `AppDelegate` retains launch options,
+and `SceneDelegate` creates the React Native window and handles Google Sign-In
+URL callbacks. Keep the scene manifest in `Info.plist` in sync with this setup;
+newer iOS SDKs require scene-based startup.
+
 For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
 
 ```sh
