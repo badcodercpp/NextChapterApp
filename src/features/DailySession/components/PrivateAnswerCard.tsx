@@ -9,20 +9,25 @@ interface PrivateAnswerCardProps {
 
 export function PrivateAnswerCard({ onPress }: PrivateAnswerCardProps) {
   return (
-    <AppCard className="overflow-hidden rounded-[24px] border border-border bg-card p-4">
+    <AppCard className="overflow-hidden rounded-[22px] border border-primary-v2/30 bg-background-v2 p-3.5">
+      <View
+        pointerEvents="none"
+        className="absolute inset-0 bg-primary-v2/10"
+      />
       <AppPressable onPress={onPress} className="flex-row items-center">
-        {/* Icon */}
-        <View className="h-12 w-12 items-center justify-center rounded-full bg-primary/15">
-          <AppIcon icon={Lock} size={20} className="text-primary" />
+        <View className="h-10 w-10 items-center justify-center rounded-[14px] bg-primary-v2/20">
+          <AppIcon icon={Lock} size={22} className="text-link-v2" />
         </View>
 
-        {/* Content */}
-        <View className="ml-5 flex-1">
-          <AppText variant="lg" className="text-primary">
+        <View className="ml-3 flex-1">
+          <AppText
+            variant="sm"
+            className="font-semibold leading-5 text-link-v2"
+          >
             Your answer is private and encrypted
           </AppText>
 
-          <AppText variant="sm" className="mt-1 text-text-muted">
+          <AppText variant="xs" className="mt-1 leading-4 text-text-muted-v2">
             Only you and your AI coach can see this.
           </AppText>
         </View>

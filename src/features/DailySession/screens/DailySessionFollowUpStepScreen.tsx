@@ -3,9 +3,10 @@ import {
   AppButton,
   AppConfirmModal,
   AppInput,
+  AppIcon,
   AppText,
 } from '@/components';
-import { ChevronRight, Send } from 'lucide-react-native';
+import { ChevronRight, LockKeyhole, Send } from 'lucide-react-native';
 import {
   FollowUpChats,
   FollowUpProgressCard,
@@ -29,10 +30,10 @@ export function DailySessionFollowUpStepScreen() {
 
   return (
     <AppAuthenticatedLayout noBottomPadding>
-      <View className="mt-4">
+      <View className="mt-5">
         <SessionProgress currentStep={'FOLLOW_UPS'} />
       </View>
-      <View className="mt-4">
+      <View className="mt-5">
         <FollowUpChats />
       </View>
       <View className="mt-4">
@@ -40,6 +41,7 @@ export function DailySessionFollowUpStepScreen() {
       </View>
       <View className="mt-4">
         <AppInput
+          variant="v2"
           value={''}
           onChangeText={() => {}}
           placeholder="Type your answer..."
@@ -47,15 +49,25 @@ export function DailySessionFollowUpStepScreen() {
           showCharacterCount
           className="w-full"
           endIcon={Send}
-          endIconClassName="text-primary"
+          endIconClassName="text-link-v2"
           endIconSize={24}
           onEndIconPress={() => {}}
-          inputClassName=" px-2 pt-4 text-md text-text border-border"
-          containerClassName="border-border"
+          inputClassName="min-h-[104px] px-3 pt-4 text-md text-text-v2"
+          containerClassName="rounded-[24px] border-primary-v2/40 bg-selected-v2/40"
         />
-        <AppText variant="sm" className="mt-1 text-center text-text-muted">
-          Only you and your AI coach can see this.
-        </AppText>
+        <View className="mt-3 flex-row items-center justify-center px-3">
+          <AppIcon
+            icon={LockKeyhole}
+            size={16}
+            className="mr-2 text-text-muted-v2"
+          />
+          <AppText
+            variant="xs"
+            className="shrink text-center text-text-muted-v2"
+          >
+            Only you and your AI coach can see this.
+          </AppText>
+        </View>
       </View>
       <View className="mt-4">
         <FollowUpProgressCard current={1} total={5} />

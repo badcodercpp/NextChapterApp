@@ -1,7 +1,7 @@
 import { DailySessionHistoryRoutes } from './DailySessionHistoryRoutes';
 import { DailySessionHistoryScreen } from '../screens';
 import { DailySessionHistoryStackParamList } from './DailySessionHistoryStackParamList';
-import { NavigatorAppHeader } from '@/components';
+import { NavigatorAppHeader, appHeaderOptions } from '@/components';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator<DailySessionHistoryStackParamList>();
@@ -13,6 +13,10 @@ export function DailySessionHistoryNavigator() {
         options={{
           headerShown: true,
           header: NavigatorAppHeader,
+          ...appHeaderOptions({
+            title: 'Session History',
+            subtitle: 'Look back on your healing journey',
+          }),
         }}
         name={DailySessionHistoryRoutes.DailySessionHistory}
         component={DailySessionHistoryScreen}

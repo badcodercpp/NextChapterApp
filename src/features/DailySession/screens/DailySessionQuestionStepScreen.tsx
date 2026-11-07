@@ -23,17 +23,21 @@ export function DailySessionQuestionStepScreen() {
 
   return (
     <AppAuthenticatedLayout noBottomPadding>
-      <View className="mt-4">
+      <View className="mt-5">
         <SessionProgress currentStep={'QUESTION'} />
       </View>
-      <View className="mt-4">
+      <View className="mt-5">
         <TodaysQuestionCardInSession />
       </View>
       <View className="mt-4">
         <PrivateAnswerCard />
       </View>
       <View className="mt-4">
-        <TodaysQuestionAnswerInputCard />
+        <TodaysQuestionAnswerInputCard
+          variant="v2"
+          inputClassName="min-h-[112px] px-3 pt-3 text-text-v2 leading-6"
+          containerClassName="rounded-[24px] border-primary-v2/50 bg-selected-v2/40"
+        />
       </View>
       <View className="mt-4">
         <AnswerStarterCard />

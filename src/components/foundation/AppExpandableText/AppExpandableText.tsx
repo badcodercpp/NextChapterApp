@@ -41,7 +41,7 @@ export function AppExpandableText({
           pointerEvents="none"
         >
           <AppText
-            variant="md"
+            variant={variant}
             className={textClassName}
             onTextLayout={handleTextLayout}
           >

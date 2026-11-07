@@ -94,3 +94,17 @@ test('does not go back when disabled or without a previous screen', () => {
   pressBack();
   expect(mockGoBack).not.toHaveBeenCalled();
 });
+
+test('renders a completion tick next to the final program day', () => {
+  render({
+    title: 'Daily Session',
+    subtitle: 'Day 90 out of 90',
+    headerSubtitleAccessory: () => (
+      <Text accessibilityLabel="Program complete">tick</Text>
+    ),
+  });
+
+  const output = JSON.stringify(screen.toJSON());
+  expect(output).toContain('Day 90 out of 90');
+  expect(output).toContain('Program complete');
+});

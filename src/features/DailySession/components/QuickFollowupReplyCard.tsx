@@ -1,4 +1,5 @@
-import { AppCard, AppPressable, AppText } from '@/components';
+import { AppCard, AppIcon, AppPressable, AppText } from '@/components';
+import { Frown, Handshake, Sparkles, Target, Users } from 'lucide-react-native';
 
 import { View } from 'react-native';
 
@@ -36,19 +37,31 @@ export function QuickFollowupReplyCard({
   onSelect,
 }: QuickFollowupReplyCardProps) {
   return (
-    <AppCard className="overflow-hidden rounded-[24px] border border-border bg-card p-5">
-      <AppText variant="lg" className=" text-primary">
-        You can reply or try one of these
-      </AppText>
+    <AppCard className="overflow-hidden rounded-[26px] border border-primary-v2/30 bg-background-v2 p-4">
+      <View
+        pointerEvents="none"
+        className="absolute inset-0 bg-primary-v2/10"
+      />
+      <View className="flex-row items-center">
+        <AppIcon icon={Sparkles} size={23} className="mr-2 text-link-v2" />
+        <AppText variant="md" className="flex-1 font-semibold text-link-v2">
+          You can reply or try one of these
+        </AppText>
+      </View>
 
-      <View className="mt-2 flex-row flex-wrap justify-between gap-y-3">
-        {replies.map(reply => (
+      <View className="mt-3 flex-row flex-wrap justify-between gap-y-2">
+        {replies.map((reply, index) => (
           <AppPressable
             key={reply.id}
             onPress={() => onSelect?.(reply)}
-            className="w-[48%] flex-row items-center rounded-[24px] border border-border bg-transparent p-4"
+            className="w-[48%] min-h-[72px] flex-row items-center rounded-[20px] border border-primary-v2/30 bg-background-v2/40 px-3 py-3"
           >
-            <AppText variant="md" className="flex-1 text-text-secondary">
+            <AppIcon
+              icon={[Handshake, Frown, Users, Target][index % 4]}
+              size={24}
+              className="mr-2 text-link-v2"
+            />
+            <AppText variant="sm" className="flex-1 leading-5 text-text-v2">
               {reply.text}
             </AppText>
           </AppPressable>

@@ -21,24 +21,27 @@ export function DailyAffirmationCard({ onPress }: DailyAffirmationCardProps) {
 
   return (
     <AppPressable onPress={onPress}>
-      <AppCard className="rounded-[28px] border border-rose-v2/30 bg-surface-v2 px-5 py-4">
-        <View className="flex-row items-center">
+      <AppCard className="overflow-hidden rounded-[24px] border border-primary-v2/25 bg-background-v2 px-4 py-4">
+        <View
+          pointerEvents="none"
+          className="absolute -bottom-16 -right-12 h-28 w-48 rounded-full bg-primary-v2/10"
+        />
+        <View className="flex-row items-start">
           {/* Icon */}
-          <View className="mr-4">
+          <View className="mr-3 h-10 w-10 items-center justify-center rounded-[14px] border border-primary-v2/25 bg-primary-v2/15">
             <AppIcon
               icon={Sparkles}
-              size={28}
-              className="text-rose-v2"
+              size={20}
+              className="text-link-v2"
               strokeWidth={2}
             />
           </View>
 
           {/* Content */}
-          <View className="flex-1">
+          <View className="flex-1 border-l border-primary-v2/25 pl-3">
             <AppText
               variant="md"
-              className="font-semibold text-text-v2"
-              numberOfLines={2}
+              className="font-semibold leading-6 text-text-v2"
             >
               {t(motivationalMessage?.title ?? title) ?? title}
             </AppText>
@@ -46,19 +49,20 @@ export function DailyAffirmationCard({ onPress }: DailyAffirmationCardProps) {
             {subtitle && (
               <AppText
                 variant="sm"
-                className="mt-1 text-text-muted-v2"
-                numberOfLines={1}
+                className="mt-1 leading-5 text-text-muted-v2"
               >
                 {t(motivationalMessage?.description ?? subtitle) ?? subtitle}
               </AppText>
             )}
           </View>
 
-          <AppIcon
-            icon={ChevronRight}
-            size={20}
-            className="ml-3 text-text-muted-v2"
-          />
+          {onPress && (
+            <AppIcon
+              icon={ChevronRight}
+              size={20}
+              className="ml-3 text-text-muted-v2"
+            />
+          )}
         </View>
       </AppCard>
     </AppPressable>

@@ -1,7 +1,7 @@
 import { AppCard, AppIcon, AppPressable, AppText } from '@/components';
 import { View, ViewProps } from 'react-native';
 
-import { LucideIcon } from 'lucide-react-native';
+import { ArrowRight, LucideIcon } from 'lucide-react-native';
 
 interface QuickActionCardProps extends ViewProps {
   icon: LucideIcon;
@@ -24,14 +24,27 @@ export function QuickActionCard({
   ...rest
 }: QuickActionCardProps) {
   return (
-    <AppPressable className="w-[48%]" onPress={onPress}>
+    <AppPressable
+      accessibilityRole="button"
+      accessibilityLabel={`${title}, ${actionLabel}`}
+      className="w-[48%]"
+      onPress={onPress}
+    >
       <AppCard
         {...rest}
-        className="rounded-[28px] border border-border bg-surface-v2 p-5"
+        className="flex-1 overflow-hidden rounded-[24px] border border-primary-v2/30 bg-background-v2 p-3.5"
       >
+        <View
+          pointerEvents="none"
+          className="absolute inset-0 bg-primary-v2/5"
+        />
+        <View
+          pointerEvents="none"
+          className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-primary-v2/10"
+        />
         {/* Icon */}
         <View
-          className={`h-12 w-12 items-center justify-center rounded-full ${iconBackgroundClassName}`}
+          className={`h-10 w-10 items-center justify-center rounded-[14px] ${iconBackgroundClassName}`}
         >
           <AppIcon
             icon={icon}
@@ -42,17 +55,17 @@ export function QuickActionCard({
         </View>
 
         {/* Content */}
-        <View className="mt-4 flex-1">
+        <View className="mt-3 flex-1">
           <AppText
-            variant="lg"
+            variant="md"
             className="font-semibold text-text-v2"
-            numberOfLines={1}
+            numberOfLines={2}
           >
             {title}
           </AppText>
 
           <AppText
-            variant="sm"
+            variant="xs"
             className="mt-1 leading-5 text-text-muted-v2"
             numberOfLines={4}
           >
@@ -61,13 +74,21 @@ export function QuickActionCard({
         </View>
 
         {/* Action */}
-        <AppText
-          variant="sm"
-          className={`mt-4 font-semibold ${accentClassName}`}
-          numberOfLines={1}
-        >
-          {actionLabel} →
-        </AppText>
+        <View className="mt-4 flex-row items-center justify-between rounded-[14px] border border-primary-v2/25 bg-primary-v2/15 px-2.5 py-2.5">
+          <AppText
+            variant="xs"
+            className={`flex-1 font-semibold ${accentClassName}`}
+            numberOfLines={1}
+            adjustsFontSizeToFit
+          >
+            {actionLabel}
+          </AppText>
+          <AppIcon
+            icon={ArrowRight}
+            size={16}
+            className={`ml-1 ${accentClassName}`}
+          />
+        </View>
       </AppCard>
     </AppPressable>
   );

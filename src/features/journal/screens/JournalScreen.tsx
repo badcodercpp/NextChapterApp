@@ -34,10 +34,11 @@ export function JournalScreen() {
       </View>
       <View className="mt-4">
         <MoodSelector
+          variant="journal"
           value={value}
           setValue={setValue}
           title="Your current mood"
-          subtitle="How are you feeling now ?"
+          subtitle="How are you feeling now?"
           selectionMode="single"
         />
       </View>

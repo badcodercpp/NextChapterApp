@@ -13,6 +13,7 @@ export function AppHeader({
   title,
   subtitle,
   titleAccessory,
+  subtitleAccessory,
   right,
   backDisabled,
 }: AppHeaderProps) {
@@ -59,13 +60,16 @@ export function AppHeader({
           </View>
         )}
         {!!subtitle && (
-          <AppText
-            variant="xs"
-            className="mt-0.5 text-text-muted-v2"
-            numberOfLines={1}
-          >
-            {subtitle}
-          </AppText>
+          <View className="mt-0.5 flex-row items-center gap-1.5">
+            <AppText
+              variant="xs"
+              className="shrink text-text-muted-v2"
+              numberOfLines={1}
+            >
+              {subtitle}
+            </AppText>
+            {subtitleAccessory}
+          </View>
         )}
       </View>
 
@@ -86,6 +90,7 @@ export const NavigatorAppHeader = (props: NativeStackHeaderProps) => {
       title={options.title}
       subtitle={options.subtitle}
       titleAccessory={options.headerTitleAccessory?.()}
+      subtitleAccessory={options.headerSubtitleAccessory?.()}
       right={options.headerRight?.({
         canGoBack: props.navigation.canGoBack(),
       })}

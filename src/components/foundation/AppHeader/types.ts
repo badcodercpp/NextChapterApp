@@ -5,6 +5,7 @@ export interface AppHeaderProps extends NativeStackHeaderProps {
   title?: string;
   subtitle?: string;
   titleAccessory?: ReactNode;
+  subtitleAccessory?: ReactNode;
   right?: ReactNode;
   backDisabled?: boolean;
 }
@@ -12,5 +13,6 @@ export interface AppHeaderProps extends NativeStackHeaderProps {
 export type AppHeaderOptions = NativeStackHeaderProps['options'] & {
   subtitle?: string;
   headerTitleAccessory?: () => ReactNode;
+  headerSubtitleAccessory?: () => ReactNode;
   backDisabled?: boolean;
 };

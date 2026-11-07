@@ -6,7 +6,6 @@ import { RangeOption } from '../components/RecoveryScoreChartTypes';
 import { lazySelectGetRecoveryScoreTrendForLastNDay } from '@/state/selectors';
 import { lineDataItem } from 'react-native-gifted-charts';
 import { useLazyGetRecoveryScoreTrendForLastNDayQuery } from '@/__generated__/graphql';
-import { useResolveClassNames } from 'uniwind';
 import { useSelector } from 'react-redux';
 
 export const useRecoveryScoreChart = () => {
@@ -30,16 +29,15 @@ export const useRecoveryScoreChart = () => {
 
   const [customEndInput, setCustomEndInput] = useState('');
 
-  const { color: chartPrimaryColor } = useResolveClassNames('text-primary');
-  const { color: chartMutedColor } = useResolveClassNames('text-text-muted');
-
   const refetchChartDataFromApi = useCallback(
     async (days: number) => {
       try {
         setIsChartDataLoading(true);
-        await triggerLazyGetRecoveryScoreTrendForLastNDayQuery({ days });
+        await triggerLazyGetRecoveryScoreTrendForLastNDayQuery({
+          days,
+        }).unwrap();
       } catch (error) {
-        console.log(error);
+        console.error('Unable to load recovery score chart:', error);
       } finally {
         setIsChartDataLoading(false);
       }
@@ -51,7 +49,7 @@ export const useRecoveryScoreChart = () => {
     return lazySelectGetRecoveryScoreTrendForLastNDay(selectedRange.days);
   }, [selectedRange.days]);
 
-  const { data: recoveryScoreTrendForLastNDay } = useSelector(
+  const { data: recoveryScoreTrendForLastNDay, isError } = useSelector(
     selectGetRecoveryScoreTrendForLastNDay,
   );
 
@@ -67,6 +65,9 @@ export const useRecoveryScoreChart = () => {
 
     setSelectedRange(option);
     setShowRangeOptions(false);
+    if (option.days === selectedRange.days && isError) {
+      refetchChartDataFromApi(option.days);
+    }
   };
 
   /**
@@ -173,21 +174,16 @@ export const useRecoveryScoreChart = () => {
     return filteredData.map(item => ({
       value: Math.max(0, Math.min(100, item.score ?? 0)),
       label: formatDate(item.createdAt?.toString() ?? null),
-      labelTextStyle: {
-        color: chartMutedColor?.toString(),
-        fontSize: 16,
-        width: 80,
-        textAlign: 'center',
-      },
-
-      hideDataPoint: false,
-      dataPointColor: chartPrimaryColor?.toString(),
-      dataPointRadius: 6,
     }));
-  }, [chartMutedColor, chartPrimaryColor, filteredData]);
+  }, [filteredData]);
 
   const latestScore =
     chartData.length > 0 ? chartData[chartData.length - 1].value : null;
+  const firstScore = chartData[0]?.value;
+  const scoreChange =
+    chartData.length > 1 && latestScore != null && firstScore != null
+      ? latestScore - firstScore
+      : null;
 
   useEffect(() => {
     refetchChartDataFromApi(selectedRange.days);
@@ -214,5 +210,7 @@ export const useRecoveryScoreChart = () => {
     setCustomEndDate,
     chartData,
     isChartDataLoading,
+    isError,
+    scoreChange,
   };
 };
