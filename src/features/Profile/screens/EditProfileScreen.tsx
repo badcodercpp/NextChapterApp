@@ -17,7 +17,7 @@ import { useUpdateProfileBootstrap } from '@/features/Profile/hooks/useUpdatePro
 
 export function EditProfileScreen() {
   const navigation = useNavigation<ProfileNavigationProp>();
-  const { handleStartProfileUpdate, isBootstrapPending, isBootstrapError } =
+  const { handleStartProfileUpdate, isBootstrapPending } =
     useUpdateProfileBootstrap();
 
   useScreenHeader({
@@ -28,29 +28,27 @@ export function EditProfileScreen() {
 
   return (
     <AppAuthenticatedLayout noBottomPadding>
-      <View className="mt-4">
+      <View className="mt-6">
         <ProfilePhotoPicker />
       </View>
-      <View className="mt-4">
+      <View className="mt-8">
         <BasicInfoSection />
       </View>
-      <View className="mt-4">
+      <View className="mt-8">
         <ContactSection />
       </View>
-      <View className="mt-4">
+      <View className="mt-8">
         <PersonalDetailsSection />
       </View>
-      <View className="mt-4">
+      <View className="mt-6">
         <WellnessFocusSection
+          saving={isBootstrapPending}
           onSave={async () => {
-            await handleStartProfileUpdate();
-
-            if (isBootstrapError) {
+            const didUpdate = await handleStartProfileUpdate();
+            if (!didUpdate) {
               showToast('Failed to update profile', 'error');
               return;
             }
-            console.log('CURRENT ROUTE:', navigation.getState().routes);
-            console.log('CURRENT INDEX:', navigation.getState().index);
             navigation.replace(ProfileRoutes.EditProfileSuccessScreen);
           }}
           onDeleteAccount={() => {

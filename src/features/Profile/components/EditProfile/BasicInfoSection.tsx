@@ -17,19 +17,19 @@ export function BasicInfoSection({}: BasicInfoSectionProps) {
   return (
     <View className="w-full">
       {/* Section Header */}
-      <View className="mb-2 flex-row items-center">
-        <View className="mr-3 h-7 w-1.5 rounded-full bg-primary" />
+      <View className="mb-4 flex-row items-center">
+        <View className="mr-3 h-9 w-1.5 rounded-full bg-primary" />
 
         <AppText
-          variant="sm"
-          className="font-semibold uppercase tracking-[2px] text-text-muted"
+          variant="md"
+          className="font-semibold uppercase tracking-[2.5px] text-text-muted"
         >
           Basic Info
         </AppText>
       </View>
 
       {/* Full Name */}
-      <AppText variant="sm" className="mb-1 px-2 text-text">
+      <AppText variant="md" className="mb-2 px-2 text-text">
         Full Name
       </AppText>
       <Controller
@@ -48,13 +48,14 @@ export function BasicInfoSection({}: BasicInfoSectionProps) {
             startIcon={UserRound}
             endIcon={Pencil}
             inputClassName="text-text-secondary"
-            className="mb-4"
+            containerClassName="min-h-[64px] rounded-[24px] border-border bg-card/60 px-4"
+            className="mb-6"
           />
         )}
       />
 
       {/* Bio */}
-      <AppText variant="sm" className="mb-1 px-2 text-text">
+      <AppText variant="md" className="mb-2 px-2 text-text">
         Bio
       </AppText>
       <Controller
@@ -74,7 +75,8 @@ export function BasicInfoSection({}: BasicInfoSectionProps) {
             startIcon={FileText}
             endIcon={Pencil}
             inputClassName="text-text-secondary"
-            className="mb-4"
+            containerClassName="min-h-[160px] items-start rounded-[24px] border-border bg-card/60 px-4"
+            className="mb-2"
           />
         )}
       />

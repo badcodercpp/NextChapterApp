@@ -7,6 +7,7 @@ import { cn } from '@/utils';
 export interface AccountSettingItem {
   id: string;
   title: string;
+  subtitle: string;
   icon: typeof UserRound;
   destructive?: boolean;
 }
@@ -18,23 +19,9 @@ interface AccountSettingsProps {
 
 const ACCOUNT_ITEMS: AccountSettingItem[] = [
   {
-    id: 'basic-information',
-    title: 'Basic Information',
-    icon: UserRound,
-  },
-  {
-    id: 'personal-information',
-    title: 'Personal Information',
-    icon: UserRound,
-  },
-  {
-    id: 'contact-information',
-    title: 'Contact Information',
-    icon: UserRound,
-  },
-  {
     id: 'sign-out',
     title: 'Sign Out',
+    subtitle: 'Log out of your account',
     icon: LogOut,
     destructive: true,
   },
@@ -55,41 +42,55 @@ function AccountRow({
       className={cn(
         'flex-row items-center px-4 py-3',
         !isLast && 'border-b border-border',
+        item.destructive &&
+          'my-2 rounded-[20px] border border-red-500/25 bg-transparent px-4 py-4',
       )}
     >
       {/* Icon */}
       <View
         className={cn(
           'h-10 w-10 items-center justify-center rounded-full',
-          item.destructive ? 'bg-red-500/10' : 'bg-white/[0.06]',
+          item.destructive ? 'bg-red-500/10' : 'bg-primary/15',
         )}
       >
         <AppIcon
           icon={item.icon}
-          size={24}
+          size={item.destructive ? 26 : 24}
           strokeWidth={2.2}
           className={cn(item.destructive ? 'text-red-500' : 'text-text-muted')}
         />
       </View>
 
       {/* Title */}
-      <AppText
-        variant="sm"
-        className={cn(
-          'ml-5 flex-1',
-          item.destructive ? 'text-red-500' : 'text-text-secondary',
-        )}
-      >
-        {item.title}
-      </AppText>
+      <View className="ml-3 flex-1">
+        <AppText
+          variant="md"
+          className={cn(
+            'font-semibold',
+            item.destructive ? 'text-red-500' : 'text-text',
+          )}
+        >
+          {item.title}
+        </AppText>
+        <AppText
+          variant="sm"
+          className={cn(
+            'mt-0.5',
+            item.destructive ? 'text-text-muted' : 'text-text-secondary',
+          )}
+          numberOfLines={1}
+        >
+          {item.subtitle}
+        </AppText>
+      </View>
 
       {/* Chevron */}
       <AppIcon
         icon={ChevronRight}
-        size={25}
+        size={22}
         strokeWidth={2.5}
         className={cn(
-          item.destructive ? 'text-red-500/60' : 'text-text-muted/60',
+          item.destructive ? 'text-red-500' : 'text-text-muted',
         )}
       />
     </AppPressable>
@@ -102,13 +103,8 @@ export function AccountSettings({
 }: AccountSettingsProps) {
   return (
     <View className="flex-1">
-      {/* Header */}
-      <AppText variant="xl" className="ml-2 pb-1 font-semibold text-text">
-        Account
-      </AppText>
-
       {/* Settings Card */}
-      <View className=" overflow-hidden rounded-[24px] border border-border bg-card">
+      <View className="overflow-hidden rounded-[24px] bg-transparent">
         {ACCOUNT_ITEMS.map((item, index) => (
           <AccountRow
             key={item.id}

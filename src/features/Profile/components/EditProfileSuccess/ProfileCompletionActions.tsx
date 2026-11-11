@@ -24,15 +24,15 @@ export function ProfileCompletionActions({
         }}
         disabled={disabled}
         className={cn(
-          'w-full flex-row items-center justify-center py-3',
-          'rounded-[24px]',
+          'min-h-14 w-full flex-row items-center justify-center py-3',
+          'rounded-[22px]',
           'bg-primary',
           disabled && 'opacity-50',
         )}
         accessibilityRole="button"
         accessibilityLabel="Go to Dashboard"
       >
-        <AppText variant="md" className="font-semibold text-white">
+        <AppText variant="lg" className="font-semibold text-white">
           Go to Profile Now
         </AppText>
 
@@ -51,10 +51,9 @@ export function ProfileCompletionActions({
         }}
         disabled={disabled}
         className={cn(
-          'mt-4 py-3 w-full flex-row items-center justify-center',
-          'rounded-[24px]',
-          'border border-white/10',
-          'bg-white/[0.03]',
+          'mt-4 min-h-14 w-full flex-row items-center justify-center py-3',
+          'rounded-[22px]',
+          'border border-border bg-card/40',
           disabled && 'opacity-50',
         )}
         accessibilityRole="button"

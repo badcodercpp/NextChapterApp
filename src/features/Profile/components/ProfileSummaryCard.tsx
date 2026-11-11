@@ -5,6 +5,8 @@ import { Pencil } from 'lucide-react-native';
 import { View } from 'react-native';
 import { toHttpsURL } from '@/utils';
 import { useSelector } from 'react-redux';
+import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
+import { useResolveClassNames } from 'uniwind';
 
 interface ProfileSummaryCardProps {
   onEditPress?: () => void;
@@ -13,15 +15,42 @@ interface ProfileSummaryCardProps {
 export function ProfileSummaryCard({ onEditPress }: ProfileSummaryCardProps) {
   const { data: me } = useSelector(selectMe);
   const { data: applicationConfig } = useSelector(selectApplicationConfig);
+  const { backgroundColor: accent } = useResolveClassNames('bg-secondary');
 
   return (
-    <View className="rounded-[28px] border border-secondary/40 bg-card/60 p-4">
+    <View className="overflow-hidden rounded-[28px] border border-secondary/50 bg-card/60 p-3">
+      <View pointerEvents="none" className="absolute inset-0">
+        <Svg width="100%" height="100%">
+          <Defs>
+            <LinearGradient
+              id="profileSummaryBackground"
+              x1="0"
+              y1="0"
+              x2="1"
+              y2="1"
+            >
+              <Stop offset="0" stopColor={accent} stopOpacity={0.28} />
+              <Stop offset="1" stopColor={accent} stopOpacity={0.03} />
+            </LinearGradient>
+          </Defs>
+          <Rect width="100%" height="100%" fill="url(#profileSummaryBackground)" />
+        </Svg>
+      </View>
       <View className="flex-row items-center">
         {/* Profile Image */}
         <View className="mr-4">
-          <View className="items-center justify-center">
+          <View
+            className="items-center justify-center rounded-full border-2 border-secondary p-1"
+            style={{
+              shadowColor: accent,
+              shadowOffset: { width: 0, height: 0 },
+              shadowOpacity: 0.8,
+              shadowRadius: 8,
+              elevation: 8,
+            }}
+          >
             <AppAvatar
-              size="lg"
+              size="md"
               name={me?.displayName ?? ''}
               uri={toHttpsURL(me?.avatarUrl) ?? undefined}
             />
@@ -33,7 +62,7 @@ export function ProfileSummaryCard({ onEditPress }: ProfileSummaryCardProps) {
           {/* Name + Edit */}
           <View className="flex-row items-start justify-between">
             <AppText
-              variant="xl"
+              variant="lg"
               className="flex-1 font-semibold text-text"
               numberOfLines={1}
             >
@@ -50,11 +79,8 @@ export function ProfileSummaryCard({ onEditPress }: ProfileSummaryCardProps) {
                 items-center
                 justify-center
                 rounded-full
-                border
-                border-text-muted/30
+                border border-text-muted/20
                 bg-white/5
-                px-4
-                py-2.5
                 absolute
                 right-0
               "
@@ -69,7 +95,11 @@ export function ProfileSummaryCard({ onEditPress }: ProfileSummaryCardProps) {
           </View>
           {/* Quote */}
           <View className="mt-1 flex-row">
-            <AppText variant="md" className="mr-8 flex-1 text-text-secondary">
+            <AppText
+              variant="sm"
+              className="mr-8 flex-1 text-text-secondary"
+              numberOfLines={2}
+            >
               {me?.bio ?? applicationConfig?.profileSummaryQuote}
             </AppText>
           </View>
