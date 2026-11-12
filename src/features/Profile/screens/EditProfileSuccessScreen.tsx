@@ -12,7 +12,7 @@ import { View } from 'react-native';
 export function EditProfileSuccessScreen() {
   return (
     <AppAuthenticatedLayout noBottomPadding>
-      <View className="mt-4">
+      <View className="mt-6">
         <ProfileUpdateSuccess />
       </View>
       <View className="mt-6">
@@ -21,7 +21,7 @@ export function EditProfileSuccessScreen() {
       <View className="mt-6">
         <RedirectCountdown />
       </View>
-      <View className="mt-6">
+      <View className="mt-6 mb-8">
         <ProfileCompletionActions />
       </View>
     </AppAuthenticatedLayout>

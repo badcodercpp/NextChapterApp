@@ -46,35 +46,31 @@ export function ProfileStats({}: ProfileStatsProps) {
   ];
 
   return (
-    <View className="flex-row gap-3">
+    <View className="flex-row flex-wrap justify-between gap-y-3">
       {stats.map(stat => (
         <View
           key={stat.id}
-          className="flex-1 items-center rounded-[16px] border border-border bg-card px-2 py-2"
+          className="min-h-[128px] w-[48%] items-center justify-center rounded-[22px] border border-secondary/30 bg-card px-3 py-3"
         >
           {/* Icon */}
-          <View
-            className={
-              'h-12 w-12 items-center justify-center rounded-full iconBackgroundClassName'
-            }
-          >
+          <View className="mb-2 h-11 w-11 items-center justify-center rounded-[15px] bg-primary/15">
             <AppIcon
               icon={stat.icon}
-              size={20}
-              strokeWidth={2.5}
-              className="text-primary"
+              size={24}
+              strokeWidth={2.2}
+              className="text-secondary"
             />
           </View>
 
           {/* Value */}
-          <AppText variant="2xl" className="mt-2 font-bold text-text">
+          <AppText variant="2xl" className="font-bold leading-7 text-text">
             {stat.value}
           </AppText>
 
           {/* Label */}
           <AppText
-            variant="xs"
-            className="mt-1 text-center text-text-muted"
+            variant="sm"
+            className="mt-1 min-h-10 text-center leading-5 text-text-secondary"
             numberOfLines={2}
           >
             {stat.label}

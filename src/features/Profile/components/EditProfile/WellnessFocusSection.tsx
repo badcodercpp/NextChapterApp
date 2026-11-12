@@ -24,20 +24,20 @@ export function WellnessFocusSection({
           onPress={onSave}
           disabled={saving}
           className={cn(
-            'mt-4 py-3 w-full flex-row items-center justify-center',
-            'rounded-[24px]',
+            'mt-2 min-h-14 w-full flex-row items-center justify-center',
+            'rounded-[20px]',
             'bg-primary',
             saving && 'opacity-60',
           )}
         >
           <AppIcon
             icon={Save}
-            size={27}
+            size={22}
             className="mr-3 text-white"
             strokeWidth={2.5}
           />
 
-          <AppText variant="xl" className="font-semibold text-white">
+          <AppText variant="lg" className="font-semibold text-white">
             {saving ? 'Saving...' : 'Save Changes'}
           </AppText>
         </AppPressable>

@@ -12,7 +12,7 @@ interface RedirectCountdownProps {
   onComplete?: () => void;
 }
 
-const SIZE = 80;
+const SIZE = 104;
 const STROKE_WIDTH = 7;
 const RADIUS = (SIZE - STROKE_WIDTH) / 2;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
@@ -75,7 +75,7 @@ export function RedirectCountdown({
   }, [navigation, seconds]);
 
   return (
-    <View className="flex-1 items-center justify-center bg-background">
+    <View className="items-center justify-center">
       {/* Countdown Circle */}
       <View
         className="relative items-center justify-center"
@@ -130,7 +130,7 @@ export function RedirectCountdown({
       </View>
 
       {/* Redirect Message */}
-      <AppText variant="xl" className="mt-4 text-center text-text-muted">
+      <AppText variant="lg" className="mt-5 text-center text-text-muted">
         {message}
       </AppText>
     </View>

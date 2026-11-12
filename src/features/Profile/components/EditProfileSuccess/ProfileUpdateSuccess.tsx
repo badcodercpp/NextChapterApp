@@ -16,7 +16,7 @@ export function ProfileUpdateSuccess({
 }: ProfileUpdateSuccessProps) {
   const { data: me } = useSelector(selectMe);
   return (
-    <View className="flex-1 items-center bg-background pt-4">
+    <View className="items-center pt-2">
       {/* Profile Avatar */}
       <AppAvatar
         size="xl"
@@ -28,7 +28,7 @@ export function ProfileUpdateSuccess({
       <AppText
         variant="xl"
         className="
-          mt-4
+          mt-5
           text-center
           font-semibold
           text-text
@@ -41,9 +41,10 @@ export function ProfileUpdateSuccess({
       <AppText
         variant="sm"
         className="
-          mt-2
+          mt-3
           text-center
           text-text-muted
+          leading-6
         "
       >
         {description}

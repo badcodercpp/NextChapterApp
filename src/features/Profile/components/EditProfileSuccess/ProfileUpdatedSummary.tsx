@@ -23,14 +23,12 @@ export function ProfileUpdatedSummary({
   const updateProfileUpdatedFields =
     useSelector(selectUpdateProfileUpdatedFields) ?? [];
 
-  console.log('updateProfileUpdatedFields', updateProfileUpdatedFields);
-
   return (
     <AppCard
       className={cn(
-        'w-full rounded-[24]',
-        'border border-white/10',
-        'bg-white/[0.05]',
+        'w-full overflow-hidden rounded-[24px]',
+        'border border-secondary/25',
+        'bg-card/70',
         'p-4',
         className,
       )}
@@ -57,14 +55,14 @@ export function ProfileUpdatedSummary({
               key={`${item}_${index}`}
               className={cn(
                 'flex-row items-center',
-                index !== updateProfileUpdatedFields?.length - 1 && 'mb-4',
+                index !== updateProfileUpdatedFields?.length - 1 && 'mb-3',
               )}
             >
               {/* Icon */}
               <View
                 className="
-                h-8
-                w-8
+                h-11
+                w-11
                 items-center
                 justify-center
                 rounded-full
@@ -75,7 +73,7 @@ export function ProfileUpdatedSummary({
               >
                 <AppIcon
                   icon={UpdatedItemIcon}
-                  size={16}
+                  size={20}
                   className="text-teal-400"
                   strokeWidth={2.3}
                 />
@@ -98,8 +96,8 @@ export function ProfileUpdatedSummary({
               <View
                 className="
                 ml-4
-                h-8
-                w-8
+                h-11
+                w-11
                 items-center
                 justify-center
                 rounded-full
@@ -108,7 +106,7 @@ export function ProfileUpdatedSummary({
               >
                 <AppIcon
                   icon={Check}
-                  size={16}
+                  size={20}
                   className="text-teal-400"
                   strokeWidth={3}
                 />

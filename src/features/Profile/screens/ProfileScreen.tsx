@@ -64,7 +64,7 @@ export function ProfileScreen() {
       <View className="mt-4">
         <CurrentJourneyCard />
       </View>
-      <View className="mt-4">
+      <View className="mt-5">
         <Achievements />
       </View>
       <View className="mt-4">

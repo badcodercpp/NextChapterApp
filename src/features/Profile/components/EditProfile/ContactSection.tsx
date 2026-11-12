@@ -21,18 +21,18 @@ export function ContactSection({}: ContactSectionProps) {
     <View className="w-full">
       {/* Section Header */}
       <View className="mb-4 flex-row items-center">
-        <View className="mr-3 h-7 w-1.5 rounded-full bg-primary" />
+        <View className="mr-3 h-9 w-1.5 rounded-full bg-primary" />
 
         <AppText
-          variant="sm"
-          className="font-semibold uppercase tracking-[2px] text-text-muted"
+          variant="md"
+          className="font-semibold uppercase tracking-[2.5px] text-text-muted"
         >
           Contact
         </AppText>
       </View>
 
       {/* Mobile Number */}
-      <AppText variant="sm" className="mb-1 px-2 text-text">
+      <AppText variant="md" className="mb-2 px-2 text-text">
         Mobile Number
       </AppText>
 
@@ -52,13 +52,14 @@ export function ContactSection({}: ContactSectionProps) {
             startIcon={Phone}
             endIcon={Pencil}
             inputClassName="text-text-secondary"
-            className="mb-4"
+            containerClassName="min-h-[64px] rounded-[24px] border-border bg-card/60 px-4"
+            className="mb-6"
           />
         )}
       />
 
       {/* Email */}
-      <AppText variant="sm" className="mb-1 px-2 text-text">
+      <AppText variant="md" className="mb-2 px-2 text-text">
         Email Address
       </AppText>
       <AppInput
@@ -66,6 +67,7 @@ export function ContactSection({}: ContactSectionProps) {
         startIcon={Mail}
         disabled={true}
         inputClassName="text-text-secondary"
+        containerClassName="min-h-[64px] rounded-[24px] border-border bg-card/60 px-4"
       />
     </View>
   );
