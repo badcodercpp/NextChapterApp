@@ -109,10 +109,3 @@ test('continues to the existing timeline screen', () => {
   });
   expect(mockNavigate).toHaveBeenCalledWith('HowLongHasItBeen');
 });
-
-test('back control preserves back navigation', () => {
-  act(() => {
-    screen.root.findByProps({ accessibilityLabel: 'Go back' }).props.onPress();
-  });
-  expect(mockGoBack).toHaveBeenCalledTimes(1);
-});

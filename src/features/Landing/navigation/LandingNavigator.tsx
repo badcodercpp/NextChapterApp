@@ -73,7 +73,7 @@ export function LandingNavigator() {
         name={LandingRoutes.MeetYourAI}
         component={MeetYourAIScreen}
         options={{
-          title: 'Meet your AI !!',
+          title: 'Meet Your AI Companion',
         }}
       />
 

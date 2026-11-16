@@ -7,4 +7,5 @@ export const DrawerRoutes = {
   About: 'About',
   RateUs: 'RateUs',
   ReferToFriend: 'ReferToFriend',
+  Premium: 'Premium',
 } as const;

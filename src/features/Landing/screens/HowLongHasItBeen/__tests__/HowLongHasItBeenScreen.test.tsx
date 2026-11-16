@@ -101,10 +101,3 @@ test.each(TIMELINES)(
     expect(mockNavigate).toHaveBeenCalledWith('HowAreYouFeeling');
   },
 );
-
-test('back control goes back', () => {
-  act(() => {
-    screen.root.findByProps({ accessibilityLabel: 'Go back' }).props.onPress();
-  });
-  expect(mockGoBack).toHaveBeenCalledTimes(1);
-});

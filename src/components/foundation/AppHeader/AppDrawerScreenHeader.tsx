@@ -16,12 +16,18 @@ export function AppDrawerScreenHeader({
   subtitleAccessory,
   right,
   backDisabled,
-}: AppHeaderProps) {
+  onBack,
+}: AppHeaderProps & { onBack?: () => void }) {
   const navigation = useNavigation();
   const { top } = useSafeAreaInsets();
 
   const handleBack = () => {
     if (backDisabled) {
+      return;
+    }
+
+    if (onBack) {
+      onBack();
       return;
     }
 
@@ -86,5 +92,6 @@ export const NavigatorAppDrawerScreenHeader = (
     {...props}
     title={props.options.title}
     backDisabled={false}
+    onBack={props.back ? props.navigation.goBack : undefined}
   />
 );

@@ -11,6 +11,7 @@ import {
   ImageBackground,
   LayoutChangeEvent,
   ScrollView,
+  StyleSheet,
   View,
 } from 'react-native';
 
@@ -39,55 +40,41 @@ export function HowAreYouFeelingScreen() {
       contentClassName="flex-1 bg-background"
       safeArea={false}
     >
-      <View className="items-center pt-4 h-[150px]">
+      <View className="h-[150px]">
         <ImageBackground
           source={require('@/assets/images/landing-background.png')}
           resizeMode="cover"
-          className="absolute top-0 left-0 right-0 h-[150px] w-full"
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{ width: '100%' }}
+          className="h-[150px] w-full"
         >
           <LinearGradient
             colors={[
+              'rgba(46,16,101,0.55)',
+              'rgba(46,16,101,0.35)',
               '#141129',
-              'rgba(20,17,41,0.75)',
-              'transparent',
-              'rgba(20,17,41,0.75)',
             ]}
-            locations={[0, 0.7, 0.45, 0.2]}
-            // eslint-disable-next-line react-native/no-inline-styles
-            style={{
-              position: 'absolute',
-              inset: 0,
-            }}
+            locations={[0, 0.5, 1]}
+            style={StyleSheet.absoluteFill}
           />
         </ImageBackground>
       </View>
       <View className="flex-1 px-4">
-        <View className="mb-8">
-          <View className="mt-4 items-center">
-            <AppText variant="4xl" className="text-center text-text">
-              How are you
-              <AppText variant="4xl" className="text-primary">
-                {' '}
-                feeling
-              </AppText>
+        <View className="mb-4 items-center">
+          <AppText variant="4xl" className="text-center font-bold text-text">
+            How are you
+            <AppText variant="4xl" className="font-bold text-primary">
+              {' '}
+              feeling
             </AppText>
-            <AppText variant="4xl" className="text-center text-text">
-              today?
-            </AppText>
-
-            <AppText
-              variant="sm"
-              className="mt-2 text-center text-text-secondary"
-            >
-              Your feelings matter.
-            </AppText>
-
-            <AppText variant="sm" className="text-center text-text-secondary">
-              Select all that apply.
-            </AppText>
-          </View>
+          </AppText>
+          <AppText variant="4xl" className="text-center font-bold text-text">
+            today?
+          </AppText>
+          <AppText
+            variant="sm"
+            className="mt-2 text-center text-text-secondary"
+          >
+            Your feelings matter. Select all that apply.
+          </AppText>
         </View>
 
         <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
@@ -103,53 +90,54 @@ export function HowAreYouFeelingScreen() {
                     return (
                       <AppPressable
                         key={item.id}
-                        className="mb-4 w-[48%]"
+                        className="mb-3 w-[48.5%]"
                         onPress={() =>
                           onChange(Array.from(new Set([...value, item.id])))
                         }
                       >
                         <AppCard
                           className={cn(
-                            'rounded-2xl border p-4',
+                            'rounded-2xl border p-3',
                             selected
-                              ? 'border-primary bg-card'
-                              : 'border-border bg-surface',
+                              ? 'border-primary bg-primary/25'
+                              : 'border-white/10 bg-white/5',
                           )}
                           onLayout={handleLayout}
                           style={
                             cardHeight ? { height: cardHeight } : undefined
                           }
                         >
-                          {selected && (
-                            <View className="absolute right-3 top-5 h-7 w-7 items-center justify-center rounded-full bg-primary">
+                          <View
+                            className={cn(
+                              'absolute right-2 top-2 h-6 w-6 items-center justify-center rounded-full',
+                              selected
+                                ? 'bg-primary'
+                                : 'border-2 border-divider',
+                            )}
+                          >
+                            {selected && (
                               <AppIcon
                                 icon={Check}
-                                size={16}
+                                size={14}
                                 className="text-white"
                               />
-                            </View>
-                          )}
+                            )}
+                          </View>
 
-                          {!selected && (
-                            <View className="absolute right-3 top-5 h-7 w-7 rounded-full border-2 border-divider" />
-                          )}
-
-                          <View className="mt-1 items-center justify-center">
-                            <AppText className="text-5xl leading-h2">
+                          <View className="h-11 w-11 items-center justify-center rounded-xl bg-white/10">
+                            <AppText className="text-2xl leading-h2">
                               {item.emoji}
                             </AppText>
                           </View>
-
                           <AppText
-                            variant="xl"
-                            className="mt-4 text-center text-text"
+                            variant="lg"
+                            className="mt-2 font-semibold text-text"
                           >
                             {item.title}
                           </AppText>
-
                           <AppText
-                            variant="sm"
-                            className=" text-center text-text-secondary"
+                            variant="xs"
+                            className="mt-0.5 text-text-secondary"
                           >
                             {item.subtitle}
                           </AppText>

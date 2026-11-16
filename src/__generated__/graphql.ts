@@ -782,7 +782,7 @@ export const AdvanceJourneyDayDocument = new TypedDocumentString(`
 }
     `);
 export const CompleteDailySessionDocument = new TypedDocumentString(`
-    mutation completeDailySession {
+    mutation CompleteDailySession {
   completeDailySession {
     id
     userId
@@ -841,7 +841,7 @@ export const CreateJournalEntryDocument = new TypedDocumentString(`
 }
     `);
 export const CreateReflectionDocument = new TypedDocumentString(`
-    mutation createReflection($input: CreateReflectionInput!) {
+    mutation CreateReflection($input: CreateReflectionInput!) {
   createReflection(input: $input) {
     id
     userId
@@ -1674,7 +1674,7 @@ const injectedRtkApi = api.injectEndpoints({
     AdvanceJourneyDay: build.mutation<AdvanceJourneyDayMutation, AdvanceJourneyDayMutationVariables | void>({
       query: (variables) => ({ document: AdvanceJourneyDayDocument as unknown as string, variables })
     }),
-    completeDailySession: build.mutation<CompleteDailySessionMutation, CompleteDailySessionMutationVariables | void>({
+    CompleteDailySession: build.mutation<CompleteDailySessionMutation, CompleteDailySessionMutationVariables | void>({
       query: (variables) => ({ document: CompleteDailySessionDocument as unknown as string, variables })
     }),
     CompleteJourney: build.mutation<CompleteJourneyMutation, CompleteJourneyMutationVariables | void>({
@@ -1686,7 +1686,7 @@ const injectedRtkApi = api.injectEndpoints({
     CreateJournalEntry: build.mutation<CreateJournalEntryMutation, CreateJournalEntryMutationVariables>({
       query: (variables) => ({ document: CreateJournalEntryDocument as unknown as string, variables })
     }),
-    createReflection: build.mutation<CreateReflectionMutation, CreateReflectionMutationVariables>({
+    CreateReflection: build.mutation<CreateReflectionMutation, CreateReflectionMutationVariables>({
       query: (variables) => ({ document: CreateReflectionDocument as unknown as string, variables })
     }),
     DeactivateUser: build.mutation<DeactivateUserMutation, DeactivateUserMutationVariables | void>({

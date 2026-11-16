@@ -10,6 +10,11 @@ export const styles = StyleSheet.create({
     flexGrow: 1,
   },
 
+  spacer: {
+    flex: 1,
+    minHeight: 12,
+  },
+
   /* Header */
 
   header: {
@@ -37,7 +42,8 @@ export const styles = StyleSheet.create({
   /* Menu */
 
   menu: {
-    marginTop: 20,
+    marginTop: 12,
+    marginBottom: 4,
   },
 
   sectionTitle: {

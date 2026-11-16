@@ -1,16 +1,13 @@
 import { AppButton, AppCard, AppIcon, AppScreen, AppText } from '@/components';
 import { ArrowRight, Heart, Lock } from 'lucide-react-native';
-import { Image, ImageBackground, ScrollView, View } from 'react-native';
+import { Image, ImageBackground, ScrollView, StyleSheet, View } from 'react-native';
 
 import { FEATURES } from '../../constants';
 import LinearGradient from 'react-native-linear-gradient';
-import { selectApplicationConfig } from '@/state/selectors';
 import { useMeetYourAI } from './useMeetYourAI';
-import { useSelector } from 'react-redux';
 
 export function MeetYourAIScreen() {
   const { submitMeetYourAI } = useMeetYourAI();
-  const { data: applicationConfig } = useSelector(selectApplicationConfig);
 
   return (
     <AppScreen
@@ -20,49 +17,38 @@ export function MeetYourAIScreen() {
       contentClassName="flex-1 bg-background"
       safeArea={false}
     >
-      <View className="items-center pt-4 h-[150px]">
+      <View className="h-[150px]">
         <ImageBackground
           source={require('@/assets/images/landing-background.png')}
           resizeMode="cover"
-          className="absolute top-0 left-0 right-0 h-[150px] w-full"
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{ width: '100%' }}
+          className="h-[150px] w-full"
         >
           <LinearGradient
             colors={[
+              'rgba(46,16,101,0.55)',
+              'rgba(46,16,101,0.35)',
               '#141129',
-              'rgba(20,17,41,0.75)',
-              'transparent',
-              'rgba(20,17,41,0.75)',
             ]}
-            locations={[0, 0.7, 0.45, 0.2]}
-            // eslint-disable-next-line react-native/no-inline-styles
-            style={{
-              position: 'absolute',
-              inset: 0,
-            }}
+            locations={[0, 0.5, 1]}
+            style={StyleSheet.absoluteFill}
           />
         </ImageBackground>
       </View>
       <View className="flex-1 px-4">
-        <View className="mt-4 items-center mb-8">
-          <AppText variant="4xl" className="text-center text-text">
-            Meet your
-            <AppText variant="4xl" className="text-primary">
+        <View className="mb-4 items-center">
+          <AppText variant="4xl" className="text-center font-bold text-text">
+            Your Personal
+            <AppText variant="4xl" className="font-bold text-primary">
               {' '}
-              AI companion
+              AI Companion
             </AppText>
           </AppText>
 
-          <AppText variant="2xl" className="mt-1 text-primary">
-            I'm {applicationConfig?.aiCoachName} 💜
-          </AppText>
-
           <AppText
-            variant="sm"
-            className="mt-1 text-center text-text-secondary"
+            variant="md"
+            className="mt-2 text-center text-text-secondary"
           >
-            {applicationConfig?.aiCoachMessage}
+            A supportive, understanding partner for your wellness journey 💜
           </AppText>
         </View>
 
@@ -70,12 +56,18 @@ export function MeetYourAIScreen() {
           {FEATURES.map(feature => (
             <AppCard
               key={feature.id}
-              className="mb-4 flex-row items-center rounded-2xl border border-border bg-surface p-4"
+              className="mb-3 flex-row items-center rounded-2xl border border-white/10 bg-white/5 p-3"
             >
-              <AppIcon icon={feature.icon} size={30} className="text-primary" />
+              <View className="h-12 w-12 items-center justify-center rounded-xl bg-white/10">
+                <AppIcon
+                  icon={feature.icon}
+                  size={24}
+                  className="text-primary"
+                />
+              </View>
 
-              <View className="flex-1 pr-4 ml-4">
-                <AppText variant="xl" className="text-text">
+              <View className="ml-3 flex-1 pr-3">
+                <AppText variant="lg" className="font-semibold text-text">
                   {feature.title}
                 </AppText>
 
@@ -84,11 +76,11 @@ export function MeetYourAIScreen() {
                 </AppText>
               </View>
 
-              <AppIcon icon={Heart} size={24} className="text-primary" />
+              <AppIcon icon={Heart} size={22} className="text-primary" />
             </AppCard>
           ))}
 
-          <AppCard className="mt-2 rounded-2xl border border-border bg-surface p-4">
+          <AppCard className="mt-1 rounded-2xl border border-primary bg-primary/25 p-4">
             <View className="">
               <View className="flex-1 flex-row">
                 <View className="flex-2">
