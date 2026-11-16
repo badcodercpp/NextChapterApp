@@ -196,7 +196,7 @@ export function MoodSelector({
                     : `
                   mt-2
                   text-center
-                  ${selected ? 'text-text' : 'text-primary'}
+                  ${selected ? 'text-text-v2' : 'text-primary'}
                 `
                 }
               >

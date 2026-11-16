@@ -1,0 +1,8 @@
+mutation GenerateReflection {
+  generateReflection {
+    realization
+    feeling
+    need
+    action
+  }
+}

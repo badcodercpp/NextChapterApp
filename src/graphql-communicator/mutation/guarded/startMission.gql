@@ -1,0 +1,9 @@
+mutation StartMission {
+  startMission {
+    id
+    day
+    status
+    currentStep
+    missionCompletedAt
+  }
+}

@@ -1,0 +1,9 @@
+mutation CompleteMission {
+  completeMission {
+    id
+    day
+    status
+    currentStep
+    missionCompletedAt
+  }
+}

@@ -4,13 +4,14 @@ import {
   ProfileScreen,
 } from '../screens';
 import {
+  NavigatorAppDrawerScreenHeader,
   NavigatorAppHeader,
+  appHeaderOptions,
 } from '@/components';
 
 import { DeleteProfileScreen } from '@/features/Profile/screens';
 import { ProfileRoutes } from './ProfileRoutes';
 import { ProfileStackParamList } from './ProfileStackParamList';
-import { ProfileScreenHeader } from './ProfileScreenHeader';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator<ProfileStackParamList>();
@@ -21,8 +22,10 @@ export function ProfileNavigator() {
       <Stack.Screen
         options={{
           headerShown: true,
-          title: 'Profile',
-          header: ProfileScreenHeader,
+          header: NavigatorAppDrawerScreenHeader,
+          ...appHeaderOptions({
+            title: 'Profile',
+          }),
         }}
         name={ProfileRoutes.ProfileScreen}
         component={ProfileScreen}
@@ -31,8 +34,10 @@ export function ProfileNavigator() {
       <Stack.Screen
         options={{
           headerShown: true,
-          title: 'Edit Profile',
-          header: ProfileScreenHeader,
+          header: NavigatorAppHeader,
+          ...appHeaderOptions({
+            title: 'Edit Profile',
+          }),
         }}
         name={ProfileRoutes.EditProfileScreen}
         component={EditProfileScreen}
@@ -42,6 +47,9 @@ export function ProfileNavigator() {
         options={{
           headerShown: true,
           header: NavigatorAppHeader,
+          ...appHeaderOptions({
+            title: 'Delete Profile',
+          }),
         }}
         name={ProfileRoutes.DeleteProfileScreen}
         component={DeleteProfileScreen}
@@ -50,8 +58,10 @@ export function ProfileNavigator() {
       <Stack.Screen
         options={{
           headerShown: true,
-          title: 'Updating Profile',
-          header: ProfileScreenHeader,
+          header: NavigatorAppHeader,
+          ...appHeaderOptions({
+            title: 'Edit Profile Success',
+          }),
         }}
         name={ProfileRoutes.EditProfileSuccessScreen}
         component={EditProfileSuccessScreen}

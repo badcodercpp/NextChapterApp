@@ -1,0 +1,9 @@
+query ApplicationMetadata {
+  applicationMetadata {
+    id
+    theme
+    language
+    createdAt
+    updatedAt
+  }
+}

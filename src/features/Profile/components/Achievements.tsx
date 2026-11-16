@@ -1,6 +1,7 @@
 import { AppIcon, AppPressable, AppText } from '@/components';
 import { ScrollView, View } from 'react-native';
 
+import { Lock } from 'lucide-react-native';
 import { MyAchievementsQuery } from '@/__generated__/graphql';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { getAchievementTypeIcon } from '@/utils';
@@ -35,19 +36,34 @@ function AchievementItem({
     <AppPressable
       onPress={onPress}
       className={`h-[112px] w-[136px] items-center justify-center rounded-[18px] border px-2 py-2 ${
-        isFeatured
-          ? 'border-secondary bg-primary/25'
-          : 'border-border bg-card'
+        isFeatured ? 'border-secondary bg-primary/25' : 'border-border bg-card'
       }`}
     >
       {/* Badge */}
       <View className="h-6 items-center justify-center">
-        <AppIcon
-          icon={AchievementItemIcon}
-          size={22}
-          strokeWidth={2.2}
-          className={isFeatured ? 'text-white' : 'text-text'}
-        />
+        {achievement.unlocked && (
+          <AppIcon
+            icon={AchievementItemIcon}
+            size={22}
+            strokeWidth={2.2}
+            className={
+              achievement.unlocked
+                ? isFeatured
+                  ? 'text-white'
+                  : 'text-text'
+                : 'text-text-muted opacity-40'
+            }
+          />
+        )}
+
+        {!achievement.unlocked && (
+          <AppIcon
+            icon={Lock}
+            size={22}
+            strokeWidth={2.5}
+            className="text-text"
+          />
+        )}
       </View>
 
       {/* Title */}
@@ -59,14 +75,16 @@ function AchievementItem({
         {achievement.title}
       </AppText>
 
-      {/* Date */}
-      <AppText
-        variant="xs"
-        className="mt-1 text-center leading-4 text-text-muted"
-        numberOfLines={1}
-      >
-        {timeAgo}
-      </AppText>
+      {/* Date / Locked */}
+      {achievement.unlocked && (
+        <AppText
+          variant="xs"
+          className="mt-1 text-center leading-4 text-text-muted"
+          numberOfLines={1}
+        >
+          {timeAgo}
+        </AppText>
+      )}
     </AppPressable>
   );
 }
@@ -100,7 +118,7 @@ export function Achievements({
       >
         {(myAchievements || []).map((achievement, index) => (
           <AchievementItem
-            key={achievement.id}
+            key={`achievement_${index}_${achievement.id}`}
             achievement={achievement}
             isFeatured={index === 0}
             onPress={() => onAchievementPress?.(achievement)}

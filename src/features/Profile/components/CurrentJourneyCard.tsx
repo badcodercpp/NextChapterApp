@@ -1,5 +1,6 @@
 import { AppIcon, AppPressable, AppText } from '@/components';
 import { ChevronRight, Heart } from 'lucide-react-native';
+import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import {
   selectActiveJourney,
   selectApplicationConfig,
@@ -9,9 +10,8 @@ import { useCallback, useMemo } from 'react';
 import { View } from 'react-native';
 import { format } from 'date-fns';
 import { properCase } from '@/utils/strings';
-import { useSelector } from 'react-redux';
-import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import { useResolveClassNames } from 'uniwind';
+import { useSelector } from 'react-redux';
 
 interface CurrentJourneyCardProps {
   onPress?: () => void;
@@ -113,7 +113,7 @@ export function CurrentJourneyCard({ onPress }: CurrentJourneyCardProps) {
       </View>
 
       {/* Progress Header */}
-      <View className="mt-4 flex-row items-center justify-between border-t border-border/80 pt-3">
+      <View className="mt-4 flex-row items-center justify-between border-t-2 border-border pt-3">
         <AppText variant="sm" className="text-text-muted">
           Day {activeJourney?.currentDay} of{' '}
           {applicationConfig?.totalProgramDays}
@@ -125,7 +125,7 @@ export function CurrentJourneyCard({ onPress }: CurrentJourneyCardProps) {
       </View>
 
       {/* Progress Bar */}
-      <View className="mt-3 h-2.5 overflow-hidden rounded-full bg-white/10">
+      <View className="mt-3 h-2.5 overflow-hidden rounded-full bg-primary/20">
         <View
           className="h-full rounded-full bg-primary"
           style={{

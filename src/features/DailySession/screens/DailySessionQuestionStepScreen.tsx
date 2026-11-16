@@ -5,21 +5,25 @@ import {
   SessionProgress,
   TodaysQuestionCardInSession,
 } from '../components';
-import { AppAuthenticatedLayout, AppButton } from '@/components';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import {
+  AppAuthenticatedLayout,
+  AppButton,
+  AppConfirmModal,
+} from '@/components';
 
 import { ChevronRight } from 'lucide-react-native';
-import { DailySessionStackParamList } from '../navigation';
-import { DailySessionStep } from '@/__generated__/graphql';
 import React from 'react';
 import { TodaysQuestionAnswerInputCard } from '@/features/CommonFeature';
 import { View } from 'react-native';
-import { useOptimisticSessionStepUpdate } from '../hooks/useOptimisticSessionStepUpdate';
+import { useDailySeeionQuestionStep } from '../hooks/useDailySeeionQuestionStep';
 
 export function DailySessionQuestionStepScreen() {
-  const navigation =
-    useNavigation<NavigationProp<DailySessionStackParamList>>();
-  const { updateDailySessionStep } = useOptimisticSessionStepUpdate();
+  const {
+    showProceedModal,
+    goToNextStep,
+    openProceedModal,
+    closeProceedModal,
+  } = useDailySeeionQuestionStep();
 
   return (
     <AppAuthenticatedLayout noBottomPadding>
@@ -48,16 +52,25 @@ export function DailySessionQuestionStepScreen() {
           size="lg"
           fullWidth
           className="mb-0"
-          onPress={() => {
-            updateDailySessionStep(DailySessionStep.FollowUp);
-            navigation.navigate('DailySessionFollowUpStep');
-          }}
+          onPress={openProceedModal}
           rightIcon={ChevronRight}
         />
       </View>
       <View className="mt-4">
         <HealingMessageCard />
       </View>
+      <AppConfirmModal
+        visible={showProceedModal}
+        title="Please answer today's question to proceed."
+        message="Our recovery engine need your answer to all question to work better."
+        confirmText="Proceed"
+        cancelText="Stay"
+        onCancel={closeProceedModal}
+        onConfirm={() => {
+          closeProceedModal();
+          goToNextStep();
+        }}
+      />
     </AppAuthenticatedLayout>
   );
 }

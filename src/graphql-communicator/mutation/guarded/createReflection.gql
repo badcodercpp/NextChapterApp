@@ -1,0 +1,16 @@
+mutation CreateReflection($input: CreateReflectionInput!) {
+  createReflection(input: $input) {
+    id
+    userId
+    journeyId
+    missionId
+    questionHistoryId
+    realization
+    feeling
+    need
+    action
+    completedAt
+    createdAt
+    updatedAt
+  }
+}

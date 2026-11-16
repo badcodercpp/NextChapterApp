@@ -1,0 +1,12 @@
+query NextAchievement {
+  nextAchievement {
+    key
+    type
+    title
+    description
+    threshold
+    icon
+    progress
+    remaining
+  }
+}
