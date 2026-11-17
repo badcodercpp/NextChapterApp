@@ -30,11 +30,12 @@ export function CreateAccountScreen() {
       scroll
       keyboard
       safeArea={false}
+      safeTop={false}
       className="bg-background-v2"
-      contentClassName="grow items-center bg-background-v2 px-4 pb-8 pt-8"
+      contentClassName="grow items-center bg-background-v2 px-4 pb-8 pt-4"
     >
       <View className="w-full max-w-md">
-        <View className="items-center pb-8 pt-1">
+        <View className="items-center pb-6">
           <Image
             source={require('@/assets/images/logo.png')}
             resizeMode="contain"

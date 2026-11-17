@@ -1,41 +1,24 @@
 import { AppIcon, AppPressable, AppScreen, AppText } from '@/components';
-import {
-  ArrowRight,
-  CalendarClock,
-  Check,
-  ChevronLeft,
-  Lock,
-} from 'lucide-react-native';
+import { ArrowRight, CalendarClock, Check, Lock } from 'lucide-react-native';
 
 import { Controller } from 'react-hook-form';
-import { LandingNavigationProp } from '@/features/Landing/navigation/types';
 import { TIMELINES } from '../../constants';
 import { View } from 'react-native';
 import { cn } from '@/utils';
 import { useHowLongHasItBeen } from './useHowLongHasItBeen';
-import { useNavigation } from '@react-navigation/native';
 
 export function HowLongHasItBeenScreen() {
   const { control, submitHowLongHasItBeen } = useHowLongHasItBeen();
-  const navigation = useNavigation<LandingNavigationProp>();
 
   return (
     <AppScreen
       scroll
       safeArea={false}
+      safeTop={false}
       className="bg-background-v2"
       contentClassName="grow items-center bg-background-v2 px-5 pb-6 pt-2"
     >
       <View className="w-full max-w-md flex-1">
-        <AppPressable
-          accessibilityRole="button"
-          accessibilityLabel="Go back"
-          className="h-10 w-10 items-center justify-center rounded-full border border-border-v2 bg-surface-v2"
-          onPress={() => navigation.goBack()}
-        >
-          <AppIcon icon={ChevronLeft} size={22} className="text-text-v2" />
-        </AppPressable>
-
         <View className="items-center pb-6 pt-5">
           <View className="h-20 w-20 items-center justify-center rounded-3xl bg-primary-v2">
             <AppIcon

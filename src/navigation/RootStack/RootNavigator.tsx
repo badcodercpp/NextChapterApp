@@ -1,4 +1,4 @@
-import { AppLoader } from '@/components';
+import { AppScreenLoader } from '@/components';
 import { DrawerNavigator } from '../Drawer/DrawerNavigator';
 import { LandingNavigator } from '@/features/Landing/navigation/LandingNavigator';
 import { NavigationContainer } from '@react-navigation/native';
@@ -19,7 +19,7 @@ export default function RootNavigator() {
   const isLoggedIn = bootstrapFinished && authStatus === 'authenticated';
 
   if (isBootstrapping || authStatus === 'checking') {
-    return <AppLoader title="Please wait preparing your account ..." />;
+    return <AppScreenLoader />;
   }
 
   return (

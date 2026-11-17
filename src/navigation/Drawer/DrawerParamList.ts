@@ -14,4 +14,10 @@ export type DrawerParamList = {
   [DrawerRoutes.Help]: undefined;
 
   [DrawerRoutes.About]: undefined;
+
+  [DrawerRoutes.RateUs]: undefined;
+
+  [DrawerRoutes.ReferToFriend]: undefined;
+
+  [DrawerRoutes.Premium]: undefined;
 };
