@@ -1,7 +1,13 @@
 import { AppCard, AppIcon, AppPressable, AppText } from '@/components';
 import { Frown, Handshake, Sparkles, Target, Users } from 'lucide-react-native';
+import { useCallback, useMemo } from 'react';
 
+import { ConversationRole } from '@/__generated__/graphql';
 import { View } from 'react-native';
+import { getLastConversationByRole } from '@/utils';
+import { selectTodayQuestion } from '@/state/selectors';
+import { useSelector } from 'react-redux';
+import uuid from 'react-native-uuid';
 
 interface QuickReply {
   id: string;
@@ -9,8 +15,7 @@ interface QuickReply {
 }
 
 interface QuickFollowupReplyCardProps {
-  replies?: QuickReply[];
-  onSelect?: (reply: QuickReply) => void;
+  createQuickReplyFollowupRecord?: (reply: string) => void;
 }
 
 const defaultReplies: QuickReply[] = [
@@ -33,9 +38,37 @@ const defaultReplies: QuickReply[] = [
 ];
 
 export function QuickFollowupReplyCard({
-  replies = defaultReplies,
-  onSelect,
+  createQuickReplyFollowupRecord,
 }: QuickFollowupReplyCardProps) {
+  const { data: todayQuestion } = useSelector(selectTodayQuestion);
+
+  const getReplies = useCallback((questions: typeof todayQuestion) => {
+    const lastAssistantConversation = getLastConversationByRole(
+      questions,
+      ConversationRole.Assistant,
+    );
+    if (!lastAssistantConversation?.quickReplies?.length) {
+      return defaultReplies;
+    }
+
+    return (
+      lastAssistantConversation?.quickReplies?.reduce((acc, curr) => {
+        const newId = uuid.v4();
+        return [
+          ...acc,
+          {
+            id: newId,
+            text: curr,
+          },
+        ];
+      }, [] as Array<QuickReply>) ?? []
+    );
+  }, []);
+
+  const allReplyEntity = useMemo(() => {
+    return getReplies(todayQuestion);
+  }, [getReplies, todayQuestion]);
+
   return (
     <AppCard className="overflow-hidden rounded-[26px] border border-primary-v2/30 bg-background-v2 p-4">
       <View
@@ -50,10 +83,10 @@ export function QuickFollowupReplyCard({
       </View>
 
       <View className="mt-3 flex-row flex-wrap justify-between gap-y-2">
-        {replies.map((reply, index) => (
+        {allReplyEntity.map((reply, index) => (
           <AppPressable
             key={reply.id}
-            onPress={() => onSelect?.(reply)}
+            onPress={() => createQuickReplyFollowupRecord?.(reply.text)}
             className="w-[48%] min-h-[72px] flex-row items-center rounded-[20px] border border-primary-v2/30 bg-background-v2/40 px-3 py-3"
           >
             <AppIcon

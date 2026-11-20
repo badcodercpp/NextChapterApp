@@ -10,3 +10,4 @@ export * from './date';
 export * from './mood';
 export * from './userUpdatedFieldIcon';
 export * from './achievementTypeIcon';
+export * from './conversation';

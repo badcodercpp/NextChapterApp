@@ -1,6 +1,10 @@
 import { AppAvatar, AppText } from '@/components';
 
 import { View } from 'react-native';
+import { formatDistanceToNowStrict } from 'date-fns';
+import { selectMe } from '@/state/selectors';
+import { toHttpsURL } from '@/utils';
+import { useSelector } from 'react-redux';
 
 interface UserChatMessageCardProps {
   content: string;
@@ -12,9 +16,14 @@ interface UserChatMessageCardProps {
 export function UserChatMessageCard({
   content,
   createdAt,
-  userName,
   themed = false,
 }: UserChatMessageCardProps) {
+  const { data: me } = useSelector(selectMe);
+  const dateAgo = new Date(createdAt);
+  const timeAgo = formatDistanceToNowStrict(dateAgo, {
+    addSuffix: true,
+  });
+
   return (
     <View className="flex-1 flex-row justify-end">
       <View className="flex-1">
@@ -35,12 +44,16 @@ export function UserChatMessageCard({
             variant="xs"
             className={themed ? 'text-text-muted-v2' : 'text-text-muted'}
           >
-            {createdAt}
+            {timeAgo}
           </AppText>
         </View>
       </View>
       <View className="ml-2 mt-2">
-        <AppAvatar size="sm" name={userName} />
+        <AppAvatar
+          size="sm"
+          name={me?.displayName ?? ''}
+          uri={toHttpsURL(me?.avatarUrl) ?? undefined}
+        />
       </View>
     </View>
   );

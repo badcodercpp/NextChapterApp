@@ -2,31 +2,36 @@ import {
   AppAuthenticatedLayout,
   AppButton,
   AppConfirmModal,
-  AppInput,
   AppIcon,
+  AppLoadingModal,
   AppText,
 } from '@/components';
-import { ChevronRight, LockKeyhole, Send } from 'lucide-react-native';
+import { ChevronRight, LockKeyhole, Summary } from 'lucide-react-native';
 import {
   FollowUpChats,
   FollowUpProgressCard,
   QuickFollowupReplyCard,
   SessionProgress,
 } from '../components';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
 
-import { DailySessionStackParamList } from '../navigation';
-import { DailySessionStep } from '@/__generated__/graphql';
+import React from 'react';
+import { TodaysFollowUpInputCard } from '@/features/CommonFeature';
 import { View } from 'react-native';
-import { useOptimisticSessionStepUpdate } from '../hooks/useOptimisticSessionStepUpdate';
+import { useDailySessionFollowUpStep } from '../hooks/useDailySessionFollowUpStep';
 
 export function DailySessionFollowUpStepScreen() {
-  const [showProceedModal, setShowProceedModal] = useState<boolean>(false);
-  const navigation =
-    useNavigation<NavigationProp<DailySessionStackParamList>>();
-
-  const { updateDailySessionStep } = useOptimisticSessionStepUpdate();
+  const {
+    isPending,
+    showProceedModal,
+    goToNextStep,
+    openProceedModal,
+    closeProceedModal,
+    createFollowupRecord,
+    createQuickReplyFollowupRecord,
+    showSummaryModal,
+    closeSummaryModal,
+    lastAssistantConversation,
+  } = useDailySessionFollowUpStep();
 
   return (
     <AppAuthenticatedLayout noBottomPadding>
@@ -37,23 +42,14 @@ export function DailySessionFollowUpStepScreen() {
         <FollowUpChats />
       </View>
       <View className="mt-4">
-        <QuickFollowupReplyCard />
+        <QuickFollowupReplyCard
+          createQuickReplyFollowupRecord={createQuickReplyFollowupRecord}
+        />
       </View>
       <View className="mt-4">
-        <AppInput
-          variant="v2"
-          value={''}
-          onChangeText={() => {}}
-          placeholder="Type your answer..."
-          multiline
-          showCharacterCount
-          className="w-full"
-          endIcon={Send}
-          endIconClassName="text-link-v2"
-          endIconSize={24}
-          onEndIconPress={() => {}}
-          inputClassName="min-h-[104px] px-3 pt-4 text-md text-text-v2"
-          containerClassName="rounded-[24px] border-primary-v2/40 bg-selected-v2/40"
+        <TodaysFollowUpInputCard
+          endIconDisabled={isPending}
+          onEndIconPress={createFollowupRecord}
         />
         <View className="mt-3 flex-row items-center justify-center px-3">
           <AppIcon
@@ -70,7 +66,7 @@ export function DailySessionFollowUpStepScreen() {
         </View>
       </View>
       <View className="mt-4">
-        <FollowUpProgressCard current={1} total={5} />
+        <FollowUpProgressCard total={5} />
       </View>
       <View className="mt-4">
         <AppButton
@@ -78,25 +74,38 @@ export function DailySessionFollowUpStepScreen() {
           size="lg"
           fullWidth
           className="mb-0"
-          onPress={() => {
-            setShowProceedModal(true);
-          }}
+          onPress={openProceedModal}
           rightIcon={ChevronRight}
+          disabled={isPending}
         />
       </View>
       <AppConfirmModal
         visible={showProceedModal}
-        title="Are you sure you want to proceed ?"
-        message="We suggest you to answer atleast 5 followup questions, it will help you to let go of pain."
-        confirmText="Proceed"
-        cancelText="Stay"
-        onCancel={() => {
-          setShowProceedModal(false);
-        }}
+        title="Please complete 5 followup!!"
+        message="We need you to answer 5 followup questions, it will help you to let go of pain."
+        confirmText="Ok"
+        cancelText="Cancel"
+        onCancel={closeProceedModal}
         onConfirm={() => {
-          setShowProceedModal(false);
-          updateDailySessionStep(DailySessionStep.Mission);
-          navigation.navigate('DailySessionMissionStep');
+          closeProceedModal();
+          goToNextStep();
+        }}
+      />
+      <AppLoadingModal
+        visible={isPending}
+        message="Please wait createing followup record ..."
+      />
+      <AppConfirmModal
+        visible={showSummaryModal}
+        title="Take a moment to red summry of followups!!"
+        message={lastAssistantConversation?.summary ?? ''}
+        confirmText="Proceed"
+        cancelText="Cancel"
+        onCancel={closeSummaryModal}
+        icon={Summary}
+        onConfirm={() => {
+          closeSummaryModal();
+          goToNextStep();
         }}
       />
     </AppAuthenticatedLayout>

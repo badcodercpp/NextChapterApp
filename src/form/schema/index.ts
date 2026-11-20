@@ -13,3 +13,4 @@ export * from './updateProfile';
 export * from './aiChat';
 export * from './createOrUpdateJournal';
 export * from './todaysQuestionAnswer';
+export * from './todaysQuestionFollowup';

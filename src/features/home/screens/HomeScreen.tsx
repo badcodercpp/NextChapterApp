@@ -33,7 +33,7 @@ export function HomeScreen() {
         </>
       ) : (
         <>
-          <View className="mt-6">
+          <View className="mt-4">
             <RecoveryScoreCard />
           </View>
           <View className="mt-4">

@@ -716,7 +716,7 @@ export type TodayMissionQuery = { todayMission: { id: string, journeyId: string,
 export type TodayQuestionQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TodayQuestionQuery = { todayQuestion: { id: string, journeyId: string, missionId: string, day: number, status: QuestionStatus, askedAt: unknown, answeredAt: unknown, createdAt: unknown, updatedAt: unknown, conversation: Array<{ role: ConversationRole, content: string | null, question: string | null, reflection: string | null, insight: string | null, createdAt: unknown }> } };
+export type TodayQuestionQuery = { todayQuestion: { id: string, journeyId: string, missionId: string, day: number, status: QuestionStatus, askedAt: unknown, answeredAt: unknown, createdAt: unknown, updatedAt: unknown, conversation: Array<{ role: ConversationRole, content: string | null, question: string | null, reflection: string | null, insight: string | null, summary: string | null, quickReplies: Array<string> | null, createdAt: unknown }> } };
 
 export type RegisterDeviceMutationVariables = Exact<{
   input: DeviceInfoInput;
@@ -1635,6 +1635,8 @@ export const TodayQuestionDocument = new TypedDocumentString(`
       question
       reflection
       insight
+      summary
+      quickReplies
       createdAt
     }
   }

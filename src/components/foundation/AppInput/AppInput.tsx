@@ -58,6 +58,7 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
       endIconClassName,
       startIconSize,
       endIconSize,
+      endIconDisabled,
 
       ...props
     },
@@ -231,6 +232,7 @@ export const AppInput = forwardRef<AppInputRef, AppInputProps>(
               <AppPressable
                 className={rightIconClassName}
                 onPress={onEndIconPress}
+                disabled={endIconDisabled}
               >
                 <AppIcon
                   icon={endIcon}

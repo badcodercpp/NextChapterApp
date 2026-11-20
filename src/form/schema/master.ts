@@ -9,6 +9,7 @@ import { howAreYouFeelingSchema } from '@/form/schema/howAreYouFeeling';
 import { howLongHasItBeenSchema } from '@/form/schema/howLongHasItBeen';
 import { loginSchema } from '@/form/schema/login';
 import { todaysQuestionAnswerSchema } from '@/form/schema/todaysQuestionAnswer';
+import { todaysQuestionFollowupSchema } from '@/form/schema/todaysQuestionFollowup';
 import { updateProfileSchema } from '@/form/schema/updateProfile';
 import { verifyEmailSchema } from '@/form/schema/verifyEmail';
 import { verifyIdentitySchema } from '@/form/schema/verifyIdentity';
@@ -30,4 +31,5 @@ export const masterSchema = z.object({
   aiChat: aiChatSchema,
   createOrUpdateJournal: createOrUpdateJournalSchema,
   todaysQuestionAnswer: todaysQuestionAnswerSchema,
+  todaysQuestionFollowup: todaysQuestionFollowupSchema,
 });

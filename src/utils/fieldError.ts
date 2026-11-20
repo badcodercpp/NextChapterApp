@@ -31,7 +31,7 @@ export const mapZodErrorsToForm = <TFieldValues extends FieldValues>({
   clearErrors(parentKey);
 
   // 2. Loop through Zod issues and assign them to React Hook Form
-  error.issues.forEach(issue => {
+  error?.issues.forEach(issue => {
     const fieldKey = issue.path?.[0];
 
     if (fieldKey !== undefined) {

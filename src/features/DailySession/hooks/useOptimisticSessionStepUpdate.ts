@@ -1,6 +1,7 @@
 import {
   DailySessionStep,
   useLazyActiveDailySessionQuery,
+  useLazyTodayQuestionQuery,
   useUpdateDailySessionStepMutation,
 } from '@/__generated__/graphql';
 import { useCallback, useOptimistic, useTransition } from 'react';
@@ -16,6 +17,7 @@ export const useOptimisticSessionStepUpdate = () => {
   const [triggerUpdateDailySessionStepMutation] =
     useUpdateDailySessionStepMutation();
   const [triggerLazyActiveDailySessionQuery] = useLazyActiveDailySessionQuery();
+  const [triggerLazyTodayQuestionQuery] = useLazyTodayQuestionQuery();
 
   const [optimisticDailySessionStep, addOptimisticDailySessionStep] =
     useOptimistic<DailySessionStep | undefined, DailySessionStep | undefined>(
@@ -37,6 +39,7 @@ export const useOptimisticSessionStepUpdate = () => {
                 step: nextStep,
               },
             }).unwrap();
+            triggerLazyTodayQuestionQuery().unwrap();
             await triggerLazyActiveDailySessionQuery().unwrap();
           }
         } catch (error) {
@@ -47,6 +50,7 @@ export const useOptimisticSessionStepUpdate = () => {
     [
       addOptimisticDailySessionStep,
       triggerLazyActiveDailySessionQuery,
+      triggerLazyTodayQuestionQuery,
       triggerUpdateDailySessionStepMutation,
     ],
   );

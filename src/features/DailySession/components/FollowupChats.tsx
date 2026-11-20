@@ -72,14 +72,17 @@ export function FollowUpChats({}: FollowUpChatsProps) {
         }
         createdAt={todayQuestionContent?.createdAt?.toString() ?? ''}
       />
-      <View className="mt-4">
-        <UserChatMessageCard
-          themed
-          content={todayUserReplyContent?.content ?? ''}
-          createdAt={todayUserReplyContent?.createdAt?.toString() ?? ''}
-          userName={me?.displayName ?? ''}
-        />
-      </View>
+      {todayUserReplyContent && (
+        <View className="mt-4">
+          <UserChatMessageCard
+            themed
+            content={todayUserReplyContent?.content ?? ''}
+            createdAt={todayUserReplyContent?.createdAt?.toString() ?? ''}
+            userName={me?.displayName ?? ''}
+          />
+        </View>
+      )}
+
       <View className="mt-0">
         {remainingConversation.map((item, index) => {
           if (item.role === ConversationRole.Assistant) {

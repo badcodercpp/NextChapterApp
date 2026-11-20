@@ -100,4 +100,8 @@ export interface AppInputProps extends Omit<TextInputProps, 'editable'> {
   endIconClassName?: string;
 
   endIconSize?: number;
+
+  endIconDisabled?: boolean;
+
+  startIconDisabled?: boolean;
 }
