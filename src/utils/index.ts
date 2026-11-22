@@ -11,3 +11,4 @@ export * from './mood';
 export * from './userUpdatedFieldIcon';
 export * from './achievementTypeIcon';
 export * from './conversation';
+export * from './apiErrorMessage';

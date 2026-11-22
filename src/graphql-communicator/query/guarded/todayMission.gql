@@ -9,6 +9,7 @@ query TodayMission {
     reminder
     category
     difficulty
+    status
     impact
     time
     steps {
@@ -16,6 +17,8 @@ query TodayMission {
       title
       description
     }
+    startedAt
+    completedAt
     createdAt
     updatedAt
   }

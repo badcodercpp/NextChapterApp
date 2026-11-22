@@ -1,5 +1,5 @@
-mutation CreateReflection($input: CreateReflectionInput!) {
-  createReflection(input: $input) {
+query CurrentSessionReflection {
+  currentSessionReflection {
     id
     userId
     journeyId
@@ -9,6 +9,7 @@ mutation CreateReflection($input: CreateReflectionInput!) {
     feeling
     need
     action
+    userMessage
     completedAt
     createdAt
     updatedAt

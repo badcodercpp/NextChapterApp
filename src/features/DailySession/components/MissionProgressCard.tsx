@@ -1,21 +1,18 @@
 import { AppCard, AppIcon, AppPressable, AppText } from '@/components';
-
 import { ChartNoAxesColumnIncreasing, ChevronRight } from 'lucide-react-native';
+
 import React from 'react';
 import { View } from 'react-native';
+import { useMissionMetadata } from '@/features/CommonFeature/hooks/useMissionMetadata';
 
 interface MissionProgressCardProps {
-  completed?: number;
-  total?: number;
   onWhyPress?: () => void;
 }
 
-export function MissionProgressCard({
-  completed = 0,
-  total = 1,
-  onWhyPress,
-}: MissionProgressCardProps) {
-  const progress = total > 0 ? Math.min(Math.max(completed / total, 0), 1) : 0;
+export function MissionProgressCard({ onWhyPress }: MissionProgressCardProps) {
+  const { isMissionStarted, getMissionProgress } = useMissionMetadata();
+
+  const { progress, started, completed, total } = getMissionProgress();
 
   return (
     <AppCard className="overflow-hidden rounded-[26px] border border-primary-v2/40 bg-background-v2 p-5">
@@ -26,7 +23,7 @@ export function MissionProgressCard({
       <View className="flex-row flex-wrap items-center justify-between gap-3">
         <View className="shrink">
           <AppPressable
-            onPress={onWhyPress}
+            onPress={() => {}}
             className="flex-row items-center justify-between"
           >
             <AppIcon
@@ -39,8 +36,13 @@ export function MissionProgressCard({
             </AppText>
           </AppPressable>
           <AppText variant="lg" className="mt-2 font-bold text-text-v2">
-            {completed} / {total} Completed
+            {started} / {total} Started
           </AppText>
+          {isMissionStarted && (
+            <AppText variant="lg" className="mt-2 font-bold text-text-v2">
+              {completed} / {total} Completed
+            </AppText>
+          )}
         </View>
         <View>
           <AppPressable

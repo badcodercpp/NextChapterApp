@@ -1,5 +1,4 @@
-// src/components/Toast/Toast.ts
-type ToastType = 'success' | 'error' | 'info';
+export type ToastType = 'success' | 'error' | 'info';
 
 type ToastListener = (
   message: string,
@@ -9,7 +8,7 @@ type ToastListener = (
 
 let toastListener: ToastListener | null = null;
 
-export const registerToastListener = (listener: ToastListener) => {
+export const registerToastListener = (listener: ToastListener | null) => {
   toastListener = listener;
 };
 
@@ -18,7 +17,5 @@ export const showToast = (
   type: ToastType = 'info',
   duration = 3000,
 ) => {
-  if (toastListener) {
-    toastListener(message, type, duration);
-  }
+  toastListener?.(message, type, duration);
 };

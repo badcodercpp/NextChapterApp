@@ -12,18 +12,22 @@ export function AppLoadingModal({
     <Modal
       visible={visible}
       transparent
-      animationType="fade"
+      animationType="none"
       statusBarTranslucent
+      presentationStyle="overFullScreen"
+      onRequestClose={() => {
+        // Prevent Android back button from dismissing loading modal.
+      }}
     >
       <View className="flex-1 items-center justify-center bg-black/50">
         <View className="min-w-[140px] items-center rounded-2xl bg-card px-6 py-5 mx-5">
           <ActivityIndicator size="large" className="text-primary" />
 
-          {message ? (
+          {!!message && (
             <AppText variant="sm" className="mt-3 text-center text-text">
               {message}
             </AppText>
-          ) : null}
+          )}
         </View>
       </View>
     </Modal>

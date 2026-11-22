@@ -1,4 +1,8 @@
-import { DailySessionStep, useFollowUpMutation } from '@/__generated__/graphql';
+import {
+  DailySessionStep,
+  useFollowUpMutation,
+  useLazyTodayQuestionQuery,
+} from '@/__generated__/graphql';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -22,6 +26,7 @@ export const useDailySessionQuestionStep = () => {
 
   const { updateDailySessionStep } = useOptimisticSessionStepUpdate();
   const [triggerFollowUpMutation] = useFollowUpMutation();
+  const [triggerLazyTodayQuestionQuery] = useLazyTodayQuestionQuery();
 
   const {
     control,
@@ -75,6 +80,7 @@ export const useDailySessionQuestionStep = () => {
               answer: answerText,
             },
           }).unwrap();
+          triggerLazyTodayQuestionQuery().unwrap();
           reset({
             todaysQuestionAnswer: {
               answer: '',
@@ -105,6 +111,7 @@ export const useDailySessionQuestionStep = () => {
     setError,
     todayQuestion?.id,
     triggerFollowUpMutation,
+    triggerLazyTodayQuestionQuery,
     updateDailySessionStep,
   ]);
 

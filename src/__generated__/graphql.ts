@@ -67,6 +67,7 @@ export type CreateReflectionInput = {
   feeling?: string | null | undefined;
   need?: string | null | undefined;
   realization?: string | null | undefined;
+  userMessage?: string | null | undefined;
 };
 
 export enum DailySessionStatus {
@@ -195,6 +196,13 @@ export enum MissionImpact {
   High = 'HIGH',
   Low = 'LOW',
   Medium = 'MEDIUM'
+}
+
+/** Mission Status */
+export enum MissionStatus {
+  Active = 'ACTIVE',
+  Completed = 'COMPLETED',
+  Started = 'STARTED'
 }
 
 /** Mission Time */
@@ -416,13 +424,6 @@ export type CreateJournalEntryMutationVariables = Exact<{
 
 export type CreateJournalEntryMutation = { createJournalEntry: { id: string, day: number, title: string, content: string, mood: RecoveryReasonCurrentFeeling | null, entryDate: unknown, createdAt: unknown, updatedAt: unknown } };
 
-export type CreateReflectionMutationVariables = Exact<{
-  input: CreateReflectionInput;
-}>;
-
-
-export type CreateReflectionMutation = { createReflection: { id: string, userId: string, journeyId: string, missionId: string, questionHistoryId: string, realization: string | null, feeling: string | null, need: string | null, action: string | null, completedAt: unknown, createdAt: unknown, updatedAt: unknown } };
-
 export type DeactivateUserMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -539,6 +540,13 @@ export type UpdateProfileMutationVariables = Exact<{
 
 export type UpdateProfileMutation = { updateProfile: { updatedFields: Array<UserUpdatedField>, user: { id: string, email: string, displayName: string, gender: Gender | null, role: UserRole | null, emailVerified: boolean, isActive: boolean, avatarUrl: string | null, bio: string | null, phone: string | null, dob: string | null, locationName: string | null, locationLat: string | null, locationLong: string | null, timezone: string | null, locale: string | null, createdAt: unknown, updatedAt: unknown, whatBringsYouHere: RecoveryReason, howLongHasItBeen: RecoveryReasonTimeline, howAreYouFeeling: Array<RecoveryReasonCurrentFeeling>, whatWouldYouLikeHelpWith: RecoveryReasonEndGoal } } };
 
+export type UpdateReflectionMutationVariables = Exact<{
+  input: CreateReflectionInput;
+}>;
+
+
+export type UpdateReflectionMutation = { updateReflection: { id: string, userId: string, journeyId: string, missionId: string, questionHistoryId: string, realization: string | null, feeling: string | null, need: string | null, action: string | null, userMessage: string | null, completedAt: unknown, createdAt: unknown, updatedAt: unknown } };
+
 export type UploadSingleFilesMutationVariables = Exact<{
   file: unknown;
 }>;
@@ -624,6 +632,11 @@ export type CompletedMissionHistoryQueryVariables = Exact<{ [key: string]: never
 
 
 export type CompletedMissionHistoryQuery = { completedMissionHistory: Array<{ id: string, day: number, completedAt: unknown, mission: { id: string, day: number, title: string, description: string, overview: string, reminder: string, category: MissionCategory, difficulty: MissionDifficulty, impact: MissionImpact, time: MissionTime, steps: Array<{ order: number, title: string, description: string }> } }> };
+
+export type CurrentSessionReflectionQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CurrentSessionReflectionQuery = { currentSessionReflection: { id: string, userId: string, journeyId: string, missionId: string, questionHistoryId: string, realization: string | null, feeling: string | null, need: string | null, action: string | null, userMessage: string | null, completedAt: unknown, createdAt: unknown, updatedAt: unknown } | null };
 
 export type DailySessionHistoryByDayQueryVariables = Exact<{
   day: number;
@@ -711,7 +724,7 @@ export type RecoveryAssessmentHistoryQuery = { recoveryAssessmentHistory: Array<
 export type TodayMissionQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TodayMissionQuery = { todayMission: { id: string, journeyId: string, day: number, title: string, description: string, overview: string, reminder: string, category: MissionCategory, difficulty: MissionDifficulty, impact: MissionImpact, time: MissionTime, createdAt: unknown, updatedAt: unknown, steps: Array<{ order: number, title: string, description: string }> } };
+export type TodayMissionQuery = { todayMission: { id: string, journeyId: string, day: number, title: string, description: string, overview: string, reminder: string, category: MissionCategory, difficulty: MissionDifficulty, status: MissionStatus | null, impact: MissionImpact, time: MissionTime, startedAt: unknown, completedAt: unknown, createdAt: unknown, updatedAt: unknown, steps: Array<{ order: number, title: string, description: string }> } };
 
 export type TodayQuestionQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -835,24 +848,6 @@ export const CreateJournalEntryDocument = new TypedDocumentString(`
     content
     mood
     entryDate
-    createdAt
-    updatedAt
-  }
-}
-    `);
-export const CreateReflectionDocument = new TypedDocumentString(`
-    mutation CreateReflection($input: CreateReflectionInput!) {
-  createReflection(input: $input) {
-    id
-    userId
-    journeyId
-    missionId
-    questionHistoryId
-    realization
-    feeling
-    need
-    action
-    completedAt
     createdAt
     updatedAt
   }
@@ -1123,6 +1118,25 @@ export const UpdateProfileDocument = new TypedDocumentString(`
   }
 }
     `);
+export const UpdateReflectionDocument = new TypedDocumentString(`
+    mutation UpdateReflection($input: CreateReflectionInput!) {
+  updateReflection(input: $input) {
+    id
+    userId
+    journeyId
+    missionId
+    questionHistoryId
+    realization
+    feeling
+    need
+    action
+    userMessage
+    completedAt
+    createdAt
+    updatedAt
+  }
+}
+    `);
 export const UploadSingleFilesDocument = new TypedDocumentString(`
     mutation UploadSingleFiles($file: Upload!) {
   uploadSingleFiles(file: $file) {
@@ -1289,6 +1303,25 @@ export const CompletedMissionHistoryDocument = new TypedDocumentString(`
         description
       }
     }
+  }
+}
+    `);
+export const CurrentSessionReflectionDocument = new TypedDocumentString(`
+    query CurrentSessionReflection {
+  currentSessionReflection {
+    id
+    userId
+    journeyId
+    missionId
+    questionHistoryId
+    realization
+    feeling
+    need
+    action
+    userMessage
+    completedAt
+    createdAt
+    updatedAt
   }
 }
     `);
@@ -1605,6 +1638,7 @@ export const TodayMissionDocument = new TypedDocumentString(`
     reminder
     category
     difficulty
+    status
     impact
     time
     steps {
@@ -1612,6 +1646,8 @@ export const TodayMissionDocument = new TypedDocumentString(`
       title
       description
     }
+    startedAt
+    completedAt
     createdAt
     updatedAt
   }
@@ -1688,9 +1724,6 @@ const injectedRtkApi = api.injectEndpoints({
     CreateJournalEntry: build.mutation<CreateJournalEntryMutation, CreateJournalEntryMutationVariables>({
       query: (variables) => ({ document: CreateJournalEntryDocument as unknown as string, variables })
     }),
-    CreateReflection: build.mutation<CreateReflectionMutation, CreateReflectionMutationVariables>({
-      query: (variables) => ({ document: CreateReflectionDocument as unknown as string, variables })
-    }),
     DeactivateUser: build.mutation<DeactivateUserMutation, DeactivateUserMutationVariables | void>({
       query: (variables) => ({ document: DeactivateUserDocument as unknown as string, variables })
     }),
@@ -1748,6 +1781,9 @@ const injectedRtkApi = api.injectEndpoints({
     UpdateProfile: build.mutation<UpdateProfileMutation, UpdateProfileMutationVariables>({
       query: (variables) => ({ document: UpdateProfileDocument as unknown as string, variables })
     }),
+    UpdateReflection: build.mutation<UpdateReflectionMutation, UpdateReflectionMutationVariables>({
+      query: (variables) => ({ document: UpdateReflectionDocument as unknown as string, variables })
+    }),
     UploadSingleFiles: build.mutation<UploadSingleFilesMutation, UploadSingleFilesMutationVariables>({
       query: (variables) => ({ document: UploadSingleFilesDocument as unknown as string, variables })
     }),
@@ -1789,6 +1825,9 @@ const injectedRtkApi = api.injectEndpoints({
     }),
     CompletedMissionHistory: build.query<CompletedMissionHistoryQuery, CompletedMissionHistoryQueryVariables | void>({
       query: (variables) => ({ document: CompletedMissionHistoryDocument as unknown as string, variables })
+    }),
+    CurrentSessionReflection: build.query<CurrentSessionReflectionQuery, CurrentSessionReflectionQueryVariables | void>({
+      query: (variables) => ({ document: CurrentSessionReflectionDocument as unknown as string, variables })
     }),
     DailySessionHistoryByDay: build.query<DailySessionHistoryByDayQuery, DailySessionHistoryByDayQueryVariables>({
       query: (variables) => ({ document: DailySessionHistoryByDayDocument as unknown as string, variables })
@@ -1860,5 +1899,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useActivateUserMutation, useAdvanceJourneyDayMutation, useCompleteDailySessionMutation, useCompleteJourneyMutation, useCompleteMissionMutation, useCreateJournalEntryMutation, useCreateReflectionMutation, useDeactivateUserMutation, useDeleteJournalEntryMutation, useFollowUpMutation, useGenerateReflectionMutation, useLogoutMutation, useLogoutAllMutation, usePauseJourneyMutation, useRefreshTokenMutation, useRequestChangePasswordOtpMutation, useResumeJourneyMutation, useSendAiChatMessageMutation, useSetDailySessionEndMoodsMutation, useSetDailySessionStartMoodsMutation, useStartDailySessionMutation, useStartJourneyMutation, useStartMissionMutation, useUpdateDailySessionStepMutation, useUpdateJournalEntryMutation, useUpdateProfileMutation, useUploadSingleFilesMutation, useVerifyChangePasswordOtpMutation, useGoogleLoginMutation, useGoogleRegisterMutation, useLoginMutation, useRegisterMutation, useResendEmailVerificationOtpMutation, useVerifyEmailOtpMutation, useActiveDailySessionQuery, useLazyActiveDailySessionQuery, useActiveJourneyQuery, useLazyActiveJourneyQuery, useActiveReflectionQuery, useLazyActiveReflectionQuery, useApplicationConfigQuery, useLazyApplicationConfigQuery, useApplicationMetadataQuery, useLazyApplicationMetadataQuery, useCompletedMissionHistoryQuery, useLazyCompletedMissionHistoryQuery, useDailySessionHistoryByDayQuery, useLazyDailySessionHistoryByDayQuery, useGetRecoveryScoreTrendForLastNDayQuery, useLazyGetRecoveryScoreTrendForLastNDayQuery, useJournalEntryQuery, useLazyJournalEntryQuery, useLatestAiChatMessageQuery, useLazyLatestAiChatMessageQuery, useMeQuery, useLazyMeQuery, useMissionHistoryQuery, useLazyMissionHistoryQuery, useMoodThisWeekQuery, useLazyMoodThisWeekQuery, useMotivationalMessageQuery, useLazyMotivationalMessageQuery, useMyAchievementsQuery, useLazyMyAchievementsQuery, useMyAiChatConversationsQuery, useLazyMyAiChatConversationsQuery, useMyJournalEntriesQuery, useLazyMyJournalEntriesQuery, useMyRecoveryQuery, useLazyMyRecoveryQuery, useNextAchievementQuery, useLazyNextAchievementQuery, useRecentJournalEntriesQuery, useLazyRecentJournalEntriesQuery, useRecoveryAssessmentHistoryQuery, useLazyRecoveryAssessmentHistoryQuery, useTodayMissionQuery, useLazyTodayMissionQuery, useTodayQuestionQuery, useLazyTodayQuestionQuery, useRegisterDeviceMutation, useGetRecoveryFeelingQuery, useLazyGetRecoveryFeelingQuery, useGetRecoveryGoalQuery, useLazyGetRecoveryGoalQuery, useGetRecoveryReasonQuery, useLazyGetRecoveryReasonQuery, useGetRecoveryTimelineQuery, useLazyGetRecoveryTimelineQuery } = injectedRtkApi;
+export const { useActivateUserMutation, useAdvanceJourneyDayMutation, useCompleteDailySessionMutation, useCompleteJourneyMutation, useCompleteMissionMutation, useCreateJournalEntryMutation, useDeactivateUserMutation, useDeleteJournalEntryMutation, useFollowUpMutation, useGenerateReflectionMutation, useLogoutMutation, useLogoutAllMutation, usePauseJourneyMutation, useRefreshTokenMutation, useRequestChangePasswordOtpMutation, useResumeJourneyMutation, useSendAiChatMessageMutation, useSetDailySessionEndMoodsMutation, useSetDailySessionStartMoodsMutation, useStartDailySessionMutation, useStartJourneyMutation, useStartMissionMutation, useUpdateDailySessionStepMutation, useUpdateJournalEntryMutation, useUpdateProfileMutation, useUpdateReflectionMutation, useUploadSingleFilesMutation, useVerifyChangePasswordOtpMutation, useGoogleLoginMutation, useGoogleRegisterMutation, useLoginMutation, useRegisterMutation, useResendEmailVerificationOtpMutation, useVerifyEmailOtpMutation, useActiveDailySessionQuery, useLazyActiveDailySessionQuery, useActiveJourneyQuery, useLazyActiveJourneyQuery, useActiveReflectionQuery, useLazyActiveReflectionQuery, useApplicationConfigQuery, useLazyApplicationConfigQuery, useApplicationMetadataQuery, useLazyApplicationMetadataQuery, useCompletedMissionHistoryQuery, useLazyCompletedMissionHistoryQuery, useCurrentSessionReflectionQuery, useLazyCurrentSessionReflectionQuery, useDailySessionHistoryByDayQuery, useLazyDailySessionHistoryByDayQuery, useGetRecoveryScoreTrendForLastNDayQuery, useLazyGetRecoveryScoreTrendForLastNDayQuery, useJournalEntryQuery, useLazyJournalEntryQuery, useLatestAiChatMessageQuery, useLazyLatestAiChatMessageQuery, useMeQuery, useLazyMeQuery, useMissionHistoryQuery, useLazyMissionHistoryQuery, useMoodThisWeekQuery, useLazyMoodThisWeekQuery, useMotivationalMessageQuery, useLazyMotivationalMessageQuery, useMyAchievementsQuery, useLazyMyAchievementsQuery, useMyAiChatConversationsQuery, useLazyMyAiChatConversationsQuery, useMyJournalEntriesQuery, useLazyMyJournalEntriesQuery, useMyRecoveryQuery, useLazyMyRecoveryQuery, useNextAchievementQuery, useLazyNextAchievementQuery, useRecentJournalEntriesQuery, useLazyRecentJournalEntriesQuery, useRecoveryAssessmentHistoryQuery, useLazyRecoveryAssessmentHistoryQuery, useTodayMissionQuery, useLazyTodayMissionQuery, useTodayQuestionQuery, useLazyTodayQuestionQuery, useRegisterDeviceMutation, useGetRecoveryFeelingQuery, useLazyGetRecoveryFeelingQuery, useGetRecoveryGoalQuery, useLazyGetRecoveryGoalQuery, useGetRecoveryReasonQuery, useLazyGetRecoveryReasonQuery, useGetRecoveryTimelineQuery, useLazyGetRecoveryTimelineQuery } = injectedRtkApi;
 

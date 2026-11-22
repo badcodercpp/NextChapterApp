@@ -2,6 +2,7 @@ import {
   AppAuthenticatedLayout,
   AppButton,
   AppConfirmModal,
+  AppLoadingModal,
 } from '@/components';
 import {
   MissionOverviewCard,
@@ -9,22 +10,27 @@ import {
   MissionStepsCard,
   SessionProgress,
 } from '../components';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
 
 import { ChevronRight } from 'lucide-react-native';
-import { DailySessionStackParamList } from '../navigation';
-import { DailySessionStep } from '@/__generated__/graphql';
+import React from 'react';
 import { TodaysMissionCard } from '@/features/CommonFeature';
 import { View } from 'react-native';
-import { useOptimisticSessionStepUpdate } from '../hooks/useOptimisticSessionStepUpdate';
+import { useDailySessionMissionStep } from '../hooks/useDailySessionMissionStep';
+import { useMissionMetadata } from '@/features/CommonFeature/hooks/useMissionMetadata';
 
 export function DailySessionMissionStepScreen() {
-  const [showProceedModal, setShowProceedModal] = useState<boolean>(false);
-  const navigation =
-    useNavigation<NavigationProp<DailySessionStackParamList>>();
+  const {
+    isStartTodaysMissionPending,
+    isCompleteTodaysMissionPending,
+    showProceedModal,
+    openProceedModal,
+    closeProceedModal,
+    startTodaysMission,
+    completeTodaysMission,
+    goToNextStep,
+  } = useDailySessionMissionStep();
 
-  const { updateDailySessionStep } = useOptimisticSessionStepUpdate();
+  const { isMissionStarted, isMissionCompleted } = useMissionMetadata();
 
   return (
     <AppAuthenticatedLayout noBottomPadding>
@@ -44,14 +50,40 @@ export function DailySessionMissionStepScreen() {
         <MissionStepsCard />
       </View>
       <View className="mt-4">
-        <AppButton
-          title="Start Mission"
-          size="lg"
-          fullWidth
-          className="mb-0"
-          onPress={() => setShowProceedModal(true)}
-          rightIcon={ChevronRight}
-        />
+        {!isMissionStarted && !isMissionCompleted && (
+          <AppButton
+            title="Start Mission"
+            size="lg"
+            fullWidth
+            className="mb-0"
+            onPress={startTodaysMission}
+            rightIcon={ChevronRight}
+            disabled={isStartTodaysMissionPending}
+            loading={isStartTodaysMissionPending}
+          />
+        )}
+        {isMissionStarted && (
+          <AppButton
+            title="Complete Mission"
+            size="lg"
+            fullWidth
+            className="mb-0"
+            onPress={openProceedModal}
+            rightIcon={ChevronRight}
+            disabled={isCompleteTodaysMissionPending}
+            loading={isCompleteTodaysMissionPending}
+          />
+        )}
+        {isMissionCompleted && (
+          <AppButton
+            title="Continue"
+            size="lg"
+            fullWidth
+            className="mb-0"
+            onPress={goToNextStep}
+            rightIcon={ChevronRight}
+          />
+        )}
       </View>
 
       <AppConfirmModal
@@ -60,14 +92,19 @@ export function DailySessionMissionStepScreen() {
         message="Hard times can make you question who you are. Keep holding on to your values, your identity, and the person you want to become. Even when life feels heavy, don't lose yourself trying to survive it."
         confirmText="Continue"
         cancelText="Stay here"
-        onCancel={() => {
-          setShowProceedModal(false);
-        }}
+        onCancel={closeProceedModal}
         onConfirm={() => {
-          setShowProceedModal(false);
-          updateDailySessionStep(DailySessionStep.Reflection);
-          navigation.navigate('DailySessionReflectStep');
+          closeProceedModal();
+          completeTodaysMission();
         }}
+      />
+      <AppLoadingModal
+        visible={isStartTodaysMissionPending}
+        message="Please wait starting your mission ..."
+      />
+      <AppLoadingModal
+        visible={isCompleteTodaysMissionPending}
+        message="Please wait completing your mission ..."
       />
     </AppAuthenticatedLayout>
   );
