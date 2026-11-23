@@ -117,7 +117,7 @@ export function AppDateRangePicker({
 
         {(startDate || endDate) && (
           <AppPressable onPress={clear}>
-            <AppText className="font-medium text-purple-600">Clear</AppText>
+            <AppText className="font-medium text-link-v2">Clear</AppText>
           </AppPressable>
         )}
       </View>

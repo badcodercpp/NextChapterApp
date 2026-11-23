@@ -1,4 +1,5 @@
 import {
+  AchievementsScreen,
   EditProfileScreen,
   EditProfileSuccessScreen,
   ProfileScreen,
@@ -65,6 +66,18 @@ export function ProfileNavigator() {
         }}
         name={ProfileRoutes.EditProfileSuccessScreen}
         component={EditProfileSuccessScreen}
+      />
+
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          header: NavigatorAppHeader,
+          ...appHeaderOptions({
+            title: 'Achievements',
+          }),
+        }}
+        name={ProfileRoutes.AchievementsScreen}
+        component={AchievementsScreen}
       />
     </Stack.Navigator>
   );

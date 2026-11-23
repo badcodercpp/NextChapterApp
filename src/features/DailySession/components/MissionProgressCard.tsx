@@ -15,7 +15,10 @@ export function MissionProgressCard({ onWhyPress }: MissionProgressCardProps) {
   const { progress, started, completed, total } = getMissionProgress();
 
   return (
-    <AppCard className="overflow-hidden rounded-[26px] border border-primary-v2/40 bg-background-v2 p-5">
+    <AppCard
+      decorated
+      className="overflow-hidden rounded-[26px] border border-primary-v2/40 bg-background-v2 p-5"
+    >
       <View
         pointerEvents="none"
         className="absolute inset-0 bg-primary-v2/10"

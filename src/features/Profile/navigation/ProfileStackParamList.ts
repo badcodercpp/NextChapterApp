@@ -8,4 +8,6 @@ export type ProfileStackParamList = {
   [ProfileRoutes.DeleteProfileScreen]: undefined;
 
   [ProfileRoutes.EditProfileSuccessScreen]: undefined;
+
+  [ProfileRoutes.AchievementsScreen]: undefined;
 };

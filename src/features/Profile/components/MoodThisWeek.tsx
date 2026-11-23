@@ -8,11 +8,19 @@ import Svg, {
   Stop,
 } from 'react-native-svg';
 
-import { AppText } from '@/components';
+import { AppCardDecoration, AppIcon, AppText } from '@/components';
+import { ChartColumn } from 'lucide-react-native';
 import { format } from 'date-fns';
 import { selectMoodThisWeek } from '@/state/selectors';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
+import { useCSSVariable } from 'uniwind';
+
+const MOOD_FILTERS = [
+  { key: 'all', label: 'All' },
+  { key: 'before', label: 'Before' },
+  { key: 'after', label: 'After' },
+] as const;
 
 interface MoodEntry {
   day: string;
@@ -43,6 +51,12 @@ const normalizeMood = (value: unknown): number => {
 
 export function MoodThisWeek({}: MoodThisWeekProps) {
   const { data: moodThisWeek } = useSelector(selectMoodThisWeek);
+  const primary = useCSSVariable('--color-primary-v2');
+  const divider = useCSSVariable('--color-border-v2');
+  const surface = useCSSVariable('--color-surface-v2');
+  const chartColor = typeof primary === 'string' ? primary : '#A936FF';
+  const gridColor = typeof divider === 'string' ? divider : '#6D5A91';
+  const dotFill = typeof surface === 'string' ? surface : '#FFFFFF';
 
   const [filter, setFilter] = useState<MoodFilter>('all');
 
@@ -77,9 +91,9 @@ export function MoodThisWeek({}: MoodThisWeekProps) {
       filter === 'before'
         ? entry.beforeMood
         : filter === 'after'
-          ? entry.afterMood
-          : (entry.beforeMood + entry.afterMood) /
-            (entry.beforeMood && entry.afterMood ? 2 : 1);
+        ? entry.afterMood
+        : (entry.beforeMood + entry.afterMood) /
+          (entry.beforeMood && entry.afterMood ? 2 : 1);
     const x =
       entries.length === 1
         ? CHART_WIDTH / 2
@@ -89,9 +103,7 @@ export function MoodThisWeek({}: MoodThisWeekProps) {
 
     return {
       x,
-      y:
-        CHART_BOTTOM -
-        (mood / MAX_LEVEL) * (CHART_BOTTOM - CHART_TOP),
+      y: CHART_BOTTOM - (mood / MAX_LEVEL) * (CHART_BOTTOM - CHART_TOP),
     };
   });
 
@@ -106,85 +118,68 @@ export function MoodThisWeek({}: MoodThisWeekProps) {
   }, '');
   const areaPath =
     points.length > 0
-      ? `${linePath} L ${points[points.length - 1].x} ${CHART_BOTTOM} L ${points[0].x} ${CHART_BOTTOM} Z`
+      ? `${linePath} L ${points[points.length - 1].x} ${CHART_BOTTOM} L ${
+          points[0].x
+        } ${CHART_BOTTOM} Z`
       : '';
 
   return (
-    <View className="rounded-[24px] border border-secondary/35 bg-card p-4">
+    <View className="overflow-hidden rounded-[24px] border border-primary-v2/20 bg-surface-v2 p-4">
+      <AppCardDecoration />
       {/* Header */}
       <View className="mb-4 flex-row items-center justify-between">
-        <AppText variant="md" className="font-semibold text-text">
-          Mood This Week
-        </AppText>
+        <View className="flex-row items-center gap-2">
+          <AppIcon icon={ChartColumn} size={20} className="text-link-v2" />
+          <AppText variant="md" className="font-semibold text-text-v2">
+            Mood This Week
+          </AppText>
+        </View>
 
-        <AppText variant="sm" className="text-text-muted">
+        <AppText variant="sm" className="text-text-muted-v2">
           {dateRange}
         </AppText>
       </View>
 
       {/* Legend */}
-      <View className="mb-3 flex-row items-center">
-        <Pressable
-          onPress={() => setFilter('all')}
-          className={`flex-row items-center rounded-full px-3 py-1.5 ${
-            filter === 'all' ? 'bg-primary/15' : ''
-          }`}
-        >
-          <View className="mr-2 h-2.5 w-2.5 rounded-full bg-primary" />
-
-          <AppText
-            variant="sm"
-            className={
-              filter === 'all'
-                ? 'font-semibold text-primary'
-                : 'text-text-muted'
-            }
-          >
-            All
-          </AppText>
-        </Pressable>
-
-        <Pressable
-          onPress={() => setFilter('before')}
-          className={`flex-row items-center rounded-full px-3 py-1.5 ${
-            filter === 'before' ? 'bg-primary/15' : ''
-          }`}
-        >
-          <View className="mr-2 h-2.5 w-2.5 rounded-full bg-primary/40" />
-
-          <AppText
-            variant="sm"
-            className={
-              filter === 'before'
-                ? 'font-semibold text-text'
-                : 'text-text-muted'
-            }
-          >
-            Before
-          </AppText>
-        </Pressable>
-
-        <Pressable
-          onPress={() => setFilter('after')}
-          className={`flex-row items-center rounded-full px-3 py-1.5 ${
-            filter === 'after' ? 'bg-primary/15' : ''
-          }`}
-        >
-          <View className="mr-2 h-2.5 w-2.5 rounded-full bg-primary/40" />
-          <AppText
-            variant="sm"
-            className={
-              filter === 'after' ? 'font-semibold text-text' : 'text-text-muted'
-            }
-          >
-            After
-          </AppText>
-        </Pressable>
+      <View className="mb-3 flex-row items-center gap-2">
+        {MOOD_FILTERS.map(option => {
+          const isActive = filter === option.key;
+          return (
+            <Pressable
+              key={option.key}
+              onPress={() => setFilter(option.key)}
+              accessibilityRole="button"
+              accessibilityState={{ selected: isActive }}
+              className={`flex-row items-center rounded-full border px-3 py-1.5 ${
+                isActive
+                  ? 'border-primary-v2 bg-primary-v2'
+                  : 'border-border-v2 bg-primary-v2/10'
+              }`}
+            >
+              <View
+                className={`mr-2 h-2 w-2 rounded-full ${
+                  isActive ? 'bg-on-primary-v2' : 'bg-link-v2/60'
+                }`}
+              />
+              <AppText
+                variant="sm"
+                className={
+                  isActive
+                    ? 'font-semibold text-on-primary-v2'
+                    : 'text-text-muted-v2'
+                }
+              >
+                {option.label}
+              </AppText>
+            </Pressable>
+          );
+        })}
       </View>
 
       {/* Chart */}
       <View>
         <Svg
+          key={chartColor}
           width="100%"
           height={CHART_HEIGHT}
           viewBox={`0 0 ${CHART_WIDTH} ${CHART_HEIGHT}`}
@@ -192,8 +187,8 @@ export function MoodThisWeek({}: MoodThisWeekProps) {
         >
           <Defs>
             <LinearGradient id="moodArea" x1="0" y1="0" x2="0" y2="1">
-              <Stop offset="0" stopColor="#A936FF" stopOpacity={0.45} />
-              <Stop offset="1" stopColor="#A936FF" stopOpacity={0.04} />
+              <Stop offset="0" stopColor={chartColor} stopOpacity={0.45} />
+              <Stop offset="1" stopColor={chartColor} stopOpacity={0.04} />
             </LinearGradient>
           </Defs>
           {points.map((point, index) => (
@@ -203,7 +198,7 @@ export function MoodThisWeek({}: MoodThisWeekProps) {
               y1={CHART_TOP}
               x2={point.x}
               y2={CHART_BOTTOM}
-              stroke="#6D5A91"
+              stroke={gridColor}
               strokeOpacity={0.4}
               strokeDasharray="4 4"
             />
@@ -213,7 +208,7 @@ export function MoodThisWeek({}: MoodThisWeekProps) {
             <Path
               d={linePath}
               fill="none"
-              stroke="#A936FF"
+              stroke={chartColor}
               strokeWidth={2}
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -225,8 +220,8 @@ export function MoodThisWeek({}: MoodThisWeekProps) {
               cx={point.x}
               cy={point.y}
               r={index === points.length - 1 ? 4.5 : 3}
-              fill={index === points.length - 1 ? '#FFFFFF' : '#A936FF'}
-              stroke={index === points.length - 1 ? '#A936FF' : 'none'}
+              fill={index === points.length - 1 ? dotFill : chartColor}
+              stroke={index === points.length - 1 ? chartColor : 'none'}
               strokeWidth={index === points.length - 1 ? 2 : 0}
             />
           ))}
@@ -234,7 +229,7 @@ export function MoodThisWeek({}: MoodThisWeekProps) {
         <View className="flex-row">
           {entries.map((entry, index) => (
             <View key={`${entry.day}-${index}`} className="flex-1 items-center">
-              <AppText variant="sm" className="mt-2 text-text-muted">
+              <AppText variant="sm" className="mt-2 text-text-muted-v2">
                 {entry.day}
               </AppText>
             </View>

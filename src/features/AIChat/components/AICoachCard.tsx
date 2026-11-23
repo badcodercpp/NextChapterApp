@@ -1,4 +1,4 @@
-import { AppIcon, AppPressable, AppText } from '@/components';
+import { AppCard, AppIcon, AppPressable, AppText } from '@/components';
 import { Bot, Sparkles } from 'lucide-react-native';
 import { View } from 'react-native';
 import { selectApplicationConfig, selectMe } from '@/state/selectors';
@@ -24,7 +24,10 @@ export function AICoachCard({
   const displayName = name ?? me?.displayName;
 
   const card = (
-    <View className="rounded-3xl border border-primary-v2/40 bg-surface-v2 p-4">
+    <AppCard
+      decorated
+      className="rounded-3xl border border-primary-v2/40 bg-surface-v2 p-4 shadow-none"
+    >
       <View className="flex-row items-center gap-3">
         <View className="h-10 w-10 items-center justify-center rounded-full bg-primary-v2">
           <AppIcon icon={Sparkles} size={21} className="text-on-primary-v2" />
@@ -63,7 +66,7 @@ export function AICoachCard({
           Avg response {responseTime}
         </AppText>
       </View>
-    </View>
+    </AppCard>
   );
 
   return onPress ? (

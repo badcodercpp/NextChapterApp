@@ -1,5 +1,7 @@
 import {
   AppButton,
+  AppCardDecoration,
+  AppHeroArtwork,
   AppIcon,
   AppPressable,
   AppScreen,
@@ -12,6 +14,7 @@ import { cn } from '@/utils';
 import { showToast } from '@/components/Toast';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
+import { useCSSVariable } from 'uniwind';
 
 const STARS = [1, 2, 3, 4, 5];
 const MAX_FEEDBACK_LENGTH = 250;
@@ -28,6 +31,9 @@ export function RateUsScreen() {
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState('');
   const [focused, setFocused] = useState(false);
+  const onPrimary = useCSSVariable('--color-on-primary-v2');
+  const placeholderColor = useCSSVariable('--color-text-muted-v2');
+  const starColor = useCSSVariable('--color-link-v2');
 
   const handleSubmit = () => {
     showToast('Thanks for your feedback!', 'success');
@@ -47,12 +53,13 @@ export function RateUsScreen() {
       className="bg-background-v2"
       contentClassName="grow bg-background-v2 px-4 pb-8 pt-6"
     >
-      <View className="items-center">
+      <View className="-mx-4 -mt-6 items-center px-4 pb-2 pt-6">
+        <AppHeroArtwork />
         <View className="h-20 w-20 items-center justify-center rounded-3xl bg-primary-v2">
           <AppIcon
             icon={Star}
             size={36}
-            fill="#FFFFFF"
+            fill={typeof onPrimary === 'string' ? onPrimary : '#FFFFFF'}
             className="text-on-primary-v2"
           />
         </View>
@@ -60,7 +67,7 @@ export function RateUsScreen() {
           variant="3xl"
           className="mt-5 text-center font-bold text-text-v2"
         >
-          Enjoying NextChapter?
+          Enjoying Outdated.me?
         </AppText>
         <AppText
           variant="md"
@@ -90,8 +97,12 @@ export function RateUsScreen() {
               <AppIcon
                 icon={Star}
                 size={28}
-                fill={active ? '#FACC15' : 'transparent'}
-                className={active ? 'text-yellow-400' : 'text-text-muted-v2'}
+                fill={
+                  active && typeof starColor === 'string'
+                    ? starColor
+                    : 'transparent'
+                }
+                className={active ? 'text-link-v2' : 'text-text-muted-v2'}
               />
             </AppPressable>
           );
@@ -102,9 +113,7 @@ export function RateUsScreen() {
         <AppText
           variant={rating > 0 ? 'xl' : 'sm'}
           className={cn(
-            rating > 0
-              ? 'font-semibold text-text-v2'
-              : 'text-text-muted-v2',
+            rating > 0 ? 'font-semibold text-text-v2' : 'text-text-muted-v2',
           )}
         >
           {rating > 0 ? RATING_LABELS[rating] : 'Tap a star to rate'}
@@ -113,10 +122,11 @@ export function RateUsScreen() {
 
       <View
         className={cn(
-          'mt-6 rounded-3xl border bg-surface-v2 p-4',
+          'mt-6 overflow-hidden rounded-3xl border bg-surface-v2 p-4',
           focused ? 'border-primary-v2' : 'border-border-v2',
         )}
       >
+        <AppCardDecoration />
         <TextInput
           multiline
           value={feedback}
@@ -125,7 +135,9 @@ export function RateUsScreen() {
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           placeholder="Tell us what you like or how we can improve (optional)"
-          placeholderTextColor="#8B8FA8"
+          placeholderTextColor={
+            typeof placeholderColor === 'string' ? placeholderColor : undefined
+          }
           textAlignVertical="top"
           className="min-h-24 text-base text-text-v2"
         />

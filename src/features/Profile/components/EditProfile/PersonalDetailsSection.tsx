@@ -9,6 +9,7 @@ import { Gender } from '@/__generated__/graphql';
 import { MasterFormData } from '@/form/types';
 import { useState } from 'react';
 import { cn } from '@/utils';
+import { useCSSVariable } from 'uniwind';
 
 interface PersonalDetailsSectionProps {}
 
@@ -45,6 +46,15 @@ export function PersonalDetailsSection({}: PersonalDetailsSectionProps) {
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [choosingYear, setChoosingYear] = useState(false);
   const [calendarDate, setCalendarDate] = useState<string>();
+  const [primary, card, text, textSecondary, textMuted, onPrimary] =
+    useCSSVariable([
+      '--color-primary-v2',
+      '--color-surface-v2',
+      '--color-text-v2',
+      '--color-text-muted-v2',
+      '--color-text-muted-v2',
+      '--color-on-primary-v2',
+    ]) as (string | undefined)[];
   const today = new Date();
   const currentYear = today.getFullYear();
   const yearOptions = Array.from(
@@ -62,11 +72,11 @@ export function PersonalDetailsSection({}: PersonalDetailsSectionProps) {
     <View className="w-full">
       {/* Section Header */}
       <View className="mb-4 flex-row items-center">
-        <View className="mr-3 h-9 w-1.5 rounded-full bg-primary" />
+        <View className="mr-3 h-9 w-1.5 rounded-full bg-primary-v2" />
 
         <AppText
           variant="md"
-          className="font-semibold uppercase tracking-[2.5px] text-text-muted"
+          className="font-semibold uppercase tracking-[2.5px] text-text-muted-v2"
         >
           Personal Details
         </AppText>
@@ -74,7 +84,7 @@ export function PersonalDetailsSection({}: PersonalDetailsSectionProps) {
 
       {/* Gender */}
       <View className="mb-6">
-        <AppText variant="md" className="mb-2 px-2 text-text">
+        <AppText variant="md" className="mb-2 px-2 text-text-v2">
           Gender
         </AppText>
 
@@ -100,8 +110,8 @@ export function PersonalDetailsSection({}: PersonalDetailsSectionProps) {
                         'min-w-[104px] px-5 py-3 items-center justify-center rounded-[18px]',
                         'border',
                         isSelected
-                          ? 'border-primary bg-primary/15'
-                          : 'border-white/10 bg-white/[0.06]',
+                          ? 'border-primary-v2 bg-primary-v2/15'
+                          : 'border-border-v2 bg-surface-v2/60',
                       )}
                       accessibilityRole="button"
                       accessibilityState={{
@@ -112,7 +122,7 @@ export function PersonalDetailsSection({}: PersonalDetailsSectionProps) {
                         variant="md"
                         className={cn(
                           'font-semibold',
-                          isSelected ? 'text-primary' : 'text-text-muted',
+                          isSelected ? 'text-primary-v2' : 'text-text-muted-v2',
                         )}
                       >
                         {option.label}
@@ -127,7 +137,7 @@ export function PersonalDetailsSection({}: PersonalDetailsSectionProps) {
       </View>
 
       {/* Date of Birth */}
-      <AppText variant="md" className="mb-2 px-2 text-text">
+      <AppText variant="md" className="mb-2 px-2 text-text-v2">
         Date of Birth
       </AppText>
 
@@ -146,24 +156,24 @@ export function PersonalDetailsSection({}: PersonalDetailsSectionProps) {
                 onPress={() => {
                   clearErrors('updateProfile.dob');
                   setChoosingYear(false);
-                  setCalendarDate(
-                    format(selectedDate ?? today, 'yyyy-MM-dd'),
-                  );
+                  setCalendarDate(format(selectedDate ?? today, 'yyyy-MM-dd'));
                   setDatePickerVisible(true);
                 }}
                 accessibilityRole="button"
                 accessibilityLabel="Choose date of birth"
-                className="min-h-[64px] flex-row items-center rounded-[24px] border border-border bg-card/60 px-4"
+                className="min-h-[64px] flex-row items-center rounded-[24px] border border-border-v2 bg-surface-v2/60 px-4"
               >
                 <AppIcon
                   icon={Calendar}
                   size={22}
-                  className="mr-3 text-text-secondary"
+                  className="mr-3 text-text-muted-v2"
                 />
                 <AppText
                   variant="md"
                   className={
-                    selectedDate ? 'flex-1 text-text' : 'flex-1 text-text-muted'
+                    selectedDate
+                      ? 'flex-1 text-text-v2'
+                      : 'flex-1 text-text-muted-v2'
                   }
                 >
                   {selectedDate
@@ -173,7 +183,7 @@ export function PersonalDetailsSection({}: PersonalDetailsSectionProps) {
                 <AppIcon
                   icon={ChevronDown}
                   size={20}
-                  className="text-text-muted"
+                  className="text-text-muted-v2"
                 />
               </AppPressable>
 
@@ -196,25 +206,31 @@ export function PersonalDetailsSection({}: PersonalDetailsSectionProps) {
                     accessibilityRole="button"
                     accessibilityLabel="Close date picker"
                   />
-                  <View className="w-full max-w-[420px] overflow-hidden rounded-[24px] border border-secondary/40 bg-background p-4">
+                  <View className="w-full max-w-[420px] overflow-hidden rounded-[24px] border border-primary-v2/40 bg-background-v2 p-4">
                     <View className="mb-3 flex-row items-center justify-between">
-                      <AppText variant="lg" className="font-semibold text-text">
+                      <AppText
+                        variant="lg"
+                        className="font-semibold text-text-v2"
+                      >
                         Date of Birth
                       </AppText>
                       <AppPressable
                         onPress={() => setChoosingYear(current => !current)}
                         accessibilityRole="button"
                         accessibilityLabel="Select birth year"
-                        className="flex-row items-center rounded-full border border-secondary/30 bg-primary/10 px-3 py-2"
+                        className="flex-row items-center rounded-full border border-primary-v2/30 bg-primary-v2/10 px-3 py-2"
                       >
-                        <AppText variant="sm" className="font-semibold text-secondary">
+                        <AppText
+                          variant="sm"
+                          className="font-semibold text-primary-v2"
+                        >
                           {selectedDate?.getFullYear() ??
                             initialDate.getFullYear()}
                         </AppText>
                         <AppIcon
                           icon={ChevronDown}
                           size={16}
-                          className="ml-1 text-secondary"
+                          className="ml-1 text-primary-v2"
                         />
                       </AppPressable>
                     </View>
@@ -257,16 +273,16 @@ export function PersonalDetailsSection({}: PersonalDetailsSectionProps) {
                               className={cn(
                                 'mb-2 w-[23%] items-center justify-center rounded-xl border py-3',
                                 isSelected
-                                  ? 'border-secondary bg-primary/20'
-                                  : 'border-border bg-card',
+                                  ? 'border-primary-v2 bg-primary-v2/20'
+                                  : 'border-border-v2 bg-surface-v2',
                               )}
                             >
                               <AppText
                                 variant="sm"
                                 className={
                                   isSelected
-                                    ? 'font-semibold text-secondary'
-                                    : 'text-text'
+                                    ? 'font-semibold text-primary-v2'
+                                    : 'text-text-v2'
                                 }
                               >
                                 {year}
@@ -297,23 +313,23 @@ export function PersonalDetailsSection({}: PersonalDetailsSectionProps) {
                             ? {
                                 [format(selectedDate, 'yyyy-MM-dd')]: {
                                   selected: true,
-                                  selectedColor: '#7C3AED',
-                                  selectedTextColor: '#FFFFFF',
+                                  selectedColor: primary,
+                                  selectedTextColor: onPrimary,
                                 },
                               }
                             : undefined
                         }
                         theme={{
-                          calendarBackground: '#221D42',
-                          backgroundColor: '#221D42',
-                          textSectionTitleColor: '#A39CBF',
-                          monthTextColor: '#FFFFFF',
-                          dayTextColor: '#FFFFFF',
-                          textDisabledColor: '#625D78',
-                          todayTextColor: '#C084FC',
-                          arrowColor: '#C084FC',
-                          selectedDayBackgroundColor: '#7C3AED',
-                          selectedDayTextColor: '#FFFFFF',
+                          calendarBackground: card,
+                          backgroundColor: card,
+                          textSectionTitleColor: textSecondary,
+                          monthTextColor: text,
+                          dayTextColor: text,
+                          textDisabledColor: textMuted,
+                          todayTextColor: primary,
+                          arrowColor: primary,
+                          selectedDayBackgroundColor: primary,
+                          selectedDayTextColor: onPrimary,
                           textMonthFontWeight: '700',
                           textDayFontWeight: '500',
                         }}
@@ -322,11 +338,11 @@ export function PersonalDetailsSection({}: PersonalDetailsSectionProps) {
 
                     <AppPressable
                       onPress={() => setDatePickerVisible(false)}
-                      className="mt-3 items-center rounded-2xl border border-border py-3"
+                      className="mt-3 items-center rounded-2xl border border-border-v2 py-3"
                     >
                       <AppText
                         variant="sm"
-                        className="font-semibold text-text-secondary"
+                        className="font-semibold text-text-muted-v2"
                       >
                         Cancel
                       </AppText>

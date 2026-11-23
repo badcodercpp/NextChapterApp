@@ -50,17 +50,17 @@ export function BeforeYouGoCard({
   ];
 
   return (
-    <AppCard className="rounded-[28px] border border-teal-400/25 bg-teal-400/[0.04] px-4 py-3">
+    <AppCard className="rounded-[28px] border border-primary-v2/25 bg-primary-v2/[0.04] px-4 py-3">
       {/* Header */}
       <View className="mb-4 flex-row items-center">
         <AppIcon
           icon={Lightbulb}
           size={21}
-          className="mr-4 text-teal-400"
+          className="mr-4 text-link-v2"
           strokeWidth={2.5}
         />
 
-        <AppText variant="md" className="font-semibold text-teal-400">
+        <AppText variant="md" className="font-semibold text-link-v2">
           Before you go — consider instead
         </AppText>
       </View>
@@ -82,7 +82,7 @@ export function BeforeYouGoCard({
               <AppIcon
                 icon={action.icon}
                 size={23}
-                className="text-teal-400"
+                className="text-link-v2"
                 strokeWidth={2.3}
               />
             </View>
@@ -90,7 +90,7 @@ export function BeforeYouGoCard({
             {/* Label */}
             <AppText
               variant="sm"
-              className="flex-1 font-semibold text-teal-400"
+              className="flex-1 font-semibold text-link-v2"
               numberOfLines={1}
             >
               {action.label}
@@ -100,7 +100,7 @@ export function BeforeYouGoCard({
             <AppIcon
               icon={ChevronRight}
               size={22}
-              className="ml-3 text-teal-400/70"
+              className="ml-3 text-link-v2/70"
               strokeWidth={2.8}
             />
           </AppPressable>

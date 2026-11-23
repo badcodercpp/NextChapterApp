@@ -39,7 +39,7 @@ export function AppDrawerScreenHeader({
 
   return (
     <View
-      className="flex-row items-center gap-3 border-b border-border bg-background px-3 pb-2"
+      className="flex-row items-center gap-3 border-b border-border-v2 bg-background-v2 px-3 pb-2"
       style={{ paddingTop: top }}
     >
       <AppPressable

@@ -1,7 +1,4 @@
-import {
-  NavigatorAppDrawerScreenHeader,
-  appHeaderOptions,
-} from '@/components';
+import { NavigatorAppDrawerScreenHeader, appHeaderOptions } from '@/components';
 
 import { PremiumScreen } from '../screens/PremiumScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';

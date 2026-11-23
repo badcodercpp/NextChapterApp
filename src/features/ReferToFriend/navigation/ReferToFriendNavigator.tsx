@@ -1,7 +1,4 @@
-import {
-  NavigatorAppDrawerScreenHeader,
-  appHeaderOptions,
-} from '@/components';
+import { NavigatorAppDrawerScreenHeader, appHeaderOptions } from '@/components';
 
 import { ReferToFriendScreen } from '../screens/ReferToFriendScreen';
 import { ReferralRewardsScreen } from '../screens/ReferralRewardsScreen';

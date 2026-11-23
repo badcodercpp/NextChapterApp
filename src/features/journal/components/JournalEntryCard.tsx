@@ -21,8 +21,10 @@ export function JournalEntryCard({
     <AppCard className="mb-4 rounded-[26px] border border-primary-v2/30 bg-background-v2 p-4">
       <View
         pointerEvents="none"
-        className="absolute bottom-0 right-0 h-20 w-32 rounded-tl-full bg-primary-v2/10"
-      />
+        className="absolute inset-0 overflow-hidden rounded-[26px]"
+      >
+        <View className="absolute bottom-0 right-0 h-20 w-32 rounded-tl-full bg-primary-v2/10" />
+      </View>
       <View className="flex-row items-center">
         <View className="mr-3 h-12 w-12 shrink-0 items-center justify-center rounded-[16px] border border-primary-v2/30 bg-primary-v2/15">
           {/* Mood */}

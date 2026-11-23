@@ -170,7 +170,10 @@ export function DailySessionHistoryScreen() {
             />
           </AppCard>
         ) : !history ? (
-          <AppCard className="items-center rounded-[26px] border border-primary-v2/25 bg-background-v2 px-5 py-8">
+          <AppCard
+            decorated
+            className="items-center rounded-[26px] border border-primary-v2/25 bg-background-v2 px-5 py-8"
+          >
             <AppIcon icon={Sprout} size={42} className="text-link-v2" />
             <AppText variant="lg" className="mt-4 font-semibold text-text-v2">
               No session saved for this day
@@ -204,7 +207,10 @@ export function DailySessionHistoryScreen() {
               </View>
             </View>
             {!!history.question?.conversation.length && (
-              <AppCard className="rounded-[26px] border border-primary-v2/30 bg-background-v2 p-4">
+              <AppCard
+                decorated
+                className="rounded-[26px] border border-primary-v2/30 bg-background-v2 p-4"
+              >
                 <View className="mb-4 flex-row items-center">
                   <AppIcon
                     icon={MessageCircle}
@@ -253,7 +259,10 @@ export function DailySessionHistoryScreen() {
               </AppCard>
             )}
             {history.mission && (
-              <AppCard className="rounded-[26px] border border-primary-v2/30 bg-background-v2 p-4">
+              <AppCard
+                decorated
+                className="rounded-[26px] border border-primary-v2/30 bg-background-v2 p-4"
+              >
                 <View className="mb-3 flex-row items-center">
                   <AppIcon
                     icon={Shield}
@@ -296,7 +305,10 @@ export function DailySessionHistoryScreen() {
               </AppCard>
             )}
             {history.reflection && (
-              <AppCard className="rounded-[26px] border border-primary-v2/30 bg-background-v2 p-4">
+              <AppCard
+                decorated
+                className="rounded-[26px] border border-primary-v2/30 bg-background-v2 p-4"
+              >
                 <View className="mb-3 flex-row items-center">
                   <AppIcon
                     icon={ClipboardList}
@@ -331,7 +343,10 @@ export function DailySessionHistoryScreen() {
               </AppCard>
             )}
             {!!history.dailySession.endMoods.length && (
-              <AppCard className="rounded-[24px] border border-primary-v2/25 bg-background-v2 p-4">
+              <AppCard
+                decorated
+                className="rounded-[24px] border border-primary-v2/25 bg-background-v2 p-4"
+              >
                 <AppText variant="md" className="font-semibold text-link-v2">
                   How you felt afterwards
                 </AppText>

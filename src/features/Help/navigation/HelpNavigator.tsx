@@ -1,7 +1,4 @@
-import {
-  NavigatorAppDrawerScreenHeader,
-  appHeaderOptions,
-} from '@/components';
+import { NavigatorAppDrawerScreenHeader, appHeaderOptions } from '@/components';
 
 import { HelpScreen } from '../screens/HelpScreen';
 import { HelpTopicScreen } from '../screens/HelpTopicScreen';

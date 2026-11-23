@@ -7,19 +7,21 @@ interface AppAuthenticatedLayoutProps {
   children?: React.ReactNode;
   noBottomPadding?: boolean;
   withoutScrollView?: boolean;
+  backgroundClassName?: string;
 }
 
 export function AppAuthenticatedLayout({
   children,
   noBottomPadding,
   withoutScrollView,
+  backgroundClassName = 'bg-background',
 }: AppAuthenticatedLayoutProps) {
   return (
     <AppScreen
       safeBottom={true}
       safeTop={false}
-      className="flex-1 bg-background"
-      contentClassName="flex-1 bg-background"
+      className={`flex-1 ${backgroundClassName}`}
+      contentClassName={`flex-1 ${backgroundClassName}`}
       safeArea={false}
     >
       {withoutScrollView ? (
@@ -27,7 +29,7 @@ export function AppAuthenticatedLayout({
           <View
             className={`flex-1 ${
               !noBottomPadding ? 'pb-20' : ''
-            } bg-background`}
+            } ${backgroundClassName}`}
           >
             {children}
           </View>
@@ -37,12 +39,12 @@ export function AppAuthenticatedLayout({
           <ScrollView
             className="flex-1"
             showsVerticalScrollIndicator={false}
-            contentContainerClassName="bg-background"
+            contentContainerClassName={backgroundClassName}
           >
             <View
               className={`flex-1 ${
                 !noBottomPadding ? 'pb-20' : ''
-              } bg-background`}
+              } ${backgroundClassName}`}
             >
               {children}
             </View>

@@ -1,14 +1,18 @@
-import { Camera, Eye, Image as ImageIcon } from 'lucide-react-native';
-import { Modal, Pressable, View } from 'react-native';
+import { Camera, ChevronRight, Eye } from 'lucide-react-native';
+import { View } from 'react-native';
 
 import type { AppFileChooseModalProps } from './types';
 import { AppIcon } from '@/components/foundation/AppIcon';
+import {
+  AppPhotoModalHeader,
+  AppPhotoModalShell,
+} from '@/components/foundation/AppImagePreviewModal/AppImagePreviewModal';
 import { AppPressable } from '@/components/foundation/AppPressable';
 import { AppText } from '@/components/foundation/AppText';
 import React from 'react';
+import { cn } from '@/utils';
 
-export function AppFileChooseModal({
-  visible,
+export function AppFileChooseContent({
   title = 'Profile Photo',
   viewText = 'View Photo',
   changeText = 'Change Photo',
@@ -16,71 +20,109 @@ export function AppFileChooseModal({
   onView,
   onChange,
   onCancel,
-  onDismiss,
   showView = true,
   showChange = true,
+}: Omit<AppFileChooseModalProps, 'visible' | 'onDismiss'>) {
+  const options = [
+    showView && {
+      key: 'view',
+      icon: Eye,
+      label: viewText,
+      hint: 'See your current photo',
+      onPress: onView,
+      primary: false,
+    },
+    showChange && {
+      key: 'change',
+      icon: Camera,
+      label: changeText,
+      hint: 'Pick a new photo from your library',
+      onPress: onChange,
+      primary: true,
+    },
+  ].filter(Boolean) as {
+    key: string;
+    icon: typeof Eye;
+    label: string;
+    hint: string;
+    onPress?: () => void;
+    primary: boolean;
+  }[];
+
+  return (
+    <>
+      <AppPhotoModalHeader title={title} message="What would you like to do?" />
+
+      <View className="mt-6 gap-3">
+        {options.map(option => (
+          <AppPressable
+            key={option.key}
+            accessibilityRole="button"
+            accessibilityLabel={option.label}
+            onPress={option.onPress}
+            className={cn(
+              'flex-row items-center rounded-2xl border p-3',
+              option.primary
+                ? 'border-primary-v2 bg-primary-v2/15'
+                : 'border-primary-v2/30 bg-background-v2/40',
+            )}
+          >
+            <View
+              className={cn(
+                'h-11 w-11 items-center justify-center rounded-xl',
+                option.primary ? 'bg-primary-v2' : 'bg-primary-v2/15',
+              )}
+            >
+              <AppIcon
+                icon={option.icon}
+                size={20}
+                className={
+                  option.primary ? 'text-on-primary-v2' : 'text-link-v2'
+                }
+              />
+            </View>
+            <View className="ml-3 flex-1">
+              <AppText variant="md" className="font-semibold text-text-v2">
+                {option.label}
+              </AppText>
+              <AppText variant="sm" className="text-text-muted-v2">
+                {option.hint}
+              </AppText>
+            </View>
+            <AppIcon
+              icon={ChevronRight}
+              size={20}
+              className="text-text-muted-v2"
+            />
+          </AppPressable>
+        ))}
+      </View>
+
+      <AppPressable
+        accessibilityRole="button"
+        onPress={onCancel}
+        className="mt-5 items-center justify-center rounded-2xl border border-primary-v2/40 px-4 py-3.5"
+      >
+        <AppText variant="md" className="font-semibold text-link-v2">
+          {cancelText}
+        </AppText>
+      </AppPressable>
+    </>
+  );
+}
+
+export function AppFileChooseModal({
+  visible,
+  onDismiss,
+  ...props
 }: AppFileChooseModalProps) {
   return (
-    <Modal
+    <AppPhotoModalShell
       visible={visible}
-      transparent
-      animationType="fade"
-      onRequestClose={onCancel}
+      onClose={props.onCancel}
       onDismiss={onDismiss}
     >
-      <View className="flex-1 items-center justify-center bg-background/80 px-6">
-        <Pressable className="absolute inset-0" onPress={onCancel} />
-
-        <View className="w-full max-w-[380px] rounded-[28px] bg-background p-6">
-          <View className="mb-5 self-center rounded-full bg-primary/10 p-4">
-            <AppIcon icon={ImageIcon} size={28} className="text-primary" />
-          </View>
-
-          <AppText variant="xl" className="text-center font-semibold text-text">
-            {title}
-          </AppText>
-
-          <View className="mt-7 gap-3">
-            {showView && (
-              <AppPressable
-                onPress={onView}
-                className="flex-row items-center justify-center rounded-2xl border border-border px-4 py-3"
-              >
-                <AppIcon icon={Eye} size={20} className="mr-2 text-text" />
-
-                <AppText variant="md" className="font-semibold text-text">
-                  {viewText}
-                </AppText>
-              </AppPressable>
-            )}
-
-            {showChange && (
-              <AppPressable
-                onPress={onChange}
-                className="flex-row items-center justify-center rounded-2xl bg-primary px-4 py-3"
-              >
-                <AppIcon icon={Camera} size={20} className="mr-2 text-white" />
-
-                <AppText variant="md" className="font-semibold text-white">
-                  {changeText}
-                </AppText>
-              </AppPressable>
-            )}
-
-            <AppPressable
-              onPress={onCancel}
-              className="items-center justify-center rounded-2xl px-4 py-3"
-            >
-              <AppText
-                variant="md"
-                className="font-semibold text-text-secondary"
-              >
-                {cancelText}
-              </AppText>
-            </AppPressable>
-          </View>
-        </View>
-      </View>
-    </Modal>
+      <AppFileChooseContent {...props} />
+    </AppPhotoModalShell>
   );
 }

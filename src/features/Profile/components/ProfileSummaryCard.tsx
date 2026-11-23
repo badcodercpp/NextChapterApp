@@ -1,12 +1,18 @@
-import { AppAvatar, AppIcon, AppPressable, AppText } from '@/components';
+import {
+  AppAvatar,
+  AppIcon,
+  AppMountainArtwork,
+  AppPressable,
+  AppText,
+} from '@/components';
+import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import { selectApplicationConfig, selectMe } from '@/state/selectors';
 
 import { Pencil } from 'lucide-react-native';
 import { View } from 'react-native';
 import { toHttpsURL } from '@/utils';
+import { useCSSVariable } from 'uniwind';
 import { useSelector } from 'react-redux';
-import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
-import { useResolveClassNames } from 'uniwind';
 
 interface ProfileSummaryCardProps {
   onEditPress?: () => void;
@@ -15,12 +21,13 @@ interface ProfileSummaryCardProps {
 export function ProfileSummaryCard({ onEditPress }: ProfileSummaryCardProps) {
   const { data: me } = useSelector(selectMe);
   const { data: applicationConfig } = useSelector(selectApplicationConfig);
-  const { backgroundColor: accent } = useResolveClassNames('bg-secondary');
+  const primary = useCSSVariable('--color-primary-v2');
+  const accent = typeof primary === 'string' ? primary : '#7c3aed';
 
   return (
-    <View className="overflow-hidden rounded-[28px] border border-secondary/50 bg-card/60 p-3">
+    <View className="overflow-hidden rounded-[28px] border border-primary-v2/25 bg-surface-v2 px-4 py-5">
       <View pointerEvents="none" className="absolute inset-0">
-        <Svg width="100%" height="100%">
+        <Svg key={accent} width="100%" height="100%">
           <Defs>
             <LinearGradient
               id="profileSummaryBackground"
@@ -29,26 +36,22 @@ export function ProfileSummaryCard({ onEditPress }: ProfileSummaryCardProps) {
               x2="1"
               y2="1"
             >
-              <Stop offset="0" stopColor={accent} stopOpacity={0.28} />
-              <Stop offset="1" stopColor={accent} stopOpacity={0.03} />
+              <Stop offset="0" stopColor={accent} stopOpacity={0.08} />
+              <Stop offset="1" stopColor={accent} stopOpacity={0.22} />
             </LinearGradient>
           </Defs>
-          <Rect width="100%" height="100%" fill="url(#profileSummaryBackground)" />
+          <Rect
+            width="100%"
+            height="100%"
+            fill="url(#profileSummaryBackground)"
+          />
         </Svg>
       </View>
+      <AppMountainArtwork className="h-3/4 w-3/5" />
+
       <View className="flex-row items-center">
-        {/* Profile Image */}
-        <View className="mr-4">
-          <View
-            className="items-center justify-center rounded-full border-2 border-secondary p-1"
-            style={{
-              shadowColor: accent,
-              shadowOffset: { width: 0, height: 0 },
-              shadowOpacity: 0.8,
-              shadowRadius: 8,
-              elevation: 8,
-            }}
-          >
+        <View className="mr-4 rounded-full border-[3px] border-primary-v2 p-0.5">
+          <View className="rounded-full border-2 border-surface-v2">
             <AppAvatar
               size="md"
               name={me?.displayName ?? ''}
@@ -57,54 +60,37 @@ export function ProfileSummaryCard({ onEditPress }: ProfileSummaryCardProps) {
           </View>
         </View>
 
-        {/* Content */}
-        <View className="flex-1">
-          {/* Name + Edit */}
-          <View className="flex-row items-start justify-between">
-            <AppText
-              variant="lg"
-              className="flex-1 font-semibold text-text"
-              numberOfLines={1}
-            >
-              {me?.displayName ?? ''}
-            </AppText>
-
-            <AppPressable
-              onPress={onEditPress}
-              className="
-                ml-3
-                w-10
-                h-10
-                flex-row
-                items-center
-                justify-center
-                rounded-full
-                border border-text-muted/20
-                bg-white/5
-                absolute
-                right-0
-              "
-            >
-              <AppIcon
-                icon={Pencil}
-                size={18}
-                strokeWidth={2.5}
-                className="text-secondary"
-              />
-            </AppPressable>
-          </View>
-          {/* Quote */}
-          <View className="mt-1 flex-row">
-            <AppText
-              variant="sm"
-              className="mr-8 flex-1 text-text-secondary"
-              numberOfLines={2}
-            >
-              {me?.bio ?? applicationConfig?.profileSummaryQuote}
-            </AppText>
-          </View>
+        <View className="flex-1 pr-12">
+          <AppText
+            variant="xl"
+            className="font-bold text-text-v2"
+            numberOfLines={1}
+          >
+            {me?.displayName ?? ''}
+          </AppText>
+          <AppText
+            variant="sm"
+            className="mt-1 text-text-muted-v2"
+            numberOfLines={2}
+          >
+            {me?.bio ?? applicationConfig?.profileSummaryQuote}
+          </AppText>
         </View>
       </View>
+
+      <AppPressable
+        onPress={onEditPress}
+        accessibilityRole="button"
+        accessibilityLabel="Edit profile"
+        className="absolute right-4 top-4 h-11 w-11 items-center justify-center rounded-full border border-primary-v2/20 bg-surface-v2"
+      >
+        <AppIcon
+          icon={Pencil}
+          size={18}
+          strokeWidth={2.4}
+          className="text-link-v2"
+        />
+      </AppPressable>
     </View>
   );
 }

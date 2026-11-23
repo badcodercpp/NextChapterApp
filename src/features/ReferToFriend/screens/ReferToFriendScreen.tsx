@@ -1,5 +1,6 @@
 import {
   AppButton,
+  AppPatternArtwork,
   AppIcon,
   AppPressable,
   AppScreen,
@@ -31,10 +32,21 @@ import {
 } from '../referral';
 import { selectMe } from '@/state/selectors';
 import { useSelector } from 'react-redux';
+import { useCSSVariable } from 'uniwind';
 
 const STEPS = [
-  { id: 'share', icon: Link2, title: 'Share', subtitle: 'Send your referral link' },
-  { id: 'join', icon: Users, title: 'They Join', subtitle: 'Your friend signs up' },
+  {
+    id: 'share',
+    icon: Link2,
+    title: 'Share',
+    subtitle: 'Send your referral link',
+  },
+  {
+    id: 'join',
+    icon: Users,
+    title: 'They Join',
+    subtitle: 'Your friend signs up',
+  },
   {
     id: 'grow',
     icon: Star,
@@ -72,6 +84,12 @@ export function ReferToFriendScreen() {
     useNavigation<NativeStackNavigationProp<ReferToFriendStackParamList>>();
   const { data: me } = useSelector(selectMe);
   const referralCode = buildReferralCode(me?.displayName);
+  const primary = useCSSVariable('--color-primary-v2');
+  const secondary = useCSSVariable('--color-secondary');
+  const heroColors = [
+    typeof primary === 'string' ? primary : '#7c3aed',
+    typeof secondary === 'string' ? secondary : '#5b21b6',
+  ];
   const referralLink = `${REFERRAL_BASE_URL}/${referralCode}`;
 
   const handleInvite = () =>
@@ -104,10 +122,10 @@ export function ReferToFriendScreen() {
           <View className="absolute h-28 w-28 rounded-full bg-primary-v2/25" />
           <View style={styles.tile}>
             <LinearGradient
-              colors={['#A855F7', '#6D28D9']}
+              colors={heroColors}
               style={StyleSheet.absoluteFill}
             />
-            <AppIcon icon={UserPlus} size={40} className="text-white" />
+            <AppIcon icon={UserPlus} size={40} className="text-on-primary-v2" />
           </View>
           <View className="absolute right-1 top-2">
             <AppIcon icon={Sparkles} size={16} className="text-primary-v2" />
@@ -115,7 +133,8 @@ export function ReferToFriendScreen() {
         </View>
       </View>
 
-      <View className="mt-6 flex-row rounded-3xl border border-primary-v2/25 bg-primary-v2/10 py-4">
+      <View className="mt-6 flex-row overflow-hidden rounded-3xl border border-primary-v2/25 bg-primary-v2/10 py-4">
+        <AppPatternArtwork variant="waves" className="h-2/3 w-full" />
         {STEPS.map((step, index) => (
           <View
             key={step.id}
@@ -142,7 +161,13 @@ export function ReferToFriendScreen() {
         ))}
       </View>
 
-      <View className="mt-4 rounded-3xl border border-primary-v2/25 bg-primary-v2/10 p-4">
+      <View className="mt-4 overflow-hidden rounded-3xl border border-primary-v2/25 bg-primary-v2/10 p-4">
+        <AppPatternArtwork
+          variant="grid"
+          className="bottom-auto top-0 h-28 w-2/5"
+          icon={Link2}
+          iconClassName="bottom-auto top-1 right-3"
+        />
         <AppText variant="xl" className="font-bold text-text-v2">
           Your Referral Link
         </AppText>
@@ -198,8 +223,14 @@ export function ReferToFriendScreen() {
         accessibilityRole="button"
         accessibilityLabel="Referral Rewards"
         onPress={() => navigation.navigate('ReferralRewards')}
-        className="mt-4 flex-row items-center rounded-3xl border border-primary-v2/25 bg-primary-v2/10 p-4"
+        className="mt-4 flex-row items-center overflow-hidden rounded-3xl border border-primary-v2/25 bg-primary-v2/10 p-4"
       >
+        <AppPatternArtwork
+          variant="sparkles"
+          className="w-2/5"
+          icon={Gift}
+          iconClassName="right-12"
+        />
         <View className="h-12 w-12 items-center justify-center rounded-xl bg-primary-v2/20">
           <AppIcon icon={Gift} size={26} className="text-primary-v2" />
         </View>

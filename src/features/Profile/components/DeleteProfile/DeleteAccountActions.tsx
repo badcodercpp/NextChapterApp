@@ -26,7 +26,7 @@ export function DeleteAccountActions({
   return (
     <View className="w-full">
       {/* Confirmation Label */}
-      <AppText variant="lg" className="mb-2 font-semibold text-text-muted">
+      <AppText variant="lg" className="mb-2 font-semibold text-text-muted-v2">
         Type DELETE to confirm
       </AppText>
 
@@ -75,8 +75,8 @@ export function DeleteAccountActions({
         className={cn(
           'mt-4 py-3 w-full flex-row items-center justify-center',
           'rounded-[24px]',
-          'border border-white/10',
-          'bg-white/[0.04]',
+          'border border-border-v2',
+          'bg-surface-v2/60',
           deleting && 'opacity-50',
         )}
         accessibilityRole="button"
@@ -85,11 +85,11 @@ export function DeleteAccountActions({
         <AppIcon
           icon={ArrowLeft}
           size={28}
-          className="mr-4 text-text-muted"
+          className="mr-4 text-text-muted-v2"
           strokeWidth={2.5}
         />
 
-        <AppText variant="xl" className="font-semibold text-text-muted">
+        <AppText variant="xl" className="font-semibold text-text-muted-v2">
           Keep My Account
         </AppText>
       </AppPressable>

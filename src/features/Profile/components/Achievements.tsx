@@ -1,7 +1,7 @@
 import { AppIcon, AppPressable, AppText } from '@/components';
 import { ScrollView, View } from 'react-native';
 
-import { Lock } from 'lucide-react-native';
+import { ChevronRight, Lock, Trophy } from 'lucide-react-native';
 import { MyAchievementsQuery } from '@/__generated__/graphql';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { getAchievementTypeIcon } from '@/utils';
@@ -36,7 +36,9 @@ function AchievementItem({
     <AppPressable
       onPress={onPress}
       className={`h-[112px] w-[136px] items-center justify-center rounded-[18px] border px-2 py-2 ${
-        isFeatured ? 'border-secondary bg-primary/25' : 'border-border bg-card'
+        isFeatured
+          ? 'border-primary-v2 bg-primary-v2/15'
+          : 'border-primary-v2/20 bg-surface-v2'
       }`}
     >
       {/* Badge */}
@@ -49,9 +51,9 @@ function AchievementItem({
             className={
               achievement.unlocked
                 ? isFeatured
-                  ? 'text-white'
-                  : 'text-text'
-                : 'text-text-muted opacity-40'
+                  ? 'text-link-v2'
+                  : 'text-text-v2'
+                : 'text-text-muted-v2 opacity-40'
             }
           />
         )}
@@ -61,7 +63,7 @@ function AchievementItem({
             icon={Lock}
             size={22}
             strokeWidth={2.5}
-            className="text-text"
+            className="text-text-v2"
           />
         )}
       </View>
@@ -69,7 +71,7 @@ function AchievementItem({
       {/* Title */}
       <AppText
         variant="sm"
-        className="mt-1 text-center leading-5 text-text"
+        className="mt-1 text-center font-semibold leading-5 text-text-v2"
         numberOfLines={2}
       >
         {achievement.title}
@@ -79,7 +81,7 @@ function AchievementItem({
       {achievement.unlocked && (
         <AppText
           variant="xs"
-          className="mt-1 text-center leading-4 text-text-muted"
+          className="mt-1 text-center leading-4 text-text-muted-v2"
           numberOfLines={1}
         >
           {timeAgo}
@@ -99,14 +101,21 @@ export function Achievements({
     <View className="w-full">
       {/* Header */}
       <View className="mb-3 flex-row items-center justify-between">
-        <AppText variant="lg" className="font-semibold text-text">
-          Achievements
-        </AppText>
+        <View className="flex-row items-center gap-2">
+          <AppIcon icon={Trophy} size={22} className="text-link-v2" />
+          <AppText variant="lg" className="font-semibold text-text-v2">
+            Achievements
+          </AppText>
+        </View>
 
-        <AppPressable onPress={onViewAllPress}>
-          <AppText variant="md" className="font-medium text-secondary">
+        <AppPressable
+          onPress={onViewAllPress}
+          className="flex-row items-center gap-0.5"
+        >
+          <AppText variant="md" className="font-semibold text-link-v2">
             View All
           </AppText>
+          <AppIcon icon={ChevronRight} size={18} className="text-link-v2" />
         </AppPressable>
       </View>
 

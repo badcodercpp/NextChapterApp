@@ -43,7 +43,10 @@ export function FollowUpProgressCard({
   }, [getTotalTodayUserReplyContent, todayQuestion]);
 
   return (
-    <AppCard className="overflow-hidden rounded-[24px] border border-primary-v2/30 bg-background-v2 px-4 py-4">
+    <AppCard
+      decorated
+      className="overflow-hidden rounded-[24px] border border-primary-v2/30 bg-background-v2 px-4 py-4"
+    >
       <View
         pointerEvents="none"
         className="absolute inset-0 bg-primary-v2/10"

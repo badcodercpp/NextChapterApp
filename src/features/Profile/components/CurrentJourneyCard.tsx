@@ -1,4 +1,9 @@
-import { AppIcon, AppPressable, AppText } from '@/components';
+import {
+  AppIcon,
+  AppMountainArtwork,
+  AppPressable,
+  AppText,
+} from '@/components';
 import { ChevronRight, Heart } from 'lucide-react-native';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import {
@@ -10,7 +15,7 @@ import { useCallback, useMemo } from 'react';
 import { View } from 'react-native';
 import { format } from 'date-fns';
 import { properCase } from '@/utils/strings';
-import { useResolveClassNames } from 'uniwind';
+import { useCSSVariable } from 'uniwind';
 import { useSelector } from 'react-redux';
 
 interface CurrentJourneyCardProps {
@@ -20,7 +25,8 @@ interface CurrentJourneyCardProps {
 export function CurrentJourneyCard({ onPress }: CurrentJourneyCardProps) {
   const { data: applicationConfig } = useSelector(selectApplicationConfig);
   const { data: activeJourney } = useSelector(selectActiveJourney);
-  const { backgroundColor: accent } = useResolveClassNames('bg-secondary');
+  const primary = useCSSVariable('--color-primary-v2');
+  const accent = typeof primary === 'string' ? primary : '#7c3aed';
 
   const calculateProgress = useCallback(() => {
     if (!activeJourney || !applicationConfig) {
@@ -38,16 +44,10 @@ export function CurrentJourneyCard({ onPress }: CurrentJourneyCardProps) {
   return (
     <AppPressable
       onPress={onPress}
-      className="
-        overflow-hidden
-        rounded-[24px]
-        border border-secondary/40
-        bg-card
-        p-4
-      "
+      className="overflow-hidden rounded-[24px] border border-primary-v2/20 bg-surface-v2 p-4"
     >
       <View pointerEvents="none" className="absolute inset-0">
-        <Svg width="100%" height="100%">
+        <Svg key={accent} width="100%" height="100%">
           <Defs>
             <LinearGradient
               id="profileJourneyBackground"
@@ -56,8 +56,7 @@ export function CurrentJourneyCard({ onPress }: CurrentJourneyCardProps) {
               x2="1"
               y2="1"
             >
-              <Stop offset="0" stopColor={accent} stopOpacity={0.18} />
-              <Stop offset="0.55" stopColor={accent} stopOpacity={0.04} />
+              <Stop offset="0" stopColor={accent} stopOpacity={0.06} />
               <Stop offset="1" stopColor={accent} stopOpacity={0.12} />
             </LinearGradient>
           </Defs>
@@ -68,34 +67,30 @@ export function CurrentJourneyCard({ onPress }: CurrentJourneyCardProps) {
           />
         </Svg>
       </View>
-      {/* Top Section */}
+      <AppMountainArtwork variant="hills" className="bottom-12 h-20 w-3/5" />
+
       <View className="flex-row items-center">
-        {/* Journey Icon */}
-        <View className="mr-3 h-14 w-14 items-center justify-center rounded-[18px] bg-primary/25">
+        <View className="mr-4 h-16 w-16 items-center justify-center rounded-[18px] bg-primary-v2/15">
           <AppIcon
             icon={Heart}
-            size={32}
-            strokeWidth={2.5}
-            className="text-secondary"
+            size={30}
+            strokeWidth={2.2}
+            className="text-link-v2"
           />
         </View>
-        <View className="mr-3 h-14 w-px bg-border" />
 
-        {/* Journey Details */}
         <View className="flex-1">
-          <AppText variant="md" className="font-semibold text-secondary">
+          <AppText variant="sm" className="font-semibold text-link-v2">
             Current Journey
           </AppText>
-
           <AppText
-            variant="lg"
-            className="mt-0 font-semibold text-text"
+            variant="xl"
+            className="font-bold text-text-v2"
             numberOfLines={1}
           >
             {properCase(activeJourney?.program)}
           </AppText>
-
-          <AppText variant="sm" className="mt-0.5 text-text-muted">
+          <AppText variant="sm" className="mt-0.5 text-text-muted-v2">
             {format(
               new Date(activeJourney?.startedAt?.toString() ?? Date.now()),
               'MMM dd, yyyy',
@@ -103,31 +98,29 @@ export function CurrentJourneyCard({ onPress }: CurrentJourneyCardProps) {
           </AppText>
         </View>
 
-        {/* Arrow */}
-        <AppIcon
-          icon={ChevronRight}
-          size={26}
-          strokeWidth={2.5}
-          className="text-text-muted"
-        />
+        <View className="h-10 w-10 items-center justify-center rounded-full bg-primary-v2/10">
+          <AppIcon
+            icon={ChevronRight}
+            size={22}
+            strokeWidth={2.4}
+            className="text-text-v2"
+          />
+        </View>
       </View>
 
-      {/* Progress Header */}
-      <View className="mt-4 flex-row items-center justify-between border-t-2 border-border pt-3">
-        <AppText variant="sm" className="text-text-muted">
+      <View className="mt-4 flex-row items-center justify-between border-t border-border-v2 pt-3">
+        <AppText variant="sm" className="text-text-muted-v2">
           Day {activeJourney?.currentDay} of{' '}
           {applicationConfig?.totalProgramDays}
         </AppText>
-
-        <AppText variant="sm" className="font-semibold text-secondary">
+        <AppText variant="sm" className="font-semibold text-link-v2">
           {progress}%
         </AppText>
       </View>
 
-      {/* Progress Bar */}
-      <View className="mt-3 h-2.5 overflow-hidden rounded-full bg-primary/20">
+      <View className="mt-3 h-2.5 overflow-hidden rounded-full bg-primary-v2/15">
         <View
-          className="h-full rounded-full bg-primary"
+          className="h-full rounded-full bg-primary-v2"
           style={{
             width: `${Math.min(Math.max(progress, 0), 100)}%`,
           }}

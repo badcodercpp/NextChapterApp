@@ -1,4 +1,4 @@
-import { AppIcon, AppText } from '@/components';
+import { AppCardDecoration, AppIcon, AppText } from '@/components';
 
 import { Sparkles } from 'lucide-react-native';
 import { View } from 'react-native';
@@ -28,6 +28,7 @@ export function RememberCard({
           className="absolute -bottom-16 -right-8 h-28 w-44 rounded-full bg-primary-v2/20"
         />
       )}
+      {!themed && <AppCardDecoration />}
       <View className="flex-row items-center">
         {/* Icon */}
         <View

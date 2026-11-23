@@ -1,10 +1,20 @@
 import {
+  APP_PATTERN_ARTWORK_VARIANTS,
+  AppPatternArtwork,
+  AppHeroArtwork,
   AppIcon,
   AppPressable,
   AppScreen,
   AppText,
 } from '@/components';
-import { ChevronDown, ChevronRight, Headphones, Mail, Search } from 'lucide-react-native';
+import {
+  ChevronDown,
+  ChevronRight,
+  Headphones,
+  Mail,
+  MessageCircleQuestion,
+  Search,
+} from 'lucide-react-native';
 import { HELP_TOPICS as TOPICS } from '../data/helpTopics';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -14,6 +24,7 @@ import { Linking, TextInput, View } from 'react-native';
 import { cn } from '@/utils';
 import { showToast } from '@/components/Toast';
 import { useState } from 'react';
+import { useCSSVariable } from 'uniwind';
 
 const SUPPORT_EMAIL = 'support@outdated.me';
 
@@ -43,6 +54,7 @@ export function HelpScreen() {
     useNavigation<NativeStackNavigationProp<HelpStackParamList>>();
   const [query, setQuery] = useState('');
   const [openFaq, setOpenFaq] = useState<string | null>(null);
+  const placeholderColor = useCSSVariable('--color-text-muted-v2');
 
   const search = query.trim().toLowerCase();
   const topics = TOPICS.filter(
@@ -52,8 +64,7 @@ export function HelpScreen() {
   );
   const faqs = FAQS.filter(
     faq =>
-      !search ||
-      `${faq.question} ${faq.answer}`.toLowerCase().includes(search),
+      !search || `${faq.question} ${faq.answer}`.toLowerCase().includes(search),
   );
 
   const contactSupport = () =>
@@ -70,15 +81,18 @@ export function HelpScreen() {
       className="bg-background-v2"
       contentClassName="grow bg-background-v2 px-4 pb-8 pt-4"
     >
-      <AppText variant="sm" className="font-semibold text-primary-v2">
-        Outdated.me
-      </AppText>
-      <AppText variant="3xl" className="mt-1 font-bold text-text-v2">
-        How can we help?
-      </AppText>
-      <AppText variant="sm" className="mt-1 max-w-[300px] text-text-muted-v2">
-        Find answers, get support, and make the most of Outdated.me.
-      </AppText>
+      <View className="-mx-4 -mt-4 px-4 pb-1 pt-4">
+        <AppHeroArtwork />
+        <AppText variant="sm" className="font-semibold text-primary-v2">
+          Outdated.me
+        </AppText>
+        <AppText variant="3xl" className="mt-1 font-bold text-text-v2">
+          How can we help?
+        </AppText>
+        <AppText variant="sm" className="mt-1 max-w-[300px] text-text-muted-v2">
+          Find answers, get support, and make the most of Outdated.me.
+        </AppText>
+      </View>
 
       <View className="mt-5 flex-row items-center rounded-2xl border border-primary-v2/40 bg-surface-v2 px-4">
         <AppIcon icon={Search} size={20} className="text-primary-v2" />
@@ -86,7 +100,9 @@ export function HelpScreen() {
           value={query}
           onChangeText={setQuery}
           placeholder="Search for help, topics, or questions..."
-          placeholderTextColor="#8B8FA8"
+          placeholderTextColor={
+            typeof placeholderColor === 'string' ? placeholderColor : undefined
+          }
           returnKeyType="search"
           className="ml-3 h-12 flex-1 text-base text-text-v2"
         />
@@ -97,16 +113,31 @@ export function HelpScreen() {
           <AppText variant="xl" className="mb-3 mt-6 font-bold text-text-v2">
             Popular Topics
           </AppText>
-          {topics.map(topic => (
+          {topics.map((topic, index) => (
             <AppPressable
               key={topic.id}
               accessibilityRole="button"
               accessibilityLabel={topic.title}
-              onPress={() => navigation.navigate('HelpTopic', { topicId: topic.id })}
-              className="mb-2 flex-row items-center rounded-2xl border border-primary-v2/30 bg-surface-v2 p-2.5"
+              onPress={() =>
+                navigation.navigate('HelpTopic', { topicId: topic.id })
+              }
+              className="mb-2 flex-row items-center overflow-hidden rounded-2xl border border-primary-v2/30 bg-surface-v2 p-2.5"
             >
+              <AppPatternArtwork
+                variant={
+                  APP_PATTERN_ARTWORK_VARIANTS[
+                    index % APP_PATTERN_ARTWORK_VARIANTS.length
+                  ]
+                }
+                className="w-2/5"
+                icon={topic.icon}
+              />
               <View className="h-12 w-12 items-center justify-center rounded-xl bg-primary-v2/20">
-                <AppIcon icon={topic.icon} size={24} className="text-primary-v2" />
+                <AppIcon
+                  icon={topic.icon}
+                  size={24}
+                  className="text-primary-v2"
+                />
               </View>
               <View className="ml-3 flex-1">
                 <AppText variant="lg" className="font-semibold text-text-v2">
@@ -116,11 +147,7 @@ export function HelpScreen() {
                   {topic.subtitle}
                 </AppText>
               </View>
-              <AppIcon
-                icon={ChevronRight}
-                size={20}
-                className="text-text-v2"
-              />
+              <AppIcon icon={ChevronRight} size={20} className="text-text-v2" />
             </AppPressable>
           ))}
         </>
@@ -131,7 +158,13 @@ export function HelpScreen() {
           <AppText variant="xl" className="mb-3 mt-5 font-bold text-text-v2">
             Frequently Asked Questions
           </AppText>
-          <View className="rounded-2xl border border-primary-v2/30 bg-surface-v2 px-4">
+          <View className="overflow-hidden rounded-2xl border border-primary-v2/30 bg-surface-v2 px-4">
+            <AppPatternArtwork
+              variant="waves"
+              className="h-32 w-full"
+              icon={MessageCircleQuestion}
+              iconClassName="bottom-auto top-2 right-12"
+            />
             {faqs.map((faq, index) => {
               const open = openFaq === faq.id;
               return (
@@ -183,7 +216,10 @@ export function HelpScreen() {
           onPress={contactSupport}
         >
           <AppIcon icon={Headphones} size={22} className="text-on-primary-v2" />
-          <AppText variant="lg" className="ml-3 font-semibold text-on-primary-v2">
+          <AppText
+            variant="lg"
+            className="ml-3 font-semibold text-on-primary-v2"
+          >
             Contact Support
           </AppText>
         </AppPressable>

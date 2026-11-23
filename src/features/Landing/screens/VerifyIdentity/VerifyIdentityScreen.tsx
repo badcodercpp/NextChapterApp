@@ -148,7 +148,10 @@ export function VerifyIdentityScreen() {
             </View>
           </View>
 
-          <AppCard className="mt-2 flex-row rounded-2xl border border-border bg-surface p-5">
+          <AppCard
+            decorated
+            className="mt-2 flex-row rounded-2xl border border-border bg-surface p-5"
+          >
             <AppIcon
               icon={ShieldCheck}
               size={28}

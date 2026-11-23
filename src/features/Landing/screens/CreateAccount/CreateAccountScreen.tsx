@@ -40,7 +40,7 @@ export function CreateAccountScreen() {
             source={require('@/assets/images/logo.png')}
             resizeMode="contain"
             className="h-24 w-24 rounded-full"
-            accessibilityLabel="NextChapter logo"
+            accessibilityLabel="Outdated.me logo"
           />
           <AppText
             variant="4xl"

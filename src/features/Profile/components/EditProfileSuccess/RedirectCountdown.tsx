@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { AppText } from '@/components';
 import { ProfileNavigationProp } from '@/features/Profile/navigation/types';
 import { useNavigation } from '@react-navigation/native';
+import { useCSSVariable } from 'uniwind';
 
 interface RedirectCountdownProps {
   duration?: number;
@@ -23,6 +24,9 @@ export function RedirectCountdown({
   onComplete,
 }: RedirectCountdownProps) {
   const [seconds, setSeconds] = useState(duration);
+  const primary = useCSSVariable('--color-primary-v2');
+  const ringColor = typeof primary === 'string' ? primary : '#A855F7';
+  const trackColor = `${ringColor}1f`;
 
   const navigation = useNavigation<ProfileNavigationProp>();
 
@@ -99,7 +103,7 @@ export function RedirectCountdown({
             cx={SIZE / 2}
             cy={SIZE / 2}
             r={RADIUS}
-            stroke="rgba(255,255,255,0.06)"
+            stroke={trackColor}
             strokeWidth={STROKE_WIDTH}
             fill="none"
           />
@@ -109,7 +113,7 @@ export function RedirectCountdown({
             cx={SIZE / 2}
             cy={SIZE / 2}
             r={RADIUS}
-            stroke="#A855F7"
+            stroke={ringColor}
             strokeWidth={STROKE_WIDTH}
             strokeLinecap="round"
             fill="none"
@@ -119,18 +123,18 @@ export function RedirectCountdown({
         </Svg>
 
         {/* Number */}
-        <AppText variant="lg" className="font-medium leading-none text-white">
+        <AppText variant="lg" className="font-medium leading-none text-text-v2">
           {seconds}
         </AppText>
 
         {/* Seconds */}
-        <AppText variant="md" className="mt-1 text-text-muted">
+        <AppText variant="md" className="mt-1 text-text-muted-v2">
           sec
         </AppText>
       </View>
 
       {/* Redirect Message */}
-      <AppText variant="lg" className="mt-5 text-center text-text-muted">
+      <AppText variant="lg" className="mt-5 text-center text-text-muted-v2">
         {message}
       </AppText>
     </View>

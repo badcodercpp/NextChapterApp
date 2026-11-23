@@ -23,6 +23,7 @@ jest.mock('@/components', () => {
   } = jest.requireActual<typeof import('react-native')>('react-native');
   return {
     AppScreen: View,
+    AppCard: View,
     AppText: Text,
     AppPressable: Pressable,
     AppIcon: View,

@@ -13,7 +13,10 @@ interface SessionOverviewCardProps {}
 
 export function SessionOverviewCard({}: SessionOverviewCardProps) {
   return (
-    <AppCard className="overflow-hidden rounded-[22px] border border-border bg-card p-6">
+    <AppCard
+      decorated
+      className="overflow-hidden rounded-[22px] border border-border bg-card p-6"
+    >
       <AppText variant="xl" className="text-primary">
         What to expect in this session
       </AppText>

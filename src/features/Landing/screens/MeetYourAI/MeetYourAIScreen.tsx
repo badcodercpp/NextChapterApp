@@ -56,6 +56,7 @@ export function MeetYourAIScreen() {
           {FEATURES.map(feature => (
             <AppCard
               key={feature.id}
+              decorated
               className="mb-3 flex-row items-center rounded-2xl border border-white/10 bg-white/5 p-3"
             >
               <View className="h-12 w-12 items-center justify-center rounded-xl bg-white/10">
@@ -80,7 +81,10 @@ export function MeetYourAIScreen() {
             </AppCard>
           ))}
 
-          <AppCard className="mt-1 rounded-2xl border border-primary bg-primary/25 p-4">
+          <AppCard
+            decorated
+            className="mt-1 rounded-2xl border border-primary bg-primary/25 p-4"
+          >
             <View className="">
               <View className="flex-1 flex-row">
                 <View className="flex-2">

@@ -41,7 +41,7 @@ function AccountRow({
       onPress={onPress}
       className={cn(
         'flex-row items-center px-4 py-3',
-        !isLast && 'border-b border-border',
+        !isLast && 'border-b border-border-v2',
         item.destructive &&
           'my-2 rounded-[20px] border border-red-500/25 bg-transparent px-4 py-4',
       )}
@@ -50,14 +50,16 @@ function AccountRow({
       <View
         className={cn(
           'h-10 w-10 items-center justify-center rounded-full',
-          item.destructive ? 'bg-red-500/10' : 'bg-primary/15',
+          item.destructive ? 'bg-red-500/10' : 'bg-primary-v2/15',
         )}
       >
         <AppIcon
           icon={item.icon}
           size={item.destructive ? 26 : 24}
           strokeWidth={2.2}
-          className={cn(item.destructive ? 'text-red-500' : 'text-text-muted')}
+          className={cn(
+            item.destructive ? 'text-red-500' : 'text-text-muted-v2',
+          )}
         />
       </View>
 
@@ -67,7 +69,7 @@ function AccountRow({
           variant="md"
           className={cn(
             'font-semibold',
-            item.destructive ? 'text-red-500' : 'text-text',
+            item.destructive ? 'text-red-500' : 'text-text-v2',
           )}
         >
           {item.title}
@@ -76,7 +78,7 @@ function AccountRow({
           variant="sm"
           className={cn(
             'mt-0.5',
-            item.destructive ? 'text-text-muted' : 'text-text-secondary',
+            item.destructive ? 'text-text-muted-v2' : 'text-text-muted-v2',
           )}
           numberOfLines={1}
         >
@@ -89,9 +91,7 @@ function AccountRow({
         icon={ChevronRight}
         size={22}
         strokeWidth={2.5}
-        className={cn(
-          item.destructive ? 'text-red-500' : 'text-text-muted',
-        )}
+        className={cn(item.destructive ? 'text-red-500' : 'text-text-muted-v2')}
       />
     </AppPressable>
   );
@@ -117,8 +117,8 @@ export function AccountSettings({
 
       {/* Footer */}
       <View className="mt-4 items-center px-4">
-        <AppText variant="sm" className="text-center text-text-muted/60">
-          NextChapter {version} • Made with 💜 Naz
+        <AppText variant="sm" className="text-center text-text-muted-v2/60">
+          Outdated.me {version} • Made with 💜 Naz
         </AppText>
       </View>
     </View>

@@ -9,6 +9,7 @@ export function AppIcon({
   icon: Icon,
   size = 24,
   strokeWidth = 2,
+  fill,
   className = 'text-text',
   count,
   maxCount = 9,
@@ -25,15 +26,16 @@ export function AppIcon({
       <UniwindIcon
         size={size}
         strokeWidth={strokeWidth}
+        {...(fill ? { fill } : {})}
         className={cn(className)}
       />
 
       {/* Conditional Badge Rendering */}
       {count !== undefined && count > 0 && (
-        <View className="absolute -top-2 -right-2 bg-error rounded-full flex items-center justify-center px-1 min-w-[24px] min-h-[20px] pointer-events-none">
+        <View className="absolute -top-2 -right-2 bg-primary-v2 border-2 border-background-v2 rounded-full flex items-center justify-center px-1 min-w-[24px] min-h-[20px] pointer-events-none">
           <View className="flex-1">
             <View className="flex-1 items-center justify-center">
-              <AppText variant="xs" className=" text-text">
+              <AppText variant="xs" className="font-bold text-on-primary-v2">
                 {displayCount}
               </AppText>
             </View>
