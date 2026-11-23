@@ -3,26 +3,35 @@ import {
   AppButton,
   AppCard,
   AppIcon,
-  AppInput,
+  AppLoadingModal,
   AppText,
 } from '@/components';
-import { MoodSelector, RememberCard } from '@/features/CommonFeature';
-import React, { useState } from 'react';
+import { ChevronRight, PencilLine } from 'lucide-react-native';
+import {
+  MoodSelector,
+  ReflectionAddiotionalUserMessageInputCard,
+  RememberCard,
+} from '@/features/CommonFeature';
 import {
   ReflectionIntroCard,
   ReflectionPrompts,
   SessionProgress,
 } from '../components';
 
-import { ChevronRight, PencilLine } from 'lucide-react-native';
-import { RecoveryReasonCurrentFeeling } from '@/__generated__/graphql';
+import React from 'react';
 import { View } from 'react-native';
+import { useDailySessionReflectStep } from '../hooks/useDailySessionReflectStep';
+import { useOptimisticSessionEndMoodUpdate } from '../hooks/useOptimisticSessionEndMoodUpdate';
 
 export function DailySessionReflectStepScreen() {
-  const [additionalThoughts, setAdditionalThoughts] = useState('');
-  const [value, setValue] = useState<
-    Array<RecoveryReasonCurrentFeeling | undefined>
-  >([]);
+  const { optimisticDailySessionEndMoods, updateDailySessionEndMoods } =
+    useOptimisticSessionEndMoodUpdate();
+
+  const {
+    isPendingCurrentSessionReflectionQuery,
+    isPendingUpdateSessionReflectionQuery,
+    goToNextStep,
+  } = useDailySessionReflectStep();
 
   return (
     <AppAuthenticatedLayout noBottomPadding>
@@ -40,8 +49,8 @@ export function DailySessionReflectStepScreen() {
           variant="journal"
           collapsedCount={6}
           description="Check in with your emotions right now."
-          value={value}
-          setValue={setValue}
+          value={optimisticDailySessionEndMoods}
+          setValue={updateDailySessionEndMoods}
         />
       </View>
       <View className="mt-4">
@@ -56,17 +65,7 @@ export function DailySessionReflectStepScreen() {
               Anything else you want to say?
             </AppText>
           </View>
-          <AppInput
-            variant="v2"
-            value={additionalThoughts}
-            onChangeText={setAdditionalThoughts}
-            placeholder="Write your thoughts here..."
-            multiline
-            showCharacterCount
-            className="w-full"
-            inputClassName="min-h-[88px] px-3 pt-3 text-md text-text-v2"
-            containerClassName="rounded-[18px] border-primary-v2/25 bg-background-v2"
-          />
+          <ReflectionAddiotionalUserMessageInputCard />
         </AppCard>
       </View>
       <View className="mt-4">
@@ -75,7 +74,7 @@ export function DailySessionReflectStepScreen() {
           size="lg"
           fullWidth
           className="mb-0"
-          onPress={() => {}}
+          onPress={goToNextStep}
           rightIcon={ChevronRight}
         />
       </View>
@@ -86,6 +85,14 @@ export function DailySessionReflectStepScreen() {
           message="Reflection turns experiences into growth."
         />
       </View>
+      <AppLoadingModal
+        visible={isPendingCurrentSessionReflectionQuery}
+        message="Please wait fetching your reflection ..."
+      />
+      <AppLoadingModal
+        visible={isPendingUpdateSessionReflectionQuery}
+        message="Please wait updating your reflection ..."
+      />
     </AppAuthenticatedLayout>
   );
 }

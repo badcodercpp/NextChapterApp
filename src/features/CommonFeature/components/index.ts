@@ -10,3 +10,4 @@ export * from './EmojiSelector';
 export * from './TodaysQuestionAnswerInputCard';
 export * from './JournalAnswerInputCard';
 export * from './TodaysFollowUpInputCard';
+export * from './ReflectionAddiotionalUserMessageInputCard';

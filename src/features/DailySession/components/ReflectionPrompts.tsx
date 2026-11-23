@@ -10,64 +10,26 @@ import {
   ChevronDown,
   ChevronUp,
   ClipboardList,
-  Compass,
   Pencil,
-  Smile,
-  Sprout,
-  Target,
 } from 'lucide-react-native';
+import { Controller, useFormContext } from 'react-hook-form';
 import React, { useState } from 'react';
 
+import { MasterFormData } from '@/form/types';
+import { ReflectionData } from '@/features/DailySession/types/types';
 import { View } from 'react-native';
-
-export interface ReflectionData {
-  realization?: string;
-  feeling?: string;
-  need?: string;
-  action?: string;
-}
+import { useDailySessionReflectionMetadata } from '@/features/DailySession/hooks/useDailySessionReflectionMetadata';
 
 interface ReflectionPromptsProps {
   reflection?: ReflectionData;
   onChange?: (key: keyof ReflectionData, value: string) => void;
 }
 
-const prompts: {
-  key: keyof ReflectionData;
-  title: string;
-  description: string;
-  icon: typeof Smile;
-}[] = [
-  {
-    key: 'realization',
-    title: 'What did you learn about yourself today?',
-    description: 'Your thoughts, feelings, or patterns.',
-    icon: Smile,
-  },
-  {
-    key: 'feeling',
-    title: 'What felt meaningful or helpful?',
-    description: 'Moments, insights, or realizations.',
-    icon: Sprout,
-  },
-  {
-    key: 'need',
-    title: 'What was challenging for you?',
-    description: 'Anything that was hard to face or accept.',
-    icon: Compass,
-  },
-  {
-    key: 'action',
-    title: 'What will you carry forward?',
-    description: 'One intention or reminder for tomorrow.',
-    icon: Target,
-  },
-];
-
 export function ReflectionPrompts({
   reflection,
   onChange,
 }: ReflectionPromptsProps) {
+  const { getReflectionPrompts } = useDailySessionReflectionMetadata();
   const [editingKey, setEditingKey] = useState<keyof ReflectionData | null>(
     null,
   );
@@ -77,6 +39,15 @@ export function ReflectionPrompts({
   );
 
   const [draftValue, setDraftValue] = useState('');
+
+  const prompts = getReflectionPrompts();
+
+  const {
+    control,
+    formState: { errors },
+    getValues,
+    clearErrors,
+  } = useFormContext<MasterFormData>();
 
   const handleEdit = (key: keyof ReflectionData) => {
     setDraftValue(reflection?.[key] ?? '');
@@ -122,7 +93,6 @@ export function ReflectionPrompts({
         <View className="gap-2.5">
           {prompts.map(prompt => {
             const Icon = prompt.icon;
-            const value = reflection?.[prompt.key] ?? '';
 
             const isEditing = editingKey === prompt.key;
             const isExpanded = expandedKey === prompt.key;
@@ -191,7 +161,8 @@ export function ReflectionPrompts({
                             </AppText>
 
                             <AppText variant="md" className="mt-2 text-text-v2">
-                              {value || 'No reflection yet.'}
+                              {getValues(`sessionReflection.${prompt.key}`) ||
+                                'No reflection yet.'}
                             </AppText>
                           </View>
 
@@ -212,15 +183,36 @@ export function ReflectionPrompts({
                         <AppText variant="sm" className="mb-3 text-link-v2">
                           Your reflection
                         </AppText>
-
-                        <AppInput
-                          variant="v2"
-                          value={draftValue}
-                          onChangeText={setDraftValue}
-                          multiline
-                          className="w-full"
-                          inputClassName="min-h-[140px] px-4 pt-4 text-base text-text-v2"
-                          containerClassName="rounded-[18px] border-primary-v2/30 bg-background-v2"
+                        <Controller
+                          control={control}
+                          name={`sessionReflection.${prompt.key}`}
+                          render={({
+                            field: {
+                              onChange: onKeyChange,
+                              onBlur,
+                              value: keyValue,
+                            },
+                          }) => (
+                            <>
+                              <AppInput
+                                variant="v2"
+                                value={keyValue}
+                                onChangeText={onKeyChange}
+                                onBlur={onBlur}
+                                error={
+                                  errors?.sessionReflection?.[prompt.key]
+                                    ?.message
+                                }
+                                onFocus={() =>
+                                  clearErrors(`sessionReflection.${prompt.key}`)
+                                }
+                                multiline
+                                className="w-full"
+                                inputClassName="min-h-[140px] px-4 pt-4 text-base text-text-v2"
+                                containerClassName="rounded-[18px] border-primary-v2/30 bg-background-v2"
+                              />
+                            </>
+                          )}
                         />
 
                         <View className="mt-4 flex-row justify-end">

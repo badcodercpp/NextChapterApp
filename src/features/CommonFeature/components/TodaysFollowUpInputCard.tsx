@@ -22,6 +22,7 @@ export function TodaysFollowUpInputCard({
     formState: { errors },
     clearErrors,
   } = useFormContext<MasterFormData>();
+
   return (
     <Controller
       control={control}

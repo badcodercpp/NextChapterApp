@@ -4,9 +4,10 @@ import Svg, { Path } from 'react-native-svg';
 
 import { View } from 'react-native';
 import { selectTodayMission } from '@/state/selectors';
+import { useMissionMetadata } from '@/features/CommonFeature/hooks/useMissionMetadata';
+import { useResolveClassNames } from 'uniwind';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { useResolveClassNames } from 'uniwind';
 
 interface TodaysMissionCardProps {
   completed?: number;
@@ -16,13 +17,12 @@ interface TodaysMissionCardProps {
 }
 
 export function TodaysMissionCard({
-  completed = 0,
-  total = 1,
   onPress,
   showProgress = true,
 }: TodaysMissionCardProps) {
-  const progress = total > 0 ? completed / total : 0;
-  const isCompleted = completed >= total;
+  const { getMissionProgress, isMissionCompleted } = useMissionMetadata();
+
+  const { progress, completed, total } = getMissionProgress();
 
   const { data: todayMission } = useSelector(selectTodayMission);
   const { backgroundColor: accentColor } =
@@ -108,7 +108,7 @@ export function TodaysMissionCard({
         <View className="mt-4 flex-row items-center">
           <AppPressable
             onPress={onPress}
-            disabled={!onPress}
+            disabled={!isMissionCompleted}
             className="h-7 w-7 items-center justify-center rounded-full bg-primary-v2"
           >
             <AppIcon
@@ -132,9 +132,9 @@ export function TodaysMissionCard({
 
           <AppText variant="sm" className="text-text-muted-v2">
             {completed}/{total}{' '}
-            {isCompleted
+            {isMissionCompleted
               ? t('app.locale.common.completed')
-              : t('app.locale.common.completed')}
+              : t('app.locale.common.started')}
           </AppText>
         </View>
       )}

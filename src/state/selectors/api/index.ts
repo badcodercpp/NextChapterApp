@@ -15,3 +15,4 @@ export * from './activeDailySession';
 export * from './myJournalEntries';
 export * from './updateProfile';
 export * from './myAchievements';
+export * from './currentSessionReflection';

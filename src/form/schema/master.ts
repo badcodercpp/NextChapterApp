@@ -8,6 +8,7 @@ import { forgotPasswordSchema } from '@/form/schema/forgotPassword';
 import { howAreYouFeelingSchema } from '@/form/schema/howAreYouFeeling';
 import { howLongHasItBeenSchema } from '@/form/schema/howLongHasItBeen';
 import { loginSchema } from '@/form/schema/login';
+import { sessionReflectionSchema } from '@/form/schema/sessionReflection';
 import { todaysQuestionAnswerSchema } from '@/form/schema/todaysQuestionAnswer';
 import { todaysQuestionFollowupSchema } from '@/form/schema/todaysQuestionFollowup';
 import { updateProfileSchema } from '@/form/schema/updateProfile';
@@ -32,4 +33,5 @@ export const masterSchema = z.object({
   createOrUpdateJournal: createOrUpdateJournalSchema,
   todaysQuestionAnswer: todaysQuestionAnswerSchema,
   todaysQuestionFollowup: todaysQuestionFollowupSchema,
+  sessionReflection: sessionReflectionSchema,
 });

@@ -52,6 +52,13 @@ export function MasterFormProvider({
       todaysQuestionFollowup: {
         answer: '',
       },
+      sessionReflection: {
+        realization: '',
+        feeling: '',
+        need: '',
+        action: '',
+        userMessage: '',
+      },
     },
   });
 
