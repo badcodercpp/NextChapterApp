@@ -25,11 +25,11 @@ export function ThemeSheet({ selected, onSelect, onClose }: ThemeSheetProps) {
         />
         <View
           accessibilityViewIsModal
-          className="rounded-t-3xl border border-border bg-card p-5"
+          className="rounded-t-3xl border border-border-v2 bg-surface-v2 p-5"
           style={{ paddingBottom: bottom + 20 }}
         >
           <View className="mb-4 flex-row items-center justify-between">
-            <AppText variant="lg" className="font-bold text-text-secondary">
+            <AppText variant="lg" className="font-bold text-text-v2">
               Theme
             </AppText>
 
@@ -39,7 +39,7 @@ export function ThemeSheet({ selected, onSelect, onClose }: ThemeSheetProps) {
               className="h-11 w-11 items-center justify-center"
               onPress={onClose}
             >
-              <AppIcon icon={X} size={22} className="text-text-secondary" />
+              <AppIcon icon={X} size={22} className="text-text-v2" />
             </AppPressable>
           </View>
 
@@ -54,20 +54,20 @@ export function ThemeSheet({ selected, onSelect, onClose }: ThemeSheetProps) {
                 accessibilityState={{ checked: isSelected }}
                 className={`mb-2 flex-row items-center rounded-2xl border px-4 py-4 ${
                   isSelected
-                    ? 'border-primary bg-primary/10'
+                    ? 'border-primary-v2 bg-primary-v2/10'
                     : 'border-transparent'
                 }`}
                 onPress={() => onSelect(item.value)}
               >
                 <AppText
                   variant="xl"
-                  className="flex-1 font-medium text-text-secondary"
+                  className="flex-1 font-medium text-text-v2"
                 >
                   {item.label}
                 </AppText>
 
                 {isSelected && (
-                  <AppIcon icon={Check} size={20} className="text-primary" />
+                  <AppIcon icon={Check} size={20} className="text-link-v2" />
                 )}
               </AppPressable>
             );

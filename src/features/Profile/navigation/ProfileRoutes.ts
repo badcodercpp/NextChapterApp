@@ -3,4 +3,5 @@ export const ProfileRoutes = {
   EditProfileScreen: 'EditProfileScreen',
   DeleteProfileScreen: 'DeleteProfileScreen',
   EditProfileSuccessScreen: 'EditProfileSuccessScreen',
+  AchievementsScreen: 'AchievementsScreen',
 } as const;

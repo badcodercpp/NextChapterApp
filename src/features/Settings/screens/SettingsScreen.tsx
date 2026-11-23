@@ -1,10 +1,18 @@
 import {
   AppAuthenticatedLayout,
-  AppCard,
+  AppHeroArtwork,
   AppIcon,
+  AppMountainArtwork,
+  AppPatternArtwork,
   AppPressable,
 } from '@/components';
-import { ChevronRight, Globe, Moon } from 'lucide-react-native';
+import {
+  ChevronRight,
+  Globe,
+  Palette,
+  Settings2,
+  Sparkles,
+} from 'lucide-react-native';
 import { LanguageSheet, ThemeSheet } from '@/features/Settings/components';
 
 import { AppText } from '@/components/foundation/AppText';
@@ -27,87 +35,106 @@ export const SettingsScreen = () => {
     setShowThemeSheet,
   } = useSettingsBootstrap();
 
+  const rows = [
+    {
+      key: 'language',
+      title: 'Language',
+      value: selectedLanguage,
+      icon: Globe,
+      artwork: 'grid' as const,
+      accessibilityLabel: 'Choose language',
+      onPress: () => setShowLanguageSheet(true),
+    },
+    {
+      key: 'theme',
+      title: 'Theme',
+      value: selectedTheme,
+      icon: Palette,
+      artwork: 'bubbles' as const,
+      accessibilityLabel: 'Choose theme',
+      onPress: () => setShowThemeSheet(true),
+    },
+  ];
+
   return (
-    <AppAuthenticatedLayout noBottomPadding>
-      {/* Header */}
-      <View className="mb-4 mt-2">
-        <AppText variant="lg" className="mt-1 text-text-secondary">
-          Customize your NextChapter experience
-        </AppText>
+    <AppAuthenticatedLayout
+      noBottomPadding
+      backgroundClassName="bg-background-v2"
+    >
+      {/* Hero */}
+      <View className="mt-4 overflow-hidden rounded-[24px] border border-primary-v2/25 bg-surface-v2 p-5">
+        <AppHeroArtwork />
+        <View className="flex-row items-center">
+          <View className="h-14 w-14 items-center justify-center rounded-2xl bg-primary-v2">
+            <AppIcon
+              icon={Settings2}
+              size={28}
+              className="text-on-primary-v2"
+            />
+          </View>
+          <View className="ml-4 flex-1">
+            <AppText variant="xl" className="font-bold text-text-v2">
+              Make it{' '}
+              <AppText variant="xl" className="font-bold text-link-v2">
+                yours
+              </AppText>
+            </AppText>
+            <AppText variant="sm" className="mt-1 text-text-muted-v2">
+              Customize your Outdated.me experience
+            </AppText>
+          </View>
+        </View>
       </View>
 
       {/* Preferences */}
-      <View>
-        <AppText
-          variant="sm"
-          className="mb-3 px-1 font-semibold uppercase tracking-wide text-text-secondary"
-        >
-          Preferences
-        </AppText>
+      <AppText
+        variant="sm"
+        className="mb-3 mt-6 px-1 font-semibold uppercase tracking-wide text-text-muted-v2"
+      >
+        Preferences
+      </AppText>
 
-        <AppCard className="overflow-hidden p-0">
-          {/* Language */}
+      <View className="gap-3">
+        {rows.map(row => (
           <AppPressable
-            className="flex-row items-center px-4 py-4"
-            onPress={() => setShowLanguageSheet(true)}
-          >
-            <View className="mr-4 h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-              <AppIcon icon={Globe} size={20} className="text-primary" />
-            </View>
-
-            <View className="flex-1">
-              <AppText
-                variant="lg"
-                className="font-semibold text-text-secondary"
-              >
-                Language
-              </AppText>
-
-              <AppText variant="sm" className="mt-0.5 text-text-secondary">
-                {selectedLanguage}
-              </AppText>
-            </View>
-
-            <AppIcon
-              icon={ChevronRight}
-              size={20}
-              className="text-text-secondary"
-            />
-          </AppPressable>
-
-          <View className="ml-[68px] h-px bg-border" />
-
-          {/* Theme */}
-          <AppPressable
+            key={row.key}
             accessibilityRole="button"
-            accessibilityLabel="Choose theme"
-            className="flex-row items-center px-4 py-4"
-            onPress={() => setShowThemeSheet(true)}
+            accessibilityLabel={row.accessibilityLabel}
+            className="flex-row items-center overflow-hidden rounded-[20px] border border-primary-v2/20 bg-surface-v2 px-4 py-4"
+            onPress={row.onPress}
           >
-            <View className="mr-4 h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-              <AppIcon icon={Moon} size={20} className="text-primary" />
+            <AppPatternArtwork variant={row.artwork} className="w-2/5" />
+            <View className="mr-4 h-12 w-12 items-center justify-center rounded-2xl bg-primary-v2/15">
+              <AppIcon icon={row.icon} size={22} className="text-link-v2" />
             </View>
-
             <View className="flex-1">
-              <AppText
-                variant="lg"
-                className="font-semibold text-text-secondary"
-              >
-                Theme
+              <AppText variant="lg" className="font-semibold text-text-v2">
+                {row.title}
               </AppText>
-
-              <AppText variant="sm" className="mt-0.5 text-text-secondary">
-                {selectedTheme}
+              <AppText variant="sm" className="mt-0.5 text-text-muted-v2">
+                {row.value}
               </AppText>
             </View>
-
-            <AppIcon
-              icon={ChevronRight}
-              size={20}
-              className="text-text-secondary"
-            />
+            <View className="h-9 w-9 items-center justify-center rounded-full bg-primary-v2/10">
+              <AppIcon icon={ChevronRight} size={20} className="text-text-v2" />
+            </View>
           </AppPressable>
-        </AppCard>
+        ))}
+      </View>
+
+      {/* Footer */}
+      <View className="mt-6 overflow-hidden rounded-[24px] border border-primary-v2/20 bg-surface-v2 p-5">
+        <AppMountainArtwork className="h-3/4 w-3/5" />
+        <View className="h-10 w-10 items-center justify-center rounded-full bg-primary-v2/15">
+          <AppIcon icon={Sparkles} size={20} className="text-link-v2" />
+        </View>
+        <AppText variant="md" className="mt-3 font-semibold text-text-v2">
+          Your journey, your way
+        </AppText>
+        <AppText variant="sm" className="mt-1 pr-16 text-text-muted-v2">
+          Pick the language and look that feel most comfortable as you move
+          forward.
+        </AppText>
       </View>
 
       {/* Language Sheet */}

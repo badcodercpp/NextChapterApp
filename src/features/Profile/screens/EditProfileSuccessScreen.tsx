@@ -11,7 +11,10 @@ import { View } from 'react-native';
 
 export function EditProfileSuccessScreen() {
   return (
-    <AppAuthenticatedLayout noBottomPadding>
+    <AppAuthenticatedLayout
+      noBottomPadding
+      backgroundClassName="bg-background-v2"
+    >
       <View className="mt-6">
         <ProfileUpdateSuccess />
       </View>

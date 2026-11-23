@@ -1,6 +1,6 @@
 import { Image, View } from 'react-native';
 import { PickedAvatar, cn, pickAvatar } from '@/utils';
-import React, { useEffect, useState } from 'react';
+import React, { useImperativeHandle, useState } from 'react';
 import {
   useLazyMeQuery,
   useUpdateProfileMutation,
@@ -8,12 +8,17 @@ import {
 } from '@/__generated__/graphql';
 
 import type { AppAvatarProps } from './types';
-import { AppFileChooseModal } from '../AppFileChooseModal';
-import { AppImagePreviewModal } from '@/components';
+import {
+  AppImagePreviewContent,
+  AppPhotoModalShell,
+} from '../AppImagePreviewModal/AppImagePreviewModal';
+import { AppFileChooseContent } from '../AppFileChooseModal';
 import { AppPressable } from '../AppPressable';
 import { AppText } from '../AppText';
 import { AvatarSizes } from './variants';
 import { RTKQueryFixedCacheKey } from '@/api/fixedCacheKey';
+
+type PhotoStep = 'actions' | 'view' | 'confirm';
 
 export function AppAvatar({
   name,
@@ -23,12 +28,12 @@ export function AppAvatar({
   className,
   onPress,
   enablePhotoActions = false,
+  photoActionsRef,
   ...props
 }: AppAvatarProps) {
-  const [showFileChooseModal, setShowFileChooseModal] = useState(false);
-  const [showImagePreviewModal, setShowImagePreviewModal] = useState(false);
-
-  const [openPicker, setOpenPicker] = useState(false);
+  // One modal for every photo step, so switching steps never closes/re-opens it.
+  const [photoStep, setPhotoStep] = useState<PhotoStep | null>(null);
+  const [picking, setPicking] = useState(false);
 
   const [selectedAvatar, setSelectedAvatar] = useState<PickedAvatar | null>(
     null,
@@ -42,6 +47,13 @@ export function AppAvatar({
   });
   const [triggerMeQuery] = useLazyMeQuery();
 
+  // Lets sibling UI (e.g. a "Change photo" label) open the photo actions modal.
+  useImperativeHandle(
+    photoActionsRef,
+    () => ({ open: () => setPhotoStep('actions') }),
+    [],
+  );
+
   const avatarSize = AvatarSizes[size];
 
   const initials =
@@ -54,24 +66,36 @@ export function AppAvatar({
       .toUpperCase() ?? '';
 
   /**
-   * Open the existing remote image.
+   * Show the existing remote image.
    */
   const handleViewPhoto = () => {
-    setShowFileChooseModal(false);
-
-    if (!uri) {
-      return;
+    if (uri) {
+      setPhotoStep('view');
     }
-
-    setShowImagePreviewModal(true);
   };
 
   /**
-   * Change profile photo.
+   * Change profile photo. The native picker presents over the open modal.
    */
-  const handleChangePhoto = () => {
-    setShowFileChooseModal(false);
-    setOpenPicker(true);
+  const handleChangePhoto = async () => {
+    if (picking) {
+      return;
+    }
+
+    setPicking(true);
+
+    try {
+      const file = await pickAvatar();
+
+      if (file) {
+        setSelectedAvatar(file);
+        setPhotoStep('confirm');
+      }
+    } catch (error) {
+      console.error('Failed to pick avatar:', error);
+    } finally {
+      setPicking(false);
+    }
   };
 
   /**
@@ -91,33 +115,44 @@ export function AppAvatar({
 
     // Photo actions enabled.
     if (enablePhotoActions) {
-      setShowFileChooseModal(true);
+      setPhotoStep('actions');
       return;
     }
 
     // Photo exists but actions are disabled.
     // Simply preview the image.
     if (uri) {
-      setShowImagePreviewModal(true);
+      setPhotoStep('view');
     }
   };
 
   /**
-   * Close remote image preview.
+   * Close the photo modal entirely.
    */
-  const handleCloseImagePreview = () => {
-    setShowImagePreviewModal(false);
+  const handleClosePhotoModal = () => {
+    if (loading) {
+      return;
+    }
+
+    setPhotoStep(null);
+    setSelectedAvatar(null);
   };
 
   /**
-   * Cancel newly selected avatar.
+   * OK / Cancel return to the View / Change photo actions.
    */
-  const handleCancelAvatar = () => {
+  const handleBackToPhotoActions = () => {
     if (loading) {
       return;
     }
 
     setSelectedAvatar(null);
+
+    if (enablePhotoActions) {
+      setPhotoStep('actions');
+    } else {
+      setPhotoStep(null);
+    }
   };
 
   /**
@@ -148,40 +183,13 @@ export function AppAvatar({
       await triggerMeQuery().unwrap();
 
       setSelectedAvatar(null);
+      setPhotoStep(null);
     } catch (error) {
       console.error('Failed to upload avatar:', error);
     } finally {
       setLoading(false);
     }
   };
-
-  /**
-   * Open native photo picker after
-   * AppFileChooseModal has been closed.
-   */
-  useEffect(() => {
-    if (!openPicker) {
-      return;
-    }
-
-    const timer = setTimeout(async () => {
-      setOpenPicker(false);
-
-      try {
-        const file = await pickAvatar();
-
-        if (!file) {
-          return;
-        }
-
-        setSelectedAvatar(file);
-      } catch (error) {
-        console.error('Failed to pick avatar:', error);
-      }
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [openPicker]);
 
   const avatar = (
     <View
@@ -218,51 +226,44 @@ export function AppAvatar({
         {avatar}
       </AppPressable>
 
-      {/* 
-        Action modal:
-        View Photo / Change Photo
-      */}
-      {enablePhotoActions && (
-        <AppFileChooseModal
-          visible={showFileChooseModal}
-          onCancel={() => setShowFileChooseModal(false)}
-          onView={handleViewPhoto}
-          onChange={handleChangePhoto}
-          showView={!!uri}
-        />
-      )}
+      <AppPhotoModalShell
+        visible={photoStep !== null}
+        onClose={handleClosePhotoModal}
+        closeDisabled={loading}
+      >
+        {photoStep === 'actions' && (
+          <AppFileChooseContent
+            onCancel={handleClosePhotoModal}
+            onView={handleViewPhoto}
+            onChange={handleChangePhoto}
+            showView={!!uri}
+          />
+        )}
 
-      {/*
-        Existing remote image preview.
-      */}
-      {uri && (
-        <AppImagePreviewModal
-          visible={showImagePreviewModal}
-          uri={uri}
-          title="Profile Photo"
-          message=""
-          confirmText="Ok"
-          onCancel={handleCloseImagePreview}
-          onConfirm={handleCloseImagePreview}
-        />
-      )}
+        {photoStep === 'view' && uri && (
+          <AppImagePreviewContent
+            uri={uri}
+            title="Profile Photo"
+            message="View your profile picture"
+            confirmText="OK"
+            onCancel={handleClosePhotoModal}
+            onConfirm={handleBackToPhotoActions}
+          />
+        )}
 
-      {/*
-        Newly selected image preview before upload.
-      */}
-      {selectedAvatar && (
-        <AppImagePreviewModal
-          visible={!!selectedAvatar}
-          uri={selectedAvatar.uri}
-          title="Profile Photo"
-          message="Use this photo as your profile picture?"
-          cancelText="Cancel"
-          confirmText="Use Photo"
-          onCancel={handleCancelAvatar}
-          onConfirm={handleConfirmAvatar}
-          loading={loading}
-        />
-      )}
+        {photoStep === 'confirm' && selectedAvatar && (
+          <AppImagePreviewContent
+            uri={selectedAvatar.uri}
+            title="Profile Photo"
+            message="Use this photo as your profile picture?"
+            cancelText="Cancel"
+            confirmText="Use Photo"
+            onCancel={handleBackToPhotoActions}
+            onConfirm={handleConfirmAvatar}
+            loading={loading}
+          />
+        )}
+      </AppPhotoModalShell>
     </>
   );
 }

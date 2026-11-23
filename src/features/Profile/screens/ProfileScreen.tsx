@@ -18,6 +18,11 @@ import { MasterFormData } from '@/form/types';
 import { useSelector } from 'react-redux';
 import { selectMe } from '@/state/selectors';
 import { useAccountRowItemAction } from '../hooks/useAccountRowItemAction';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { DrawerParamList } from '@/navigation/Drawer/DrawerParamList';
+import { DrawerRoutes } from '@/navigation/Drawer/DrawerRoutes';
+import { TabRoutes } from '@/navigation/Tab/TabRoutes';
+import { RecoveryProgressRoutes } from '@/features/RecoveryProgress/navigation/RecoveryProgressRoutes';
 
 export function ProfileScreen() {
   const { data: me } = useSelector(selectMe);
@@ -34,6 +39,19 @@ export function ProfileScreen() {
 
   const goToEditProfile = useCallback(() => {
     navigation.navigate('EditProfileScreen');
+  }, [navigation]);
+
+  const goToJourneyProgress = useCallback(() => {
+    navigation
+      .getParent<DrawerNavigationProp<DrawerParamList>>()
+      ?.navigate(DrawerRoutes.Tabs, {
+        screen: TabRoutes.Progress,
+        params: { screen: RecoveryProgressRoutes.RecoveryProgressScreen },
+      });
+  }, [navigation]);
+
+  const goToAchievements = useCallback(() => {
+    navigation.navigate('AchievementsScreen');
   }, [navigation]);
 
   const { reset } = useFormContext<MasterFormData>();
@@ -54,7 +72,10 @@ export function ProfileScreen() {
   }, [me, reset]);
 
   return (
-    <AppAuthenticatedLayout noBottomPadding>
+    <AppAuthenticatedLayout
+      noBottomPadding
+      backgroundClassName="bg-background-v2"
+    >
       <View className="mt-4">
         <ProfileSummaryCard onEditPress={goToEditProfile} />
       </View>
@@ -62,10 +83,13 @@ export function ProfileScreen() {
         <ProfileStats />
       </View>
       <View className="mt-4">
-        <CurrentJourneyCard />
+        <CurrentJourneyCard onPress={goToJourneyProgress} />
       </View>
       <View className="mt-5">
-        <Achievements />
+        <Achievements
+          onViewAllPress={goToAchievements}
+          onAchievementPress={goToAchievements}
+        />
       </View>
       <View className="mt-4">
         <MoodThisWeek />

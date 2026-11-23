@@ -13,7 +13,10 @@ import { View } from 'react-native';
 export function DeleteProfileScreen() {
   const [confirmationText, setConfirmationText] = useState('');
   return (
-    <AppAuthenticatedLayout noBottomPadding>
+    <AppAuthenticatedLayout
+      noBottomPadding
+      backgroundClassName="bg-background-v2"
+    >
       <AppText variant="xl">DeleteProfileScreen</AppText>
       <View className="mt-4">
         <DeleteAccountConfirmation

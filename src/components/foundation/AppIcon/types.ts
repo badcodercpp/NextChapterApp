@@ -4,6 +4,7 @@ export interface AppIconProps {
   icon: ComponentType<any>;
   size?: number;
   strokeWidth?: number;
+  fill?: string;
   className?: string;
   count?: number; // Added count prop
   maxCount?: number; // Optional limit (e.g., 99+)

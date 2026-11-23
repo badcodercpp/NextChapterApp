@@ -52,7 +52,7 @@ export function DeletionSummaryCard({
   items = DEFAULT_ITEMS,
 }: DeletionSummaryCardProps) {
   return (
-    <AppCard className="overflow-hidden rounded-[24px] border border-red-400/25 bg-white/[0.04] p-0">
+    <AppCard className="overflow-hidden rounded-[24px] border border-red-400/25 bg-red-500/[0.04] p-0">
       {/* Header */}
       <View className="py-4 flex-row items-center border-b border-red-400/20 px-7">
         <AppIcon
@@ -90,7 +90,7 @@ export function DeletionSummaryCard({
             {/* Label */}
             <AppText
               variant="sm"
-              className="flex-1 text-text-secondary"
+              className="flex-1 text-text-muted-v2"
               numberOfLines={2}
             >
               {item.label}

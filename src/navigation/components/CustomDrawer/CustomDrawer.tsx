@@ -15,6 +15,7 @@ import { AppConfirmModal } from '@/components';
 import { useOptimisticLogout } from '@/features/Profile/hooks/useOptimisticLogout';
 import { styles } from './styles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useCSSVariable } from 'uniwind';
 
 export function CustomDrawerComponent({
   navigation,
@@ -23,6 +24,17 @@ export function CustomDrawerComponent({
   const insets = useSafeAreaInsets();
   const [confirmLogout, setConfirmLogout] = React.useState(false);
   const { logoutCurrentDevice, logoutAllDevices } = useOptimisticLogout();
+  const primary = useCSSVariable('--color-primary');
+  const primaryHex =
+    typeof primary === 'string' && /^#[0-9a-f]{6}$/i.test(primary)
+      ? primary
+      : '#7c3aed';
+  // Tint the themed background with the theme's primary color (8-digit hex alpha).
+  const gradientColors = [
+    `${primaryHex}59`,
+    `${primaryHex}1f`,
+    `${primaryHex}00`,
+  ];
 
   const currentRoute = state.routeNames[state.index];
 
@@ -35,14 +47,17 @@ export function CustomDrawerComponent({
   return (
     <View className="flex-1 bg-background">
       <LinearGradient
-        colors={['#3B1A7A', '#1E1240', '#141129']}
+        colors={gradientColors}
         locations={[0, 0.45, 1]}
         style={StyleSheet.absoluteFill}
       />
       <View
         style={[
           styles.container,
-          { paddingTop: Math.max(insets.top - 8, 0), paddingBottom: Math.max(insets.bottom * 0.5, 8) },
+          {
+            paddingTop: Math.max(insets.top - 8, 0),
+            paddingBottom: Math.max(insets.bottom * 0.5, 8),
+          },
         ]}
       >
         <DrawerHeader />

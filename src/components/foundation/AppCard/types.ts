@@ -9,5 +9,7 @@ export interface AppCardProps extends ViewProps {
 
   border?: boolean;
 
+  decorated?: boolean;
+
   className?: string;
 }

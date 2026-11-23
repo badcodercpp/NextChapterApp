@@ -33,7 +33,6 @@ export function DailySessionCompleteStepScreen() {
           />
           <View className="h-20 w-20 items-center justify-center rounded-full bg-primary-v2/20">
             <AppIcon icon={BadgeCheck} size={56} className="text-link-v2" />
-           
           </View>
           <AppText
             variant="xs"
@@ -58,7 +57,10 @@ export function DailySessionCompleteStepScreen() {
       </View>
 
       <View className="mt-4">
-        <AppCard className="overflow-hidden rounded-[24px] border border-primary-v2/30 bg-background-v2 p-4">
+        <AppCard
+          decorated
+          className="overflow-hidden rounded-[24px] border border-primary-v2/30 bg-background-v2 p-4"
+        >
           <View
             pointerEvents="none"
             className="absolute inset-0 bg-primary-v2/10"
@@ -84,7 +86,10 @@ export function DailySessionCompleteStepScreen() {
       </View>
 
       <View className="mt-4">
-        <AppCard className="rounded-[24px] border border-primary-v2/25 bg-background-v2 p-4">
+        <AppCard
+          decorated
+          className="rounded-[24px] border border-primary-v2/25 bg-background-v2 p-4"
+        >
           <View className="flex-row items-center">
             <View className="h-10 w-10 items-center justify-center rounded-[14px] bg-primary-v2/15">
               <AppIcon icon={Heart} size={24} className="text-success" />

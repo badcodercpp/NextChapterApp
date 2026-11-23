@@ -54,9 +54,9 @@ beforeEach(() => {
 
 afterEach(() => act(() => screen.unmount()));
 
-test('shows NextChapter branding and hides the old landing header', () => {
+test('shows Outdated.me branding and hides the old landing header', () => {
   const rendered = JSON.stringify(screen.toJSON());
-  expect(rendered).toContain('NextChapter');
+  expect(rendered).toContain('Outdated.me');
   expect(rendered).toContain('AI RECOVERY COMPANION');
   expect(rendered).toContain(
     'Every ending is the beginning of your next chapter.',

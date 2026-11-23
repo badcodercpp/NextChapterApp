@@ -27,7 +27,10 @@ export function EditProfileScreen() {
   usePreventBackNavigation(isBootstrapPending);
 
   return (
-    <AppAuthenticatedLayout noBottomPadding>
+    <AppAuthenticatedLayout
+      noBottomPadding
+      backgroundClassName="bg-background-v2"
+    >
       <View className="mt-6">
         <ProfilePhotoPicker />
       </View>

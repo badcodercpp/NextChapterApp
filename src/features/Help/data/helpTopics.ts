@@ -45,7 +45,8 @@ export const HELP_TOPICS: HelpTopic[] = [
       {
         icon: User,
         title: 'Create an Account',
-        description: 'Sign up with your email or Google account to get started.',
+        description:
+          'Sign up with your email or Google account to get started.',
       },
       {
         icon: UserPen,
@@ -96,7 +97,8 @@ export const HELP_TOPICS: HelpTopic[] = [
       {
         icon: User,
         title: 'AI Companion',
-        description: 'Chat any time for support, reflection and gentle guidance.',
+        description:
+          'Chat any time for support, reflection and gentle guidance.',
       },
     ],
     tip: 'Check in with your mood daily to spot patterns and celebrate progress.',
@@ -159,7 +161,8 @@ export const HELP_TOPICS: HelpTopic[] = [
       {
         icon: BookOpen,
         title: 'No Selling of Data',
-        description: 'We never sell your personal information to third parties.',
+        description:
+          'We never sell your personal information to third parties.',
       },
       {
         icon: CheckCircle2,

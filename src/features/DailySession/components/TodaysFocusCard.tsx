@@ -37,7 +37,10 @@ export function TodaysFocusCard({
   }, [getTodayFocusContent]);
 
   return (
-    <AppCard className="overflow-hidden rounded-[24px] border border-border bg-card p-5">
+    <AppCard
+      decorated
+      className="overflow-hidden rounded-[24px] border border-border bg-card p-5"
+    >
       {/* Header */}
       <View className="flex-row items-start">
         {/* Focus Icon */}
@@ -84,7 +87,7 @@ export function TodaysFocusCard({
           icon={
             <AppIcon icon={CircleHelp} size={24} className="text-primary" />
           }
-          iconClassName="bg-purple-500/10"
+          iconClassName="bg-primary/10"
           label="Questions"
           value={questionCount}
         />
@@ -92,7 +95,7 @@ export function TodaysFocusCard({
         {/* Purpose */}
         <FocusStat
           icon={<AppIcon icon={Star} size={24} className="text-primary" />}
-          iconClassName="bg-amber-500/10"
+          iconClassName="bg-primary/10"
           label="Purpose"
           value={purpose}
         />
@@ -100,7 +103,7 @@ export function TodaysFocusCard({
         {/* Outcome */}
         <FocusStat
           icon={<AppIcon icon={Sprout} size={24} className="text-primary" />}
-          iconClassName="bg-emerald-500/10"
+          iconClassName="bg-primary/10"
           label="Outcome"
           value={outcome}
         />

@@ -9,14 +9,14 @@ export function LandingBanner() {
       <View
         className="h-24 w-24 overflow-hidden rounded-full"
         accessible
-        accessibilityLabel="NextChapter logo"
+        accessibilityLabel="Outdated.me logo"
       >
         <AppLogo width="100%" height="100%" />
       </View>
 
       <View className="mt-6 items-center">
         <AppText variant="5xl" className="text-center text-text-v2 font-bold">
-          NextChapter
+          Outdated.me
         </AppText>
 
         <AppText

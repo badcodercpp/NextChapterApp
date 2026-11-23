@@ -5,7 +5,10 @@ import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppIcon, AppPressable, AppText } from '@/components';
 
-export function ProfileScreenHeader({ navigation, options }: NativeStackHeaderProps) {
+export function ProfileScreenHeader({
+  navigation,
+  options,
+}: NativeStackHeaderProps) {
   const { top } = useSafeAreaInsets();
 
   const handleBack = () => {
@@ -18,10 +21,7 @@ export function ProfileScreenHeader({ navigation, options }: NativeStackHeaderPr
   };
 
   return (
-    <View
-      className="bg-background px-4"
-      style={{ paddingTop: top }}
-    >
+    <View className="bg-background px-4" style={{ paddingTop: top }}>
       <View className="relative h-14 flex-row items-center justify-center">
         <AppPressable
           onPress={handleBack}

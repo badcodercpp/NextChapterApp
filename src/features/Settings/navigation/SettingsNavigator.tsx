@@ -13,6 +13,7 @@ export function SettingsNavigator() {
         options={{
           headerShown: true,
           header: NavigatorAppHeader,
+          title: 'Settings',
         }}
         name={SettingsRoutes.SettingsScreen}
         component={SettingsScreen}

@@ -31,7 +31,7 @@ export function ProfileUpdateSuccess({
           mt-5
           text-center
           font-semibold
-          text-text
+          text-text-v2
         "
       >
         {title}
@@ -43,7 +43,7 @@ export function ProfileUpdateSuccess({
         className="
           mt-3
           text-center
-          text-text-muted
+          text-text-muted-v2
           leading-6
         "
       >

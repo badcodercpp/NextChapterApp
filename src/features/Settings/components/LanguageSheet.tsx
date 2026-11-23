@@ -33,14 +33,14 @@ export function LanguageSheet({
         {/* Bottom sheet */}
         <View
           accessibilityViewIsModal
-          className="h-[50%] rounded-t-3xl border border-border bg-card"
+          className="h-[50%] rounded-t-3xl border border-border-v2 bg-surface-v2"
           style={{
             paddingBottom: bottom,
           }}
         >
           {/* Header */}
           <View className="flex-row items-center justify-between px-4 py-4">
-            <AppText variant="lg" className="font-bold text-text-secondary">
+            <AppText variant="lg" className="font-bold text-text-v2">
               Language
             </AppText>
 
@@ -50,7 +50,7 @@ export function LanguageSheet({
               className="h-11 w-11 items-center justify-center"
               onPress={onClose}
             >
-              <AppIcon icon={X} size={22} className="text-text-secondary" />
+              <AppIcon icon={X} size={22} className="text-text-v2" />
             </AppPressable>
           </View>
 
@@ -72,20 +72,20 @@ export function LanguageSheet({
                   }}
                   className={`mb-2 flex-row items-center rounded-2xl border px-4 py-4 ${
                     isSelected
-                      ? 'border-primary bg-primary/10'
+                      ? 'border-primary-v2 bg-primary-v2/10'
                       : 'border-transparent'
                   }`}
                   onPress={() => onSelect(item.code as TLanguageCode)}
                 >
                   <AppText
                     variant="xl"
-                    className="flex-1 font-medium text-text-secondary"
+                    className="flex-1 font-medium text-text-v2"
                   >
                     {item.label}
                   </AppText>
 
                   {isSelected && (
-                    <AppIcon icon={Check} size={20} className="text-primary" />
+                    <AppIcon icon={Check} size={20} className="text-link-v2" />
                   )}
                 </AppPressable>
               );

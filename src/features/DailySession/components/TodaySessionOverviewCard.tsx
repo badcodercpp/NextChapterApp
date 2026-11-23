@@ -20,7 +20,10 @@ export function TodaySessionOverviewCard({
   const { data: applicationConfig } = useSelector(selectApplicationConfig);
 
   return (
-    <AppCard className=" rounded-[24px] bg-card border-1 border-border bg-card p-5">
+    <AppCard
+      decorated
+      className="rounded-[24px] border border-border bg-card p-5"
+    >
       <View className="relative">
         <AppText variant="sm" className="font-semibold text-primary">
           Day {activeJourney?.currentDay ?? 1} of{' '}

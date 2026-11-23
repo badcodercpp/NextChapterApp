@@ -26,18 +26,18 @@ export function WellnessFocusSection({
           className={cn(
             'mt-2 min-h-14 w-full flex-row items-center justify-center',
             'rounded-[20px]',
-            'bg-primary',
+            'bg-primary-v2',
             saving && 'opacity-60',
           )}
         >
           <AppIcon
             icon={Save}
             size={22}
-            className="mr-3 text-white"
+            className="mr-3 text-on-primary-v2"
             strokeWidth={2.5}
           />
 
-          <AppText variant="lg" className="font-semibold text-white">
+          <AppText variant="lg" className="font-semibold text-on-primary-v2">
             {saving ? 'Saving...' : 'Save Changes'}
           </AppText>
         </AppPressable>

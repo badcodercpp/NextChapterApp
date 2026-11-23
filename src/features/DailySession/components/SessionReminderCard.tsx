@@ -7,7 +7,10 @@ interface SessionReminderCardProps {}
 
 export function SessionReminderCard({}: SessionReminderCardProps) {
   return (
-    <AppCard className="overflow-hidden rounded-[24px] border border-border bg-card p-5">
+    <AppCard
+      decorated
+      className="overflow-hidden rounded-[24px] border border-border bg-card p-5"
+    >
       <View className="flex-row items-center">
         {/* Heart */}
         <View className="h-14 w-14 items-center justify-center rounded-full bg-primary/15">

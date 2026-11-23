@@ -21,18 +21,18 @@ export function ContactSection({}: ContactSectionProps) {
     <View className="w-full">
       {/* Section Header */}
       <View className="mb-4 flex-row items-center">
-        <View className="mr-3 h-9 w-1.5 rounded-full bg-primary" />
+        <View className="mr-3 h-9 w-1.5 rounded-full bg-primary-v2" />
 
         <AppText
           variant="md"
-          className="font-semibold uppercase tracking-[2.5px] text-text-muted"
+          className="font-semibold uppercase tracking-[2.5px] text-text-muted-v2"
         >
           Contact
         </AppText>
       </View>
 
       {/* Mobile Number */}
-      <AppText variant="md" className="mb-2 px-2 text-text">
+      <AppText variant="md" className="mb-2 px-2 text-text-v2">
         Mobile Number
       </AppText>
 
@@ -51,23 +51,23 @@ export function ContactSection({}: ContactSectionProps) {
             }}
             startIcon={Phone}
             endIcon={Pencil}
-            inputClassName="text-text-secondary"
-            containerClassName="min-h-[64px] rounded-[24px] border-border bg-card/60 px-4"
+            inputClassName="text-text-muted-v2"
+            containerClassName="min-h-[64px] rounded-[24px] border-border-v2 bg-surface-v2/60 px-4"
             className="mb-6"
           />
         )}
       />
 
       {/* Email */}
-      <AppText variant="md" className="mb-2 px-2 text-text">
+      <AppText variant="md" className="mb-2 px-2 text-text-v2">
         Email Address
       </AppText>
       <AppInput
         value={me?.email}
         startIcon={Mail}
         disabled={true}
-        inputClassName="text-text-secondary"
-        containerClassName="min-h-[64px] rounded-[24px] border-border bg-card/60 px-4"
+        inputClassName="text-text-muted-v2"
+        containerClassName="min-h-[64px] rounded-[24px] border-border-v2 bg-surface-v2/60 px-4"
       />
     </View>
   );

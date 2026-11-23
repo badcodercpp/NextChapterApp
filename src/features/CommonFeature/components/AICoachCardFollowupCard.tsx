@@ -39,6 +39,7 @@ export function AICoachCardFollowupCard({
   return (
     <>
       <AppCard
+        decorated
         className={
           themed
             ? 'overflow-hidden rounded-[26px] border border-primary-v2/40 bg-background-v2 p-4'

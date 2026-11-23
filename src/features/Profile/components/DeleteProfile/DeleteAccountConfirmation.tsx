@@ -19,7 +19,7 @@ export function DeleteAccountConfirmation({
   onDelete,
 }: DeleteAccountConfirmationProps) {
   return (
-    <View className="flex-1 bg-background px-0">
+    <View className="flex-1 bg-background-v2 px-0">
       {/* Warning Icon */}
       <View className="mt-4 items-center">
         <View className="relative h-[132px] w-[132px] items-center justify-center rounded-[38px] border border-red-400/40 bg-red-400/[0.05]">
@@ -40,7 +40,7 @@ export function DeleteAccountConfirmation({
       {/* Title */}
       <AppText
         variant="xl"
-        className="mt-4 text-center font-semibold text-white"
+        className="mt-4 text-center font-semibold text-text-v2"
       >
         Are you sure?
       </AppText>
@@ -48,7 +48,7 @@ export function DeleteAccountConfirmation({
       {/* Description */}
       <AppText
         variant="lg"
-        className="mt-4 text-center leading-8 text-text-muted"
+        className="mt-4 text-center leading-8 text-text-muted-v2"
       >
         Deleting your account is permanent and cannot be undone. All your data
         will be lost.
@@ -60,8 +60,8 @@ export function DeleteAccountConfirmation({
           mt-4
           rounded-[24px]
           border
-          border-white/10
-          bg-white/[0.05]
+          border-border-v2
+          bg-surface-v2/60
           py-4
         "
       >
@@ -75,8 +75,11 @@ export function DeleteAccountConfirmation({
                 resizeMode="cover"
               />
             ) : (
-              <View className="h-full w-full items-center justify-center bg-white/10">
-                <AppText variant="xl" className="font-semibold text-text-muted">
+              <View className="h-full w-full items-center justify-center bg-primary-v2/10">
+                <AppText
+                  variant="xl"
+                  className="font-semibold text-text-muted-v2"
+                >
                   {name.charAt(0).toUpperCase()}
                 </AppText>
               </View>
@@ -87,7 +90,7 @@ export function DeleteAccountConfirmation({
           <View className="flex-1">
             <AppText
               variant="lg"
-              className="font-semibold text-white"
+              className="font-semibold text-text-v2"
               numberOfLines={1}
             >
               {name}
@@ -95,7 +98,7 @@ export function DeleteAccountConfirmation({
 
             <AppText
               variant="md"
-              className="mt-1 text-text-muted"
+              className="mt-1 text-text-muted-v2"
               numberOfLines={1}
             >
               {email} · Member since {memberSince}

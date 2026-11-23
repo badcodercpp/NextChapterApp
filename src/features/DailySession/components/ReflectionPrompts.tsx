@@ -74,7 +74,10 @@ export function ReflectionPrompts({
   };
 
   return (
-    <AppCard className="overflow-hidden rounded-[28px] border border-primary-v2/30 bg-background-v2 p-4 shadow-none">
+    <AppCard
+      decorated
+      className="overflow-hidden rounded-[28px] border border-primary-v2/30 bg-background-v2 p-4 shadow-none"
+    >
       <View
         pointerEvents="none"
         className="absolute inset-0 bg-primary-v2/10"

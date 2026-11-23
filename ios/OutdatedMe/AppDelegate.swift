@@ -6,6 +6,8 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+  // Native libraries (e.g. react-native-image-crop-picker) read `delegate.window`; SceneDelegate assigns it.
+  var window: UIWindow?
   private(set) var launchOptions: [UIApplication.LaunchOptionsKey: Any]?
 
   func application(
@@ -45,6 +47,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     reactNativeFactory = factory
 
     window = UIWindow(windowScene: windowScene)
+    appDelegate.window = window
 
     factory.startReactNative(
       withModuleName: "Outdated Me",

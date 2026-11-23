@@ -51,13 +51,13 @@ export function LoginScreen() {
             source={require('@/assets/images/logo.png')}
             resizeMode="contain"
             className="h-24 w-24 rounded-full"
-            accessibilityLabel="NextChapter logo"
+            accessibilityLabel="Outdated.me logo"
           />
           <AppText
             variant="4xl"
             className="mt-3 text-center font-bold text-text-v2"
           >
-            NextChapter
+            Outdated.me
           </AppText>
           <AppText variant="md" className="mt-2 text-center text-text-muted-v2">
             Your healing journey starts here

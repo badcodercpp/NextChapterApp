@@ -25,7 +25,10 @@ export function MissionStepsCard({
   const { data: todayMission } = useSelector(selectTodayMission);
 
   return (
-    <AppCard className="overflow-hidden rounded-[28px] border border-primary-v2/30 bg-background-v2 p-4">
+    <AppCard
+      decorated
+      className="overflow-hidden rounded-[28px] border border-primary-v2/30 bg-background-v2 p-4"
+    >
       <View
         pointerEvents="none"
         className="absolute inset-0 bg-primary-v2/10"

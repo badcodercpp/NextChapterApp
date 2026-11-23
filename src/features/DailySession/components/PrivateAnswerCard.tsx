@@ -9,7 +9,10 @@ interface PrivateAnswerCardProps {
 
 export function PrivateAnswerCard({ onPress }: PrivateAnswerCardProps) {
   return (
-    <AppCard className="overflow-hidden rounded-[22px] border border-primary-v2/30 bg-background-v2 p-3.5">
+    <AppCard
+      decorated
+      className="overflow-hidden rounded-[22px] border border-primary-v2/30 bg-background-v2 p-3.5"
+    >
       <View
         pointerEvents="none"
         className="absolute inset-0 bg-primary-v2/10"

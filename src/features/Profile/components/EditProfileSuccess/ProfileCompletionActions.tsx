@@ -26,20 +26,20 @@ export function ProfileCompletionActions({
         className={cn(
           'min-h-14 w-full flex-row items-center justify-center py-3',
           'rounded-[22px]',
-          'bg-primary',
+          'bg-primary-v2',
           disabled && 'opacity-50',
         )}
         accessibilityRole="button"
         accessibilityLabel="Go to Dashboard"
       >
-        <AppText variant="lg" className="font-semibold text-white">
+        <AppText variant="lg" className="font-semibold text-on-primary-v2">
           Go to Profile Now
         </AppText>
 
         <AppIcon
           icon={ArrowRight}
           size={24}
-          className="ml-4 text-white"
+          className="ml-4 text-on-primary-v2"
           strokeWidth={2.5}
         />
       </AppPressable>
@@ -53,7 +53,7 @@ export function ProfileCompletionActions({
         className={cn(
           'mt-4 min-h-14 w-full flex-row items-center justify-center py-3',
           'rounded-[22px]',
-          'border border-border bg-card/40',
+          'border border-border-v2 bg-surface-v2/40',
           disabled && 'opacity-50',
         )}
         accessibilityRole="button"
@@ -62,11 +62,11 @@ export function ProfileCompletionActions({
         <AppIcon
           icon={Pencil}
           size={24}
-          className="mr-3 text-text-muted"
+          className="mr-3 text-text-muted-v2"
           strokeWidth={2.4}
         />
 
-        <AppText variant="md" className="font-semibold text-text-muted">
+        <AppText variant="md" className="font-semibold text-text-muted-v2">
           Edit Profile Again
         </AppText>
       </AppPressable>

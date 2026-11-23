@@ -1,6 +1,8 @@
 import {
   AppButton,
+  AppPatternArtwork,
   AppIcon,
+  AppPressable,
   AppScreen,
   AppText,
 } from '@/components';
@@ -13,6 +15,7 @@ import {
   Share2,
   Sparkles,
   UserPlus,
+  Users,
 } from 'lucide-react-native';
 import { StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -26,10 +29,21 @@ import {
 import { selectMe } from '@/state/selectors';
 import { showToast } from '@/components/Toast';
 import { useSelector } from 'react-redux';
+import { useCSSVariable } from 'uniwind';
 
 const STEPS = [
-  { id: 'share', icon: Link2, title: 'Share', subtitle: 'Send your referral link or code' },
-  { id: 'join', icon: UserPlus, title: 'They Join', subtitle: 'Your friend signs up' },
+  {
+    id: 'share',
+    icon: Link2,
+    title: 'Share',
+    subtitle: 'Send your referral link or code',
+  },
+  {
+    id: 'join',
+    icon: UserPlus,
+    title: 'They Join',
+    subtitle: 'Your friend signs up',
+  },
   {
     id: 'reward',
     icon: Crown,
@@ -74,6 +88,12 @@ const styles = StyleSheet.create({
 export function ReferralRewardsScreen() {
   const { data: me } = useSelector(selectMe);
   const code = buildReferralCode(me?.displayName);
+  const primary = useCSSVariable('--color-primary-v2');
+  const secondary = useCSSVariable('--color-secondary');
+  const heroColors = [
+    typeof primary === 'string' ? primary : '#7c3aed',
+    typeof secondary === 'string' ? secondary : '#5b21b6',
+  ];
   const progress = Math.min(REFERRAL_COUNT / REFERRALS_FOR_REWARD, 1);
 
   return (
@@ -101,12 +121,12 @@ export function ReferralRewardsScreen() {
           <View className="absolute h-20 w-20 rounded-full bg-primary-v2/40" />
           <View style={styles.giftTile}>
             <LinearGradient
-              colors={['#A855F7', '#6D28D9']}
+              colors={heroColors}
               style={StyleSheet.absoluteFill}
             />
-            <AppIcon icon={Gift} size={44} className="text-white" />
+            <AppIcon icon={Gift} size={44} className="text-on-primary-v2" />
             <View className="absolute bottom-2">
-              <AppIcon icon={Crown} size={16} className="text-white" />
+              <AppIcon icon={Crown} size={16} className="text-on-primary-v2" />
             </View>
           </View>
           <View className="absolute right-2 top-3">
@@ -125,7 +145,13 @@ export function ReferralRewardsScreen() {
         and unlock premium benefits for both of you.
       </AppText>
 
-      <View className="mt-5 rounded-3xl border border-primary-v2/25 bg-primary-v2/10 p-4">
+      <View className="mt-5 overflow-hidden rounded-3xl border border-primary-v2/25 bg-primary-v2/10 p-4">
+        <AppPatternArtwork
+          variant="waves"
+          className="h-2/3 w-full"
+          icon={Share2}
+          iconClassName="bottom-auto -top-2 right-3"
+        />
         <AppText variant="xl" className="font-bold text-text-v2">
           How It Works
         </AppText>
@@ -134,7 +160,11 @@ export function ReferralRewardsScreen() {
             <View key={step.id} className="flex-1 flex-row items-start">
               <View className="flex-1 items-center">
                 <View className="h-14 w-14 items-center justify-center rounded-2xl bg-primary-v2/30">
-                  <AppIcon icon={step.icon} size={26} className="text-primary-v2" />
+                  <AppIcon
+                    icon={step.icon}
+                    size={26}
+                    className="text-primary-v2"
+                  />
                 </View>
                 <AppText
                   variant="sm"
@@ -142,13 +172,20 @@ export function ReferralRewardsScreen() {
                 >
                   {step.title}
                 </AppText>
-                <AppText variant="xs" className="mt-1 text-center text-text-muted-v2">
+                <AppText
+                  variant="xs"
+                  className="mt-1 text-center text-text-muted-v2"
+                >
                   {step.subtitle}
                 </AppText>
               </View>
               {index < STEPS.length - 1 && (
                 <View className="h-14 justify-center">
-                  <AppIcon icon={ArrowRight} size={16} className="text-primary-v2" />
+                  <AppIcon
+                    icon={ArrowRight}
+                    size={16}
+                    className="text-primary-v2"
+                  />
                 </View>
               )}
             </View>
@@ -156,17 +193,31 @@ export function ReferralRewardsScreen() {
         </View>
       </View>
 
-      <View className="mt-4 rounded-3xl border border-primary-v2/25 bg-primary-v2/10 p-4">
+      <View className="mt-4 overflow-hidden rounded-3xl border border-primary-v2/25 bg-primary-v2/10 p-4">
+        <AppPatternArtwork
+          variant="sparkles"
+          className="bottom-auto top-0 h-20 w-28"
+        />
         <AppText variant="xl" className="mb-3 font-bold text-text-v2">
           Your Rewards
         </AppText>
-        {REWARDS.map(reward => (
+        {REWARDS.map((reward, index) => (
           <View
             key={reward.id}
-            className="mb-2 flex-row items-center rounded-2xl border border-primary-v2/30 bg-primary-v2/10 p-3"
+            className="mb-2 flex-row items-center overflow-hidden rounded-2xl border border-primary-v2/30 bg-primary-v2/10 p-3"
           >
+            <AppPatternArtwork
+              variant={index === 0 ? 'rings' : 'bubbles'}
+              className="w-2/5"
+              icon={index === 0 ? Crown : Users}
+              iconClassName="right-24"
+            />
             <View className="h-14 w-14 items-center justify-center rounded-2xl bg-primary-v2/30">
-              <AppIcon icon={reward.icon} size={26} className="text-primary-v2" />
+              <AppIcon
+                icon={reward.icon}
+                size={26}
+                className="text-primary-v2"
+              />
             </View>
             <View className="ml-3 flex-1">
               <AppText variant="md" className="font-semibold text-text-v2">
@@ -177,7 +228,10 @@ export function ReferralRewardsScreen() {
               </AppText>
             </View>
             <View className="self-start rounded-full bg-primary-v2 px-3 py-1">
-              <AppText variant="xs" className="font-semibold text-on-primary-v2">
+              <AppText
+                variant="xs"
+                className="font-semibold text-on-primary-v2"
+              >
                 {reward.tag}
               </AppText>
             </View>
@@ -185,22 +239,28 @@ export function ReferralRewardsScreen() {
         ))}
       </View>
 
-      <View className="mt-4 rounded-3xl border border-primary-v2/25 bg-primary-v2/10 p-4">
+      <View className="mt-4 overflow-hidden rounded-3xl border border-primary-v2/25 bg-primary-v2/10 p-4">
+        <AppPatternArtwork
+          variant="stripes"
+          className="bottom-auto top-0 h-16 w-1/3"
+        />
         <View className="mb-3 flex-row items-center justify-between">
           <AppText variant="xl" className="font-bold text-text-v2">
             Referral Progress
           </AppText>
-          <AppIcon
-            icon={Info}
-            size={22}
-            className="text-text-muted-v2"
+          <AppPressable
+            accessibilityRole="button"
+            accessibilityLabel="How referral rewards work"
+            hitSlop={12}
             onPress={() =>
               showToast(
-                `Refer ${REFERRALS_FOR_REWARD} friends to get 1 month of Premium.`,
+                `A referral counts when a friend signs up with your link or code. Refer ${REFERRALS_FOR_REWARD} friends to unlock 1 month of Premium.`,
                 'info',
               )
             }
-          />
+          >
+            <AppIcon icon={Info} size={22} className="text-text-muted-v2" />
+          </AppPressable>
         </View>
         <View className="rounded-2xl border border-primary-v2/30 bg-primary-v2/10 p-4">
           <View className="absolute bottom-3 right-3">
@@ -218,13 +278,13 @@ export function ReferralRewardsScreen() {
             </AppText>
             {'  referrals'}
           </AppText>
-          <View className="mr-16 mt-2 h-2.5 overflow-hidden rounded-full bg-white/15">
+          <View className="mr-16 mt-2 h-2.5 overflow-hidden rounded-full bg-primary-v2/15">
             <View
               className="h-full rounded-full bg-primary-v2"
               style={{ width: `${progress * 100}%` }}
             />
           </View>
-          <AppText variant="sm" className="mt-3 text-text-muted-v2">
+          <AppText variant="sm" className="mt-3 pr-14 text-text-muted-v2">
             Refer {REFERRALS_FOR_REWARD} friends to get 1 month of Premium! 🎉
           </AppText>
         </View>
