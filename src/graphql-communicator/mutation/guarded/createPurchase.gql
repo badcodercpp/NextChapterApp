@@ -1,0 +1,19 @@
+mutation CreatePurchase($input: CreatePurchaseInput!) {
+  createPurchase(input: $input) {
+    purchase {
+      id
+      planId
+      planName
+      durationDays
+      amount
+      currency
+      status
+      razorpayOrderId
+      createdAt
+    }
+    razorpayOrderId
+    amount
+    currency
+    keyId
+  }
+}

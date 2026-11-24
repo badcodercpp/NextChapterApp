@@ -1,0 +1,20 @@
+query MyAccess {
+  myAccess {
+    id
+    level
+    canAccessDailySessions
+    assistantMessagesPerDay
+
+    trialJourneyId
+    trialStatus
+    trialStartedAt
+    trialExpiredAt
+
+    premiumTotalDays
+    premiumConsumedDays
+    premiumRemainingDays
+
+    createdAt
+    updatedAt
+  }
+}

@@ -1,0 +1,15 @@
+query MyPurchases {
+  myPurchases {
+    id
+    planId
+    planName
+    durationDays
+    amount
+    currency
+    status
+    razorpayOrderId
+    razorpayPaymentId
+    paidAt
+    createdAt
+  }
+}

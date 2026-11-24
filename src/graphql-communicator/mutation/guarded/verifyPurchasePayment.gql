@@ -1,0 +1,14 @@
+mutation VerifyPurchasePayment($input: VerifyPurchasePaymentInput!) {
+  verifyPurchasePayment(input: $input) {
+    id
+    planId
+    planName
+    durationDays
+    amount
+    currency
+    status
+    razorpayPaymentId
+    paidAt
+    createdAt
+  }
+}

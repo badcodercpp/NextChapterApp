@@ -62,6 +62,10 @@ export type CreateJournalEntryInput = {
   title: string;
 };
 
+export type CreatePurchaseInput = {
+  planId: string | number;
+};
+
 export type CreateReflectionInput = {
   action?: string | null | undefined;
   feeling?: string | null | undefined;
@@ -212,6 +216,23 @@ export enum MissionTime {
   Anytime = 'ANYTIME',
   Evening = 'EVENING',
   Morning = 'MORNING'
+}
+
+/** Plan Status */
+export enum PlanStatus {
+  Active = 'ACTIVE',
+  Draft = 'DRAFT',
+  Inactive = 'INACTIVE'
+}
+
+/** Purchase Status */
+export enum PurchaseStatus {
+  Created = 'CREATED',
+  Failed = 'FAILED',
+  Pending = 'PENDING',
+  Processing = 'PROCESSING',
+  Refunded = 'REFUNDED',
+  Success = 'SUCCESS'
 }
 
 /** Question Status */
@@ -392,6 +413,12 @@ export type VerifyEmailOtpInput = {
   userAgent?: string | null | undefined;
 };
 
+export type VerifyPurchasePaymentInput = {
+  razorpayOrderId: string;
+  razorpayPaymentId: string;
+  razorpaySignature: string;
+};
+
 export type ActivateUserMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -423,6 +450,13 @@ export type CreateJournalEntryMutationVariables = Exact<{
 
 
 export type CreateJournalEntryMutation = { createJournalEntry: { id: string, day: number, title: string, content: string, mood: RecoveryReasonCurrentFeeling | null, entryDate: unknown, createdAt: unknown, updatedAt: unknown } };
+
+export type CreatePurchaseMutationVariables = Exact<{
+  input: CreatePurchaseInput;
+}>;
+
+
+export type CreatePurchaseMutation = { createPurchase: { razorpayOrderId: string, amount: number, currency: string, keyId: string, purchase: { id: string, planId: string, planName: string, durationDays: number, amount: number, currency: string, status: PurchaseStatus, razorpayOrderId: string | null, createdAt: unknown } } };
 
 export type DeactivateUserMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -561,6 +595,13 @@ export type VerifyChangePasswordOtpMutationVariables = Exact<{
 
 export type VerifyChangePasswordOtpMutation = { verifyChangePasswordOtp: boolean };
 
+export type VerifyPurchasePaymentMutationVariables = Exact<{
+  input: VerifyPurchasePaymentInput;
+}>;
+
+
+export type VerifyPurchasePaymentMutation = { verifyPurchasePayment: { id: string, planId: string, planName: string, durationDays: number, amount: number, currency: string, status: PurchaseStatus, razorpayPaymentId: string | null, paidAt: unknown, createdAt: unknown } };
+
 export type GoogleLoginMutationVariables = Exact<{
   input: GoogleLoginInput;
 }>;
@@ -623,6 +664,11 @@ export type ApplicationMetadataQueryVariables = Exact<{ [key: string]: never; }>
 
 export type ApplicationMetadataQuery = { applicationMetadata: { id: string, theme: ApplicationTheme, language: ApplicationLanguage, createdAt: unknown, updatedAt: unknown } };
 
+export type AvailablePlansQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AvailablePlansQuery = { availablePlans: Array<{ id: string, code: string, name: string, durationDays: number, baseAmount: number, discountPercentage: number, discountAmount: number, payableAmount: number, currency: string, status: PlanStatus, sortOrder: number, pricePerDay: number, discountPerDay: number }> };
+
 export type CompletedMissionHistoryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -681,6 +727,11 @@ export type MotivationalMessageQueryVariables = Exact<{ [key: string]: never; }>
 
 export type MotivationalMessageQuery = { motivationalMessage: { id: string, title: string, description: string } };
 
+export type MyAccessQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyAccessQuery = { myAccess: { id: string, level: string, canAccessDailySessions: boolean, assistantMessagesPerDay: number | null, trialJourneyId: string | null, trialStatus: string | null, trialStartedAt: unknown, trialExpiredAt: unknown, premiumTotalDays: number, premiumConsumedDays: number, premiumRemainingDays: number, createdAt: unknown, updatedAt: unknown } };
+
 export type MyAchievementsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -695,6 +746,11 @@ export type MyJournalEntriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MyJournalEntriesQuery = { myJournalEntries: Array<{ id: string, day: number, title: string, content: string, mood: RecoveryReasonCurrentFeeling | null, entryDate: unknown, createdAt: unknown, updatedAt: unknown }> };
+
+export type MyPurchasesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyPurchasesQuery = { myPurchases: Array<{ id: string, planId: string, planName: string, durationDays: number, amount: number, currency: string, status: PurchaseStatus, razorpayOrderId: string | null, razorpayPaymentId: string | null, paidAt: unknown, createdAt: unknown }> };
 
 export type MyRecoveryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -845,6 +901,27 @@ export const CreateJournalEntryDocument = new TypedDocumentString(`
     entryDate
     createdAt
     updatedAt
+  }
+}
+    `);
+export const CreatePurchaseDocument = new TypedDocumentString(`
+    mutation CreatePurchase($input: CreatePurchaseInput!) {
+  createPurchase(input: $input) {
+    purchase {
+      id
+      planId
+      planName
+      durationDays
+      amount
+      currency
+      status
+      razorpayOrderId
+      createdAt
+    }
+    razorpayOrderId
+    amount
+    currency
+    keyId
   }
 }
     `);
@@ -1151,6 +1228,22 @@ export const VerifyChangePasswordOtpDocument = new TypedDocumentString(`
   verifyChangePasswordOtp(input: $input)
 }
     `);
+export const VerifyPurchasePaymentDocument = new TypedDocumentString(`
+    mutation VerifyPurchasePayment($input: VerifyPurchasePaymentInput!) {
+  verifyPurchasePayment(input: $input) {
+    id
+    planId
+    planName
+    durationDays
+    amount
+    currency
+    status
+    razorpayPaymentId
+    paidAt
+    createdAt
+  }
+}
+    `);
 export const GoogleLoginDocument = new TypedDocumentString(`
     mutation GoogleLogin($input: GoogleLoginInput!) {
   googleLogin(input: $input) {
@@ -1254,6 +1347,25 @@ export const ApplicationMetadataDocument = new TypedDocumentString(`
     language
     createdAt
     updatedAt
+  }
+}
+    `);
+export const AvailablePlansDocument = new TypedDocumentString(`
+    query AvailablePlans {
+  availablePlans {
+    id
+    code
+    name
+    durationDays
+    baseAmount
+    discountPercentage
+    discountAmount
+    payableAmount
+    currency
+    status
+    sortOrder
+    pricePerDay
+    discountPerDay
   }
 }
     `);
@@ -1489,6 +1601,25 @@ export const MotivationalMessageDocument = new TypedDocumentString(`
   }
 }
     `);
+export const MyAccessDocument = new TypedDocumentString(`
+    query MyAccess {
+  myAccess {
+    id
+    level
+    canAccessDailySessions
+    assistantMessagesPerDay
+    trialJourneyId
+    trialStatus
+    trialStartedAt
+    trialExpiredAt
+    premiumTotalDays
+    premiumConsumedDays
+    premiumRemainingDays
+    createdAt
+    updatedAt
+  }
+}
+    `);
 export const MyAchievementsDocument = new TypedDocumentString(`
     query MyAchievements {
   myAchievements {
@@ -1532,6 +1663,23 @@ export const MyJournalEntriesDocument = new TypedDocumentString(`
     entryDate
     createdAt
     updatedAt
+  }
+}
+    `);
+export const MyPurchasesDocument = new TypedDocumentString(`
+    query MyPurchases {
+  myPurchases {
+    id
+    planId
+    planName
+    durationDays
+    amount
+    currency
+    status
+    razorpayOrderId
+    razorpayPaymentId
+    paidAt
+    createdAt
   }
 }
     `);
@@ -1701,6 +1849,9 @@ const injectedRtkApi = api.injectEndpoints({
     CreateJournalEntry: build.mutation<CreateJournalEntryMutation, CreateJournalEntryMutationVariables>({
       query: (variables) => ({ document: CreateJournalEntryDocument as unknown as string, variables })
     }),
+    CreatePurchase: build.mutation<CreatePurchaseMutation, CreatePurchaseMutationVariables>({
+      query: (variables) => ({ document: CreatePurchaseDocument as unknown as string, variables })
+    }),
     DeactivateUser: build.mutation<DeactivateUserMutation, DeactivateUserMutationVariables | void>({
       query: (variables) => ({ document: DeactivateUserDocument as unknown as string, variables })
     }),
@@ -1767,6 +1918,9 @@ const injectedRtkApi = api.injectEndpoints({
     VerifyChangePasswordOtp: build.mutation<VerifyChangePasswordOtpMutation, VerifyChangePasswordOtpMutationVariables>({
       query: (variables) => ({ document: VerifyChangePasswordOtpDocument as unknown as string, variables })
     }),
+    VerifyPurchasePayment: build.mutation<VerifyPurchasePaymentMutation, VerifyPurchasePaymentMutationVariables>({
+      query: (variables) => ({ document: VerifyPurchasePaymentDocument as unknown as string, variables })
+    }),
     GoogleLogin: build.mutation<GoogleLoginMutation, GoogleLoginMutationVariables>({
       query: (variables) => ({ document: GoogleLoginDocument as unknown as string, variables })
     }),
@@ -1796,6 +1950,9 @@ const injectedRtkApi = api.injectEndpoints({
     }),
     ApplicationMetadata: build.query<ApplicationMetadataQuery, ApplicationMetadataQueryVariables | void>({
       query: (variables) => ({ document: ApplicationMetadataDocument as unknown as string, variables })
+    }),
+    AvailablePlans: build.query<AvailablePlansQuery, AvailablePlansQueryVariables | void>({
+      query: (variables) => ({ document: AvailablePlansDocument as unknown as string, variables })
     }),
     CompletedMissionHistory: build.query<CompletedMissionHistoryQuery, CompletedMissionHistoryQueryVariables | void>({
       query: (variables) => ({ document: CompletedMissionHistoryDocument as unknown as string, variables })
@@ -1827,6 +1984,9 @@ const injectedRtkApi = api.injectEndpoints({
     MotivationalMessage: build.query<MotivationalMessageQuery, MotivationalMessageQueryVariables | void>({
       query: (variables) => ({ document: MotivationalMessageDocument as unknown as string, variables })
     }),
+    MyAccess: build.query<MyAccessQuery, MyAccessQueryVariables | void>({
+      query: (variables) => ({ document: MyAccessDocument as unknown as string, variables })
+    }),
     MyAchievements: build.query<MyAchievementsQuery, MyAchievementsQueryVariables | void>({
       query: (variables) => ({ document: MyAchievementsDocument as unknown as string, variables })
     }),
@@ -1835,6 +1995,9 @@ const injectedRtkApi = api.injectEndpoints({
     }),
     MyJournalEntries: build.query<MyJournalEntriesQuery, MyJournalEntriesQueryVariables | void>({
       query: (variables) => ({ document: MyJournalEntriesDocument as unknown as string, variables })
+    }),
+    MyPurchases: build.query<MyPurchasesQuery, MyPurchasesQueryVariables | void>({
+      query: (variables) => ({ document: MyPurchasesDocument as unknown as string, variables })
     }),
     MyRecovery: build.query<MyRecoveryQuery, MyRecoveryQueryVariables | void>({
       query: (variables) => ({ document: MyRecoveryDocument as unknown as string, variables })
@@ -1873,5 +2036,5 @@ const injectedRtkApi = api.injectEndpoints({
 });
 
 export { injectedRtkApi as api };
-export const { useActivateUserMutation, useAdvanceJourneyDayMutation, useCompleteDailySessionMutation, useCompleteJourneyMutation, useCompleteMissionMutation, useCreateJournalEntryMutation, useDeactivateUserMutation, useDeleteJournalEntryMutation, useFollowUpMutation, useGenerateReflectionMutation, useLogoutMutation, useLogoutAllMutation, usePauseJourneyMutation, useRefreshTokenMutation, useRequestChangePasswordOtpMutation, useResumeJourneyMutation, useSendAiChatMessageMutation, useSetDailySessionEndMoodsMutation, useSetDailySessionStartMoodsMutation, useStartDailySessionMutation, useStartJourneyMutation, useStartMissionMutation, useUpdateDailySessionStepMutation, useUpdateJournalEntryMutation, useUpdateProfileMutation, useUpdateReflectionMutation, useUploadSingleFilesMutation, useVerifyChangePasswordOtpMutation, useGoogleLoginMutation, useGoogleRegisterMutation, useLoginMutation, useRegisterMutation, useResendEmailVerificationOtpMutation, useVerifyEmailOtpMutation, useActiveDailySessionQuery, useLazyActiveDailySessionQuery, useActiveJourneyQuery, useLazyActiveJourneyQuery, useApplicationConfigQuery, useLazyApplicationConfigQuery, useApplicationMetadataQuery, useLazyApplicationMetadataQuery, useCompletedMissionHistoryQuery, useLazyCompletedMissionHistoryQuery, useCurrentSessionReflectionQuery, useLazyCurrentSessionReflectionQuery, useDailySessionHistoryByDayQuery, useLazyDailySessionHistoryByDayQuery, useGetRecoveryScoreTrendForLastNDayQuery, useLazyGetRecoveryScoreTrendForLastNDayQuery, useJournalEntryQuery, useLazyJournalEntryQuery, useLatestAiChatMessageQuery, useLazyLatestAiChatMessageQuery, useMeQuery, useLazyMeQuery, useMissionHistoryQuery, useLazyMissionHistoryQuery, useMoodThisWeekQuery, useLazyMoodThisWeekQuery, useMotivationalMessageQuery, useLazyMotivationalMessageQuery, useMyAchievementsQuery, useLazyMyAchievementsQuery, useMyAiChatConversationsQuery, useLazyMyAiChatConversationsQuery, useMyJournalEntriesQuery, useLazyMyJournalEntriesQuery, useMyRecoveryQuery, useLazyMyRecoveryQuery, useNextAchievementQuery, useLazyNextAchievementQuery, useRecentJournalEntriesQuery, useLazyRecentJournalEntriesQuery, useRecoveryAssessmentHistoryQuery, useLazyRecoveryAssessmentHistoryQuery, useTodayMissionQuery, useLazyTodayMissionQuery, useTodayQuestionQuery, useLazyTodayQuestionQuery, useRegisterDeviceMutation, useGetRecoveryFeelingQuery, useLazyGetRecoveryFeelingQuery, useGetRecoveryGoalQuery, useLazyGetRecoveryGoalQuery, useGetRecoveryReasonQuery, useLazyGetRecoveryReasonQuery, useGetRecoveryTimelineQuery, useLazyGetRecoveryTimelineQuery } = injectedRtkApi;
+export const { useActivateUserMutation, useAdvanceJourneyDayMutation, useCompleteDailySessionMutation, useCompleteJourneyMutation, useCompleteMissionMutation, useCreateJournalEntryMutation, useCreatePurchaseMutation, useDeactivateUserMutation, useDeleteJournalEntryMutation, useFollowUpMutation, useGenerateReflectionMutation, useLogoutMutation, useLogoutAllMutation, usePauseJourneyMutation, useRefreshTokenMutation, useRequestChangePasswordOtpMutation, useResumeJourneyMutation, useSendAiChatMessageMutation, useSetDailySessionEndMoodsMutation, useSetDailySessionStartMoodsMutation, useStartDailySessionMutation, useStartJourneyMutation, useStartMissionMutation, useUpdateDailySessionStepMutation, useUpdateJournalEntryMutation, useUpdateProfileMutation, useUpdateReflectionMutation, useUploadSingleFilesMutation, useVerifyChangePasswordOtpMutation, useVerifyPurchasePaymentMutation, useGoogleLoginMutation, useGoogleRegisterMutation, useLoginMutation, useRegisterMutation, useResendEmailVerificationOtpMutation, useVerifyEmailOtpMutation, useActiveDailySessionQuery, useLazyActiveDailySessionQuery, useActiveJourneyQuery, useLazyActiveJourneyQuery, useApplicationConfigQuery, useLazyApplicationConfigQuery, useApplicationMetadataQuery, useLazyApplicationMetadataQuery, useAvailablePlansQuery, useLazyAvailablePlansQuery, useCompletedMissionHistoryQuery, useLazyCompletedMissionHistoryQuery, useCurrentSessionReflectionQuery, useLazyCurrentSessionReflectionQuery, useDailySessionHistoryByDayQuery, useLazyDailySessionHistoryByDayQuery, useGetRecoveryScoreTrendForLastNDayQuery, useLazyGetRecoveryScoreTrendForLastNDayQuery, useJournalEntryQuery, useLazyJournalEntryQuery, useLatestAiChatMessageQuery, useLazyLatestAiChatMessageQuery, useMeQuery, useLazyMeQuery, useMissionHistoryQuery, useLazyMissionHistoryQuery, useMoodThisWeekQuery, useLazyMoodThisWeekQuery, useMotivationalMessageQuery, useLazyMotivationalMessageQuery, useMyAccessQuery, useLazyMyAccessQuery, useMyAchievementsQuery, useLazyMyAchievementsQuery, useMyAiChatConversationsQuery, useLazyMyAiChatConversationsQuery, useMyJournalEntriesQuery, useLazyMyJournalEntriesQuery, useMyPurchasesQuery, useLazyMyPurchasesQuery, useMyRecoveryQuery, useLazyMyRecoveryQuery, useNextAchievementQuery, useLazyNextAchievementQuery, useRecentJournalEntriesQuery, useLazyRecentJournalEntriesQuery, useRecoveryAssessmentHistoryQuery, useLazyRecoveryAssessmentHistoryQuery, useTodayMissionQuery, useLazyTodayMissionQuery, useTodayQuestionQuery, useLazyTodayQuestionQuery, useRegisterDeviceMutation, useGetRecoveryFeelingQuery, useLazyGetRecoveryFeelingQuery, useGetRecoveryGoalQuery, useLazyGetRecoveryGoalQuery, useGetRecoveryReasonQuery, useLazyGetRecoveryReasonQuery, useGetRecoveryTimelineQuery, useLazyGetRecoveryTimelineQuery } = injectedRtkApi;
 

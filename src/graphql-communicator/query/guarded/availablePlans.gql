@@ -1,0 +1,17 @@
+query AvailablePlans {
+  availablePlans {
+    id
+    code
+    name
+    durationDays
+    baseAmount
+    discountPercentage
+    discountAmount
+    payableAmount
+    currency
+    status
+    sortOrder
+    pricePerDay
+    discountPerDay
+  }
+}

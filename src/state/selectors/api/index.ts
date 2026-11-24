@@ -16,3 +16,4 @@ export * from './myJournalEntries';
 export * from './updateProfile';
 export * from './myAchievements';
 export * from './currentSessionReflection';
+export * from './availablePlans';
