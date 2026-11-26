@@ -7,6 +7,7 @@ import { useActiveSessionStepNavigation } from '@/features/DailySession/hooks/us
 import { useHomeBootstrapQueries } from './useHomeBootstrapQueries';
 import { useSelector } from 'react-redux';
 import { useTabNavigation } from '@/navigation/Tab/hooks/useTabNavigation';
+import { useUserAccess } from '@/hooks';
 
 export const useStartDailySession = () => {
   const [dailySessionMetadataProcessing, setDailySessionMetadataProcessing] =
@@ -20,12 +21,17 @@ export const useStartDailySession = () => {
     isError: activeDailySessionLoadingError,
   } = useSelector(selectActiveDailySession);
 
+  const { canProceed } = useUserAccess();
+
   const { getNextStepScreenName } = useActiveSessionStepNavigation();
 
   const navigation = useTabNavigation();
 
   const startNewOrResumeCurrentDailySession = useCallback(async () => {
     try {
+      if (!canProceed()) {
+        return;
+      }
       if (activeDailySessionLoading) {
         return;
       }
@@ -64,6 +70,7 @@ export const useStartDailySession = () => {
     activeDailySession,
     activeDailySessionLoading,
     activeDailySessionLoadingError,
+    canProceed,
     getNextStepScreenName,
     navigation,
     triggerLazyActiveDailySessionQuery,

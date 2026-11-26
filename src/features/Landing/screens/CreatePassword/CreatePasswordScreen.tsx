@@ -57,6 +57,7 @@ export function CreatePasswordScreen() {
       scroll
       keyboard
       safeArea={false}
+      safeTop={false}
       className="bg-background-v2"
       contentClassName="grow items-center bg-background-v2 px-4 pb-8 pt-8"
     >

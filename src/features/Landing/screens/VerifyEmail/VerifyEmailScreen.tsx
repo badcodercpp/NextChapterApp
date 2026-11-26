@@ -6,7 +6,6 @@ import {
   AppText,
 } from '@/components';
 import {
-  ChevronLeft,
   Clock3,
   Delete,
   Mail,
@@ -38,19 +37,11 @@ export function VerifyEmailScreen() {
     <AppScreen
       scroll
       safeArea={false}
+      safeTop={false}
       className="bg-background-v2"
       contentClassName="grow items-center bg-background-v2 px-5 pb-8 pt-2"
     >
       <View className="w-full max-w-md">
-        <AppPressable
-          accessibilityRole="button"
-          accessibilityLabel="Go back"
-          className="h-10 w-10 items-center justify-center rounded-full border border-border-v2 bg-surface-v2"
-          onPress={() => navigation.goBack()}
-        >
-          <AppIcon icon={ChevronLeft} size={22} className="text-text-v2" />
-        </AppPressable>
-
         <View className="items-center pb-6 pt-6">
           <View className="h-20 w-20 items-center justify-center rounded-3xl bg-primary-v2">
             <AppIcon

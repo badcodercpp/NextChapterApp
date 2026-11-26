@@ -7,6 +7,7 @@ import {
   useLazyApplicationConfigQuery,
   useLazyMeQuery,
   useLazyMotivationalMessageQuery,
+  useLazyMyAccessQuery,
   useLogoutMutation,
   useRefreshTokenMutation,
 } from '@/__generated__/graphql';
@@ -27,6 +28,7 @@ export const useAuthBootstrap = () => {
   const [triggerActiveJourneyQuery] = useLazyActiveJourneyQuery();
   const [triggerMotivationalMessageQuery] = useLazyMotivationalMessageQuery();
   const [triggerApplicationConfigQuery] = useLazyApplicationConfigQuery();
+  const [triggerLazyMyAccessQuery] = useLazyMyAccessQuery();
 
   const [refreshTokenMutation] = useRefreshTokenMutation();
   const [logoutMutation] = useLogoutMutation();
@@ -109,6 +111,7 @@ export const useAuthBootstrap = () => {
       triggerApplicationConfigQuery().unwrap(),
       triggerMeQuery().unwrap(),
       triggerActiveJourneyQuery().unwrap(),
+      triggerLazyMyAccessQuery().unwrap(),
     ]);
 
     // Not required for Home to become usable
@@ -119,6 +122,7 @@ export const useAuthBootstrap = () => {
     triggerApplicationConfigQuery,
     triggerMeQuery,
     triggerActiveJourneyQuery,
+    triggerLazyMyAccessQuery,
     triggerMotivationalMessageQuery,
   ]);
 

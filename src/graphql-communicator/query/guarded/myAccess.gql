@@ -4,6 +4,8 @@ query MyAccess {
     level
     canAccessDailySessions
     assistantMessagesPerDay
+    assistantMessagesUsed
+    assistantMessagesRemaining
 
     trialJourneyId
     trialStatus

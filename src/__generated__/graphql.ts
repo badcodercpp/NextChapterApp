@@ -4,6 +4,13 @@ type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 import type { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
 import { api } from '@/api/baseApi';
+/** Access Level */
+export enum AccessLevel {
+  FreeExpired = 'FREE_EXPIRED',
+  FreeTrial = 'FREE_TRIAL',
+  Premium = 'PREMIUM'
+}
+
 export enum AchievementType {
   MissionCompletion = 'MISSION_COMPLETION',
   Question = 'QUESTION',
@@ -730,7 +737,7 @@ export type MotivationalMessageQuery = { motivationalMessage: { id: string, titl
 export type MyAccessQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyAccessQuery = { myAccess: { id: string, level: string, canAccessDailySessions: boolean, assistantMessagesPerDay: number | null, trialJourneyId: string | null, trialStatus: string | null, trialStartedAt: unknown, trialExpiredAt: unknown, premiumTotalDays: number, premiumConsumedDays: number, premiumRemainingDays: number, createdAt: unknown, updatedAt: unknown } };
+export type MyAccessQuery = { myAccess: { id: string, level: AccessLevel, canAccessDailySessions: boolean, assistantMessagesPerDay: number | null, assistantMessagesUsed: number, assistantMessagesRemaining: number | null, trialJourneyId: string | null, trialStatus: string | null, trialStartedAt: unknown, trialExpiredAt: unknown, premiumTotalDays: number, premiumConsumedDays: number, premiumRemainingDays: number, createdAt: unknown, updatedAt: unknown } };
 
 export type MyAchievementsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1608,6 +1615,8 @@ export const MyAccessDocument = new TypedDocumentString(`
     level
     canAccessDailySessions
     assistantMessagesPerDay
+    assistantMessagesUsed
+    assistantMessagesRemaining
     trialJourneyId
     trialStatus
     trialStartedAt

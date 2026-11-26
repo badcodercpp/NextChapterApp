@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useHomeBootstrapQueries } from './useHomeBootstrapQueries';
+import { useUserAccess } from '@/hooks';
 
 export const useHomeBootstrap = () => {
   const [bootstrapFinished, setBootstrapFinished] = useState(false);
   const [isBootstrapping, setIsBootstrapping] = useState(true);
+
+  const { canProceed } = useUserAccess();
 
   const {
     triggerMyRecoveryQuery,
@@ -19,6 +22,9 @@ export const useHomeBootstrap = () => {
 
   const bootstrapHome = useCallback(async () => {
     try {
+      if (!canProceed()) {
+        return;
+      }
       setIsBootstrapping(true);
       setBootstrapFinished(false);
       try {
@@ -45,6 +51,7 @@ export const useHomeBootstrap = () => {
       setIsBootstrapping(false);
     }
   }, [
+    canProceed,
     triggerAdvanceJourneyDayMutation,
     triggerCompletedMissionHistoryQuery,
     triggerLazyActiveDailySessionQuery,
