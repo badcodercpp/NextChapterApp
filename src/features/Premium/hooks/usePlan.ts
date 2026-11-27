@@ -74,7 +74,7 @@ export const usePlan = () => {
       console.log(verifiedPurchase);
 
       // 4. Refresh access information.
-      await triggerLazyMyAccessQuery();
+      await triggerLazyMyAccessQuery().unwrap();
 
       // 5. Show success.
       // Navigate to your premium success screen.

@@ -15,6 +15,7 @@ import {
 } from '../components';
 
 import React from 'react';
+import { CardAccessBoundary } from '@/components/foundation/AppCard/CardAccess';
 import { TodaysFollowUpInputCard } from '@/features/CommonFeature';
 import { View } from 'react-native';
 import { useDailySessionFollowUpStep } from '../hooks/useDailySessionFollowUpStep';
@@ -47,10 +48,12 @@ export function DailySessionFollowUpStepScreen() {
         />
       </View>
       <View className="mt-4">
-        <TodaysFollowUpInputCard
-          endIconDisabled={isPending}
-          onEndIconPress={createFollowupRecord}
-        />
+        <CardAccessBoundary>
+          <TodaysFollowUpInputCard
+            endIconDisabled={isPending}
+            onEndIconPress={createFollowupRecord}
+          />
+        </CardAccessBoundary>
         <View className="mt-3 flex-row items-center justify-center px-3">
           <AppIcon
             icon={LockKeyhole}

@@ -3,6 +3,7 @@ import { act, create, ReactTestRenderer } from 'react-test-renderer';
 import { FormProvider, useForm } from 'react-hook-form';
 import { WhatBringsYouHereScreen } from '../WhatBringsYouHereScreen';
 import { REASONS } from '../../../constants';
+import { AppPatternArtwork } from '@/components';
 
 const mockNavigate = jest.fn();
 const mockGoBack = jest.fn();
@@ -11,6 +12,15 @@ jest.mock('@/components', () => {
   const { View, Text, Pressable } =
     jest.requireActual<typeof import('react-native')>('react-native');
   return {
+    APP_PATTERN_ARTWORK_VARIANTS: [
+      'rings',
+      'sparkles',
+      'grid',
+      'waves',
+      'bubbles',
+      'stripes',
+    ],
+    AppPatternArtwork: 'AppPatternArtwork',
     AppScreen: View,
     AppText: Text,
     AppPressable: Pressable,
@@ -40,7 +50,7 @@ jest.mock('../../../constants', () => ({
   ].map(reason => ({ ...reason, description: reason.title, icon: 'Heart' })),
 }));
 jest.mock('@/__generated__/graphql', () => ({
-  RecoveryReason: {
+  RecoveryProgram: {
     Breakup: 'BREAKUP',
     Divorce: 'DIVORCE',
     Grief: 'GRIEF',
@@ -85,6 +95,17 @@ test('shows every reason and preserves the initial selection', () => {
     screen.root.findByProps({ accessibilityLabel: REASONS[0].title }).props
       .accessibilityState.checked,
   ).toBe(true);
+});
+
+test('gives each reason card its own decorative artwork', () => {
+  const artwork = REASONS.map(reason =>
+    screen.root
+      .findByProps({ accessibilityLabel: reason.title })
+      .findByType(AppPatternArtwork),
+  );
+  expect(new Set(artwork.map(item => item.props.variant)).size).toBe(
+    REASONS.length,
+  );
 });
 
 test.each(REASONS)(

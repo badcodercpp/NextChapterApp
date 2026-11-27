@@ -2,6 +2,7 @@ import { AppCard, AppIcon, AppPressable, AppText } from '@/components';
 import { View, ViewProps } from 'react-native';
 
 import { ArrowRight, LucideIcon } from 'lucide-react-native';
+import { useCardAccess } from '@/components/foundation/AppCard/CardAccess';
 
 interface QuickActionCardProps extends ViewProps {
   icon: LucideIcon;
@@ -11,6 +12,7 @@ interface QuickActionCardProps extends ViewProps {
   accentClassName?: string;
   iconBackgroundClassName?: string;
   onPress?: () => void;
+  lockExempt?: boolean;
 }
 
 export function QuickActionCard({
@@ -21,17 +23,23 @@ export function QuickActionCard({
   accentClassName = 'text-primary-v2',
   iconBackgroundClassName = 'bg-primary-v2/15',
   onPress,
+  lockExempt = false,
   ...rest
 }: QuickActionCardProps) {
+  const access = useCardAccess();
+  const locked = !lockExempt && !!access?.locked;
+
   return (
     <AppPressable
       accessibilityRole="button"
       accessibilityLabel={`${title}, ${actionLabel}`}
+      accessible={!locked}
       className="w-[48%]"
-      onPress={onPress}
+      onPress={locked ? access.openPremium : onPress}
     >
       <AppCard
         {...rest}
+        lockExempt={lockExempt}
         className="flex-1 overflow-hidden rounded-[24px] border border-primary-v2/30 bg-background-v2 p-3.5"
       >
         <View

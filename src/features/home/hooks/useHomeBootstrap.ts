@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useHomeBootstrapQueries } from './useHomeBootstrapQueries';
+import { useCardAccess } from '@/components/foundation/AppCard/CardAccess';
 import { useUserAccess } from '@/hooks';
 
 export const useHomeBootstrap = () => {
@@ -8,6 +9,7 @@ export const useHomeBootstrap = () => {
   const [isBootstrapping, setIsBootstrapping] = useState(true);
 
   const { canProceed } = useUserAccess();
+  const cardAccess = useCardAccess();
 
   const {
     triggerMyRecoveryQuery,
@@ -22,7 +24,7 @@ export const useHomeBootstrap = () => {
 
   const bootstrapHome = useCallback(async () => {
     try {
-      if (!canProceed()) {
+      if (cardAccess?.locked || !canProceed()) {
         return;
       }
       setIsBootstrapping(true);
@@ -52,6 +54,7 @@ export const useHomeBootstrap = () => {
     }
   }, [
     canProceed,
+    cardAccess,
     triggerAdvanceJourneyDayMutation,
     triggerCompletedMissionHistoryQuery,
     triggerLazyActiveDailySessionQuery,

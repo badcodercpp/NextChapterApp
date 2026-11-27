@@ -33,7 +33,7 @@ export const PLANS = [
 
 export const HIGHLIGHTS = [
   { icon: InfinityIcon, label: 'Unlimited\nJourneys' },
-  { icon: InfinityIcon, label: 'Unlimited \n Session' },
+  { icon: InfinityIcon, label: 'Unlimited\nSessions' },
   { icon: BarChart3, label: 'Deeper\nInsights' },
   { icon: Brain, label: 'AI\n Coach' },
 ];

@@ -1,4 +1,11 @@
-import { AppIcon, AppPressable, AppScreen, AppText } from '@/components';
+import {
+  APP_PATTERN_ARTWORK_VARIANTS,
+  AppIcon,
+  AppPatternArtwork,
+  AppPressable,
+  AppScreen,
+  AppText,
+} from '@/components';
 import { ArrowRight, CalendarClock, Check, Lock } from 'lucide-react-native';
 
 import { Controller } from 'react-hook-form';
@@ -47,7 +54,7 @@ export function HowLongHasItBeenScreen() {
           render={({ field: { value, onChange }, fieldState: { error } }) => (
             <>
               <View accessibilityRole="radiogroup">
-                {TIMELINES.map(item => {
+                {TIMELINES.map((item, index) => {
                   const selected = value === item.id;
                   return (
                     <AppPressable
@@ -57,13 +64,23 @@ export function HowLongHasItBeenScreen() {
                       accessibilityHint={item.subtitle}
                       accessibilityState={{ checked: selected }}
                       className={cn(
-                        'mb-3 min-h-20 flex-row items-center rounded-3xl border p-4',
+                        'mb-3 min-h-20 flex-row items-center overflow-hidden rounded-3xl border p-4',
                         selected
                           ? 'border-primary-v2 bg-selected-v2'
                           : 'border-border-v2 bg-surface-v2',
                       )}
                       onPress={() => onChange(item.id)}
                     >
+                      <AppPatternArtwork
+                        variant={
+                          APP_PATTERN_ARTWORK_VARIANTS[
+                            index % APP_PATTERN_ARTWORK_VARIANTS.length
+                          ]
+                        }
+                        icon={item.icon}
+                        iconClassName="right-0 -bottom-4"
+                        className="w-1/3 opacity-60"
+                      />
                       <View className="h-11 w-11 items-center justify-center rounded-xl bg-input-v2">
                         <AppIcon
                           icon={item.icon}

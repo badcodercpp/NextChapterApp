@@ -32,6 +32,7 @@ import { properCase } from '@/utils/strings';
 import { getMoodEmojiByValue } from '@/utils';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import { useResolveClassNames } from 'uniwind';
+import { CardAccessBoundary } from '@/components/foundation/AppCard/CardAccess';
 
 export function DailySessionHistoryScreen() {
   const { backgroundColor: accent } = useResolveClassNames('bg-primary-v2');
@@ -78,77 +79,87 @@ export function DailySessionHistoryScreen() {
           </AppText>
         </AppCard>
 
-        <View className="overflow-hidden rounded-[24px] border border-primary-v2/40 bg-background-v2 p-3">
-          <View pointerEvents="none" className="absolute inset-0">
-            <Svg width="100%" height="100%">
-              <Defs>
-                <LinearGradient
-                  id="historyDayBackground"
-                  x1="0"
-                  y1="0"
-                  x2="1"
-                  y2="1"
-                >
-                  <Stop offset="0" stopColor={accent} stopOpacity={0.22} />
-                  <Stop offset="0.5" stopColor={accent} stopOpacity={0.05} />
-                  <Stop offset="1" stopColor={accent} stopOpacity={0.16} />
-                </LinearGradient>
-              </Defs>
-              <Rect
-                width="100%"
-                height="100%"
-                fill="url(#historyDayBackground)"
-              />
-            </Svg>
-          </View>
-          <View className="flex-row items-center justify-between gap-2">
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel="Previous day"
-              disabled={day <= 1}
-              onPress={() => setPickedDay(day - 1)}
-              className={`h-11 w-11 items-center justify-center rounded-[16px] border border-primary-v2/30 bg-background-v2/60 ${
-                day <= 1 ? 'opacity-30' : ''
-              }`}
-            >
-              <AppIcon icon={ChevronLeft} size={22} className="text-link-v2" />
-            </Pressable>
-            <View className="shrink flex-row items-center">
-              <AppIcon
-                icon={CalendarDays}
-                size={22}
-                className="mr-3 text-link-v2"
-              />
-              <View className="shrink">
-                <AppText variant="xs" className="mb-0.5 text-text-muted-v2">
-                  Session day
-                </AppText>
-                <AppText
-                  variant="md"
-                  numberOfLines={1}
-                  adjustsFontSizeToFit
-                  className="font-bold text-text-v2"
-                >
-                  Day {day}
-                  {config?.totalProgramDays
-                    ? ` of ${config.totalProgramDays}`
-                    : ''}
-                </AppText>
-              </View>
+        <CardAccessBoundary>
+          <View className="overflow-hidden rounded-[24px] border border-primary-v2/40 bg-background-v2 p-3">
+            <View pointerEvents="none" className="absolute inset-0">
+              <Svg width="100%" height="100%">
+                <Defs>
+                  <LinearGradient
+                    id="historyDayBackground"
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="1"
+                  >
+                    <Stop offset="0" stopColor={accent} stopOpacity={0.22} />
+                    <Stop offset="0.5" stopColor={accent} stopOpacity={0.05} />
+                    <Stop offset="1" stopColor={accent} stopOpacity={0.16} />
+                  </LinearGradient>
+                </Defs>
+                <Rect
+                  width="100%"
+                  height="100%"
+                  fill="url(#historyDayBackground)"
+                />
+              </Svg>
             </View>
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel="Next day"
-              disabled={day >= latestDay}
-              onPress={() => setPickedDay(day + 1)}
-              className={`h-11 w-11 items-center justify-center rounded-[16px] border border-primary-v2/30 bg-background-v2/60 ${
-                day >= latestDay ? 'opacity-30' : ''
-              }`}
-            >
-              <AppIcon icon={ChevronRight} size={22} className="text-link-v2" />
-            </Pressable>
+            <View className="flex-row items-center justify-between gap-2">
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel="Previous day"
+                disabled={day <= 1}
+                onPress={() => setPickedDay(day - 1)}
+                className={`h-11 w-11 items-center justify-center rounded-[16px] border border-primary-v2/30 bg-background-v2/60 ${
+                  day <= 1 ? 'opacity-30' : ''
+                }`}
+              >
+                <AppIcon
+                  icon={ChevronLeft}
+                  size={22}
+                  className="text-link-v2"
+                />
+              </Pressable>
+              <View className="shrink flex-row items-center">
+                <AppIcon
+                  icon={CalendarDays}
+                  size={22}
+                  className="mr-3 text-link-v2"
+                />
+                <View className="shrink">
+                  <AppText variant="xs" className="mb-0.5 text-text-muted-v2">
+                    Session day
+                  </AppText>
+                  <AppText
+                    variant="md"
+                    numberOfLines={1}
+                    adjustsFontSizeToFit
+                    className="font-bold text-text-v2"
+                  >
+                    Day {day}
+                    {config?.totalProgramDays
+                      ? ` of ${config.totalProgramDays}`
+                      : ''}
+                  </AppText>
+                </View>
+              </View>
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel="Next day"
+                disabled={day >= latestDay}
+                onPress={() => setPickedDay(day + 1)}
+                className={`h-11 w-11 items-center justify-center rounded-[16px] border border-primary-v2/30 bg-background-v2/60 ${
+                  day >= latestDay ? 'opacity-30' : ''
+                }`}
+              >
+                <AppIcon
+                  icon={ChevronRight}
+                  size={22}
+                  className="text-link-v2"
+                />
+              </Pressable>
+            </View>
           </View>
-        </View>
+        </CardAccessBoundary>
 
         {isFetching ? (
           <View className="items-center py-12">
@@ -158,7 +169,10 @@ export function DailySessionHistoryScreen() {
             </AppText>
           </View>
         ) : isError ? (
-          <AppCard className="rounded-[24px] border border-border-v2 bg-background-v2 p-5">
+          <AppCard
+            lockExempt
+            className="rounded-[24px] border border-border-v2 bg-background-v2 p-5"
+          >
             <AppText variant="md" className="text-error">
               Unable to load this session.
             </AppText>

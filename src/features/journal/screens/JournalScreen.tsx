@@ -9,6 +9,7 @@ import {
 import { usePreventBackNavigation, useScreenHeader } from '@/navigation/hooks';
 
 import { JournalRoutes } from '@/features/journal/navigation';
+import { CardAccessBoundary } from '@/components/foundation/AppCard/CardAccess';
 import { MoodSelector } from '@/features/CommonFeature';
 import React from 'react';
 import { View } from 'react-native';
@@ -30,7 +31,9 @@ export function JournalScreen() {
     // noBottomPadding
     >
       <View className="mt-2">
-        <JournalEmptyCard />
+        <CardAccessBoundary>
+          <JournalEmptyCard />
+        </CardAccessBoundary>
       </View>
       <View className="mt-4">
         <MoodSelector

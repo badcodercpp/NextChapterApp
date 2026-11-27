@@ -9,6 +9,7 @@ import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import { selectApplicationConfig, selectMe } from '@/state/selectors';
 
 import { Pencil } from 'lucide-react-native';
+import { PremiumAvatarBadge } from '@/components/foundation/AppAvatar/PremiumAvatarBadge';
 import { View } from 'react-native';
 import { toHttpsURL } from '@/utils';
 import { useCSSVariable } from 'uniwind';
@@ -58,6 +59,7 @@ export function ProfileSummaryCard({ onEditPress }: ProfileSummaryCardProps) {
               uri={toHttpsURL(me?.avatarUrl) ?? undefined}
             />
           </View>
+          <PremiumAvatarBadge />
         </View>
 
         <View className="flex-1 pr-12">

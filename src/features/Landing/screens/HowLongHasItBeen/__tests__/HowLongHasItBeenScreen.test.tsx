@@ -3,7 +3,7 @@ import { act, create, ReactTestRenderer } from 'react-test-renderer';
 import { FormProvider, useForm } from 'react-hook-form';
 import { HowLongHasItBeenScreen } from '../HowLongHasItBeenScreen';
 import { TIMELINES } from '../../../constants';
-import { useScreenHeader } from '@/navigation/hooks';
+import { AppPatternArtwork } from '@/components';
 
 const mockNavigate = jest.fn();
 const mockGoBack = jest.fn();
@@ -12,6 +12,15 @@ jest.mock('@/components', () => {
   const { View, Text, Pressable } =
     jest.requireActual<typeof import('react-native')>('react-native');
   return {
+    APP_PATTERN_ARTWORK_VARIANTS: [
+      'rings',
+      'sparkles',
+      'grid',
+      'waves',
+      'bubbles',
+      'stripes',
+    ],
+    AppPatternArtwork: 'AppPatternArtwork',
     AppScreen: View,
     AppText: Text,
     AppPressable: Pressable,
@@ -72,12 +81,22 @@ beforeEach(() => {
 });
 afterEach(() => act(() => screen.unmount()));
 
-test('preserves the default timeline and replaces the old header', () => {
+test('preserves the default timeline', () => {
   expect(
     screen.root.findByProps({ accessibilityLabel: 'Today' }).props
       .accessibilityState.checked,
   ).toBe(true);
-  expect(useScreenHeader).toHaveBeenCalledWith({ headerShown: false });
+});
+
+test('gives each timeline card its own decorative artwork', () => {
+  const artwork = TIMELINES.map(item =>
+    screen.root
+      .findByProps({ accessibilityLabel: item.title })
+      .findByType(AppPatternArtwork),
+  );
+  expect(new Set(artwork.map(item => item.props.variant)).size).toBe(
+    TIMELINES.length,
+  );
 });
 
 test.each(TIMELINES)(

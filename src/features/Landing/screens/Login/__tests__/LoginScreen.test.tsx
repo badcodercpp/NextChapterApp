@@ -3,6 +3,7 @@ import { TextInput } from 'react-native';
 import { act, create, ReactTestRenderer } from 'react-test-renderer';
 import { FormProvider, useForm } from 'react-hook-form';
 import { LoginScreen } from '../LoginScreen';
+import { AppHeroArtwork, AppMountainArtwork } from '@/components';
 
 const mockNavigate = jest.fn();
 const mockSubmitLogin = jest.fn();
@@ -25,6 +26,8 @@ jest.mock('@/components', () => {
     AppPressable: Button,
     AppInput: Input,
     AppIcon: View,
+    AppHeroArtwork: 'AppHeroArtwork',
+    AppMountainArtwork: 'AppMountainArtwork',
   };
 });
 
@@ -55,7 +58,7 @@ jest.mock('../useLogin', () => ({
     return {
       ...form,
       errors: form.formState.errors,
-      navigation: { navigate: mockNavigate },
+      navigation: { navigate: mockNavigate, replace: mockNavigate },
       submitLogin: mockSubmitLogin,
       isLoading: mockIsLoading,
       showPassword: mockShowPassword,
@@ -116,6 +119,15 @@ test('offers only Google social login and preserves authentication handlers', ()
   expect(mockSubmitLogin).toHaveBeenCalledTimes(1);
   expect(mockGoogleSignIn).toHaveBeenCalledTimes(1);
   expect(JSON.stringify(screen.toJSON())).not.toMatch(/Apple|Facebook/);
+});
+
+test('shows themed artwork around the login form', () => {
+  const root = renderScreen();
+  expect(root.findAllByType(AppHeroArtwork)).toHaveLength(2);
+  expect(root.findAllByType(AppMountainArtwork)).toHaveLength(2);
+  expect(
+    root.findByProps({ accessibilityLabel: 'Outdated.me logo' }),
+  ).toBeDefined();
 });
 
 test('preserves account creation, recovery, and password visibility controls', () => {

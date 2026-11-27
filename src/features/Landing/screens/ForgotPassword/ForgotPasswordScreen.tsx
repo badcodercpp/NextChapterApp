@@ -1,10 +1,10 @@
 import { AppButton, AppIcon, AppInput, AppScreen, AppText } from '@/components';
 import { ArrowRight, Lock, Mail } from 'lucide-react-native';
-import { ImageBackground, ScrollView, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 import { Controller } from 'react-hook-form';
 import { LandingNavigationProp } from '../../navigation/types';
-import LinearGradient from 'react-native-linear-gradient';
+import { LayoutTopImageComponent } from '@/features/Landing/components/LayoutTopImageComponent';
 import { useForgotPassword } from './useForgotPassword';
 import { useNavigation } from '@react-navigation/native';
 
@@ -21,30 +21,9 @@ export function ForgotPasswordScreen() {
       contentClassName="flex-1 bg-background"
       safeArea={false}
     >
-      <View className="items-center pt-4 h-[150px]">
-        <ImageBackground
-          source={require('@/assets/images/landing-background.png')}
-          resizeMode="cover"
-          className="absolute top-0 left-0 right-0 h-[150px] w-full"
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{ width: '100%' }}
-        >
-          <LinearGradient
-            colors={[
-              '#141129',
-              'rgba(20,17,41,0.75)',
-              'transparent',
-              'rgba(20,17,41,0.75)',
-            ]}
-            locations={[0, 0.7, 0.45, 0.2]}
-            // eslint-disable-next-line react-native/no-inline-styles
-            style={{
-              position: 'absolute',
-              inset: 0,
-            }}
-          />
-        </ImageBackground>
-      </View>
+      <LayoutTopImageComponent
+        source={require('@/assets/images/landing-background.png')}
+      />
       <View className="mt-4 items-center mb-4">
         <AppText variant="4xl" className="text-center text-text">
           Forgot your

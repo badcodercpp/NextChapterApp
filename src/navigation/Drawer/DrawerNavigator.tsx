@@ -2,6 +2,7 @@ import { AboutScreen } from '@/features/About/screens';
 import { CustomDrawer } from '../components/CustomDrawer';
 import { DrawerParamList } from './DrawerParamList';
 import { DrawerRoutes } from './DrawerRoutes';
+import { FeatureCardAccessProvider } from './FeatureCardAccessProvider';
 import { HelpNavigator } from '@/features/Help/navigation';
 import { NotificationScreen } from '@/features/Notification/screens';
 import { ProfileNavigator } from '@/features/Profile';
@@ -24,7 +25,13 @@ export function DrawerNavigator() {
       }}
       drawerContent={CustomDrawer}
     >
-      <Drawer.Screen name={DrawerRoutes.Tabs} component={TabNavigator} />
+      <Drawer.Screen name={DrawerRoutes.Tabs}>
+        {({ navigation }) => (
+          <FeatureCardAccessProvider navigation={navigation}>
+            <TabNavigator />
+          </FeatureCardAccessProvider>
+        )}
+      </Drawer.Screen>
 
       <Drawer.Screen name={DrawerRoutes.Profile} component={ProfileNavigator} />
 
@@ -33,22 +40,40 @@ export function DrawerNavigator() {
         component={SettingsNavigator}
       />
 
-      <Drawer.Screen
-        name={DrawerRoutes.Notifications}
-        component={NotificationScreen}
-      />
+      <Drawer.Screen name={DrawerRoutes.Notifications}>
+        {({ navigation }) => (
+          <FeatureCardAccessProvider navigation={navigation}>
+            <NotificationScreen />
+          </FeatureCardAccessProvider>
+        )}
+      </Drawer.Screen>
 
       <Drawer.Screen name={DrawerRoutes.Help} component={HelpNavigator} />
 
-      <Drawer.Screen name={DrawerRoutes.About} component={AboutScreen} />
+      <Drawer.Screen name={DrawerRoutes.About}>
+        {({ navigation }) => (
+          <FeatureCardAccessProvider navigation={navigation}>
+            <AboutScreen />
+          </FeatureCardAccessProvider>
+        )}
+      </Drawer.Screen>
 
-      <Drawer.Screen name={DrawerRoutes.RateUs} component={RateUsNavigator} />
+      <Drawer.Screen name={DrawerRoutes.RateUs}>
+        {({ navigation }) => (
+          <FeatureCardAccessProvider navigation={navigation}>
+            <RateUsNavigator />
+          </FeatureCardAccessProvider>
+        )}
+      </Drawer.Screen>
       <Drawer.Screen name={DrawerRoutes.Premium} component={PremiumNavigator} />
 
-      <Drawer.Screen
-        name={DrawerRoutes.ReferToFriend}
-        component={ReferToFriendNavigator}
-      />
+      <Drawer.Screen name={DrawerRoutes.ReferToFriend}>
+        {({ navigation }) => (
+          <FeatureCardAccessProvider navigation={navigation}>
+            <ReferToFriendNavigator />
+          </FeatureCardAccessProvider>
+        )}
+      </Drawer.Screen>
     </Drawer.Navigator>
   );
 }

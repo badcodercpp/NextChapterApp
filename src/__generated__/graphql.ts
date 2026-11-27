@@ -728,7 +728,7 @@ export type MotivationalMessageQuery = { motivationalMessage: { id: string, titl
 export type MyAccessQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyAccessQuery = { myAccess: { id: string, level: AccessLevel, canAccessDailySessions: boolean, assistantMessagesPerDay: number | null, assistantMessagesUsed: number, assistantMessagesRemaining: number | null, trialJourneyId: string | null, trialStatus: string | null, trialStartedAt: unknown, trialExpiredAt: unknown, premiumTotalDays: number, premiumConsumedDays: number, premiumRemainingDays: number, createdAt: unknown, updatedAt: unknown } };
+export type MyAccessQuery = { myAccess: { id: string, level: AccessLevel, canAccessDailySessions: boolean, assistantMessagesPerDay: number | null, assistantMessagesUsed: number, assistantMessagesRemaining: number | null, trialJourneyId: string | null, trialStatus: string | null, trialStartedAt: unknown, trialExpiredAt: unknown, premiumTotalDays: number, premiumConsumedDays: number, premiumRemainingDays: number, premiumPlanName: string | null, premiumPlanId: string | null, createdAt: unknown, updatedAt: unknown } };
 
 export type MyAchievementsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1615,6 +1615,8 @@ export const MyAccessDocument = new TypedDocumentString(`
     premiumTotalDays
     premiumConsumedDays
     premiumRemainingDays
+    premiumPlanName
+    premiumPlanId
     createdAt
     updatedAt
   }

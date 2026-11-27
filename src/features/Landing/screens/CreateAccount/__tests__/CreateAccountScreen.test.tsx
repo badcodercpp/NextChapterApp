@@ -3,6 +3,7 @@ import { TextInput } from 'react-native';
 import { act, create, ReactTestRenderer } from 'react-test-renderer';
 import { FormProvider, useForm } from 'react-hook-form';
 import { CreateAccountScreen } from '../CreateAccountScreen';
+import { AppHeroArtwork, AppMountainArtwork } from '@/components';
 
 const mockNavigate = jest.fn();
 const mockSubmitCreateAccount = jest.fn();
@@ -22,6 +23,8 @@ jest.mock('@/components', () => {
     AppPressable: Pressable,
     AppInput: Input,
     AppIcon: View,
+    AppHeroArtwork: 'AppHeroArtwork',
+    AppMountainArtwork: 'AppMountainArtwork',
   };
 });
 
@@ -51,7 +54,7 @@ jest.mock('../useCreateAccount', () => ({
     return {
       ...form,
       errors: form.formState.errors,
-      navigation: { navigate: mockNavigate },
+      navigation: { navigate: mockNavigate, replace: mockNavigate },
       submitCreateAccount: mockSubmitCreateAccount,
     };
   },
@@ -105,6 +108,15 @@ test('preserves the full-name and email step and its submit handler', () => {
       .props.onPress();
   });
   expect(mockSubmitCreateAccount).toHaveBeenCalledTimes(1);
+});
+
+test('shows themed artwork around the registration form', () => {
+  const root = renderScreen();
+  expect(root.findAllByType(AppHeroArtwork)).toHaveLength(2);
+  expect(root.findAllByType(AppMountainArtwork)).toHaveLength(2);
+  expect(
+    root.findByProps({ accessibilityLabel: 'Outdated.me logo' }),
+  ).toBeDefined();
 });
 
 test('shows only Google social registration and invokes onboarding', () => {

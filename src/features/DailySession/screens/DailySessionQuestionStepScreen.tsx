@@ -13,6 +13,7 @@ import {
 } from '@/components';
 
 import { ChevronRight } from 'lucide-react-native';
+import { CardAccessBoundary } from '@/components/foundation/AppCard/CardAccess';
 import React from 'react';
 import { TodaysQuestionAnswerInputCard } from '@/features/CommonFeature';
 import { View } from 'react-native';
@@ -39,13 +40,15 @@ export function DailySessionQuestionStepScreen() {
         <PrivateAnswerCard />
       </View>
       <View className="mt-4">
-        <TodaysQuestionAnswerInputCard
-          variant="v2"
-          inputClassName="min-h-[112px] px-3 pt-3 text-text-v2 leading-6"
-          containerClassName="rounded-[24px] border-primary-v2/50 bg-selected-v2/40"
-          endIconDisabled={isPending}
-          onEndIconPress={goToNextStep}
-        />
+        <CardAccessBoundary>
+          <TodaysQuestionAnswerInputCard
+            variant="v2"
+            inputClassName="min-h-[112px] px-3 pt-3 text-text-v2 leading-6"
+            containerClassName="rounded-[24px] border-primary-v2/50 bg-selected-v2/40"
+            endIconDisabled={isPending}
+            onEndIconPress={goToNextStep}
+          />
+        </CardAccessBoundary>
       </View>
       <View className="mt-4">
         <AnswerStarterCard />

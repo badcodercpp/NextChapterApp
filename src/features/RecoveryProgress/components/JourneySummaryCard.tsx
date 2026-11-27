@@ -12,6 +12,7 @@ import {
 } from '@/state/selectors';
 
 import { View } from 'react-native';
+import { useCardAccess } from '@/components/foundation/AppCard/CardAccess';
 import { cn } from '@/utils';
 import { useSelector } from 'react-redux';
 import { useResolveClassNames } from 'uniwind';
@@ -37,6 +38,7 @@ export function JourneySummaryCard({
   onPress,
   className,
 }: JourneySummaryCardProps) {
+  const access = useCardAccess();
   const { data: applicationConfig } = useSelector(selectApplicationConfig);
   const { data: activeJourney } = useSelector(selectActiveJourney);
   const { backgroundColor: background } =
@@ -184,7 +186,11 @@ export function JourneySummaryCard({
 
   if (onPress) {
     return (
-      <AppPressable onPress={onPress} className={cn('w-full', className)}>
+      <AppPressable
+        accessible={!access?.locked}
+        onPress={access?.locked ? access.openPremium : onPress}
+        className={cn('w-full', className)}
+      >
         <AppCard className="overflow-hidden rounded-[26px] border border-primary-v2/30 bg-background-v2 p-4">
           {content}
         </AppCard>

@@ -11,5 +11,7 @@ export interface AppCardProps extends ViewProps {
 
   decorated?: boolean;
 
+  lockExempt?: boolean;
+
   className?: string;
 }

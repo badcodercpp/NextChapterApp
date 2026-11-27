@@ -1,4 +1,5 @@
 import { AIChatNavigator } from '@/features/AIChat';
+import { CardAccessContext } from '@/components/foundation/AppCard/CardAccess';
 import { BottomTabBar } from '../components/CustomBottomTabBar';
 import { DailySessionHistoryNavigator } from '@/features/DailySessionHistory/navigation';
 import { DailySessionNavigator } from '@/features/DailySession';
@@ -53,8 +54,13 @@ export function TabNavigator() {
           },
         }}
         name={TabRoutes.AI}
-        component={AIChatNavigator}
-      />
+      >
+        {() => (
+          <CardAccessContext.Provider value={null}>
+            <AIChatNavigator />
+          </CardAccessContext.Provider>
+        )}
+      </Tab.Screen>
 
       <Tab.Screen
         options={{
@@ -103,8 +109,13 @@ export function TabNavigator() {
           tabBarButton: () => null,
         }}
         name={TabRoutes.DailySessionHistoryTab}
-        component={DailySessionHistoryNavigator}
-      />
+      >
+        {() => (
+          <CardAccessContext.Provider value={null}>
+            <DailySessionHistoryNavigator />
+          </CardAccessContext.Provider>
+        )}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }

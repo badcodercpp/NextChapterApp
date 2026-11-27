@@ -1,4 +1,11 @@
-import { AppIcon, AppPressable, AppScreen, AppText } from '@/components';
+import {
+  APP_PATTERN_ARTWORK_VARIANTS,
+  AppIcon,
+  AppPatternArtwork,
+  AppPressable,
+  AppScreen,
+  AppText,
+} from '@/components';
 import { ArrowRight, Check, HeartHandshake, Lock } from 'lucide-react-native';
 
 import { Controller } from 'react-hook-form';
@@ -49,7 +56,7 @@ export function WhatBringsYouHereScreen() {
               <View accessibilityRole="radiogroup">
                 {REASONS.filter((_, index) => index % 2 === 0).map((_, row) => (
                   <View key={row} className="mb-3 flex-row items-stretch gap-3">
-                    {REASONS.slice(row * 2, row * 2 + 2).map(reason => {
+                    {REASONS.slice(row * 2, row * 2 + 2).map((reason, col) => {
                       const selected = value === reason.id;
                       return (
                         <AppPressable
@@ -59,13 +66,24 @@ export function WhatBringsYouHereScreen() {
                           accessibilityHint={reason.description}
                           accessibilityState={{ checked: selected }}
                           className={cn(
-                            'min-h-44 flex-1 rounded-3xl border p-4',
+                            'min-h-44 flex-1 overflow-hidden rounded-3xl border p-4',
                             selected
                               ? 'border-primary-v2 bg-selected-v2'
                               : 'border-border-v2 bg-surface-v2',
                           )}
                           onPress={() => onChange(reason.id)}
                         >
+                          <AppPatternArtwork
+                            variant={
+                              APP_PATTERN_ARTWORK_VARIANTS[
+                                (row * 2 + col) %
+                                  APP_PATTERN_ARTWORK_VARIANTS.length
+                              ]
+                            }
+                            icon={reason.icon}
+                            iconClassName="right-0 -bottom-4"
+                            className="w-2/5 opacity-60"
+                          />
                           <View className="mb-4 flex-row items-start justify-between">
                             <View className="h-10 w-10 items-center justify-center rounded-xl bg-input-v2">
                               <AppIcon

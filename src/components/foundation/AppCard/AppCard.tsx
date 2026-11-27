@@ -2,6 +2,11 @@ import { AppCardProps } from './types';
 import { CardVariants } from './variants';
 import React, { ComponentType } from 'react';
 import { AppIcon } from '../AppIcon';
+import {
+  CardAccessContext,
+  CardLockOverlay,
+  useCardAccess,
+} from './CardAccess';
 import { View } from 'react-native';
 import { cn } from '@/utils';
 import Svg, { Circle, Path } from 'react-native-svg';
@@ -12,9 +17,13 @@ export function AppCard({
   variant = 'surface',
   border = false,
   decorated = false,
+  lockExempt = false,
   className,
   ...props
 }: AppCardProps) {
+  const access = useCardAccess();
+  const locked = !lockExempt && !!access?.locked;
+
   return (
     <View
       {...props}
@@ -33,7 +42,22 @@ export function AppCard({
       )}
     >
       {decorated && <AppCardDecoration />}
-      {children}
+      {locked ? (
+        <>
+          <View
+            pointerEvents="none"
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+          >
+            <CardAccessContext.Provider value={null}>
+              {children}
+            </CardAccessContext.Provider>
+          </View>
+          <CardLockOverlay onPress={access.openPremium} />
+        </>
+      ) : (
+        children
+      )}
     </View>
   );
 }

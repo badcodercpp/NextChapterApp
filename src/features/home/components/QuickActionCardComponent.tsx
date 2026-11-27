@@ -37,6 +37,7 @@ export function QuickActionCardComponent({}: QuickActionCardComponentProps) {
 
       <QuickActionCard
         icon={Bot}
+        lockExempt
         title={`${
           applicationConfig?.aiCoachName ??
           t('app.locale.home.quickActionCard.aiCoachName')
