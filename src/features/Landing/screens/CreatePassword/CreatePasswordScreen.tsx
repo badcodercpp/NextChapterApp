@@ -230,6 +230,7 @@ export function CreatePasswordScreen() {
           <AppPressable
             accessibilityRole="button"
             accessibilityLabel="Continue"
+            disabled={isPending}
             className="mt-5 min-h-14 flex-row items-center justify-center rounded-2xl bg-primary-v2 px-4 py-4"
             onPress={submitCreatePassword}
           >

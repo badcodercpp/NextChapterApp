@@ -36,6 +36,7 @@ export const useVerifyEmail = () => {
   const maskedEmail = maskEmailFixed(email);
 
   const submitVerifyEmail = useCallback(async () => {
+    setIsPending(true);
     const result = verifyEmailSchema.safeParse({ otp });
     if (!result.success) {
       mapZodErrorsToForm({
@@ -44,13 +45,13 @@ export const useVerifyEmail = () => {
         clearErrors,
         parentKey: 'verifyEmail', // Pass your master context namespace here
       });
+      setIsPending(false);
       return;
     }
     const deviceInfoSessionPayload: DeviceInfoInput =
       await getDeviceInfoSessionPayload();
 
     try {
-      setIsPending(true);
       const { data: verifyEmailOtpMutationResponse } =
         await triggerVerifyEmailOtpMutation({
           input: {
@@ -62,6 +63,19 @@ export const useVerifyEmail = () => {
       setIsPending(false);
       // for mlp we are not building notification so skiping reminder screen
       // navigation.navigate('Reminder');
+      console.log(
+        `{
+        accessToken: verifyEmailOtpMutationResponse?.verifyEmailOtp.accessToken,
+        refreshToken:
+          verifyEmailOtpMutationResponse?.verifyEmailOtp.refreshToken,
+      }`,
+        {
+          accessToken:
+            verifyEmailOtpMutationResponse?.verifyEmailOtp.accessToken,
+          refreshToken:
+            verifyEmailOtpMutationResponse?.verifyEmailOtp.refreshToken,
+        },
+      );
       navigation.navigate('RecoveryStartsToday', {
         accessToken: verifyEmailOtpMutationResponse?.verifyEmailOtp.accessToken,
         refreshToken:

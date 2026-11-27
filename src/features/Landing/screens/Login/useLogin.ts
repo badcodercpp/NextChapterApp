@@ -3,14 +3,15 @@ import {
   LoginInput,
   useLoginMutation,
 } from '@/__generated__/graphql';
+import { getApiErrorMessage, mapZodErrorsToForm } from '@/utils';
 import { useCallback, useState } from 'react';
 
 import { AppDispatch } from '@/state';
 import { LandingNavigationProp } from '@/features/Landing/navigation/types';
 import { MasterFormData } from '@/form/types';
 import { loginSchema } from '@/form';
-import { mapZodErrorsToForm } from '@/utils';
 import { setAuthTokens } from '@/state/slices/local/authtoken';
+import { showToast } from '@/components';
 import { useDeviceInfoSessionPayload } from '@/hooks/useDeviceInfoSessionPayload';
 import { useDispatch } from 'react-redux';
 import { useFormContext } from 'react-hook-form';
@@ -86,6 +87,7 @@ export const useLogin = () => {
       );
     } catch (e) {
       console.log('Login error:', e);
+      showToast(getApiErrorMessage(e), 'error');
     } finally {
       setIsAuthCallStarted(false);
     }

@@ -1,12 +1,12 @@
 import {
-  RecoveryReason,
+  RecoveryProgram,
   RecoveryReasonCurrentFeeling,
   RecoveryReasonEndGoal,
   RecoveryReasonTimeline,
 } from '@/__generated__/graphql';
 
 export type TRecoveryReason = {
-  id: RecoveryReason;
+  id: RecoveryProgram;
   title: string;
   description: string;
   icon: any;

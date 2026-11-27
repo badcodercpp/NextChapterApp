@@ -67,7 +67,7 @@ export function HowAreYouFeelingScreen() {
               render={({ field: { value, onChange } }) => (
                 <View className="flex-row flex-wrap justify-between">
                   {FEELINGS.map((item, index) => {
-                    const selected = value.includes(item.id);
+                    const selected = value?.includes(item.id);
 
                     return (
                       <AppPressable

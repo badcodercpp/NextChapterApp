@@ -70,6 +70,7 @@ export const useCreatePassword = () => {
   };
 
   const submitCreatePassword = useCallback(async () => {
+    setIsPending(true);
     const result = createPasswordSchema.safeParse({
       password,
       confirmPassword,
@@ -81,6 +82,7 @@ export const useCreatePassword = () => {
         clearErrors,
         parentKey: 'createPassword', // Pass your master context namespace here
       });
+      setIsPending(false);
       return;
     }
     const deviceInfoSessionPayload: DeviceInfoInput =
@@ -94,7 +96,6 @@ export const useCreatePassword = () => {
     const whatWouldYouLikeHelpWith = getValues('whatWouldYouLikeHelpWith');
 
     try {
-      setIsPending(true);
       await triggerRegisterMutation({
         input: {
           displayName,

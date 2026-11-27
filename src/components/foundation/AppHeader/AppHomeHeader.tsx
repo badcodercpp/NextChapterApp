@@ -3,10 +3,10 @@ import { getGreetingKey, toHttpsURL } from '@/utils';
 
 import { AppAvatar } from '@/components/foundation/AppAvatar';
 import { AppHeaderProps } from './types';
-import { AppIcon } from '../AppIcon';
-import { AppPressable } from '../AppPressable';
+// import { AppIcon } from '../AppIcon';
+// import { AppPressable } from '../AppPressable';
 import { AppText } from '../AppText';
-import { Bell } from 'lucide-react-native';
+// import { Bell } from 'lucide-react-native';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { View } from 'react-native';
 import { selectMe } from '@/state/selectors';
@@ -14,21 +14,21 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-export function AppHomeHeader({ backDisabled }: AppHeaderProps) {
+export function AppHomeHeader({}: AppHeaderProps) {
   const { data: me } = useSelector(selectMe);
   const navigation = useNavigation();
   const { top } = useSafeAreaInsets();
   const { t } = useTranslation();
 
-  const handleBack = () => {
-    if (backDisabled) {
-      return;
-    }
+  // const handleBack = () => {
+  //   if (backDisabled) {
+  //     return;
+  //   }
 
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-    }
-  };
+  //   if (navigation.canGoBack()) {
+  //     navigation.goBack();
+  //   }
+  // };
 
   const handleOpenDrawer = () => {
     navigation.dispatch(DrawerActions.openDrawer());
@@ -57,14 +57,17 @@ export function AppHomeHeader({ backDisabled }: AppHeaderProps) {
           </AppText>
         </View>
 
-        <AppPressable
+        {/**
+         * this will be enabled post mlp, for mlp there is no notification concept
+         */}
+        {/* <AppPressable
           onPress={handleBack}
           accessibilityRole="button"
           accessibilityLabel="Notifications"
           className="h-10 w-10 items-center justify-center rounded-[14px] border border-primary-v2/20"
         >
           <AppIcon icon={Bell} size={32} className="text-link-v2" count={4} />
-        </AppPressable>
+        </AppPressable> */}
       </View>
     </View>
   );

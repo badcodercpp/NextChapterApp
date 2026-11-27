@@ -2,7 +2,6 @@ import { AppIcon, AppPressable, AppScreen, AppText } from '@/components';
 import {
   ArrowRight,
   CalendarDays,
-  ChevronLeft,
   Heart,
   Lock,
   Sprout,
@@ -10,33 +9,23 @@ import {
 } from 'lucide-react-native';
 import { Image, View } from 'react-native';
 
-import { LandingNavigationProp } from '@/features/Landing/navigation/types';
 import { selectApplicationConfig } from '@/state/selectors';
-import { useNavigation } from '@react-navigation/native';
+import { useRecoveryStartsToday } from './useRecoveryStartsToday';
 import { useSelector } from 'react-redux';
 
 export function RecoveryStartsTodayScreen() {
   const { data: applicationConfig } = useSelector(selectApplicationConfig);
-  const navigation = useNavigation<LandingNavigationProp>();
+  const { submitRecoveryStartsToday } = useRecoveryStartsToday();
 
   return (
     <AppScreen
       scroll
       safeArea={false}
       className="bg-background-v2"
-      contentClassName="grow items-center bg-background-v2 px-5 pb-6 pt-2"
+      contentClassName="grow items-center bg-background-v2 px-5 pb-6 pt-0"
     >
       <View className="w-full max-w-md flex-1">
-        <AppPressable
-          accessibilityRole="button"
-          accessibilityLabel="Go back"
-          className="h-10 w-10 items-center justify-center rounded-full border border-border-v2 bg-surface-v2"
-          onPress={() => navigation.goBack()}
-        >
-          <AppIcon icon={ChevronLeft} size={22} className="text-text-v2" />
-        </AppPressable>
-
-        <View className="items-center pb-6 pt-5">
+        <View className="items-center pb-6 pt-0">
           <View className="h-20 w-20 items-center justify-center rounded-3xl bg-primary-v2">
             <AppIcon icon={Sprout} size={34} className="text-on-primary-v2" />
           </View>
@@ -133,7 +122,7 @@ export function RecoveryStartsTodayScreen() {
             accessibilityRole="button"
             accessibilityLabel="Start My Journey"
             className="min-h-14 flex-row items-center justify-center rounded-2xl bg-primary-v2 px-4 py-4"
-            onPress={() => navigation.navigate('WhatBringsYouHere')}
+            onPress={submitRecoveryStartsToday}
           >
             <AppText
               variant="lg"
