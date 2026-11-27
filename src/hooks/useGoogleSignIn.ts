@@ -11,12 +11,23 @@ import {
 } from '@react-native-google-signin/google-signin';
 import { useCallback, useState } from 'react';
 
+import { AppDispatch } from '@/state';
+import { LandingNavigationProp } from '@/features/Landing/navigation/types';
+import { MasterFormData } from '@/form/types';
+import { setAuthTokens } from '@/state/slices/local/authtoken';
 import { showToast } from '@/components';
 import { useDeviceInfoSessionPayload } from './useDeviceInfoSessionPayload';
+import { useDispatch } from 'react-redux';
+import { useFormContext } from 'react-hook-form';
+import { useNavigation } from '@react-navigation/native';
 
 const useGoogleSignIn = () => {
   const [isAuthCallStarted, setIsAuthCallStarted] = useState<boolean>(false);
   const { getDeviceInfoSessionPayload } = useDeviceInfoSessionPayload();
+
+  const navigation = useNavigation<LandingNavigationProp>();
+  const dispatch = useDispatch<AppDispatch>();
+  const { getValues } = useFormContext<MasterFormData>();
 
   const [
     googleLogin,
@@ -65,15 +76,13 @@ const useGoogleSignIn = () => {
 
       // Store auth tokens here if needed.
       //
-      // dispatch(
-      //   setAuthTokens({
-      //     accessToken:
-      //       googleUserDetails.googleLogin.accessToken,
-      //     refreshToken:
-      //       googleUserDetails.googleLogin.refreshToken,
-      //     authStatus: 'authenticated',
-      //   }),
-      // );
+      dispatch(
+        setAuthTokens({
+          accessToken: googleUserDetails.googleLogin.accessToken,
+          refreshToken: googleUserDetails.googleLogin.refreshToken,
+          authStatus: 'authenticated',
+        }),
+      );
     } catch (error) {
       console.log(error, 'google login error');
 
@@ -98,7 +107,7 @@ const useGoogleSignIn = () => {
     } finally {
       setIsAuthCallStarted(false);
     }
-  }, [getDeviceInfoSessionPayload, googleLogin]);
+  }, [dispatch, getDeviceInfoSessionPayload, googleLogin]);
 
   const doGoogleOnboard = useCallback(async () => {
     try {
@@ -116,14 +125,28 @@ const useGoogleSignIn = () => {
       const deviceInfoSessionPayload: DeviceInfoInput =
         await getDeviceInfoSessionPayload();
 
+      const whatBringsYouHere = getValues('whatBringsYouHere');
+      const howLongHasItBeen = getValues('howLongHasItBeen');
+      const howAreYouFeeling = getValues('howAreYouFeeling');
+      const whatWouldYouLikeHelpWith = getValues('whatWouldYouLikeHelpWith');
+
       const googleUserDetails = await googleRegister({
         input: {
           idToken,
+          whatBringsYouHere,
+          howLongHasItBeen,
+          howAreYouFeeling,
+          whatWouldYouLikeHelpWith,
           ...deviceInfoSessionPayload,
         },
       }).unwrap();
 
       console.log('userInfo', googleSignInResponse, googleUserDetails);
+
+      navigation.navigate('RecoveryStartsToday', {
+        accessToken: googleUserDetails?.googleRegister?.accessToken ?? '',
+        refreshToken: googleUserDetails?.googleRegister?.refreshToken ?? '',
+      });
 
       // Store auth tokens here if needed.
       //
@@ -160,7 +183,7 @@ const useGoogleSignIn = () => {
     } finally {
       setIsAuthCallStarted(false);
     }
-  }, [getDeviceInfoSessionPayload, googleRegister]);
+  }, [getDeviceInfoSessionPayload, getValues, googleRegister, navigation]);
 
   const isLoading =
     isAuthCallStarted || isGoogleLoginLoading || isGoogleRegisterLoading;

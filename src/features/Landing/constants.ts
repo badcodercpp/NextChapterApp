@@ -22,7 +22,7 @@ import {
 } from 'lucide-react-native';
 import { Feature, Feeling, Goal, TRecoveryReason, Timeline } from './types';
 import {
-  RecoveryReason,
+  RecoveryProgram,
   RecoveryReasonCurrentFeeling,
   RecoveryReasonEndGoal,
   RecoveryReasonTimeline,
@@ -30,37 +30,37 @@ import {
 
 export const REASONS: TRecoveryReason[] = [
   {
-    id: RecoveryReason.Breakup,
+    id: RecoveryProgram.Breakup,
     title: 'Going through a breakup',
     description: 'Heal from heartbreak and move forward.',
     icon: HeartCrack,
   },
   {
-    id: RecoveryReason.Divorce,
+    id: RecoveryProgram.Divorce,
     title: 'Divorce / Separation',
     description: 'Find peace after a relationship ends.',
     icon: HeartMinus,
   },
   {
-    id: RecoveryReason.Grief,
+    id: RecoveryProgram.Grief,
     title: 'Grief & Loss',
     description: 'Navigate loss with gentle support.',
     icon: CloudRain,
   },
   {
-    id: RecoveryReason.Lonely,
+    id: RecoveryProgram.Lonely,
     title: 'Feeling Lonely',
     description: 'Reconnect with yourself and others.',
     icon: Moon,
   },
   {
-    id: RecoveryReason.Burnout,
+    id: RecoveryProgram.Burnout,
     title: 'Burnout',
     description: 'Recharge mentally and emotionally.',
     icon: Brain,
   },
   {
-    id: RecoveryReason.Growth,
+    id: RecoveryProgram.Growth,
     title: 'Personal Growth',
     description: 'Become the best version of yourself.',
     icon: Sparkles,

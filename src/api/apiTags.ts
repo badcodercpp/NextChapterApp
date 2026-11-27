@@ -24,9 +24,6 @@ export const enhancedApi = api.enhanceEndpoints({
     GetRecoveryGoal: {
       providesTags: ['Recovery'],
     },
-    GetRecoveryReason: {
-      providesTags: ['Recovery'],
-    },
     GetRecoveryTimeline: {
       providesTags: ['Recovery'],
     },

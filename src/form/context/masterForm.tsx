@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import {
-  RecoveryReason,
+  RecoveryProgram,
   RecoveryReasonCurrentFeeling,
   RecoveryReasonEndGoal,
   RecoveryReasonTimeline,
@@ -21,7 +21,7 @@ export function MasterFormProvider({
     resolver: zodResolver(masterSchema),
     mode: 'onTouched',
     defaultValues: {
-      whatBringsYouHere: RecoveryReason.Breakup,
+      whatBringsYouHere: RecoveryProgram.Breakup,
       howLongHasItBeen: RecoveryReasonTimeline.Today,
       howAreYouFeeling: [
         RecoveryReasonCurrentFeeling.Heartbroken,

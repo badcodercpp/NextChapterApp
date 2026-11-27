@@ -1,5 +1,5 @@
 import * as z from 'zod';
 
-import { RecoveryReason } from '@/__generated__/graphql';
+import { RecoveryProgram } from '@/__generated__/graphql';
 
-export const whatBringsYouHereSchema = z.enum(RecoveryReason);
+export const whatBringsYouHereSchema = z.enum(RecoveryProgram);

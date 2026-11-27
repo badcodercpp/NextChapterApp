@@ -1,6 +1,7 @@
 import {
   AppIcon,
   AppInput,
+  AppLoadingModal,
   AppPressable,
   AppScreen,
   AppText,
@@ -40,6 +41,7 @@ export function CreatePasswordScreen() {
     errors,
     submitCreatePassword,
     clearErrors,
+    isPending,
   } = useCreatePassword();
 
   const email = useWatch({ control, name: 'createAccount.email' });
@@ -268,6 +270,10 @@ export function CreatePasswordScreen() {
           Your privacy is our privacy.
         </AppText>
       </View>
+      <AppLoadingModal
+        visible={isPending}
+        message="Please wait attempting to onboard you ..."
+      />
     </AppScreen>
   );
 }

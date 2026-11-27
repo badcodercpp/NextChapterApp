@@ -1,5 +1,6 @@
 import {
   AppIcon,
+  AppLoadingModal,
   AppOtpTimer,
   AppPressable,
   AppScreen,
@@ -29,6 +30,7 @@ export function VerifyEmailScreen() {
     submitVerifyEmail,
     navigation,
     clearErrors,
+    isPending,
   } = useVerifyEmail();
   const inputRefs = useRef<Array<TextInput | null>>([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -270,6 +272,10 @@ export function VerifyEmailScreen() {
           }}
         />
       </View>
+      <AppLoadingModal
+        visible={isPending}
+        message="Please wait verifying your email ..."
+      />
     </AppScreen>
   );
 }

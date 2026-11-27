@@ -1,11 +1,14 @@
+import { DeviceInfoInput, useRegisterMutation } from '@/__generated__/graphql';
 import { PasswordStrength, PasswordStrengthResult } from './types';
+import { getApiErrorMessage, mapZodErrorsToForm } from '@/utils';
 import { useCallback, useState } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import { LandingNavigationProp } from '@/features/Landing/navigation/types';
 import { MasterFormData } from '@/form/types';
 import { createPasswordSchema } from '@/form';
-import { mapZodErrorsToForm } from '@/utils';
-import { useFormContext, useWatch } from 'react-hook-form';
+import { showToast } from '@/components';
+import { useDeviceInfoSessionPayload } from '@/hooks/useDeviceInfoSessionPayload';
 import { useNavigation } from '@react-navigation/native';
 
 export function getPasswordStrength(password: string): PasswordStrengthResult {
@@ -39,15 +42,21 @@ export function getPasswordStrength(password: string): PasswordStrengthResult {
 }
 
 export const useCreatePassword = () => {
-  const navigation = useNavigation<LandingNavigationProp>();
+  const [isPending, setIsPending] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
 
+  const navigation = useNavigation<LandingNavigationProp>();
+
+  const [triggerRegisterMutation] = useRegisterMutation();
+  const { getDeviceInfoSessionPayload } = useDeviceInfoSessionPayload();
+
   const {
     control,
     formState: { errors },
+    getValues,
     setError,
     clearErrors,
   } = useFormContext<MasterFormData>();
@@ -74,8 +83,48 @@ export const useCreatePassword = () => {
       });
       return;
     }
-    navigation.navigate('VerifyEmail');
-  }, [navigation, setError, clearErrors, password, confirmPassword]);
+    const deviceInfoSessionPayload: DeviceInfoInput =
+      await getDeviceInfoSessionPayload();
+
+    const displayName = getValues('createAccount.fullName');
+    const email = getValues('createAccount.email');
+    const whatBringsYouHere = getValues('whatBringsYouHere');
+    const howLongHasItBeen = getValues('howLongHasItBeen');
+    const howAreYouFeeling = getValues('howAreYouFeeling');
+    const whatWouldYouLikeHelpWith = getValues('whatWouldYouLikeHelpWith');
+
+    try {
+      setIsPending(true);
+      await triggerRegisterMutation({
+        input: {
+          displayName,
+          email,
+          password,
+          whatBringsYouHere,
+          howLongHasItBeen,
+          howAreYouFeeling,
+          whatWouldYouLikeHelpWith,
+          ...deviceInfoSessionPayload,
+        },
+      });
+      setIsPending(false);
+      navigation.navigate('VerifyEmail');
+    } catch (error) {
+      console.log('error', error);
+      showToast(getApiErrorMessage(error), 'error');
+    } finally {
+      setIsPending(false);
+    }
+  }, [
+    password,
+    confirmPassword,
+    getDeviceInfoSessionPayload,
+    getValues,
+    navigation,
+    setError,
+    clearErrors,
+    triggerRegisterMutation,
+  ]);
 
   return {
     password,
@@ -89,5 +138,6 @@ export const useCreatePassword = () => {
     errors,
     submitCreatePassword,
     clearErrors,
+    isPending,
   };
 };

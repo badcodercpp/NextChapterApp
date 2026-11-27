@@ -17,7 +17,10 @@ export type LandingStackParamList = {
 
   [LandingRoutes.Reminder]: undefined;
 
-  [LandingRoutes.RecoveryStartsToday]: undefined;
+  [LandingRoutes.RecoveryStartsToday]?: {
+    accessToken?: string;
+    refreshToken?: string;
+  };
 
   [LandingRoutes.Login]: undefined;
 
