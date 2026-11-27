@@ -1,15 +1,18 @@
 import {
+  AppHeroArtwork,
   AppIcon,
   AppInput,
+  AppMountainArtwork,
   AppPressable,
   AppScreen,
   AppText,
 } from '@/components';
 import { ArrowRight, Eye, EyeOff, Lock, Mail } from 'lucide-react-native';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 import { usePreventBackNavigation, useScreenHeader } from '@/navigation/hooks';
 
 import { Controller } from 'react-hook-form';
+import { AuthHeader } from '@/features/Landing/components/AuthHeader';
 import { GoogleAuthButton } from '@/features/Landing/components/GoogleAuthButton';
 import useGoogleSignIn from '@/hooks/useGoogleSignIn';
 import { useLogin } from './useLogin';
@@ -46,25 +49,14 @@ export function LoginScreen() {
       contentClassName="grow items-center bg-background-v2 px-4 pb-8 pt-4"
     >
       <View className="w-full max-w-md">
-        <View className="items-center pb-6">
-          <Image
-            source={require('@/assets/images/logo.png')}
-            resizeMode="contain"
-            className="h-24 w-24 rounded-full"
-            accessibilityLabel="Outdated.me logo"
-          />
-          <AppText
-            variant="4xl"
-            className="mt-3 text-center font-bold text-text-v2"
-          >
-            Outdated.me
-          </AppText>
-          <AppText variant="md" className="mt-2 text-center text-text-muted-v2">
-            Your healing journey starts here
-          </AppText>
-        </View>
+        <AuthHeader
+          title="Outdated.me"
+          subtitle="Your healing journey starts here"
+        />
 
-        <View className="rounded-3xl border border-border-v2 bg-surface-v2 p-5">
+        <View className="overflow-hidden rounded-3xl border border-primary-v2/25 bg-surface-v2 p-5">
+          <AppHeroArtwork />
+          <AppMountainArtwork className="h-1/2 w-1/2" />
           <View className="mb-6 flex-row rounded-2xl border border-border-v2 bg-input-v2 p-1">
             <View
               accessibilityRole="tab"

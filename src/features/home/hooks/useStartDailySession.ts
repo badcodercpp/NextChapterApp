@@ -8,6 +8,7 @@ import { useHomeBootstrapQueries } from './useHomeBootstrapQueries';
 import { useSelector } from 'react-redux';
 import { useTabNavigation } from '@/navigation/Tab/hooks/useTabNavigation';
 import { useUserAccess } from '@/hooks';
+import { useCardAccess } from '@/components/foundation/AppCard/CardAccess';
 
 export const useStartDailySession = () => {
   const [dailySessionMetadataProcessing, setDailySessionMetadataProcessing] =
@@ -22,6 +23,7 @@ export const useStartDailySession = () => {
   } = useSelector(selectActiveDailySession);
 
   const { canProceed } = useUserAccess();
+  const cardAccess = useCardAccess();
 
   const { getNextStepScreenName } = useActiveSessionStepNavigation();
 
@@ -29,6 +31,10 @@ export const useStartDailySession = () => {
 
   const startNewOrResumeCurrentDailySession = useCallback(async () => {
     try {
+      if (cardAccess?.locked) {
+        cardAccess.openPremium();
+        return;
+      }
       if (!canProceed()) {
         return;
       }
@@ -70,6 +76,7 @@ export const useStartDailySession = () => {
     activeDailySession,
     activeDailySessionLoading,
     activeDailySessionLoadingError,
+    cardAccess,
     canProceed,
     getNextStepScreenName,
     navigation,

@@ -11,6 +11,7 @@ import {
 import { useCallback, useMemo } from 'react';
 
 import { ConversationRole } from '@/__generated__/graphql';
+import { CardAccessBoundary } from '@/components/foundation/AppCard/CardAccess';
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 
@@ -65,21 +66,27 @@ export function FollowUpChats({}: FollowUpChatsProps) {
 
   return (
     <View className="flex-1">
-      <AssistantChatMessageCard
-        themed
-        content={
-          todayQuestionContent?.content ?? todayQuestionContent?.question ?? ''
-        }
-        createdAt={todayQuestionContent?.createdAt?.toString() ?? ''}
-      />
+      <CardAccessBoundary>
+        <AssistantChatMessageCard
+          themed
+          content={
+            todayQuestionContent?.content ??
+            todayQuestionContent?.question ??
+            ''
+          }
+          createdAt={todayQuestionContent?.createdAt?.toString() ?? ''}
+        />
+      </CardAccessBoundary>
       {todayUserReplyContent && (
         <View className="mt-4">
-          <UserChatMessageCard
-            themed
-            content={todayUserReplyContent?.content ?? ''}
-            createdAt={todayUserReplyContent?.createdAt?.toString() ?? ''}
-            userName={me?.displayName ?? ''}
-          />
+          <CardAccessBoundary>
+            <UserChatMessageCard
+              themed
+              content={todayUserReplyContent?.content ?? ''}
+              createdAt={todayUserReplyContent?.createdAt?.toString() ?? ''}
+              userName={me?.displayName ?? ''}
+            />
+          </CardAccessBoundary>
         </View>
       )}
 
@@ -112,12 +119,14 @@ export function FollowUpChats({}: FollowUpChatsProps) {
               className="mt-4"
               key={`user_question_cont_${index.toString()}`}
             >
-              <UserChatMessageCard
-                themed
-                content={item?.content ?? ''}
-                createdAt={item?.createdAt?.toString() ?? ''}
-                userName={me?.displayName ?? ''}
-              />
+              <CardAccessBoundary>
+                <UserChatMessageCard
+                  themed
+                  content={item?.content ?? ''}
+                  createdAt={item?.createdAt?.toString() ?? ''}
+                  userName={me?.displayName ?? ''}
+                />
+              </CardAccessBoundary>
             </View>
           );
         })}

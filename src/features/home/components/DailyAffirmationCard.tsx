@@ -1,6 +1,7 @@
 import { AppCard, AppIcon, AppPressable, AppText } from '@/components';
 
 import { ChevronRight, Sparkles } from 'lucide-react-native';
+import { useCardAccess } from '@/components/foundation/AppCard/CardAccess';
 import { View } from 'react-native';
 import { selectMotivationalMessage } from '@/state/selectors';
 import { useSelector } from 'react-redux';
@@ -14,13 +15,17 @@ interface DailyAffirmationCardProps {
 
 export function DailyAffirmationCard({ onPress }: DailyAffirmationCardProps) {
   const { t } = useTranslation();
+  const access = useCardAccess();
   const { data: motivationalMessage } = useSelector(selectMotivationalMessage);
 
   const title = t('app.locale.home.dailyAffirmationCard.title');
   const subtitle = t('app.locale.home.dailyAffirmationCard.description');
 
   return (
-    <AppPressable onPress={onPress}>
+    <AppPressable
+      accessible={!access?.locked}
+      onPress={access?.locked ? access.openPremium : onPress}
+    >
       <AppCard className="overflow-hidden rounded-[24px] border border-primary-v2/25 bg-background-v2 px-4 py-4">
         <View
           pointerEvents="none"

@@ -3,16 +3,25 @@ import { ArrowRight, Crown } from 'lucide-react-native';
 
 import React from 'react';
 import { View } from 'react-native';
+import { selectIsPremiumUser } from '@/state/selectors';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   onPress?: () => void;
 }
 
 export function DrawerPremiumCard({ onPress }: Props) {
+  const isPremium = useSelector(selectIsPremiumUser);
+  const { t } = useTranslation();
+  const label = t(
+    isPremium ? 'app.locale.premium.upgrade' : 'app.locale.premium.go',
+  );
+
   return (
     <AppPressable
       accessibilityRole="button"
-      accessibilityLabel="Go Premium"
+      accessibilityLabel={label}
       onPress={onPress}
       className="mx-4 flex-row items-center rounded-3xl border border-primary/60 bg-primary/25 p-3"
     >
@@ -22,7 +31,7 @@ export function DrawerPremiumCard({ onPress }: Props) {
 
       <View className="ml-3 flex-1">
         <AppText variant="lg" className="font-bold text-text">
-          Go Premium
+          {label}
         </AppText>
         <AppText variant="xs" className="text-text-secondary">
           Unlock all journeys.

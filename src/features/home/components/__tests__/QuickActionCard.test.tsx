@@ -4,6 +4,8 @@ import { AppCard } from '@/components';
 import { BookOpen } from 'lucide-react-native';
 import { QuickActionCard } from '../QuickActionCard';
 
+let mockCardAccess: { locked: boolean; openPremium: () => void } | null = null;
+
 jest.mock('@/components', () => {
   const { View, Text, Pressable } = jest.requireActual('react-native');
   return {
@@ -19,9 +21,15 @@ jest.mock('@/components', () => {
   };
 });
 jest.mock('lucide-react-native', () => ({ BookOpen: 'BookOpen' }));
+jest.mock('@/components/foundation/AppCard/CardAccess', () => ({
+  useCardAccess: () => mockCardAccess,
+}));
 
 let screen: ReactTestRenderer;
-afterEach(() => act(() => screen?.unmount()));
+afterEach(() => {
+  act(() => screen?.unmount());
+  mockCardAccess = null;
+});
 
 test.each(['text-primary', 'text-secondary'])(
   '%s accent does not replace the semantic card border or its action',
@@ -50,3 +58,35 @@ test.each(['text-primary', 'text-secondary'])(
     expect(JSON.stringify(screen.toJSON())).toContain('Reflect on today');
   },
 );
+
+test('redirects a locked card to premium but keeps exempt cards accessible', () => {
+  const openPremium = jest.fn();
+  const onPress = jest.fn();
+  mockCardAccess = { locked: true, openPremium };
+
+  const card = (lockExempt = false) => (
+    <QuickActionCard
+      icon={BookOpen}
+      title="AI Coach"
+      description="Chat"
+      actionLabel="Open"
+      onPress={onPress}
+      lockExempt={lockExempt}
+    />
+  );
+  act(() => {
+    screen = create(card());
+  });
+  let action = screen.root.findByProps({ className: 'w-[48%]' });
+  expect(action.props.accessible).toBe(false);
+  act(() => action.props.onPress());
+  expect(openPremium).toHaveBeenCalledTimes(1);
+  expect(onPress).not.toHaveBeenCalled();
+
+  act(() => screen.update(card(true)));
+  action = screen.root.findByProps({ className: 'w-[48%]' });
+  expect(action.props.accessible).toBe(true);
+  expect(screen.root.findByType(AppCard).props.lockExempt).toBe(true);
+  act(() => action.props.onPress());
+  expect(onPress).toHaveBeenCalledTimes(1);
+});

@@ -3,6 +3,7 @@ import {
   useCompleteDailySessionMutation,
   useLazyActiveDailySessionQuery,
   useLazyCurrentSessionReflectionQuery,
+  useLazyMyAccessQuery,
   useUpdateReflectionMutation,
 } from '@/__generated__/graphql';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -39,6 +40,7 @@ export const useDailySessionReflectStep = () => {
   const [triggerCompleteDailySessionMutation] =
     useCompleteDailySessionMutation();
   const [triggerLazyActiveDailySessionQuery] = useLazyActiveDailySessionQuery();
+  const [refreshAccess] = useLazyMyAccessQuery();
 
   const getCurrntSessionReflection = useCallback(async () => {
     try {
@@ -69,7 +71,10 @@ export const useDailySessionReflectStep = () => {
         },
       });
       await triggerLazyCurrentSessionReflectionQuery();
-      await triggerCompleteDailySessionMutation();
+      await triggerCompleteDailySessionMutation().unwrap();
+      refreshAccess()
+        .unwrap()
+        .catch(error => console.error('Unable to refresh access:', error));
       await triggerLazyActiveDailySessionQuery();
       updateDailySessionStep(DailySessionStep.Completed);
       navigation.navigate('DailySessionCompleteStep');
@@ -82,6 +87,7 @@ export const useDailySessionReflectStep = () => {
   }, [
     getValues,
     navigation,
+    refreshAccess,
     triggerCompleteDailySessionMutation,
     triggerLazyActiveDailySessionQuery,
     triggerLazyCurrentSessionReflectionQuery,
