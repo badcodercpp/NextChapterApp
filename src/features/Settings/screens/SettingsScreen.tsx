@@ -80,7 +80,7 @@ export const SettingsScreen = () => {
               </AppText>
             </AppText>
             <AppText variant="sm" className="mt-1 text-text-muted-v2">
-              Customize your Outdated.me experience
+              Customize your KhudSe experience
             </AppText>
           </View>
         </View>

@@ -1,7 +1,7 @@
 import {
   AppButton,
-  AppPatternArtwork,
   AppIcon,
+  AppPatternArtwork,
   AppPressable,
   AppScreen,
   AppText,
@@ -17,19 +17,19 @@ import {
   UserPlus,
   Users,
 } from 'lucide-react-native';
-import { StyleSheet, View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-
 import {
   REFERRALS_FOR_REWARD,
   buildInviteMessage,
   buildReferralCode,
   shareText,
 } from '../referral';
+import { StyleSheet, View } from 'react-native';
+
+import LinearGradient from 'react-native-linear-gradient';
 import { selectMe } from '@/state/selectors';
 import { showToast } from '@/components/Toast';
-import { useSelector } from 'react-redux';
 import { useCSSVariable } from 'uniwind';
+import { useSelector } from 'react-redux';
 
 const STEPS = [
   {
@@ -107,7 +107,7 @@ export function ReferralRewardsScreen() {
       <View className="flex-row items-center">
         <View className="flex-1 pr-2">
           <AppText variant="md" className="font-semibold text-primary-v2">
-            Outdated.me
+            KhudSe
           </AppText>
           <AppText variant="4xl" className="mt-2 font-bold text-text-v2">
             Earn Rewards
@@ -140,7 +140,7 @@ export function ReferralRewardsScreen() {
       <AppText variant="md" className="mt-3 text-text-muted-v2">
         Invite friends to join{' '}
         <AppText variant="md" className="font-semibold text-text-v2">
-          Outdated.me
+          KhudSe
         </AppText>{' '}
         and unlock premium benefits for both of you.
       </AppText>

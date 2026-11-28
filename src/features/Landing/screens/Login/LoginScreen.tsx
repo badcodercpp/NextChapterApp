@@ -8,12 +8,12 @@ import {
   AppText,
 } from '@/components';
 import { ArrowRight, Eye, EyeOff, Lock, Mail } from 'lucide-react-native';
-import { View } from 'react-native';
 import { usePreventBackNavigation, useScreenHeader } from '@/navigation/hooks';
 
-import { Controller } from 'react-hook-form';
 import { AuthHeader } from '@/features/Landing/components/AuthHeader';
+import { Controller } from 'react-hook-form';
 import { GoogleAuthButton } from '@/features/Landing/components/GoogleAuthButton';
+import { View } from 'react-native';
 import useGoogleSignIn from '@/hooks/useGoogleSignIn';
 import { useLogin } from './useLogin';
 
@@ -50,7 +50,7 @@ export function LoginScreen() {
     >
       <View className="w-full max-w-md">
         <AuthHeader
-          title="Outdated.me"
+          title="KhudSe"
           subtitle="Your healing journey starts here"
         />
 

@@ -50,7 +50,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     appDelegate.window = window
 
     factory.startReactNative(
-      withModuleName: "Outdated Me",
+      withModuleName: "KhudSe",
       in: window,
       launchOptions: appDelegate.launchOptions
     )

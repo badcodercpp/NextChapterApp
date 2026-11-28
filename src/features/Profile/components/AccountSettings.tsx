@@ -118,7 +118,7 @@ export function AccountSettings({
       {/* Footer */}
       <View className="mt-4 items-center px-4">
         <AppText variant="sm" className="text-center text-text-muted-v2/60">
-          Outdated.me {version} • Made with 💜 Naz
+          KhudSe {version} • Made with 💜 Naz
         </AppText>
       </View>
     </View>

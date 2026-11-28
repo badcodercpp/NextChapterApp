@@ -1,7 +1,7 @@
 import {
   AppButton,
-  AppPatternArtwork,
   AppIcon,
+  AppPatternArtwork,
   AppPressable,
   AppScreen,
   AppText,
@@ -18,21 +18,21 @@ import {
   UserPlus,
   Users,
 } from 'lucide-react-native';
-import { StyleSheet, View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import { useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { ReferToFriendStackParamList } from '../navigation/types';
-
 import {
   DISCOUNT_PERCENT,
   REFERRAL_BASE_URL,
   buildReferralCode,
   shareText,
 } from '../referral';
+import { StyleSheet, View } from 'react-native';
+
+import LinearGradient from 'react-native-linear-gradient';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { ReferToFriendStackParamList } from '../navigation/types';
 import { selectMe } from '@/state/selectors';
-import { useSelector } from 'react-redux';
 import { useCSSVariable } from 'uniwind';
+import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 const STEPS = [
   {
@@ -94,7 +94,7 @@ export function ReferToFriendScreen() {
 
   const handleInvite = () =>
     shareText(
-      `Join me on Outdated.me and let's support each other's wellness journey. Use my code ${referralCode} for ${DISCOUNT_PERCENT}% off: ${referralLink}`,
+      `Join me on KhudSe and let's support each other's wellness journey. Use my code ${referralCode} for ${DISCOUNT_PERCENT}% off: ${referralLink}`,
     );
 
   return (
@@ -108,13 +108,13 @@ export function ReferToFriendScreen() {
       <View className="flex-row items-center">
         <View className="flex-1 pr-3">
           <AppText variant="sm" className="font-semibold text-primary-v2">
-            Outdated.me
+            KhudSe
           </AppText>
           <AppText variant="3xl" className="mt-1 font-bold text-text-v2">
             Refer a Friend
           </AppText>
           <AppText variant="sm" className="mt-2 text-text-muted-v2">
-            Invite your friends to Outdated.me and support each other's wellness
+            Invite your friends to KhudSe and support each other's wellness
             journey.
           </AppText>
         </View>
