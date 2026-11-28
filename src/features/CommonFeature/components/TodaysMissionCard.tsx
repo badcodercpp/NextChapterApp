@@ -74,14 +74,16 @@ export function TodaysMissionCard({
         </AppText>
       </View>
       <AppText variant="xl" className="mt-3 font-bold text-text-v2">
-        {missionTitle ?? title}
+        {missionTitle || t('app.locale.locked.todaysMission.title') || title}
       </AppText>
       <View className="mt-2 flex-row items-center">
         <AppText
           variant="md"
           className="flex-1 pr-4 leading-6 text-text-muted-v2"
         >
-          {todayMission?.description ?? description}
+          {todayMission?.description ||
+            t('app.locale.locked.todaysMission.desc') ||
+            description}
         </AppText>
 
         <View className="h-24 w-24 shrink-0 items-center justify-center rounded-[26px] border border-primary-v2/40 bg-primary-v2/20">

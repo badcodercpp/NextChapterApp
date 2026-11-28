@@ -130,6 +130,13 @@ export const mlLanguage = {
   'app.locale.confirm.confirm': 'സ്ഥിരീകരിക്കുക',
   'app.locale.confirm.next': 'അടുത്തത്',
   'app.locale.confirm.stay': 'ഇവിടെ തുടരുക',
+
+  // locked state details
+  'app.locale.locked.todaysQuestion.desc':
+    'Your next question is waiting for you. Unlock Premium to continue exploring your emotions.',
+  'app.locale.locked.todaysMission.title': 'Your Next Mission',
+  'app.locale.locked.todaysMission.desc':
+    'A new step in your healing journey is waiting. Unlock Premium to continue your daily growth.',
 };
 
 export default mlLanguage;

@@ -127,6 +127,13 @@ export const hiLanguage = {
   'app.locale.confirm.confirm': 'पुष्टि करें',
   'app.locale.confirm.next': 'अगला',
   'app.locale.confirm.stay': 'यहीं रहें',
+
+  // locked state details
+  'app.locale.locked.todaysQuestion.desc':
+    'Your next question is waiting for you. Unlock Premium to continue exploring your emotions.',
+  'app.locale.locked.todaysMission.title': 'Your Next Mission',
+  'app.locale.locked.todaysMission.desc':
+    'A new step in your healing journey is waiting. Unlock Premium to continue your daily growth.',
 };
 
 export default hiLanguage;

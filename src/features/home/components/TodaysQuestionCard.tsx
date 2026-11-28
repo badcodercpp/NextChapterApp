@@ -1,17 +1,17 @@
 import { AppButton, AppCard, AppIcon, AppText } from '@/components';
 import {
+  ArrowRight,
+  CalendarDays,
+  PencilLine,
+  Target,
+} from 'lucide-react-native';
+import {
   selectApplicationConfig,
   selectTodayQuestion,
 } from '@/state/selectors';
 import { useCallback, useMemo } from 'react';
 
 import { ConversationRole } from '@/__generated__/graphql';
-import {
-  ArrowRight,
-  CalendarDays,
-  PencilLine,
-  Target,
-} from 'lucide-react-native';
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -38,6 +38,8 @@ export function TodaysQuestionCard({
   const todayFocusContent = useMemo(() => {
     return getTodayFocusContent();
   }, [getTodayFocusContent]);
+
+  console.log('todayFocusContent', todayFocusContent);
 
   const { t } = useTranslation();
 
@@ -89,7 +91,7 @@ export function TodaysQuestionCard({
             variant="md"
             className="font-semibold leading-6 text-text-v2"
           >
-            {todayFocusContent}
+            {todayFocusContent || t('app.locale.locked.todaysQuestion.desc')}
           </AppText>
         </View>
       </View>

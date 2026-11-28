@@ -126,6 +126,13 @@ export const paLanguage = {
   'app.locale.confirm.confirm': 'ਪੁਸ਼ਟੀ ਕਰੋ',
   'app.locale.confirm.next': 'ਅੱਗੇ',
   'app.locale.confirm.stay': 'ਇੱਥੇ ਰਹੋ',
+
+  // locked state details
+  'app.locale.locked.todaysQuestion.desc':
+    'Your next question is waiting for you. Unlock Premium to continue exploring your emotions.',
+  'app.locale.locked.todaysMission.title': 'Your Next Mission',
+  'app.locale.locked.todaysMission.desc':
+    'A new step in your healing journey is waiting. Unlock Premium to continue your daily growth.',
 };
 
 export default paLanguage;

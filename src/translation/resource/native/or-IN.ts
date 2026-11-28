@@ -129,6 +129,13 @@ export const orLanguage = {
   'app.locale.confirm.confirm': 'ନିଶ୍ଚିତ କରନ୍ତୁ',
   'app.locale.confirm.next': 'ପରବର୍ତ୍ତୀ',
   'app.locale.confirm.stay': 'ଏଠାରେ ରୁହନ୍ତୁ',
+
+  // locked state details
+  'app.locale.locked.todaysQuestion.desc':
+    'Your next question is waiting for you. Unlock Premium to continue exploring your emotions.',
+  'app.locale.locked.todaysMission.title': 'Your Next Mission',
+  'app.locale.locked.todaysMission.desc':
+    'A new step in your healing journey is waiting. Unlock Premium to continue your daily growth.',
 };
 
 export default orLanguage;

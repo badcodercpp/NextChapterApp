@@ -127,6 +127,13 @@ export const guLanguage = {
   'app.locale.confirm.confirm': 'પુષ્ટિ કરો',
   'app.locale.confirm.next': 'આગળ',
   'app.locale.confirm.stay': 'અહીં જ રહો',
+
+  // locked state details
+  'app.locale.locked.todaysQuestion.desc':
+    'Your next question is waiting for you. Unlock Premium to continue exploring your emotions.',
+  'app.locale.locked.todaysMission.title': 'Your Next Mission',
+  'app.locale.locked.todaysMission.desc':
+    'A new step in your healing journey is waiting. Unlock Premium to continue your daily growth.',
 };
 
 export default guLanguage;

@@ -128,6 +128,13 @@ export const bnLanguage = {
   'app.locale.confirm.confirm': 'নিশ্চিত করুন',
   'app.locale.confirm.next': 'পরবর্তী',
   'app.locale.confirm.stay': 'এখানেই থাকুন',
+
+  // locked state details
+  'app.locale.locked.todaysQuestion.desc':
+    'Your next question is waiting for you. Unlock Premium to continue exploring your emotions.',
+  'app.locale.locked.todaysMission.title': 'Your Next Mission',
+  'app.locale.locked.todaysMission.desc':
+    'A new step in your healing journey is waiting. Unlock Premium to continue your daily growth.',
 };
 
 export default bnLanguage;
