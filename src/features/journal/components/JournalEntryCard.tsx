@@ -1,6 +1,6 @@
 import { AppCard, AppExpandableText, AppIcon, AppText } from '@/components';
-import { CalendarDays } from 'lucide-react-native';
 
+import { CalendarDays } from 'lucide-react-native';
 import { JournalEntryMenu } from './JournalEntryMenu';
 import { JournalRoutes } from '@/features/journal/navigation';
 import { RecentJournalEntriesQuery } from '@/__generated__/graphql';
@@ -13,12 +13,17 @@ type JournalEntry = RecentJournalEntriesQuery['recentJournalEntries'][0];
 export function JournalEntryCard({
   entry,
   origin,
+  lockExempt,
 }: {
   entry: JournalEntry;
   origin: keyof typeof JournalRoutes;
+  lockExempt?: boolean;
 }) {
   return (
-    <AppCard className="mb-4 rounded-[26px] border border-primary-v2/30 bg-background-v2 p-4">
+    <AppCard
+      lockExempt={lockExempt}
+      className="mb-4 rounded-[26px] border border-primary-v2/30 bg-background-v2 p-4"
+    >
       <View
         pointerEvents="none"
         className="absolute inset-0 overflow-hidden rounded-[26px]"

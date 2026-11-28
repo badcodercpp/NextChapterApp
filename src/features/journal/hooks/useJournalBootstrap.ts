@@ -107,6 +107,14 @@ export const useJournalBootstrap = () => {
         },
       });
       setValue([]);
+    } else {
+      reset({
+        createOrUpdateJournal: {
+          title: '',
+          content: '',
+        },
+      });
+      setValue([]);
     }
   }, [isFocused, reset]);
 

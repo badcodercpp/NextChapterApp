@@ -1,4 +1,5 @@
 import { AppContentLoader, AppIcon, AppText } from '@/components';
+import { BookOpen, ChevronRight } from 'lucide-react-native';
 import {
   JournalRoutes,
   JournalStackParamList,
@@ -6,7 +7,6 @@ import {
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Pressable, View } from 'react-native';
 
-import { BookOpen, ChevronRight } from 'lucide-react-native';
 import { JournalEntryCard } from './JournalEntryCard';
 import React from 'react';
 import { selectRecentJournalEntries } from '@/state/selectors/api/recentJournalEntries';
@@ -14,9 +14,10 @@ import { useSelector } from 'react-redux';
 
 interface JournalEntriesProps {
   origin: keyof typeof JournalRoutes;
+  lockExempt?: boolean;
 }
 
-export function JournalEntries({ origin }: JournalEntriesProps) {
+export function JournalEntries({ origin, lockExempt }: JournalEntriesProps) {
   const { data: recentJournalEntries, loading } = useSelector(
     selectRecentJournalEntries,
   );
@@ -55,7 +56,12 @@ export function JournalEntries({ origin }: JournalEntriesProps) {
       ) : (
         <>
           {recentJournalEntries?.map(entry => (
-            <JournalEntryCard key={entry.id} entry={entry} origin={origin} />
+            <JournalEntryCard
+              key={entry.id}
+              entry={entry}
+              origin={origin}
+              lockExempt={lockExempt}
+            />
           ))}
         </>
       )}

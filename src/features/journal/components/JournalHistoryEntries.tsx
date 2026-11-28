@@ -8,9 +8,13 @@ import { useSelector } from 'react-redux';
 
 interface JournalHistoryEntriesProps {
   origin: keyof typeof JournalRoutes;
+  lockExempt?: boolean;
 }
 
-export function JournalHistoryEntries({ origin }: JournalHistoryEntriesProps) {
+export function JournalHistoryEntries({
+  origin,
+  lockExempt,
+}: JournalHistoryEntriesProps) {
   const { data: recentJournalEntries, loading } = useSelector(
     selectMyJournalEntries,
   );
@@ -29,7 +33,12 @@ export function JournalHistoryEntries({ origin }: JournalHistoryEntriesProps) {
       ) : (
         <>
           {recentJournalEntries?.map(entry => (
-            <JournalEntryCard key={entry.id} entry={entry} origin={origin} />
+            <JournalEntryCard
+              key={entry.id}
+              entry={entry}
+              origin={origin}
+              lockExempt={lockExempt}
+            />
           ))}
         </>
       )}

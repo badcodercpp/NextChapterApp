@@ -1,9 +1,9 @@
 import { AppCard, AppIcon, AppPressable, AppText } from '@/components';
-
 import { ChevronRight, Sparkles } from 'lucide-react-native';
-import { useCardAccess } from '@/components/foundation/AppCard/CardAccess';
+
 import { View } from 'react-native';
 import { selectMotivationalMessage } from '@/state/selectors';
+import { useCardAccess } from '@/components/foundation/AppCard/CardAccess';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -26,7 +26,10 @@ export function DailyAffirmationCard({ onPress }: DailyAffirmationCardProps) {
       accessible={!access?.locked}
       onPress={access?.locked ? access.openPremium : onPress}
     >
-      <AppCard className="overflow-hidden rounded-[24px] border border-primary-v2/25 bg-background-v2 px-4 py-4">
+      <AppCard
+        lockExempt
+        className="overflow-hidden rounded-[24px] border border-primary-v2/25 bg-background-v2 px-4 py-4"
+      >
         <View
           pointerEvents="none"
           className="absolute -bottom-16 -right-12 h-28 w-48 rounded-full bg-primary-v2/10"

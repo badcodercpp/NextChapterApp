@@ -1,3 +1,10 @@
+import {
+  ActivityIndicator,
+  Modal,
+  Pressable,
+  ScrollView,
+  View,
+} from 'react-native';
 import { AppCard, AppIcon, AppPressable, AppText } from '@/components';
 import {
   ArrowDownRight,
@@ -7,13 +14,6 @@ import {
   TrendingUp,
   X,
 } from 'lucide-react-native';
-import {
-  ActivityIndicator,
-  Modal,
-  Pressable,
-  ScrollView,
-  View,
-} from 'react-native';
 
 import { RANGE_OPTIONS } from '../constants';
 import React from 'react';
@@ -53,7 +53,10 @@ export function RecoveryScoreChart({}: RecoveryScoreChartProps) {
 
   return (
     <>
-      <AppCard className="overflow-hidden rounded-[28px] border border-primary-v2/40 bg-background-v2 p-4">
+      <AppCard
+        lockExempt
+        className="overflow-hidden rounded-[28px] border border-primary-v2/40 bg-background-v2 p-4"
+      >
         <View
           pointerEvents="none"
           className="absolute inset-0 bg-primary-v2/10"

@@ -1,3 +1,4 @@
+import { ActivityIndicator, Pressable, View } from 'react-native';
 import {
   AppAuthenticatedLayout,
   AppButton,
@@ -17,22 +18,22 @@ import {
   Shield,
   Sprout,
 } from 'lucide-react-native';
-import { ActivityIndicator, Pressable, View } from 'react-native';
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import {
-  selectActiveJourney,
-  selectApplicationConfig,
-} from '@/state/selectors';
 import {
   DailySessionStatus,
   useDailySessionHistoryByDayQuery,
 } from '@/__generated__/graphql';
-import { properCase } from '@/utils/strings';
-import { getMoodEmojiByValue } from '@/utils';
+import React, { useState } from 'react';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
-import { useResolveClassNames } from 'uniwind';
+import {
+  selectActiveJourney,
+  selectApplicationConfig,
+} from '@/state/selectors';
+
 import { CardAccessBoundary } from '@/components/foundation/AppCard/CardAccess';
+import { getMoodEmojiByValue } from '@/utils';
+import { properCase } from '@/utils/strings';
+import { useResolveClassNames } from 'uniwind';
+import { useSelector } from 'react-redux';
 
 export function DailySessionHistoryScreen() {
   const { backgroundColor: accent } = useResolveClassNames('bg-primary-v2');
@@ -47,11 +48,15 @@ export function DailySessionHistoryScreen() {
     ),
   );
   const day = Math.min(pickedDay ?? latestDay, latestDay);
-  const { currentData, isFetching, isError, refetch } =
-    useDailySessionHistoryByDayQuery(
-      { day },
-      { skip: !journey, refetchOnMountOrArgChange: true },
-    );
+  const {
+    data: currentData,
+    isFetching,
+    isError,
+    refetch,
+  } = useDailySessionHistoryByDayQuery(
+    { day },
+    { skip: !journey, refetchOnMountOrArgChange: true },
+  );
   const history = currentData?.dailySessionHistoryByDay;
   const reflections = [
     { label: 'What I learned', value: history?.reflection?.realization },
@@ -68,13 +73,15 @@ export function DailySessionHistoryScreen() {
             pointerEvents="none"
             className="absolute -right-16 -top-16 h-44 w-44 rounded-full bg-primary-v2/15"
           />
-          <View className="mb-3 h-12 w-12 items-center justify-center rounded-[16px] bg-primary-v2/20">
-            <AppIcon icon={History} size={28} className="text-link-v2" />
+          <View className="mb-2 flex flex-row items-center">
+            <View className=" h-12 w-12 items-center justify-center rounded-[16px] bg-primary-v2/20">
+              <AppIcon icon={History} size={28} className="text-link-v2" />
+            </View>
+            <AppText variant="xl" className="font-bold text-text-v2 pl-3">
+              Every step tells a story.
+            </AppText>
           </View>
-          <AppText variant="xl" className="font-bold text-text-v2">
-            Every step tells a story.
-          </AppText>
-          <AppText variant="sm" className="mt-2 leading-5 text-text-muted-v2">
+          <AppText variant="sm" className="mt-1 leading-5 text-text-muted-v2">
             Revisit your conversations, small wins, and moments of growth.
           </AppText>
         </AppCard>
@@ -220,6 +227,28 @@ export function DailySessionHistoryScreen() {
                 </AppText>
               </View>
             </View>
+            {!!history.dailySession.startMoods.length && (
+              <AppCard
+                decorated
+                className="rounded-[24px] border border-primary-v2/25 bg-background-v2 p-4"
+              >
+                <AppText variant="md" className="font-semibold text-link-v2">
+                  How you felt before
+                </AppText>
+                <View className="mt-3 flex-row flex-wrap gap-2">
+                  {history.dailySession.startMoods.map(mood => (
+                    <AppText
+                      key={mood}
+                      variant="sm"
+                      className="rounded-full bg-primary-v2/10 px-3 py-2 text-text-v2"
+                    >
+                      {getMoodEmojiByValue(mood)}{' '}
+                      {properCase(mood.replace(/_/g, ' '))}
+                    </AppText>
+                  ))}
+                </View>
+              </AppCard>
+            )}
             {!!history.question?.conversation.length && (
               <AppCard
                 decorated

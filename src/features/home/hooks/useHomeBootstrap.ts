@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useHomeBootstrapQueries } from './useHomeBootstrapQueries';
-import { useCardAccess } from '@/components/foundation/AppCard/CardAccess';
 import { useUserAccess } from '@/hooks';
 
 export const useHomeBootstrap = () => {
@@ -9,7 +8,6 @@ export const useHomeBootstrap = () => {
   const [isBootstrapping, setIsBootstrapping] = useState(true);
 
   const { canProceed } = useUserAccess();
-  const cardAccess = useCardAccess();
 
   const {
     triggerMyRecoveryQuery,
@@ -24,28 +22,31 @@ export const useHomeBootstrap = () => {
 
   const bootstrapHome = useCallback(async () => {
     try {
-      if (cardAccess?.locked || !canProceed()) {
-        return;
-      }
       setIsBootstrapping(true);
       setBootstrapFinished(false);
       try {
-        await triggerAdvanceJourneyDayMutation().unwrap();
-        await triggerStartDailySessionMutation().unwrap();
+        if (canProceed()) {
+          await triggerAdvanceJourneyDayMutation().unwrap();
+          await triggerStartDailySessionMutation().unwrap();
+        }
+
         await triggerLazyActiveDailySessionQuery().unwrap();
       } catch (error) {
         console.log(error);
       }
 
       // recovery score
-      triggerMyRecoveryQuery();
-      triggerLazyGetRecoveryScoreTrendForLastNDayQuery({ days: 7 });
+      triggerLazyGetRecoveryScoreTrendForLastNDayQuery({ days: 7 }).unwrap();
+      triggerMyRecoveryQuery().unwrap();
 
       // daily session details
 
-      triggerLazyTodayQuestionQuery();
-      triggerTodayMissionQuery();
-      triggerCompletedMissionHistoryQuery();
+      if (canProceed()) {
+        triggerLazyTodayQuestionQuery().unwrap();
+        triggerTodayMissionQuery().unwrap();
+      }
+
+      triggerCompletedMissionHistoryQuery().unwrap();
       setBootstrapFinished(true);
     } catch (error) {
       console.log(error);
@@ -54,7 +55,6 @@ export const useHomeBootstrap = () => {
     }
   }, [
     canProceed,
-    cardAccess,
     triggerAdvanceJourneyDayMutation,
     triggerCompletedMissionHistoryQuery,
     triggerLazyActiveDailySessionQuery,

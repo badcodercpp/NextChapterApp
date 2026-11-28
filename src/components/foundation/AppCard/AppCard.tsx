@@ -1,15 +1,12 @@
-import { AppCardProps } from './types';
-import { CardVariants } from './variants';
+import { CardLockOverlay, useCardAccess } from './CardAccess';
 import React, { ComponentType } from 'react';
+import Svg, { Circle, Path } from 'react-native-svg';
+
+import { AppCardProps } from './types';
 import { AppIcon } from '../AppIcon';
-import {
-  CardAccessContext,
-  CardLockOverlay,
-  useCardAccess,
-} from './CardAccess';
+import { CardVariants } from './variants';
 import { View } from 'react-native';
 import { cn } from '@/utils';
-import Svg, { Circle, Path } from 'react-native-svg';
 import { useCSSVariable } from 'uniwind';
 
 export function AppCard({
@@ -44,15 +41,7 @@ export function AppCard({
       {decorated && <AppCardDecoration />}
       {locked ? (
         <>
-          <View
-            pointerEvents="none"
-            accessibilityElementsHidden
-            importantForAccessibility="no-hide-descendants"
-          >
-            <CardAccessContext.Provider value={null}>
-              {children}
-            </CardAccessContext.Provider>
-          </View>
+          {children}
           <CardLockOverlay onPress={access.openPremium} />
         </>
       ) : (

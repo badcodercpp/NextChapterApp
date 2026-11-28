@@ -19,4 +19,5 @@ export interface MoodSelectorProps {
   value: (RecoveryReasonCurrentFeeling | undefined)[];
   setValue: (newMoods: Array<RecoveryReasonCurrentFeeling | undefined>) => void;
   selectionMode?: MoodSelectionMode;
+  lockExempt?: boolean;
 }

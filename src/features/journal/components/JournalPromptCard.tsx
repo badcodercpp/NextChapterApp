@@ -7,14 +7,19 @@ import { View } from 'react-native';
 interface JournalPromptCardProps {
   prompt?: string;
   description?: string;
+  lockExempt?: boolean;
 }
 
 export function JournalPromptCard({
   prompt = 'What small win are you proud of today?',
   description = 'Celebrate the progress, no matter how small.',
+  lockExempt,
 }: JournalPromptCardProps) {
   return (
-    <AppCard className="overflow-hidden rounded-[26px] border border-primary-v2/40 bg-background-v2 p-5">
+    <AppCard
+      lockExempt={lockExempt}
+      className="overflow-hidden rounded-[26px] border border-primary-v2/40 bg-background-v2 p-5"
+    >
       <View
         pointerEvents="none"
         className="absolute -right-10 -top-24 h-48 w-56 rounded-full bg-primary-v2/15"

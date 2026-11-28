@@ -31,10 +31,11 @@ export function EditJournalScreen() {
           title="Your current mood"
           subtitle="How are you feeling now?"
           selectionMode="single"
+          lockExempt
         />
       </View>
       <View className="mt-4">
-        <CreateJournalForm />
+        <CreateJournalForm lockExempt />
       </View>
       <View className="mt-4">
         <AppButton

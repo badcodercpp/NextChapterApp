@@ -1,21 +1,21 @@
 import { AppCard, AppIcon, AppPressable, AppText } from '@/components';
+import { CalendarDays, ChevronDown, Info } from 'lucide-react-native';
+import { Modal, Pressable } from 'react-native';
 import {
   lazySelectGetRecoveryScoreTrendForLastNDay,
   selectMe,
   selectMyRecovery,
 } from '@/state/selectors';
+import { useMemo, useState } from 'react';
 
-import { Modal, Pressable } from 'react-native';
 import { RANGE_OPTIONS } from '@/features/RecoveryProgress/constants';
 import { RecoveryTrend } from './RecoveryTrend';
-import { CalendarDays, ChevronDown, Info } from 'lucide-react-native';
-import { getGreetingKey } from '@/utils';
 import { View } from 'react-native';
+import { getGreetingKey } from '@/utils';
 import { properCase } from '@/utils/strings';
-import { useMemo, useState } from 'react';
+import { useLazyGetRecoveryScoreTrendForLastNDayQuery } from '@/__generated__/graphql';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { useLazyGetRecoveryScoreTrendForLastNDayQuery } from '@/__generated__/graphql';
 
 interface RecoveryScoreCardProps {}
 
@@ -51,7 +51,10 @@ export function RecoveryScoreCard({}: RecoveryScoreCardProps) {
   const { t } = useTranslation();
 
   return (
-    <AppCard className="overflow-hidden rounded-[28px] border border-primary-v2/30 bg-background-v2 p-4">
+    <AppCard
+      lockExempt
+      className="overflow-hidden rounded-[28px] border border-primary-v2/30 bg-background-v2 p-4"
+    >
       <View
         pointerEvents="none"
         className="absolute inset-0 bg-primary-v2/10"

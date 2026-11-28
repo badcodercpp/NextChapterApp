@@ -6,17 +6,17 @@ import {
   Heart,
   MessageCircle,
 } from 'lucide-react-native';
+import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
 import {
   selectActiveJourney,
   selectApplicationConfig,
 } from '@/state/selectors';
 
 import { View } from 'react-native';
-import { useCardAccess } from '@/components/foundation/AppCard/CardAccess';
 import { cn } from '@/utils';
-import { useSelector } from 'react-redux';
+import { useCardAccess } from '@/components/foundation/AppCard/CardAccess';
 import { useResolveClassNames } from 'uniwind';
-import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
+import { useSelector } from 'react-redux';
 
 type JourneyStat = {
   id: string;
@@ -207,6 +207,7 @@ export function JourneySummaryCard({
         'p-4',
         className,
       )}
+      lockExempt
     >
       {content}
     </AppCard>

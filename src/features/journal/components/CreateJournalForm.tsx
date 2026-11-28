@@ -1,14 +1,16 @@
 import { AppCard, AppIcon, AppInput, AppText } from '@/components';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { PencilLine, Tag } from 'lucide-react-native';
-import { View } from 'react-native';
 
 import { JournalAnswerInputCard } from '@/features/CommonFeature';
 import { MasterFormData } from '@/form/types';
+import { View } from 'react-native';
 
-interface CreateJournalFormProps {}
+interface CreateJournalFormProps {
+  lockExempt?: boolean;
+}
 
-export function CreateJournalForm({}: CreateJournalFormProps) {
+export function CreateJournalForm({ lockExempt }: CreateJournalFormProps) {
   const {
     control,
     formState: { errors },
@@ -16,7 +18,10 @@ export function CreateJournalForm({}: CreateJournalFormProps) {
   } = useFormContext<MasterFormData>();
   const content = useWatch({ control, name: 'createOrUpdateJournal.content' });
   return (
-    <AppCard className="overflow-hidden rounded-[26px] border border-primary-v2/40 bg-background-v2 p-4">
+    <AppCard
+      lockExempt={lockExempt}
+      className="overflow-hidden rounded-[26px] border border-primary-v2/40 bg-background-v2 p-4"
+    >
       <View
         pointerEvents="none"
         className="absolute -right-16 -top-24 h-64 w-64 rounded-full bg-primary-v2/15"

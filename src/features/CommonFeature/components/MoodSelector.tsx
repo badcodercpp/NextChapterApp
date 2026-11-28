@@ -17,6 +17,7 @@ export function MoodSelector({
   setValue,
   selectionMode = 'multiple',
   variant = 'default',
+  lockExempt = false,
 }: MoodSelectorProps) {
   const isJournal = variant === 'journal';
   const [isDirty, setIsDirty] = useState(false);
@@ -58,6 +59,7 @@ export function MoodSelector({
           ? 'overflow-hidden rounded-[26px] border border-primary-v2/40 bg-background-v2 p-5'
           : 'rounded-[24px] border border-border bg-card p-4'
       }
+      lockExempt={lockExempt}
     >
       {isJournal && (
         <>

@@ -682,7 +682,7 @@ export type DailySessionHistoryByDayQueryVariables = Exact<{
 }>;
 
 
-export type DailySessionHistoryByDayQuery = { dailySessionHistoryByDay: { id: string, day: number, createdAt: unknown, dailySession: { id: string, userId: string, journeyId: string, missionId: string, questionHistoryId: string | null, day: number, status: DailySessionStatus, currentStep: DailySessionStep, startMoods: Array<RecoveryReasonCurrentFeeling>, endMoods: Array<RecoveryReasonCurrentFeeling>, reflectionId: string | null, startedAt: unknown, missionCompletedAt: unknown, completedAt: unknown, createdAt: unknown, updatedAt: unknown }, question: { id: string, journeyId: string, missionId: string, day: number, status: QuestionStatus, askedAt: unknown, answeredAt: unknown, createdAt: unknown, updatedAt: unknown, conversation: Array<{ role: ConversationRole, content: string | null, reflection: string | null, insight: string | null, question: string | null, summary: string | null, createdAt: unknown }> } | null, mission: { id: string, journeyId: string, day: number, title: string, description: string, overview: string, reminder: string, category: MissionCategory, difficulty: MissionDifficulty, impact: MissionImpact, time: MissionTime, createdAt: unknown, updatedAt: unknown, steps: Array<{ title: string, description: string }> } | null, reflection: { id: string, userId: string, journeyId: string, missionId: string, questionHistoryId: string, realization: string | null, feeling: string | null, need: string | null, action: string | null, completedAt: unknown, createdAt: unknown, updatedAt: unknown } | null } | null };
+export type DailySessionHistoryByDayQuery = { dailySessionHistoryByDay: { id: string, day: number, createdAt: unknown, dailySession: { id: string, userId: string, journeyId: string, missionId: string, questionHistoryId: string | null, day: number, status: DailySessionStatus, currentStep: DailySessionStep, startMoods: Array<RecoveryReasonCurrentFeeling>, endMoods: Array<RecoveryReasonCurrentFeeling>, reflectionId: string | null, startedAt: unknown, missionCompletedAt: unknown, completedAt: unknown, createdAt: unknown, updatedAt: unknown }, question: { id: string, journeyId: string, missionId: string, day: number, status: QuestionStatus, askedAt: unknown, answeredAt: unknown, createdAt: unknown, updatedAt: unknown, conversation: Array<{ role: ConversationRole, content: string | null, reflection: string | null, insight: string | null, question: string | null, summary: string | null, createdAt: unknown }> } | null, mission: { id: string, journeyId: string, day: number, title: string, description: string, overview: string, reminder: string, category: MissionCategory, difficulty: MissionDifficulty, impact: MissionImpact, time: MissionTime, createdAt: unknown, updatedAt: unknown, startedAt: unknown, completedAt: unknown, steps: Array<{ title: string, description: string }> } | null, reflection: { id: string, userId: string, journeyId: string, missionId: string, questionHistoryId: string, realization: string | null, feeling: string | null, need: string | null, action: string | null, completedAt: unknown, createdAt: unknown, updatedAt: unknown } | null } | null };
 
 export type GetRecoveryScoreTrendForLastNDayQueryVariables = Exact<{
   days: number;
@@ -753,7 +753,7 @@ export type MyPurchasesQuery = { myPurchases: Array<{ id: string, planId: string
 export type MyRecoveryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyRecoveryQuery = { myRecovery: { id: string, userId: string, overallScore: number, previousScore: number | null, scoreChange: number | null, trend: RecoveryTrend | null, emotionalDistress: number, acceptance: number, selfAwareness: number, selfWorth: number, emotionalStability: number, readinessToMoveForward: number, assessmentCount: number, createdAt: unknown, updatedAt: unknown } };
+export type MyRecoveryQuery = { myRecovery: { id: string, userId: string, overallScore: number, previousScore: number | null, scoreChange: number | null, trend: RecoveryTrend | null, emotionalDistress: number, acceptance: number, selfAwareness: number, selfWorth: number, emotionalStability: number, readinessToMoveForward: number, assessmentCount: number, createdAt: unknown, updatedAt: unknown } | null };
 
 export type NextAchievementQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1474,6 +1474,8 @@ export const DailySessionHistoryByDayDocument = new TypedDocumentString(`
       }
       createdAt
       updatedAt
+      startedAt
+      completedAt
     }
     reflection {
       id

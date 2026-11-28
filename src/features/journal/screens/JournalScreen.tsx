@@ -9,7 +9,6 @@ import {
 import { usePreventBackNavigation, useScreenHeader } from '@/navigation/hooks';
 
 import { JournalRoutes } from '@/features/journal/navigation';
-import { CardAccessBoundary } from '@/components/foundation/AppCard/CardAccess';
 import { MoodSelector } from '@/features/CommonFeature';
 import React from 'react';
 import { View } from 'react-native';
@@ -31,9 +30,7 @@ export function JournalScreen() {
     // noBottomPadding
     >
       <View className="mt-2">
-        <CardAccessBoundary>
-          <JournalEmptyCard />
-        </CardAccessBoundary>
+        <JournalEmptyCard />
       </View>
       <View className="mt-4">
         <MoodSelector
@@ -43,13 +40,14 @@ export function JournalScreen() {
           title="Your current mood"
           subtitle="How are you feeling now?"
           selectionMode="single"
+          lockExempt
         />
       </View>
       <View className="mt-4">
-        <JournalPromptCard />
+        <JournalPromptCard lockExempt />
       </View>
       <View className="mt-4">
-        <CreateJournalForm />
+        <CreateJournalForm lockExempt />
       </View>
       <View className="mt-4">
         <AppButton
@@ -65,7 +63,7 @@ export function JournalScreen() {
         />
       </View>
       <View>
-        <JournalEntries origin={JournalRoutes.CreateJournal} />
+        <JournalEntries origin={JournalRoutes.CreateJournal} lockExempt />
       </View>
     </AppAuthenticatedLayout>
   );

@@ -14,7 +14,10 @@ export function JournalHistoryScreen() {
     // noBottomPadding
     >
       <View className="mt-2">
-        <JournalHistoryEntries origin={JournalRoutes.JournalHistory} />
+        <JournalHistoryEntries
+          origin={JournalRoutes.JournalHistory}
+          lockExempt
+        />
       </View>
     </AppAuthenticatedLayout>
   );

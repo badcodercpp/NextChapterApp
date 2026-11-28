@@ -1,9 +1,10 @@
-import React, { createContext, useContext } from 'react';
 import { Pressable, View } from 'react-native';
-import { LockKeyhole } from 'lucide-react-native';
-import { useTranslation } from 'react-i18next';
+import React, { createContext, useContext } from 'react';
+
 import { AppIcon } from '../AppIcon';
 import { AppText } from '../AppText';
+import { LockKeyhole } from 'lucide-react-native';
+import { useTranslation } from 'react-i18next';
 
 interface CardAccess {
   locked: boolean;
@@ -18,24 +19,24 @@ export function useCardAccess() {
 
 export function CardLockOverlay({ onPress }: { onPress: () => void }) {
   const { t } = useTranslation();
-  const label = t('app.locale.premium.unlockCard', {
-    defaultValue: 'Locked. Upgrade to Premium',
-  });
+  const label = t('app.locale.premium.unlockCard');
 
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={label}
       onPress={onPress}
-      className="absolute inset-0 items-center justify-center rounded-[24px] bg-background-v2/90 px-2"
+      className="absolute inset-x-0 bottom-0 min-h-1/3 items-center justify-center rounded-[24px] bg-background-v2 px-2"
     >
-      <AppIcon icon={LockKeyhole} size={26} className="text-link-v2" />
-      <AppText
-        variant="xs"
-        className="mt-1 text-center font-semibold text-link-v2"
-      >
-        {label}
-      </AppText>
+      <View className="py-2">
+        <AppIcon icon={LockKeyhole} size={26} className="text-link-v2" />
+        <AppText
+          variant="xs"
+          className="mt-1 text-center font-semibold text-link-v2"
+        >
+          {label}
+        </AppText>
+      </View>
     </Pressable>
   );
 }

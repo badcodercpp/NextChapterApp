@@ -1,10 +1,10 @@
 import { BookOpen, Bot } from 'lucide-react-native';
-import { View } from 'react-native';
 
 import { AIChatRoutes } from '@/features/AIChat';
 import { JournalRoutes } from '@/features/journal';
 import { QuickActionCard } from './QuickActionCard';
 import { TabRoutes } from '@/navigation/Tab/TabRoutes';
+import { View } from 'react-native';
 import { selectApplicationConfig } from '@/state/selectors';
 import { useSelector } from 'react-redux';
 import { useTabNavigation } from '@/navigation/Tab/hooks/useTabNavigation';
@@ -27,6 +27,7 @@ export function QuickActionCardComponent({}: QuickActionCardComponentProps) {
         actionLabel={t('app.locale.home.quickActionCard.journal.actionLabel')}
         accentClassName="text-link-v2"
         iconBackgroundClassName="bg-primary-v2/15"
+        lockExempt
         onPress={() => {
           navigation.navigate(TabRoutes.Journal, {
             screen: JournalRoutes.CreateJournal,

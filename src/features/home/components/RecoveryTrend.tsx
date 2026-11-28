@@ -1,3 +1,4 @@
+import { AppText } from '@/components';
 import { LineChart } from 'react-native-gifted-charts';
 import { View } from 'react-native';
 import { useResolveClassNames } from 'uniwind';
@@ -21,6 +22,16 @@ export function RecoveryTrend({
   const valueRange = maxValue - minValue;
   const scalePadding = Math.max(valueRange * 0.2, 1);
   const chartColor = chartPrimaryColor?.toString() ?? color;
+
+  if (!data.length) {
+    return (
+      <View className="flex items-center justify-center">
+        <AppText className="text-xs text-muted-foreground text-center">
+          Your progress will appear here
+        </AppText>
+      </View>
+    );
+  }
 
   return (
     <View>

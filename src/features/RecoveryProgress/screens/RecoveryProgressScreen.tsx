@@ -6,7 +6,6 @@ import {
 } from '../components';
 
 import React from 'react';
-import { CardAccessBoundary } from '@/components/foundation/AppCard/CardAccess';
 import { RecoveryProgressShareButton } from '@/features/RecoveryProgress/components/RecoveryProgressShareButton';
 import { View } from 'react-native';
 import ViewShot from 'react-native-view-shot';
@@ -32,9 +31,7 @@ export function RecoveryProgressScreen() {
       <ViewShot ref={viewShotRef} options={{ format: 'png', quality: 1.0 }}>
         <View collapsable={false}>
           <View className="mt-4">
-            <CardAccessBoundary>
-              <RecoveryProgressCard />
-            </CardAccessBoundary>
+            <RecoveryProgressCard />
           </View>
           <View className="mt-4">
             <JourneySummaryCard />

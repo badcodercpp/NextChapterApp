@@ -14,7 +14,7 @@ export const enLanguage = {
   'app.locale.common.save': 'Save',
   'app.locale.common.close': 'Close',
   'app.locale.common.retry': 'Retry',
-  'app.locale.premium.unlockCard': 'Locked. Upgrade to Premium',
+  'app.locale.premium.unlockCard': 'Upgrade to Premium',
   'app.locale.premium.badge': 'Premium member',
   'app.locale.premium.plan': 'Premium',
   'app.locale.premium.freePlan': 'Free Plan',
