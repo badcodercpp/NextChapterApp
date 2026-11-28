@@ -1,4 +1,4 @@
-package com.outdated.me
+package me.khudse.app
 
 import android.app.Application
 import com.facebook.react.PackageList

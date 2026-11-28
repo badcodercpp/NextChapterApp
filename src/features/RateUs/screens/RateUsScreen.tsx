@@ -12,9 +12,9 @@ import { TextInput, View } from 'react-native';
 import { Star } from 'lucide-react-native';
 import { cn } from '@/utils';
 import { showToast } from '@/components/Toast';
+import { useCSSVariable } from 'uniwind';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import { useCSSVariable } from 'uniwind';
 
 const STARS = [1, 2, 3, 4, 5];
 const MAX_FEEDBACK_LENGTH = 250;
@@ -67,7 +67,7 @@ export function RateUsScreen() {
           variant="3xl"
           className="mt-5 text-center font-bold text-text-v2"
         >
-          Enjoying Outdated.me?
+          Enjoying KhudSe?
         </AppText>
         <AppText
           variant="md"

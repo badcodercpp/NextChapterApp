@@ -16,7 +16,7 @@ export function AuthHeader({
         source={require('@/assets/images/logo.png')}
         resizeMode="contain"
         className="h-24 w-24 rounded-full"
-        accessibilityLabel="Outdated.me logo"
+        accessibilityLabel="KhudSe logo"
       />
       <AppText
         variant="4xl"

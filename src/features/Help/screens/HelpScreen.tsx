@@ -1,8 +1,8 @@
 import {
   APP_PATTERN_ARTWORK_VARIANTS,
-  AppPatternArtwork,
   AppHeroArtwork,
   AppIcon,
+  AppPatternArtwork,
   AppPressable,
   AppScreen,
   AppText,
@@ -15,23 +15,23 @@ import {
   MessageCircleQuestion,
   Search,
 } from 'lucide-react-native';
-import { HELP_TOPICS as TOPICS } from '../data/helpTopics';
-import { useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { HelpStackParamList } from '../navigation/types';
 import { Linking, TextInput, View } from 'react-native';
 
+import type { HelpStackParamList } from '../navigation/types';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { HELP_TOPICS as TOPICS } from '../data/helpTopics';
 import { cn } from '@/utils';
 import { showToast } from '@/components/Toast';
-import { useState } from 'react';
 import { useCSSVariable } from 'uniwind';
+import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
 
-const SUPPORT_EMAIL = 'support@outdated.me';
+const SUPPORT_EMAIL = 'support@KhudSe';
 
 const FAQS = [
   {
     id: 'free',
-    question: 'Is Outdated.me free to use?',
+    question: 'Is KhudSe free to use?',
     answer:
       'Yes, you can get started for free. Premium unlocks all journeys and insights.',
   },
@@ -84,13 +84,13 @@ export function HelpScreen() {
       <View className="-mx-4 -mt-4 px-4 pb-1 pt-4">
         <AppHeroArtwork />
         <AppText variant="sm" className="font-semibold text-primary-v2">
-          Outdated.me
+          KhudSe
         </AppText>
         <AppText variant="3xl" className="mt-1 font-bold text-text-v2">
           How can we help?
         </AppText>
         <AppText variant="sm" className="mt-1 max-w-[300px] text-text-muted-v2">
-          Find answers, get support, and make the most of Outdated.me.
+          Find answers, get support, and make the most of KhudSe.
         </AppText>
       </View>
 

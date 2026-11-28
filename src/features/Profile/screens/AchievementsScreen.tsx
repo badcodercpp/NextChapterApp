@@ -1,9 +1,9 @@
 import {
-  AppAuthenticatedLayout,
   APP_PATTERN_ARTWORK_VARIANTS,
+  AppAuthenticatedLayout,
   AppCardDecoration,
-  AppPatternArtwork,
   AppIcon,
+  AppPatternArtwork,
   AppPressable,
   AppText,
 } from '@/components';
@@ -73,7 +73,7 @@ function HeroHeader() {
       />
       <View className="flex-1 pr-2">
         <AppText variant="md" className="font-semibold text-link-v2">
-          Outdated.me
+          KhudSe
         </AppText>
         <AppText variant="3xl" className="mt-1 font-bold text-text-v2">
           Your{' '}

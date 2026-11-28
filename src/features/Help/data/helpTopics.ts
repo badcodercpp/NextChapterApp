@@ -40,7 +40,7 @@ export const HELP_TOPICS: HelpTopic[] = [
     title: 'Getting Started',
     subtitle: 'Create your account and set up your journey',
     overview:
-      'Get started with Outdated.me in just a few simple steps. Create your account, set up your profile, choose a journey, and begin your wellness progress.',
+      'Get started with KhudSe in just a few simple steps. Create your account, set up your profile, choose a journey, and begin your wellness progress.',
     steps: [
       {
         icon: User,
@@ -75,7 +75,7 @@ export const HELP_TOPICS: HelpTopic[] = [
     title: 'App Features',
     subtitle: 'Explore journeys, tracking, and more',
     overview:
-      'Outdated.me brings guided journeys, daily tasks, mood check-ins and an AI companion together in one place to support your recovery.',
+      'KhudSe brings guided journeys, daily tasks, mood check-ins and an AI companion together in one place to support your recovery.',
     steps: [
       {
         icon: Layers,

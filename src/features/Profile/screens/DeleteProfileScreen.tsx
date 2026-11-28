@@ -21,7 +21,7 @@ export function DeleteProfileScreen() {
       <View className="mt-4">
         <DeleteAccountConfirmation
           name={'Shreya Singh'}
-          email={'shreya@outdated.me'}
+          email={'shreya@KhudSe'}
           memberSince={'2023'}
         />
       </View>

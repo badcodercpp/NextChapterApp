@@ -1,3 +1,7 @@
+import {
+  AppImagePreviewContent,
+  AppPhotoModalShell,
+} from '../AppImagePreviewModal/AppImagePreviewModal';
 import { Image, View } from 'react-native';
 import { PickedAvatar, cn, pickAvatar } from '@/utils';
 import React, { useImperativeHandle, useState } from 'react';
@@ -8,10 +12,6 @@ import {
 } from '@/__generated__/graphql';
 
 import type { AppAvatarProps } from './types';
-import {
-  AppImagePreviewContent,
-  AppPhotoModalShell,
-} from '../AppImagePreviewModal/AppImagePreviewModal';
 import { AppFileChooseContent } from '../AppFileChooseModal';
 import { AppPressable } from '../AppPressable';
 import { AppText } from '../AppText';
@@ -206,7 +206,7 @@ export function AppAvatar({
           resizeMode="cover"
         />
       ) : (
-        <AppText variant="lg" color="text">
+        <AppText variant="md" color="text">
           {initials}
         </AppText>
       )}
